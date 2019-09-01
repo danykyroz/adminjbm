@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Flotillas
  *
- * @ORM\Table(name="flotillas")
+ * @ORM\Table(name="flotillas", indexes={@ORM\Index(name="contacto_id", columns={"contacto_id"})})
  * @ORM\Entity
  */
 class Flotillas
@@ -31,9 +31,19 @@ class Flotillas
     /**
      * @var int|null
      *
-     * @ORM\Column(name="fos_user_id", type="integer", nullable=true)
+     * @ORM\Column(name="documento", type="integer", nullable=true)
      */
-    private $fosUserId;
+    private $documento;
+
+    /**
+     * @var \Contactos
+     *
+     * @ORM\ManyToOne(targetEntity="Contactos")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="contacto_id", referencedColumnName="id")
+     * })
+     */
+    private $contacto;
 
     public function getId(): ?int
     {
@@ -52,14 +62,26 @@ class Flotillas
         return $this;
     }
 
-    public function getFosUserId(): ?int
+    public function getDocumento(): ?int
     {
-        return $this->fosUserId;
+        return $this->documento;
     }
 
-    public function setFosUserId(?int $fosUserId): self
+    public function setDocumento(?int $documento): self
     {
-        $this->fosUserId = $fosUserId;
+        $this->documento = $documento;
+
+        return $this;
+    }
+
+    public function getContacto(): ?Contactos
+    {
+        return $this->contacto;
+    }
+
+    public function setContacto(?Contactos $contacto): self
+    {
+        $this->contacto = $contacto;
 
         return $this;
     }
