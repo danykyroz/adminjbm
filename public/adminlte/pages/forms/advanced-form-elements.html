@@ -1,0 +1,1700 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <title>Roxa - Bootstrap 4 Admin Dashboard Template</title>
+
+    <!-- Favicon-->
+    <link rel="icon" href="../../assets/images/favicon.ico" type="image/x-icon">
+
+    <!-- Colorpicker Css -->
+    <link href="../../assets/js/bundles/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.css" rel="stylesheet" />
+
+    <!-- Multi Select Css -->
+    <link href="../../assets/js/bundles/multiselect/css/multi-select.css" rel="stylesheet">
+
+    <!-- Plugins Core Css -->
+    <link href="../../assets/css/app.min.css" rel="stylesheet">
+    <link href="../../assets/css/form.min.css" rel="stylesheet">
+
+    <!-- Custom Css -->
+    <link href="../../assets/css/style.css" rel="stylesheet">
+
+    <!-- You can choose a theme from css/styles instead of get all themes -->
+    <link href="../../assets/css/styles/all-themes.css" rel="stylesheet" />
+</head>
+
+<body>
+    <!-- Page Loader -->
+    <div class="page-loader-wrapper">
+        <div class="loader">
+            <div class="m-t-30">
+                <img class="loading-img-spin" src="../../assets/images/loading.png" width="20" height="20" alt="admin">
+            </div>
+            <p>Please wait...</p>
+        </div>
+    </div>
+    <!-- #END# Page Loader -->
+    <!-- Overlay For Sidebars -->
+    <div class="overlay"></div>
+    <!-- #END# Overlay For Sidebars -->
+
+    <!-- Top Bar -->
+    <nav class="navbar">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"
+                    aria-expanded="false"></a>
+                <a href="javascript:void(0);" class="bars"></a>
+                <a class="navbar-brand" href="../../index.html">
+                    <img src="../../assets/images/logo.png" alt="" />
+                    <span class="logo-name">Roxa</span>
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-collapse">
+                <ul class="pull-left">
+                    <li>
+                        <a href="javascript:void(0);" class="sidemenu-collapse">
+                            <i class="fas fa-bars"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <div class="search-box">
+                            <input type="search" id="search" placeholder="Search..." />
+                            <button class="icon">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <!-- Full Screen Button -->
+                    <li class="fullscreen">
+                        <a href="javascript:;" class="fullscreen-btn">
+                            <i class="fas fa-expand-arrows-alt"></i>
+                        </a>
+                    </li>
+                    <!-- #END# Full Screen Button -->
+
+                    <!-- Notifications -->
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
+                            <i class="far fa-bell"></i>
+                            <span class="label-count bg-orange">7</span>
+                        </a>
+                        <ul class="dropdown-menu pullDown">
+                            <li class="header">NOTIFICATIONS</li>
+                            <li class="body">
+                                <ul class="menu">
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <span class="icon-circle bg-light-green">
+                                                <i class="material-icons">person_add</i>
+                                            </span>
+                                            <span class="menu-info">
+                                                <span class="menu-title">12 new members joined</span>
+                                                <span class="menu-desc">
+                                                    <i class="material-icons">access_time</i> 14 mins ago
+                                                </span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <span class="icon-circle bg-cyan">
+                                                <i class="material-icons">add_shopping_cart</i>
+                                            </span>
+                                            <span class="menu-info">
+                                                <span class="menu-title">4 sales made</span>
+                                                <span class="menu-desc">
+                                                    <i class="material-icons">access_time</i> 22 mins ago
+                                                </span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <span class="icon-circle bg-red">
+                                                <i class="material-icons">delete_forever</i>
+                                            </span>
+                                            <span class="menu-info">
+                                                <span class="menu-title">
+                                                    <b>Nancy Doe</b> deleted account</span>
+                                                <span class="menu-desc">
+                                                    <i class="material-icons">access_time</i> 3 hours ago
+                                                </span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <span class="icon-circle bg-orange">
+                                                <i class="material-icons">mode_edit</i>
+                                            </span>
+                                            <span class="menu-info">
+                                                <span class="menu-title">
+                                                    <b>Nancy</b> changed name</span>
+                                                <span class="menu-desc">
+                                                    <i class="material-icons">access_time</i> 2 hours ago
+                                                </span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <span class="icon-circle bg-blue-grey">
+                                                <i class="material-icons">comment</i>
+                                            </span>
+                                            <span class="menu-info">
+                                                <span class="menu-title">
+                                                    <b>John</b> commented your post</span>
+                                                <span class="menu-desc">
+                                                    <i class="material-icons">access_time</i> 4 hours ago
+                                                </span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <span class="icon-circle bg-light-green">
+                                                <i class="material-icons">cached</i>
+                                            </span>
+                                            <span class="menu-info">
+                                                <span class="menu-title">
+                                                    <b>John</b> updated status</span>
+                                                <span class="menu-desc">
+                                                    <i class="material-icons">access_time</i> 3 hours ago
+                                                </span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <span class="icon-circle bg-purple">
+                                                <i class="material-icons">settings</i>
+                                            </span>
+                                            <span class="menu-info">
+                                                <span class="menu-title">Settings updated</span>
+                                                <span class="menu-desc">
+                                                    <i class="material-icons">access_time</i> Yesterday
+                                                </span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="footer">
+                                <a href="javascript:void(0);">View All Notifications</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- #END# Notifications -->
+                    <!-- #START# Message-->
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
+                            <i class="far fa-comments"></i>
+                            <span class="label-count bg-green">4</span>
+                        </a>
+                        <ul class="dropdown-menu pullDown">
+                            <li class="header">MESSAGES</li>
+                            <li class="body">
+                                <ul class="menu">
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <span class="table-img msg-user">
+                                                <img src="../../assets/images/user/user1.jpg" alt="">
+                                            </span>
+                                            <span class="menu-info">
+                                                <span class="menu-title">Sarah Smith</span>
+                                                <span class="menu-desc">
+                                                    <i class="material-icons">access_time</i> 14 mins ago
+                                                </span>
+                                                <span class="menu-desc">Please check your email.</span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <span class="table-img msg-user">
+                                                <img src="../../assets/images/user/user2.jpg" alt="">
+                                            </span>
+                                            <span class="menu-info">
+                                                <span class="menu-title">Airi Satou</span>
+                                                <span class="menu-desc">
+                                                    <i class="material-icons">access_time</i> 22 mins ago
+                                                </span>
+                                                <span class="menu-desc">Please check your email.</span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <span class="table-img msg-user">
+                                                <img src="../../assets/images/user/user3.jpg" alt="">
+                                            </span>
+                                            <span class="menu-info">
+                                                <span class="menu-title">John Doe</span>
+                                                <span class="menu-desc">
+                                                    <i class="material-icons">access_time</i> 3 hours ago
+                                                </span>
+                                                <span class="menu-desc">Please check your email.</span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <span class="table-img msg-user">
+                                                <img src="../../assets/images/user/user4.jpg" alt="">
+                                            </span>
+                                            <span class="menu-info">
+                                                <span class="menu-title">Ashton Cox</span>
+                                                <span class="menu-desc">
+                                                    <i class="material-icons">access_time</i> 2 hours ago
+                                                </span>
+                                                <span class="menu-desc">Please check your email.</span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <span class="table-img msg-user">
+                                                <img src="../../assets/images/user/user5.jpg" alt="">
+                                            </span>
+                                            <span class="menu-info">
+                                                <span class="menu-title">Cara Stevens</span>
+                                                <span class="menu-desc">
+                                                    <i class="material-icons">access_time</i> 4 hours ago
+                                                </span>
+                                                <span class="menu-desc">Please check your email.</span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <span class="table-img msg-user">
+                                                <img src="../../assets/images/user/user6.jpg" alt="">
+                                            </span>
+                                            <span class="menu-info">
+                                                <span class="menu-title">Charde Marshall</span>
+                                                <span class="menu-desc">
+                                                    <i class="material-icons">access_time</i> 3 hours ago
+                                                </span>
+                                                <span class="menu-desc">Please check your email.</span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <span class="table-img msg-user">
+                                                <img src="../../assets/images/user/user7.jpg" alt="">
+                                            </span>
+                                            <span class="menu-info">
+                                                <span class="menu-title">John Doe</span>
+                                                <span class="menu-desc">
+                                                    <i class="material-icons">access_time</i> Yesterday
+                                                </span>
+                                                <span class="menu-desc">Please check your email.</span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="footer">
+                                <a href="javascript:void(0);">View All Messages</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- #END# Message-->
+                    <li class="dropdown user_profile">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
+                            <img src="../../assets/images/user.jpg" width="32" height="32" alt="User">
+                        </a>
+                        <ul class="dropdown-menu pullDown">
+                            <li class="body">
+                                <ul class="user_dw_menu">
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <i class="material-icons">person</i>Profile
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <i class="material-icons">feedback</i>Feedback
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <i class="material-icons">help</i>Help
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <i class="material-icons">power_settings_new</i>Logout
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- #END# Tasks -->
+                    <li class="pull-right">
+                        <a href="javascript:void(0);" class="js-right-sidebar" data-close="true">
+                            <i class="fas fa-cog"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- #Top Bar -->
+    <div>
+        <!-- Left Sidebar -->
+        <aside id="leftsidebar" class="sidebar">
+            <!-- Menu -->
+            <div class="menu">
+                <ul class="list">
+                    <li class="sidebar-user-panel active">
+                        <div class="user-panel">
+                            <div class=" image">
+                                <img src="../../assets/images/usrbig.jpg" class="img-circle user-img-circle" alt="User Image" />
+                            </div>
+                        </div>
+                        <div class="profile-usertitle">
+                            <div class="sidebar-userpic-name"> Emily Smith </div>
+                            <div class="profile-usertitle-job ">Manager </div>
+                        </div>
+                        <div class="sidebar-userpic-btn">
+                            <a class="tooltips" href="../examples/profile.html" data-toggle="tooltip" title="Profile">
+                                <i class="far fa-user sidebarQuickIcon"></i>
+                            </a>
+                            <a class="tooltips" href="../email/inbox.html" data-toggle="tooltip" title="Mail">
+                                <i class="far fa-envelope sidebarQuickIcon"></i>
+                            </a>
+                            <a class="tooltips" href="../apps/chat.html" data-toggle="tooltip" title="Chat">
+                                <i class="far fa-comment-alt sidebarQuickIcon"></i>
+                            </a>
+                            <a class="tooltips" href="../examples/sign-in.html" data-toggle="tooltip" title="Logout">
+                                <i class="fas fa-sign-out-alt sidebarQuickIcon"></i>
+                            </a>
+                        </div>
+                    </li>
+                    <li class="header">-- Main</li>
+                    <li>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>Home</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="../../index.html">Dashboard 1</a>
+                            </li>
+                            <li>
+                                <a href="../dashboard/dashboard2.html">Dashboard 2</a>
+                            </li>
+                            <li>
+                                <a href="../dashboard/dashboard3.html">Dashboard 3</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="../apps/calendar.html">
+                            <i class="far fa-calendar"></i>
+                            <span>Events</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="fas fa-mail-bulk"></i>
+                            <span>Email</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="../email/inbox.html">Inbox</a>
+                            </li>
+                            <li>
+                                <a href="../email/compose.html">Compose</a>
+                            </li>
+                            <li>
+                                <a href="../email/view-mail.html">Read Email</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="fab fa-google-play"></i>
+                            <span>Apps</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="../apps/chat.html">Chat</a>
+                            </li>
+                            <li>
+                                <a href="../apps/contact_list.html">Contact List</a>
+                            </li>
+                            <li>
+                                <a href="../apps/contact_grid.html">Contact Grid</a>
+                            </li>
+                            <li>
+                                <a href="../apps/support.html">Support</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="../widgets/widget.html">
+                            <i class="fas fa-braille"></i>
+                            <span>Widgets</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="fas fa-drafting-compass"></i>
+                            <span>User Interface (UI)</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li class="active">
+                                <a href="../ui/alerts.html">Alerts</a>
+                            </li>
+                            <li>
+                                <a href="../ui/animations.html">Animations</a>
+                            </li>
+                            <li>
+                                <a href="../ui/badges.html">Badges</a>
+                            </li>
+                            <li>
+                                <a href="../ui/modal.html">Modal</a>
+                            </li>
+                            <li>
+                                <a href="../ui/buttons.html">Buttons</a>
+                            </li>
+                            <li>
+                                <a href="../ui/collapse.html">Collapse</a>
+                            </li>
+                            <li>
+                                <a href="../ui/dialogs.html">Dialogs</a>
+                            </li>
+                            <li>
+                                <a href="../ui/cards.html">Cards</a>
+                            </li>
+                            <li>
+                                <a href="../ui/icons.html">Icons</a>
+                            </li>
+                            <li>
+                                <a href="../ui/labels.html">Labels</a>
+                            </li>
+                            <li>
+                                <a href="../ui/list-group.html">List Group</a>
+                            </li>
+                            <li>
+                                <a href="../ui/media-object.html">Media Object</a>
+                            </li>
+                            <li>
+                                <a href="../ui/notifications.html">Notifications</a>
+                            </li>
+                            <li>
+                                <a href="../ui/preloaders.html">Preloaders</a>
+                            </li>
+                            <li>
+                                <a href="../ui/progressbars.html">Progress Bars</a>
+                            </li>
+                            <li>
+                                <a href="../ui/range-sliders.html">Range Sliders</a>
+                            </li>
+                            <li>
+                                <a href="../ui/sortable-nestable.html">Sortable &amp; Nestable</a>
+                            </li>
+                            <li>
+                                <a href="../ui/tabs.html">Tabs</a>
+                            </li>
+                            <li>
+                                <a href="../ui/waves.html">Waves</a>
+                            </li>
+                            <li>
+                                <a href="../ui/typography.html">Typography</a>
+                            </li>
+                            <li>
+                                <a href="../ui/helper-classes.html">Helper Classes</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="active">
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="fab fa-wpforms"></i>
+                            <span>Forms</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="basic-form-elements.html">Basic Form Elements</a>
+                            </li>
+                            <li class="active">
+                                <a href="advanced-form-elements.html">Advanced Form Elements</a>
+                            </li>
+                            <li>
+                                <a href="form-examples.html">Form Examples</a>
+                            </li>
+                            <li>
+                                <a href="form-validation.html">Form Validation</a>
+                            </li>
+                            <li>
+                                <a href="form-wizard.html">Form Wizard</a>
+                            </li>
+                            <li>
+                                <a href="editors.html">Editors</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="fas fa-table"></i>
+                            <span>Tables</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="../tables/normal-tables.html">Normal Tables</a>
+                            </li>
+                            <li>
+                                <a href="../tables/jquery-datatable.html">Advance Datatables</a>
+                            </li>
+                            <li>
+                                <a href="../tables/group-table.html">Grouping</a>
+                            </li>
+                            <li>
+                                <a href="../tables/editable-table.html">Editable Tables</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="far fa-images"></i>
+                            <span>Medias</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="../medias/image-gallery.html">Image Gallery</a>
+                            </li>
+                            <li>
+                                <a href="../medias/carousel.html">Carousel</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Charts</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="../charts/morris.html">Morris</a>
+                            </li>
+                            <li>
+                                <a href="../charts/flot.html">Flot</a>
+                            </li>
+                            <li>
+                                <a href="../charts/chartjs.html">ChartJS</a>
+                            </li>
+                            <li>
+                                <a href="../charts/sparkline.html">Sparkline</a>
+                            </li>
+                            <li>
+                                <a href="../charts/jquery-knob.html">Jquery Knob</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="far fa-file-alt"></i>
+                            <span>Example Pages</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="../examples/timeline.html">Timeline</a>
+                            </li>
+                            <li>
+                                <a href="../examples/sign-in.html">Sign In</a>
+                            </li>
+                            <li>
+                                <a href="../examples/sign-up.html">Sign Up</a>
+                            </li>
+                            <li>
+                                <a href="../examples/forgot-password.html">Forgot Password</a>
+                            </li>
+                            <li>
+                                <a href="../examples/profile.html">Profile</a>
+                            </li>
+                            <li>
+                                <a href="../examples/pricing.html">Pricing</a>
+                            </li>
+                            <li>
+                                <a href="../examples/invoice.html">Invoice</a>
+                            </li>
+                            <li>
+                                <a href="../examples/faqs.html">Faqs</a>
+                            </li>
+                            <li>
+                                <a href="../examples/blank.html">Blank Page</a>
+                            </li>
+                            <li>
+                                <a href="../examples/locked.html">Locked</a>
+                            </li>
+                            <li>
+                                <a href="../examples/404.html">404 - Not Found</a>
+                            </li>
+                            <li>
+                                <a href="../examples/500.html">500 - Server Error</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="fas fa-globe-americas"></i>
+                            <span>Maps</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="../maps/google.html">Google Map</a>
+                            </li>
+                            <li>
+                                <a href="../maps/jqvmap.html">Vector Map</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="fas fa-angle-double-down"></i>
+                            <span>Multi Level Menu</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="javascript:void(0);">
+                                    <span>Menu Item</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);">
+                                    <span>Menu Item - 2</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" class="menu-toggle">
+                                    <span>Level - 2</span>
+                                </a>
+                                <ul class="ml-menu">
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <span>Menu Item</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);" class="menu-toggle">
+                                            <span>Level - 3</span>
+                                        </a>
+                                        <ul class="ml-menu">
+                                            <li>
+                                                <a href="javascript:void(0);">
+                                                    <span>Level - 4</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!-- #Menu -->
+        </aside>
+        <!-- #END# Left Sidebar -->
+        <!-- Right Sidebar -->
+        <aside id="rightsidebar" class="right-sidebar">
+            <ul class="nav nav-tabs tab-nav-right" role="tablist">
+                <li role="presentation">
+                    <a href="#skins" data-toggle="tab" class="active">SKINS</a>
+                </li>
+                <li role="presentation">
+                    <a href="#settings" data-toggle="tab">SETTINGS</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane in active in active stretchLeft" id="skins">
+                    <div class="demo-skin">
+                        <div class="rightSetting">
+                            <p>GENERAL SETTINGS</p>
+                            <ul class="setting-list list-unstyled m-t-20">
+                                <li>
+                                    <div class="form-check">
+                                        <div class="form-check m-l-10">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input" type="checkbox" value="" checked> Save
+                                                History
+                                                <span class="form-check-sign">
+                                                    <span class="check"></span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-check">
+                                        <div class="form-check m-l-10">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input" type="checkbox" value="" checked> Show
+                                                Status
+                                                <span class="form-check-sign">
+                                                    <span class="check"></span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-check">
+                                        <div class="form-check m-l-10">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input" type="checkbox" value="" checked> Auto
+                                                Submit Issue
+                                                <span class="form-check-sign">
+                                                    <span class="check"></span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-check">
+                                        <div class="form-check m-l-10">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input" type="checkbox" value="" checked> Show
+                                                Status To All
+                                                <span class="form-check-sign">
+                                                    <span class="check"></span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="rightSetting">
+                            <p>SIDEBAR MENU COLORS</p>
+                            <button type="button" class="btn btn-sidebar-light btn-border-radius p-l-20 p-r-20">Light</button>
+                            <button type="button" class="btn btn-sidebar-dark btn-default btn-border-radius p-l-20 p-r-20">Dark</button>
+                        </div>
+                        <div class="rightSetting">
+                            <p>SKINS</p>
+                            <ul class="demo-choose-skin choose-theme list-unstyled">
+                                <li data-theme="black" class="actived">
+                                    <div class="black-theme"></div>
+                                </li>
+                                <li data-theme="white">
+                                    <div class="white-theme white-theme-border"></div>
+                                </li>
+                                <li data-theme="purple">
+                                    <div class="purple-theme"></div>
+                                </li>
+                                <li data-theme="blue">
+                                    <div class="blue-theme"></div>
+                                </li>
+                                <li data-theme="cyan">
+                                    <div class="cyan-theme"></div>
+                                </li>
+                                <li data-theme="green">
+                                    <div class="green-theme"></div>
+                                </li>
+                                <li data-theme="orange">
+                                    <div class="orange-theme"></div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="rightSetting">
+                            <p>Disk Space</p>
+                            <div class="sidebar-progress">
+                                <div class="progress m-t-20">
+                                    <div class="progress-bar l-bg-cyan shadow-style width-per-45" role="progressbar"
+                                        aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <span class="progress-description">
+                                    <small>26% remaining</small>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="rightSetting">
+                            <p>Server Load</p>
+                            <div class="sidebar-progress">
+                                <div class="progress m-t-20">
+                                    <div class="progress-bar l-bg-orange shadow-style width-per-63" role="progressbar"
+                                        aria-valuenow="63" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <span class="progress-description">
+                                    <small>Highly Loaded</small>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane stretchRight" id="settings">
+                    <div class="demo-settings">
+                        <p>GENERAL SETTINGS</p>
+                        <ul class="setting-list">
+                            <li>
+                                <span>Report Panel Usage</span>
+                                <div class="switch">
+                                    <label>
+                                        <input type="checkbox" checked>
+                                        <span class="lever switch-col-green"></span>
+                                    </label>
+                                </div>
+                            </li>
+                            <li>
+                                <span>Email Redirect</span>
+                                <div class="switch">
+                                    <label>
+                                        <input type="checkbox">
+                                        <span class="lever switch-col-blue"></span>
+                                    </label>
+                                </div>
+                            </li>
+                        </ul>
+                        <p>SYSTEM SETTINGS</p>
+                        <ul class="setting-list">
+                            <li>
+                                <span>Notifications</span>
+                                <div class="switch">
+                                    <label>
+                                        <input type="checkbox" checked>
+                                        <span class="lever switch-col-purple"></span>
+                                    </label>
+                                </div>
+                            </li>
+                            <li>
+                                <span>Auto Updates</span>
+                                <div class="switch">
+                                    <label>
+                                        <input type="checkbox" checked>
+                                        <span class="lever switch-col-cyan"></span>
+                                    </label>
+                                </div>
+                            </li>
+                        </ul>
+                        <p>ACCOUNT SETTINGS</p>
+                        <ul class="setting-list">
+                            <li>
+                                <span>Offline</span>
+                                <div class="switch">
+                                    <label>
+                                        <input type="checkbox" checked>
+                                        <span class="lever switch-col-red"></span>
+                                    </label>
+                                </div>
+                            </li>
+                            <li>
+                                <span>Location Permission</span>
+                                <div class="switch">
+                                    <label>
+                                        <input type="checkbox">
+                                        <span class="lever switch-col-lime"></span>
+                                    </label>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <!-- #END# Right Sidebar -->
+    </div>
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="block-header">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-5 col-md-4 col-sm-12">
+                        <ul class="breadcrumb breadcrumb-style">
+                            <li class="breadcrumb-item 	bcrumb-1">
+                                <a href="../../index.html">
+                                    <i class="material-icons">home</i>
+                                    Home</a>
+                            </li>
+                            <li class="breadcrumb-item bcrumb-2">
+                                <a href="javascript:void(0);">Forms</a>
+                            </li>
+                            <li class="breadcrumb-item active">Advance Forms</li>
+                        </ul>
+                    </div>
+                    <div class="col-xl-6 col-lg-7 col-md-8 col-sm-12 text-right">
+                        <div class="breadcrumb-chart m-l-50">
+                            <div class="float-right">
+                                <div class="icon m-b-10">
+                                    <div class="chart header-bar">
+                                        <canvas width="49" height="40"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="float-right m-r-10">
+                                <div class="chart-info m-t-5">
+                                    <i class="fas fa-dollar-sign m-r-5"></i>
+                                    <span>$8,968</span>
+                                    <p>Total Income</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="breadcrumb-chart m-l-50">
+                            <div class="float-right">
+                                <div class="icon m-b-10">
+                                    <div class="chart header-bar2">
+                                        <canvas width="49" height="40"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="float-right m-r-10">
+                                <div class="chart-info m-t-5">
+                                    <i class="fas fa-user-tie m-r-5"></i>
+                                    <span>2,568</span>
+                                    <p>New Users</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Color Pickers -->
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>
+                                <strong>Color</strong> Picker</h2>
+                            <ul class="header-dropdown m-r--5">
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                        aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">more_vert</i>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li>
+                                            <a href="javascript:void(0);">Action</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);">Another action</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);">Something else here</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="body">
+                            <div class="row clearfix">
+                                <div class="col-md-6">
+                                    <b>HEX CODE</b>
+                                    <div class="input-group colorpicker">
+                                        <div class="form-line">
+                                            <input type="text" class="form-control" value="#00AABB">
+                                        </div>
+                                        <span class="input-group-addon">
+                                            <i></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <b>RGB(A) CODE</b>
+                                    <div class="input-group colorpicker">
+                                        <div class="form-line">
+                                            <input type="text" class="form-control" value="rgba(0,0,0,0.7)">
+                                        </div>
+                                        <span class="input-group-addon">
+                                            <i></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #END# Color Pickers -->
+            <!-- File Upload | Drag & Drop OR With Click & Choose -->
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>
+                                <strong>File</strong> Upload</h2>
+                            <ul class="header-dropdown m-r--5">
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                        aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">more_vert</i>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li>
+                                            <a href="javascript:void(0);">Action</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);">Another action</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);">Something else here</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="body">
+                            <form action="../../../../../../../index.html" id="frmFileUpload" class="dropzone" method="post" enctype="multipart/form-data">
+                                <div class="dz-message">
+                                    <div class="drag-icon-cph">
+                                        <i class="material-icons">touch_app</i>
+                                    </div>
+                                    <h3>Drop files here or click to upload.</h3>
+                                    <em>(This is just a demo dropzone. Selected files are
+                                        <strong>not</strong> actually uploaded.)
+                                    </em>
+                                </div>
+                                <div class="fallback">
+                                    <input name="file" type="file" multiple />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #END# File Upload | Drag & Drop OR With Click & Choose -->
+            <!-- Masked Input -->
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>
+                                <strong>Masked</strong> Input</h2>
+                            <ul class="header-dropdown m-r--5">
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                        aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">more_vert</i>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li>
+                                            <a href="javascript:void(0);">Action</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);">Another action</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);">Something else here</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="body">
+                            <div class="demo-masked-input">
+                                <div class="row clearfix">
+                                    <div class="col-md-3">
+                                        <b>Date</b>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">date_range</i>
+                                            </span>
+                                            <div class="form-line">
+                                                <input type="text" class="form-control date" placeholder="Ex: 30/07/2016">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <b>Time (24 hour)</b>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">access_time</i>
+                                            </span>
+                                            <div class="form-line">
+                                                <input type="text" class="form-control time24" placeholder="Ex: 23:59">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <b>Time (12 hour)</b>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">access_time</i>
+                                            </span>
+                                            <div class="form-line">
+                                                <input type="text" class="form-control time12" placeholder="Ex: 11:59 pm">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <b>Date Time</b>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">date_range</i>
+                                            </span>
+                                            <div class="form-line">
+                                                <input type="text" class="form-control datetime" placeholder="Ex: 30/07/2016 23:59">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <b>Mobile Phone Number</b>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">phone_iphone</i>
+                                            </span>
+                                            <div class="form-line">
+                                                <input type="text" class="form-control mobile-phone-number" placeholder="Ex: +00 (000) 000-00-00">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <b>Phone Number</b>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">phone</i>
+                                            </span>
+                                            <div class="form-line">
+                                                <input type="text" class="form-control mobile-phone-number" placeholder="Ex: +00 (000) 000-00-00">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <b>Money (Dollar)</b>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">attach_money</i>
+                                            </span>
+                                            <div class="form-line">
+                                                <input type="text" class="form-control money-dollar" placeholder="Ex: 99,99 $">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <b>Money (Euro)</b>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">euro_symbol</i>
+                                            </span>
+                                            <div class="form-line">
+                                                <input type="text" class="form-control money-euro" placeholder="Ex: 99,99 €">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <b>IP Address</b>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">computer</i>
+                                            </span>
+                                            <div class="form-line">
+                                                <input type="text" class="form-control ip" placeholder="Ex: 255.255.255.255">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <b>Credit Card</b>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">credit_card</i>
+                                            </span>
+                                            <div class="form-line">
+                                                <input type="text" class="form-control credit-card" placeholder="Ex: 0000 0000 0000 0000">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <b>Email Address</b>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">email</i>
+                                            </span>
+                                            <div class="form-line">
+                                                <input type="text" class="form-control email" placeholder="Ex: example@example.com">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <b>Serial Key</b>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">vpn_key</i>
+                                            </span>
+                                            <div class="form-line">
+                                                <input type="text" class="form-control key" placeholder="Ex: XXX0-XXXX-XX00-0XXX">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #END# Masked Input -->
+            <!-- Input Group -->
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>
+                                <strong>Input</strong> Group</h2>
+                            <ul class="header-dropdown m-r--5">
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                        aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">more_vert</i>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li>
+                                            <a href="javascript:void(0);">Action</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);">Another action</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);">Something else here</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="body">
+                            <h2 class="card-inside-title">With Icon</h2>
+                            <div class="row clearfix">
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">person</i>
+                                        </span>
+                                        <div class="form-line">
+                                            <input type="text" class="form-control date" placeholder="Username">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <div class="form-line">
+                                            <input type="text" class="form-control date" placeholder="Message">
+                                        </div>
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">send</i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">person</i>
+                                        </span>
+                                        <div class="form-line">
+                                            <input type="text" class="form-control date" placeholder="Recipient's username">
+                                        </div>
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">send</i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h2 class="card-inside-title">With Text</h2>
+                            <div class="row clearfix">
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">@</span>
+                                        <div class="form-line">
+                                            <input type="text" class="form-control" placeholder="Username">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <div class="form-line">
+                                            <input type="text" class="form-control" placeholder="Recipient's username">
+                                        </div>
+                                        <span class="input-group-addon">@example.com</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">$</span>
+                                        <div class="form-line">
+                                            <input type="text" class="form-control date">
+                                        </div>
+                                        <span class="input-group-addon">.00</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h2 class="card-inside-title">
+                                Different Sizes
+                                <small>You can use the
+                                    <code>.input-group-sm, .input-group-lg</code> classes for sizing.
+                                </small>
+                            </h2>
+                            <div class="row clearfix">
+                                <div class="col-md-4">
+                                    <p>
+                                        <b>Input Group Large</b>
+                                    </p>
+                                    <div class="input-group input-group-lg">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">person</i>
+                                        </span>
+                                        <div class="form-line">
+                                            <input type="text" class="form-control" placeholder="Username">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <p>
+                                        <b>Input Group Default</b>
+                                    </p>
+                                    <div class="input-group">
+                                        <div class="form-line">
+                                            <input type="text" class="form-control" placeholder="Message">
+                                        </div>
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">send</i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <p>
+                                        <b>Input Group Small</b>
+                                    </p>
+                                    <div class="input-group input-group-sm">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">person</i>
+                                        </span>
+                                        <div class="form-line">
+                                            <input type="text" class="form-control" placeholder="Recipient's username">
+                                        </div>
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">send</i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row clearfix">
+                                <div class="col-md-4">
+                                    <div class="input-group input-group-lg">
+                                        <span class="input-group-addon">@</span>
+                                        <div class="form-line">
+                                            <input type="text" class="form-control" placeholder="Username">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <div class="form-line">
+                                            <input type="text" class="form-control" placeholder="Recipient's username">
+                                        </div>
+                                        <span class="input-group-addon">@example.com</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group input-group-sm">
+                                        <span class="input-group-addon">$</span>
+                                        <div class="form-line">
+                                            <input type="text" class="form-control">
+                                        </div>
+                                        <span class="input-group-addon">.00</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #END# Input Group -->
+            <!-- Multi Select -->
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>
+                                <strong>Multi</strong> Select</h2>
+                            <ul class="header-dropdown m-r--5">
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                        aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">more_vert</i>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li>
+                                            <a href="javascript:void(0);">Action</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);">Another action</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);">Something else here</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="body">
+                            <select id="optgroup" class="ms" multiple="multiple">
+                                <optgroup label="Alaskan/Hawaiian Time Zone">
+                                    <option value="AK">Alaska</option>
+                                    <option value="HI">Hawaii</option>
+                                </optgroup>
+                                <optgroup label="Pacific Time Zone">
+                                    <option value="CA">California</option>
+                                    <option value="NV">Nevada</option>
+                                    <option value="OR">Oregon</option>
+                                    <option value="WA">Washington</option>
+                                </optgroup>
+                                <optgroup label="Mountain Time Zone">
+                                    <option value="AZ">Arizona</option>
+                                    <option value="CO">Colorado</option>
+                                    <option value="ID">Idaho</option>
+                                    <option value="MT">Montana</option>
+                                    <option value="NE">Nebraska</option>
+                                    <option value="NM">New Mexico</option>
+                                    <option value="ND">North Dakota</option>
+                                    <option value="UT">Utah</option>
+                                    <option value="WY">Wyoming</option>
+                                </optgroup>
+                                <optgroup label="Central Time Zone">
+                                    <option value="AL">Alabama</option>
+                                    <option value="AR">Arkansas</option>
+                                    <option value="IL">Illinois</option>
+                                    <option value="IA">Iowa</option>
+                                    <option value="KS">Kansas</option>
+                                    <option value="KY">Kentucky</option>
+                                    <option value="LA">Louisiana</option>
+                                    <option value="MN">Minnesota</option>
+                                    <option value="MS">Mississippi</option>
+                                    <option value="MO">Missouri</option>
+                                    <option value="OK">Oklahoma</option>
+                                    <option value="SD">South Dakota</option>
+                                    <option value="TX">Texas</option>
+                                    <option value="TN">Tennessee</option>
+                                    <option value="WI">Wisconsin</option>
+                                </optgroup>
+                                <optgroup label="Eastern Time Zone">
+                                    <option value="CT">Connecticut</option>
+                                    <option value="DE">Delaware</option>
+                                    <option value="FL">Florida</option>
+                                    <option value="GA">Georgia</option>
+                                    <option value="IN">Indiana</option>
+                                    <option value="ME">Maine</option>
+                                    <option value="MD">Maryland</option>
+                                    <option value="MA">Massachusetts</option>
+                                    <option value="MI">Michigan</option>
+                                    <option value="NH">New Hampshire</option>
+                                    <option value="NJ">New Jersey</option>
+                                    <option value="NY">New York</option>
+                                    <option value="NC">North Carolina</option>
+                                    <option value="OH">Ohio</option>
+                                    <option value="PA">Pennsylvania</option>
+                                    <option value="RI">Rhode Island</option>
+                                    <option value="SC">South Carolina</option>
+                                    <option value="VT">Vermont</option>
+                                    <option value="VA">Virginia</option>
+                                    <option value="WV">West Virginia</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #END# Multi Select -->
+
+            <div class="row clearfix">
+                <!-- Spinners -->
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>
+                                <strong>Spinner</strong>
+                            </h2>
+                            <ul class="header-dropdown m-r--5">
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                        aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">more_vert</i>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li>
+                                            <a href="javascript:void(0);">Action</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);">Another action</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);">Something else here</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="body">
+                            <div class="row clearfix">
+                                <div class="col-md-6">
+                                    <div class="input-group spinner" data-trigger="spinner">
+                                        <div class="form-line">
+                                            <input type="text" class="form-control text-center" value="1" data-rule="quantity">
+                                        </div>
+                                        <span class="input-group-addon">
+                                            <a href="javascript:;" class="spin-up" data-spin="up">
+                                                <i class="material-icons">keyboard_arrow_up</i>
+                                            </a>
+                                            <a href="javascript:;" class="spin-down" data-spin="down">
+                                                <i class="material-icons">keyboard_arrow_down</i>
+                                            </a>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group spinner" data-trigger="spinner">
+                                        <div class="form-line">
+                                            <input type="text" class="form-control text-center" value="1" data-rule="currency">
+                                        </div>
+                                        <span class="input-group-addon">
+                                            <a href="javascript:;" class="spin-up" data-spin="up">
+                                                <i class="material-icons">keyboard_arrow_up</i>
+                                            </a>
+                                            <a href="javascript:;" class="spin-down" data-spin="down">
+                                                <i class="material-icons">keyboard_arrow_down</i>
+                                            </a>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- #END# Spinners -->
+                <!-- Tags Input -->
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>
+                                <strong>Tags</strong> Input</h2>
+                            <ul class="header-dropdown m-r--5">
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                        aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">more_vert</i>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li>
+                                            <a href="javascript:void(0);">Action</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);">Another action</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);">Something else here</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="body">
+                            <div class="form-group demo-tagsinput-area">
+                                <div class="form-line">
+                                    <input type="text" class="form-control" data-role="tagsinput" value="Amsterdam,Washington,Sydney,Beijing,Cairo">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- #END# Tags Input -->
+            </div>
+            <!-- Advanced Select -->
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>
+                                <strong>Advance</strong> Select</h2>
+                            <ul class="header-dropdown m-r--5">
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                        aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">more_vert</i>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li>
+                                            <a href="javascript:void(0);">Action</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);">Another action</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);">Something else here</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="body">
+                            <div class="row clearfix">
+                                <div class="col-md-3">
+                                    <p>
+                                        <b>Basic</b>
+                                    </p>
+                                    <div class="form-group">
+                                        <select class="col-10" id="sel">
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-3">
+                                    <p>
+                                        <b>With OptGroups</b>
+                                    </p>
+                                    <select class="form-group col-10" id="sel-grp">
+                                    </select>
+
+                                </div>
+                                <div class="col-md-3">
+                                    <p>
+                                        <b>Multiple Select</b>
+                                    </p>
+                                    <select class="form-group col-10" id="multisel" multiple>
+                                    </select>
+
+                                </div>
+                                <div class="col-md-3">
+                                    <p>
+                                        <b>With Search Bar</b>
+                                    </p>
+                                    <select class="form-group col-10" id="imgsel">
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #END# Advanced Select -->
+        </div>
+    </section>
+
+
+
+
+    <!-- Plugins Js -->
+
+    <script src="../../assets/js/app.min.js"></script>
+    <script src="../../assets/js/form.min.js"></script>
+
+    <script src="../../assets/js/bundles/multiselect/js/jquery.multi-select.js"></script>
+    <script src="../../assets/js/bundles/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js"></script>
+
+    <!-- Custom Js -->
+    <script src="../../assets/js/admin.js"></script>
+    <script src="../../assets/js/pages/forms/advanced-form-elements.js"></script>
+
+    <!-- Demo Js -->
+    <script src="../../assets/js/demo.js"></script>
+</body>
+
+</html>
