@@ -56,17 +56,18 @@
             );
         </script>
 
-        {% block wrapper_wrapper %}
-    	
-    
-    <div class="overlay"></div>
-       <nav class="navbar">
+           <div class="overlay"></div>
+    <!-- #END# Overlay For Sidebars -->
+
+    <!-- Top Bar -->
+    <nav class="navbar">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
+                <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"
+                    aria-expanded="false"></a>
                 <a href="javascript:void(0);" class="bars"></a>
-                <a class="navbar-brand" href="index.html">
-                    <img src="assets/images/logo.png" alt="" />
+                <a class="navbar-brand" href="../../index.html">
+                    <img src="../../assets/images/logo.png" alt="" />
                     <span class="logo-name">Roxa</span>
                 </a>
             </div>
@@ -94,6 +95,7 @@
                         </a>
                     </li>
                     <!-- #END# Full Screen Button -->
+
                     <!-- Notifications -->
                     <li class="dropdown">
                         <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
@@ -220,7 +222,7 @@
                                     <li>
                                         <a href="javascript:void(0);">
                                             <span class="table-img msg-user">
-                                                <img src="assets/images/user/user1.jpg" alt="">
+                                                <img src="../../assets/images/user/user1.jpg" alt="">
                                             </span>
                                             <span class="menu-info">
                                                 <span class="menu-title">Sarah Smith</span>
@@ -234,7 +236,7 @@
                                     <li>
                                         <a href="javascript:void(0);">
                                             <span class="table-img msg-user">
-                                                <img src="assets/images/user/user2.jpg" alt="">
+                                                <img src="../../assets/images/user/user2.jpg" alt="">
                                             </span>
                                             <span class="menu-info">
                                                 <span class="menu-title">Airi Satou</span>
@@ -248,7 +250,7 @@
                                     <li>
                                         <a href="javascript:void(0);">
                                             <span class="table-img msg-user">
-                                                <img src="assets/images/user/user3.jpg" alt="">
+                                                <img src="../../assets/images/user/user3.jpg" alt="">
                                             </span>
                                             <span class="menu-info">
                                                 <span class="menu-title">John Doe</span>
@@ -262,7 +264,7 @@
                                     <li>
                                         <a href="javascript:void(0);">
                                             <span class="table-img msg-user">
-                                                <img src="assets/images/user/user4.jpg" alt="">
+                                                <img src="../../assets/images/user/user4.jpg" alt="">
                                             </span>
                                             <span class="menu-info">
                                                 <span class="menu-title">Ashton Cox</span>
@@ -276,7 +278,7 @@
                                     <li>
                                         <a href="javascript:void(0);">
                                             <span class="table-img msg-user">
-                                                <img src="assets/images/user/user5.jpg" alt="">
+                                                <img src="../../assets/images/user/user5.jpg" alt="">
                                             </span>
                                             <span class="menu-info">
                                                 <span class="menu-title">Cara Stevens</span>
@@ -290,7 +292,7 @@
                                     <li>
                                         <a href="javascript:void(0);">
                                             <span class="table-img msg-user">
-                                                <img src="assets/images/user/user6.jpg" alt="">
+                                                <img src="../../assets/images/user/user6.jpg" alt="">
                                             </span>
                                             <span class="menu-info">
                                                 <span class="menu-title">Charde Marshall</span>
@@ -304,7 +306,7 @@
                                     <li>
                                         <a href="javascript:void(0);">
                                             <span class="table-img msg-user">
-                                                <img src="assets/images/user/user7.jpg" alt="">
+                                                <img src="../../assets/images/user/user7.jpg" alt="">
                                             </span>
                                             <span class="menu-info">
                                                 <span class="menu-title">John Doe</span>
@@ -325,7 +327,7 @@
                     <!-- #END# Message-->
                     <li class="dropdown user_profile">
                         <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
-                            <img src="assets/images/user.jpg" width="32" height="32" alt="User">
+                            <img src="../../assets/images/user.jpg" width="32" height="32" alt="User">
                         </a>
                         <ul class="dropdown-menu pullDown">
                             <li class="body">
@@ -364,50 +366,367 @@
             </div>
         </div>
     </nav>
+    <!-- #Top Bar -->
     <div>
+        <!-- Left Sidebar -->
         <aside id="leftsidebar" class="sidebar">
-
-        <div class="menu">
+            <!-- Menu -->
+            <div class="menu">
                 <ul class="list">
-            
+                    <li class="sidebar-user-panel active">
+                        <div class="user-panel">
+                            <div class=" image">
+                                <img src="../../assets/images/usrbig.jpg" class="img-circle user-img-circle" alt="User Image" />
+                            </div>
+                        </div>
+                        <div class="profile-usertitle">
+                            <div class="sidebar-userpic-name"> Emily Smith </div>
+                            <div class="profile-usertitle-job ">Manager </div>
+                        </div>
+                        <div class="sidebar-userpic-btn">
+                            <a class="tooltips" href="../examples/profile.html" data-toggle="tooltip" title="Profile">
+                                <i class="far fa-user sidebarQuickIcon"></i>
+                            </a>
+                            <a class="tooltips" href="../email/inbox.html" data-toggle="tooltip" title="Mail">
+                                <i class="far fa-envelope sidebarQuickIcon"></i>
+                            </a>
+                            <a class="tooltips" href="../apps/chat.html" data-toggle="tooltip" title="Chat">
+                                <i class="far fa-comment-alt sidebarQuickIcon"></i>
+                            </a>
+                            <a class="tooltips" href="../examples/sign-in.html" data-toggle="tooltip" title="Logout">
+                                <i class="fas fa-sign-out-alt sidebarQuickIcon"></i>
+                            </a>
+                        </div>
+                    </li>
+                    <li class="header">-- Main</li>
                     <li>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>Home</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="../../index.html">Dashboard 1</a>
+                            </li>
+                            <li>
+                                <a href="../dashboard/dashboard2.html">Dashboard 2</a>
+                            </li>
+                            <li>
+                                <a href="../dashboard/dashboard3.html">Dashboard 3</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="../apps/calendar.html">
+                            <i class="far fa-calendar"></i>
+                            <span>Events</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="fas fa-mail-bulk"></i>
+                            <span>Email</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="../email/inbox.html">Inbox</a>
+                            </li>
+                            <li>
+                                <a href="../email/compose.html">Compose</a>
+                            </li>
+                            <li>
+                                <a href="../email/view-mail.html">Read Email</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="fab fa-google-play"></i>
+                            <span>Apps</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="../apps/chat.html">Chat</a>
+                            </li>
+                            <li>
+                                <a href="../apps/contact_list.html">Contact List</a>
+                            </li>
+                            <li>
+                                <a href="../apps/contact_grid.html">Contact Grid</a>
+                            </li>
+                            <li>
+                                <a href="../apps/support.html">Support</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="../widgets/widget.html">
+                            <i class="fas fa-braille"></i>
+                            <span>Widgets</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="fas fa-drafting-compass"></i>
+                            <span>User Interface (UI)</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li class="active">
+                                <a href="../ui/alerts.html">Alerts</a>
+                            </li>
+                            <li>
+                                <a href="../ui/animations.html">Animations</a>
+                            </li>
+                            <li>
+                                <a href="../ui/badges.html">Badges</a>
+                            </li>
+                            <li>
+                                <a href="../ui/modal.html">Modal</a>
+                            </li>
+                            <li>
+                                <a href="../ui/buttons.html">Buttons</a>
+                            </li>
+                            <li>
+                                <a href="../ui/collapse.html">Collapse</a>
+                            </li>
+                            <li>
+                                <a href="../ui/dialogs.html">Dialogs</a>
+                            </li>
+                            <li>
+                                <a href="../ui/cards.html">Cards</a>
+                            </li>
+                            <li>
+                                <a href="../ui/icons.html">Icons</a>
+                            </li>
+                            <li>
+                                <a href="../ui/labels.html">Labels</a>
+                            </li>
+                            <li>
+                                <a href="../ui/list-group.html">List Group</a>
+                            </li>
+                            <li>
+                                <a href="../ui/media-object.html">Media Object</a>
+                            </li>
+                            <li>
+                                <a href="../ui/notifications.html">Notifications</a>
+                            </li>
+                            <li>
+                                <a href="../ui/preloaders.html">Preloaders</a>
+                            </li>
+                            <li>
+                                <a href="../ui/progressbars.html">Progress Bars</a>
+                            </li>
+                            <li>
+                                <a href="../ui/range-sliders.html">Range Sliders</a>
+                            </li>
+                            <li>
+                                <a href="../ui/sortable-nestable.html">Sortable &amp; Nestable</a>
+                            </li>
+                            <li>
+                                <a href="../ui/tabs.html">Tabs</a>
+                            </li>
+                            <li>
+                                <a href="../ui/waves.html">Waves</a>
+                            </li>
+                            <li>
+                                <a href="../ui/typography.html">Typography</a>
+                            </li>
+                            <li>
+                                <a href="../ui/helper-classes.html">Helper Classes</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="fab fa-wpforms"></i>
+                            <span>Forms</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="../forms/basic-form-elements.html">Basic Form Elements</a>
+                            </li>
+                            <li>
+                                <a href="../forms/advanced-form-elements.html">Advanced Form Elements</a>
+                            </li>
+                            <li>
+                                <a href="../forms/form-examples.html">Form Examples</a>
+                            </li>
+                            <li>
+                                <a href="../forms/form-validation.html">Form Validation</a>
+                            </li>
+                            <li>
+                                <a href="../forms/form-wizard.html">Form Wizard</a>
+                            </li>
+                            <li>
+                                <a href="../forms/editors.html">Editors</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="active">
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="fas fa-table"></i>
                             <span>Tables</span>
                         </a>
                         <ul class="ml-menu">
-                            <li>
-                                <a href="pages/tables/normal-tables.html">Normal Tables</a>
+                            <li class="active">
+                                <a href="normal-tables.html">Normal Tables</a>
                             </li>
                             <li>
-                                <a href="pages/tables/jquery-datatable.html">Advance Datatables</a>
+                                <a href="jquery-datatable.html">Advance Datatables</a>
                             </li>
                             <li>
-                                <a href="pages/tables/group-table.html">Grouping</a>
+                                <a href="group-table.html">Grouping</a>
                             </li>
                             <li>
-                                <a href="pages/tables/editable-table.html">Editable Tables</a>
+                                <a href="editable-table.html">Editable Tables</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="far fa-images"></i>
+                            <span>Medias</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="../medias/image-gallery.html">Image Gallery</a>
+                            </li>
+                            <li>
+                                <a href="../medias/carousel.html">Carousel</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Charts</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="../charts/morris.html">Morris</a>
+                            </li>
+                            <li>
+                                <a href="../charts/flot.html">Flot</a>
+                            </li>
+                            <li>
+                                <a href="../charts/chartjs.html">ChartJS</a>
+                            </li>
+                            <li>
+                                <a href="../charts/sparkline.html">Sparkline</a>
+                            </li>
+                            <li>
+                                <a href="../charts/jquery-knob.html">Jquery Knob</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="far fa-file-alt"></i>
+                            <span>Example Pages</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="../examples/timeline.html">Timeline</a>
+                            </li>
+                            <li>
+                                <a href="../examples/sign-in.html">Sign In</a>
+                            </li>
+                            <li>
+                                <a href="../examples/sign-up.html">Sign Up</a>
+                            </li>
+                            <li>
+                                <a href="../examples/forgot-password.html">Forgot Password</a>
+                            </li>
+                            <li>
+                                <a href="../examples/profile.html">Profile</a>
+                            </li>
+                            <li>
+                                <a href="../examples/pricing.html">Pricing</a>
+                            </li>
+                            <li>
+                                <a href="../examples/invoice.html">Invoice</a>
+                            </li>
+                            <li>
+                                <a href="../examples/faqs.html">Faqs</a>
+                            </li>
+                            <li>
+                                <a href="../examples/blank.html">Blank Page</a>
+                            </li>
+                            <li>
+                                <a href="../examples/locked.html">Locked</a>
+                            </li>
+                            <li>
+                                <a href="../examples/404.html">404 - Not Found</a>
+                            </li>
+                            <li>
+                                <a href="../examples/500.html">500 - Server Error</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="fas fa-globe-americas"></i>
+                            <span>Maps</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="../maps/google.html">Google Map</a>
+                            </li>
+                            <li>
+                                <a href="../maps/jqvmap.html">Vector Map</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="fas fa-angle-double-down"></i>
+                            <span>Multi Level Menu</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="javascript:void(0);">
+                                    <span>Menu Item</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);">
+                                    <span>Menu Item - 2</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" class="menu-toggle">
+                                    <span>Level - 2</span>
+                                </a>
+                                <ul class="ml-menu">
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <span>Menu Item</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);" class="menu-toggle">
+                                            <span>Level - 3</span>
+                                        </a>
+                                        <ul class="ml-menu">
+                                            <li>
+                                                <a href="javascript:void(0);">
+                                                    <span>Level - 4</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
                             </li>
                         </ul>
                     </li>
                 </ul>
-
-                 {% block sidebar %}
-                    {% block main_menu_wrapper %}
-                        {{ include([
-                            '@EasyAdmin/default/menu.html.twig'
-                        ]) }}
-                    {% endblock main_menu_wrapper %}
-                
-            {% endblock sidebar %}
-        </div>
-           
-        
-            <!-- Menu -->
-        
+            </div>
             <!-- #Menu -->
         </aside>
-         <aside id="rightsidebar" class="right-sidebar">
+        <!-- #END# Left Sidebar -->
+        <!-- Right Sidebar -->
+        <aside id="rightsidebar" class="right-sidebar">
             <ul class="nav nav-tabs tab-nav-right" role="tablist">
                 <li role="presentation">
                     <a href="#skins" data-toggle="tab" class="active">SKINS</a>
@@ -426,7 +745,8 @@
                                     <div class="form-check">
                                         <div class="form-check m-l-10">
                                             <label class="form-check-label">
-                                                <input class="form-check-input" type="checkbox" value="" checked> Save History
+                                                <input class="form-check-input" type="checkbox" value="" checked> Save
+                                                History
                                                 <span class="form-check-sign">
                                                     <span class="check"></span>
                                                 </span>
@@ -438,7 +758,8 @@
                                     <div class="form-check">
                                         <div class="form-check m-l-10">
                                             <label class="form-check-label">
-                                                <input class="form-check-input" type="checkbox" value="" checked> Show Status
+                                                <input class="form-check-input" type="checkbox" value="" checked> Show
+                                                Status
                                                 <span class="form-check-sign">
                                                     <span class="check"></span>
                                                 </span>
@@ -450,7 +771,8 @@
                                     <div class="form-check">
                                         <div class="form-check m-l-10">
                                             <label class="form-check-label">
-                                                <input class="form-check-input" type="checkbox" value="" checked> Auto Submit Issue
+                                                <input class="form-check-input" type="checkbox" value="" checked> Auto
+                                                Submit Issue
                                                 <span class="form-check-sign">
                                                     <span class="check"></span>
                                                 </span>
@@ -462,7 +784,8 @@
                                     <div class="form-check">
                                         <div class="form-check m-l-10">
                                             <label class="form-check-label">
-                                                <input class="form-check-input" type="checkbox" value="" checked> Show Status To All
+                                                <input class="form-check-input" type="checkbox" value="" checked> Show
+                                                Status To All
                                                 <span class="form-check-sign">
                                                     <span class="check"></span>
                                                 </span>
@@ -506,24 +829,26 @@
                         <div class="rightSetting">
                             <p>Disk Space</p>
                             <div class="sidebar-progress">
-                            <div class="progress m-t-20">
-                                <div class="progress-bar l-bg-cyan shadow-style width-per-45" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="progress m-t-20">
+                                    <div class="progress-bar l-bg-cyan shadow-style width-per-45" role="progressbar"
+                                        aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <span class="progress-description">
+                                    <small>26% remaining</small>
+                                </span>
                             </div>
-                            <span class="progress-description">
-                                <small>26% remaining</small>
-                            </span>
-                        </div>
                         </div>
                         <div class="rightSetting">
                             <p>Server Load</p>
                             <div class="sidebar-progress">
-                            <div class="progress m-t-20">
-                                <div class="progress-bar l-bg-orange shadow-style width-per-63" role="progressbar" aria-valuenow="63" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="progress m-t-20">
+                                    <div class="progress-bar l-bg-orange shadow-style width-per-63" role="progressbar"
+                                        aria-valuenow="63" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <span class="progress-description">
+                                    <small>Highly Loaded</small>
+                                </span>
                             </div>
-                            <span class="progress-description">
-                                <small>Highly Loaded</small>
-                            </span>
-                        </div>
                         </div>
                     </div>
                 </div>
@@ -596,62 +921,517 @@
                 </div>
             </div>
         </aside>
+        <!-- #END# Right Sidebar -->
     </div>
-    {% block wrapper %}
-         
+
     <section class="content">
         <div class="container-fluid">
-
-             <div class="content-wrapper">
-                {% block flash_messages %}
-                    {{ include(_entity_config is defined ? _entity_config.templates.flash_messages : '@EasyAdmin/default/flash_messages.html.twig') }}
-                {% endblock flash_messages %}
-
-                <div id="sidebar-resizer-handler" class="resizer-handler resizer-handler-left"></div>
-
-                {% block content %}
-                    <div class="content">
-                        {% block content_header_wrapper %}
-                        {% set _has_content_help = _entity_config is defined and _entity_config[app.request.query.get('action')]['help']|default(false) %}
-                        <section class="content-header {{ _has_content_help ? 'has-content-help' }}">
-                            {% block content_header %}
-                                <div class="d-flex flex-row justify-content-between align-content-center w-100">
-                                    <div class="content-header-title">
-                                        <h1 class="title">{% block content_title %}{% endblock %}</h1>
-                                    </div>
-
-                                    {% block global_actions_wrapper %}
-                                        <div class="global-actions">{% block global_actions %}{% endblock %}</div>
-                                    {% endblock %}
-                                </div>
-
-                                {% block content_help %}
-                                    {% if _entity_config is defined and _entity_config[app.request.query.get('action')]['help']|default(false) %}
-                                        <div class="content-header-help">
-                                            {{ _entity_config[app.request.query.get('action')]['help']|trans(domain = _entity_config.translation_domain)|raw }}
-                                        </div>
-                                    {% endif %}
-                                {% endblock content_help %}
-                            {% endblock content_header %}
-                        </section>
-                        {% endblock content_header_wrapper %}
-
-                        <section id="main" class="content-body">
-                            {% block main %}{% endblock %}
-                        </section>
-
-                        {% block content_footer_wrapper %}
-                            <section class="content-footer">
-                                {% block content_footer %}{% endblock %}
-                            </section>
-                        {% endblock %}
+            <div class="block-header">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-5 col-md-4 col-sm-12">
+                        <ul class="breadcrumb breadcrumb-style">
+                            <li class="breadcrumb-item  bcrumb-1">
+                                <a href="../../index.html">
+                                    <i class="material-icons">home</i> Home</a>
+                            </li>
+                            <li class="breadcrumb-item bcrumb-2">
+                                <a href="javascript:void(0);">Tables</a>
+                            </li>
+                            <li class="breadcrumb-item active">Normal Tables</li>
+                        </ul>
                     </div>
-                {% endblock content %}
-
-                <div id="content-resizer-handler" class="resizer-handler resizer-handler-right"></div>
+                    <div class="col-xl-6 col-lg-7 col-md-8 col-sm-12 text-right">
+                        <div class="breadcrumb-chart m-l-50">
+                            <div class="float-right">
+                                <div class="icon m-b-10">
+                                    <div class="chart header-bar">
+                                        <canvas width="49" height="40"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="float-right m-r-10">
+                                <div class="chart-info m-t-5">
+                                    <i class="fas fa-dollar-sign m-r-5"></i>
+                                    <span>$8,968</span>
+                                    <p>Total Income</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="breadcrumb-chart m-l-50">
+                            <div class="float-right">
+                                <div class="icon m-b-10">
+                                    <div class="chart header-bar2">
+                                        <canvas width="49" height="40"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="float-right m-r-10">
+                                <div class="chart-info m-t-5">
+                                    <i class="fas fa-user-tie m-r-5"></i>
+                                    <span>2,568</span>
+                                    <p>New Users</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Basic Table -->
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>
+                                <strong>Basic</strong> Table</h2>
+                            <ul class="header-dropdown m-r--5">
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                        aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">more_vert</i>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li>
+                                            <a href="javascript:void(0);">Action</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);">Another action</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);">Something else here</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="body table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>FIRST NAME</th>
+                                        <th>LAST NAME</th>
+                                        <th>USERNAME</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>Mark</td>
+                                        <td>Otto</td>
+                                        <td>@mdo</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">2</th>
+                                        <td>Jacob</td>
+                                        <td>Thornton</td>
+                                        <td>@fat</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td>Larry</td>
+                                        <td>the Bird</td>
+                                        <td>@twitter</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">4</th>
+                                        <td>Larry</td>
+                                        <td>Jellybean</td>
+                                        <td>@lajelly</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">5</th>
+                                        <td>Larry</td>
+                                        <td>Kikat</td>
+                                        <td>@lakitkat</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #END# Basic Table -->
+            <!-- Striped Rows -->
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>
+                                <strong>Striped</strong> Rows</h2>
+                            <ul class="header-dropdown m-r--5">
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                        aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">more_vert</i>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li>
+                                            <a href="javascript:void(0);">Action</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);">Another action</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);">Something else here</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="body table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>FIRST NAME</th>
+                                        <th>LAST NAME</th>
+                                        <th>USERNAME</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>Mark</td>
+                                        <td>Otto</td>
+                                        <td>@mdo</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">2</th>
+                                        <td>Jacob</td>
+                                        <td>Thornton</td>
+                                        <td>@fat</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td>Larry</td>
+                                        <td>the Bird</td>
+                                        <td>@twitter</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">4</th>
+                                        <td>Larry</td>
+                                        <td>Jellybean</td>
+                                        <td>@lajelly</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">5</th>
+                                        <td>Larry</td>
+                                        <td>Kikat</td>
+                                        <td>@lakitkat</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #END# Striped Rows -->
+            <!-- Bordered Table -->
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>
+                                <strong>Bordered</strong> Table</h2>
+                            <ul class="header-dropdown m-r--5">
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                        aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">more_vert</i>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li>
+                                            <a href="javascript:void(0);">Action</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);">Another action</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);">Something else here</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="body table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>FIRST NAME</th>
+                                        <th>LAST NAME</th>
+                                        <th>USERNAME</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>Mark</td>
+                                        <td>Otto</td>
+                                        <td>@mdo</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">2</th>
+                                        <td>Jacob</td>
+                                        <td>Thornton</td>
+                                        <td>@fat</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td>Larry</td>
+                                        <td>the Bird</td>
+                                        <td>@twitter</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">4</th>
+                                        <td>Larry</td>
+                                        <td>Jellybean</td>
+                                        <td>@lajelly</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">5</th>
+                                        <td>Larry</td>
+                                        <td>Kikat</td>
+                                        <td>@lakitkat</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #END# Bordered Table -->
+            <!-- Hover Rows -->
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>
+                                <strong>Hover</strong> Rows</h2>
+                            <ul class="header-dropdown m-r--5">
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                        aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">more_vert</i>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li>
+                                            <a href="javascript:void(0);">Action</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);">Another action</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);">Something else here</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="body table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>FIRST NAME</th>
+                                        <th>LAST NAME</th>
+                                        <th>USERNAME</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>Mark</td>
+                                        <td>Otto</td>
+                                        <td>@mdo</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">2</th>
+                                        <td>Jacob</td>
+                                        <td>Thornton</td>
+                                        <td>@fat</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td>Larry</td>
+                                        <td>the Bird</td>
+                                        <td>@twitter</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">4</th>
+                                        <td>Larry</td>
+                                        <td>Jellybean</td>
+                                        <td>@lajelly</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">5</th>
+                                        <td>Larry</td>
+                                        <td>Kikat</td>
+                                        <td>@lakitkat</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #END# Hover Rows -->
+            <!-- Condensed Table -->
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>
+                                <strong>Condensed</strong> Table</h2>
+                            <ul class="header-dropdown m-r--5">
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                        aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">more_vert</i>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li>
+                                            <a href="javascript:void(0);">Action</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);">Another action</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);">Something else here</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="body table-responsive">
+                            <table class="table table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>FIRST NAME</th>
+                                        <th>LAST NAME</th>
+                                        <th>USERNAME</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>Mark</td>
+                                        <td>Otto</td>
+                                        <td>@mdo</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">2</th>
+                                        <td>Jacob</td>
+                                        <td>Thornton</td>
+                                        <td>@fat</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td>Larry</td>
+                                        <td>the Bird</td>
+                                        <td>@twitter</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">4</th>
+                                        <td>Larry</td>
+                                        <td>Jellybean</td>
+                                        <td>@lajelly</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">5</th>
+                                        <td>Larry</td>
+                                        <td>Kikat</td>
+                                        <td>@lakitkat</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #END# Condensed Table -->
+            <!-- #START# Colorful rows -->
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>
+                                <strong>Colorful</strong> Rows</h2>
+                            <ul class="header-dropdown m-r--5">
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                        aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">more_vert</i>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li>
+                                            <a href="javascript:void(0);">Action</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);">Another action</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);">Something else here</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="body table-responsive">
+                            <table class="table table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>FIRST NAME</th>
+                                        <th>LAST NAME</th>
+                                        <th>USERNAME</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="bg-light-blue">
+                                        <th scope="row">1</th>
+                                        <td>Mark</td>
+                                        <td>Otto</td>
+                                        <td>@mdo</td>
+                                    </tr>
+                                    <tr class="l-bg-green">
+                                        <th scope="row">2</th>
+                                        <td>Jacob</td>
+                                        <td>Thornton</td>
+                                        <td>@fat</td>
+                                    </tr>
+                                    <tr class="l-bg-orange">
+                                        <th scope="row">3</th>
+                                        <td>Larry</td>
+                                        <td>the Bird</td>
+                                        <td>@twitter</td>
+                                    </tr>
+                                    <tr class="l-bg-cyan">
+                                        <th scope="row">4</th>
+                                        <td>Larry</td>
+                                        <td>Jellybean</td>
+                                        <td>@lajelly</td>
+                                    </tr>
+                                    <tr class="l-bg-purple">
+                                        <th scope="row">5</th>
+                                        <td>Larry</td>
+                                        <td>Kikat</td>
+                                        <td>@lakitkat</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #END# Colorful rows -->
         </div>
-    </div>
     </section>
+
+        {% block wrapper_wrapper %}
+    	
+        {% block wrapper %}
         {% endblock wrapper %}
         {% endblock wrapper_wrapper %}
 
@@ -659,21 +1439,13 @@
         {% endblock body_javascript %}
 
         {% for js_asset in easyadmin_config('design.assets.js') %}
-            <script src="{{ asset(js_asset) }}"></script>
         {% endfor %}
-
-	    <script src="{{asset('adminlte/assets/js/chart.min.js')}}"></script>
-	   
-	    <!-- Custom Js -->
-	 <script src="{{asset('adminlte/assets/js/admin.js')}}"></script>
-       
-	    <script src="{{asset('adminlte/assets/js/pages/index.js')}}"></script>
-	    <script src="{{asset('adminlte/assets/js/demo.js')}}"></script>
-	    <script src="{{asset('adminlte/assets/js/pages/charts/jquery-knob.js')}}"></script>
-	    <script src="{{asset('adminlte/assets/js/pages/sparkline/sparkline-data.js')}}"></script>
-	    <script src="{{asset('adminlte/assets/js/pages/medias/carousel.js')}}"></script>
          <script src="{{asset('adminlte/assets/js/app.min.js')}}"></script>
+	    <!-- Custom Js -->
+	   <script src="{{asset('adminlte/assets/js/admin.js')}}"></script>
        
+	    <script src="{{asset('adminlte/assets/js/demo.js')}}"></script>
+	    
     </body>
     {% endblock body %}
 </html>
