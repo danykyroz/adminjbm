@@ -1,0 +1,724 @@
+{% extends '@EasyAdmin/default/layout.html.twig' %}
+ {% block main %}
+
+            <div class="block-header">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-5 col-md-4 col-sm-12">
+                        <ul class="breadcrumb breadcrumb-style">
+                            <li class="breadcrumb-item 	bcrumb-1">
+                                <a href="index.html">
+                                    <i class="material-icons">home</i>
+                                    Home</a>
+                            </li>
+                            <li class="breadcrumb-item active">Dashboard</li>
+                        </ul>
+                    </div>
+                    <div class="col-xl-6 col-lg-7 col-md-8 col-sm-12 text-right">
+                        <div class="breadcrumb-chart m-l-50">
+                            <div class="float-right">
+                                <div class="icon m-b-10">
+                                    <div class="chart header-bar">
+                                        <canvas width="49" height="40" ></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="float-right m-r-10">
+                                <div class="chart-info m-t-5">
+                                    <i class="fas fa-dollar-sign m-r-5"></i>
+                                    <span>$8,968</span>
+                                    <p>Total Income</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="breadcrumb-chart m-l-50">
+                            <div class="float-right">
+                                <div class="icon m-b-10">
+                                    <div class="chart header-bar2">
+                                        <canvas width="49" height="40" ></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="float-right m-r-10">
+                                <div class="chart-info m-t-5">
+                                    <i class="fas fa-user-tie m-r-5"></i>
+                                    <span>2,568</span>
+                                    <p>New Users</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Widgets -->
+            <div class="row state-overview">
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                    <div class="info-box5 animate-bar bg-b-purple">
+                        <div class="knob-icon">
+                            <input type="text" class="dial" value="45" data-width="80" data-height="80" data-fgColor="#67de69">
+                        </div>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Projects</span>
+                            <div class="progress m-t-20">
+                                <div class="progress-bar l-bg-green shadow-style width-per-45" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <span class="progress-description">
+                                <small>10% Increase in 28 Days</small>
+                            </span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                    <div class="info-box5 animate-bar bg-b-purple">
+                        <div class="knob-icon">
+                            <input type="text" class="dial" value="69" data-width="80" data-height="80" data-fgColor="#f98050">
+                        </div>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Clients</span>
+                            <div class="progress m-t-20">
+                                <div class="progress-bar l-bg-orange shadow-style width-per-45" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <span class="progress-description">
+                                <small>26% Increase in 28 Days</small>
+                            </span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                    <div class="info-box5 animate-bar bg-b-purple">
+                        <div class="knob-icon">
+                            <input type="text" class="dial" value="84" data-width="80" data-height="80" data-fgColor="#8FD8FE">
+                        </div>
+                        <div class="info-box-content">
+                            <span class="info-box-text p-b-10">Employee</span>
+                            <div class="progress m-t-20">
+                                <div class="progress-bar l-bg-cyan shadow-style width-per-45" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <span class="progress-description">
+                                <small>14% Increase in 28 Days</small>
+                            </span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                    <div class="info-box5 animate-bar bg-b-purple">
+                        <div class="knob-icon">
+                            <input type="text" class="dial" value="56" data-width="80" data-height="80" data-fgColor="#ac8bde">
+                        </div>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Task</span>
+                            <div class="progress m-t-20">
+                                <div class="progress-bar l-bg-purple shadow-style width-per-45" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <span class="progress-description">
+                                <small>50% Increase in 28 Days</small>
+                            </span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                </div>
+            </div>
+            <!-- #END# Widgets -->
+            <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>
+                                <strong>Recent</strong> Report</h2>
+                            <ul class="header-dropdown m-r--5">
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">more_vert</i>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li>
+                                            <a href="javascript:void(0);">Action</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);">Another action</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);">Something else here</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="body">
+                            <div class="chart-box">
+                                <div class="chart-box-left">
+                                    <div class="chart-note">
+                                        <span class="dot dot-black"></span>
+                                        <span>products</span>
+                                    </div>
+                                    <div class="chart-note mr-0">
+                                        <span class="dot dot-orange"></span>
+                                        <span>services</span>
+                                    </div>
+                                </div>
+                                <div class="chart-box-right">
+                                    <div class="chart-statis">
+                                        <span class="index incre">
+                                            <i class="fas fa-long-arrow-alt-up col-green"></i>25%</span>
+                                        <span class="label col-green">products</span>
+                                    </div>
+                                    <div class="chart-statis mr-0">
+                                        <span class="index decre">
+                                            <i class="fas fa-long-arrow-alt-down col-red"></i>10%</span>
+                                        <span class="label col-red">services</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="recent-report__chart">
+                                <canvas id="sales-chart"></canvas>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>
+                                <strong>Recent</strong> Report</h2>
+                            <ul class="header-dropdown m-r--5">
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">more_vert</i>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li>
+                                            <a href="javascript:void(0);">Action</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);">Another action</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);">Something else here</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="body">
+                            <div class="chart-box2">
+                                <div class="chart-box-right">
+                                    <div class="chart-statis">
+                                        <span class="index incre">
+                                            <i class="fas fa-long-arrow-alt-up col-green"></i>25%</span>
+                                        <span class="label col-green">products</span>
+                                    </div>
+                                    <div class="chart-statis mr-0">
+                                        <span class="index decre">
+                                            <i class="fas fa-long-arrow-alt-down col-red"></i>10%</span>
+                                        <span class="label col-red">services</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="recent-report__chart">
+                                <canvas id="lineChart"></canvas>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row clearfix">
+                <!-- Task Info -->
+                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                    <div class="card">
+                        <div class="header">
+                            <h2>
+                                <strong>Employee</strong> List</h2>
+                            <ul class="header-dropdown m-r--5">
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">more_vert</i>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li>
+                                            <a href="javascript:void(0);">Action</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);">Another action</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);">Something else here</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="tableBody">
+                            <div class="table-responsive">
+                                <table class="table table-hover dashboard-task-infos">
+                                    <thead>
+                                        <tr>
+                                            <th>User</th>
+                                            <th>Name</th>
+                                            <th>Designation</th>
+                                            <th>Starus</th>
+                                            <th>Performance</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="table-img">
+                                                <img src="assets/images/user/user1.jpg" alt="">
+                                            </td>
+                                            <td>Jens Brincker</td>
+                                            <td>Developer</td>
+                                            <td>
+                                                <span class="label light-green shadow-style">Available</span>
+                                            </td>
+                                            <td>
+                                                <div id="sparkline">&nbsp;</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="table-img">
+                                                <img src="assets/images/user/user2.jpg" alt="">
+                                            </td>
+                                            <td>Anthony Davie</td>
+                                            <td>Designer</td>
+                                            <td>
+                                                <span class="label l-bg-purple shadow-style">Break</span>
+                                            </td>
+                                            <td>
+                                                <div id="sparkline3">&nbsp;</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="table-img">
+                                                <img src="assets/images/user/user3.jpg" alt="">
+                                            </td>
+                                            <td>David Perry</td>
+                                            <td>Manager</td>
+                                            <td>
+                                                <span class="label l-bg-orange shadow-style">Leave</span>
+                                            </td>
+                                            <td>
+                                                <div id="sparkline4">&nbsp;</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="table-img">
+                                                <img src="assets/images/user/user4.jpg" alt="">
+                                            </td>
+                                            <td>Anthony Davie</td>
+                                            <td>Tester</td>
+                                            <td>
+                                                <span class="label l-bg-cyan shadow-style">Resigned</span>
+                                            </td>
+                                            <td>
+                                                <div id="sparkline5">&nbsp;</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="table-img">
+                                                <img src="assets/images/user/user5.jpg" alt="">
+                                            </td>
+                                            <td>Alan Gilchrist</td>
+                                            <td>Developer</td>
+                                            <td>
+                                                <span class="label light-green shadow-style">Available</span>
+                                            </td>
+                                            <td>
+                                                <div id="sparkline6">&nbsp;</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="table-img">
+                                                <img src="assets/images/user/user1.jpg" alt="">
+                                            </td>
+                                            <td>Jens Brincker</td>
+                                            <td>Manager</td>
+                                            <td>
+                                                <span class="label light-green shadow-style">Available</span>
+                                            </td>
+                                            <td>
+                                                <div id="sparkline7">&nbsp;</div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- #END# Task Info -->
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                    <div class="owl-carousel owl-theme" id="dashboard_slide">
+                        <div class="item">
+                            <div class="carousel-content bg-indigo m-b-15">
+                                <div class="col-white">
+                                    <div class="slide-heading padding-15">
+                                        <i class="fas fa-quote-left h3 text-white-50"></i>
+                                    </div>
+                                    <p class="m-l-15 m-r-15">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel rutrum ex, at ornare
+                                        mi. In quis scelerisque dui, eget rhoncus orci. consectetur adipiscing elit. Etiam vel rutrum ex.</p>
+                                    <h5 class="margin-15">- Emily Smith</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="carousel-content bg-red m-b-30">
+                                <div class="col-white">
+                                    <div class="slide-heading padding-15">
+                                        <i class="fas fa-quote-left h3 text-white-50"></i>
+                                    </div>
+                                    <p class="m-l-15 m-r-15">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel rutrum ex, at ornare
+                                        mi. In quis scelerisque dui, eget rhoncus orci</p>
+                                    <h5 class="margin-15">- Emily Smith</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="carousel-content bg-blue m-b-30">
+                                <div class="col-white">
+                                    <div class="slide-heading padding-15">
+                                        <i class="fas fa-quote-left h3 text-white-50"></i>
+                                    </div>
+                                    <p class="m-l-15 m-r-15">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel rutrum ex, at ornare
+                                        mi. In quis scelerisque dui, eget rhoncus orci</p>
+                                    <h5 class="margin-15">- Emily Smith</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="owl-carousel owl-theme" id="dashboard_slide2">
+                        <div class="item">
+                            <div class="carousel-content bg-purple">
+                                <div class="col-white">
+                                    <div class="slide-heading padding-15">
+                                        <i class="fas fa-quote-left h3 text-white-50"></i>
+                                    </div>
+                                    <p class="m-l-15 m-r-15">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel rutrum ex, at ornare
+                                        mi. In quis scelerisque dui, eget rhoncus orci</p>
+                                    <h5 class="margin-15">- Emily Smith</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="carousel-content cyan">
+                                <div class="col-white">
+                                    <div class="slide-heading padding-15">
+                                        <i class="fas fa-quote-left h3 text-white-50"></i>
+                                    </div>
+                                    <p class="m-l-15 m-r-15">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel rutrum ex, at ornare
+                                        mi. In quis scelerisque dui, eget rhoncus orci</p>
+                                    <h5 class="margin-15">- Emily Smith</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="carousel-content bg-brown">
+                                <div class="col-white">
+                                    <div class="slide-heading padding-15">
+                                        <i class="fas fa-quote-left h3 text-white-50"></i>
+                                    </div>
+                                    <p class="m-l-15 m-r-15">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel rutrum ex, at ornare
+                                        mi. In quis scelerisque dui, eget rhoncus orci</p>
+                                    <h5 class="margin-15">- Emily Smith</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                    <div class="card">
+                        <div class="header">
+                            <h2>
+                                <strong>Recent</strong> Activities</h2>
+                            <ul class="header-dropdown m-r--5">
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">more_vert</i>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li>
+                                            <a href="javascript:void(0);">Action</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);">Another action</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);">Something else here</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="body">
+                            <div class="sl-item sl-primary">
+                                <div class="sl-content">
+                                    <small class="text-muted">
+                                        <i class="fa fa-user position-left"></i>
+                                        5 mins ago</small>
+                                    <p>Lorem ipsum dolor sit amet conse ctetur which ascing elit users.</p>
+                                </div>
+                            </div>
+                            <div class="sl-item sl-danger">
+                                <div class="sl-content">
+                                    <small class="text-muted">
+                                        <i class="fa fa-user position-left"></i>
+                                        8 mins ago</small>
+                                    <p>Lorem ipsum dolor sit ametcon the sectetur that ascing elit users.</p>
+                                </div>
+                            </div>
+                            <div class="sl-item sl-success">
+                                <div class="sl-content">
+                                    <small class="text-muted">
+                                        <i class="fa fa-user position-left"></i>
+                                        10 mins ago</small>
+                                    <p>Lorem ipsum dolor sit amet cons the ecte tur and adip ascing elit users.</p>
+                                </div>
+                            </div>
+                            <div class="sl-item sl-warning">
+                                <div class="sl-content">
+                                    <small class="text-muted">
+                                        <i class="fa fa-user position-left"></i>
+                                        12 mins ago</small>
+                                    <p>Lorem ipsum dolor sit amet consec tetur adip ascing elit users.</p>
+                                </div>
+                            </div>
+                            <div class="sl-item sl-primary">
+                                <div class="sl-content">
+                                    <small class="text-muted">
+                                        <i class="fa fa-user position-left"></i>
+                                        5 mins ago</small>
+                                    <p>Lorem ipsum dolor sit amet conse ctetur which ascing elit users.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                    <div class="card">
+                        <div class="chat">
+                            <div class="chat-header clearfix">
+                                <img src="assets/images/user/user2.jpg" alt="avatar">
+                                <div class="chat-about">
+                                    <div class="chat-with">Aiden Chavez</div>
+                                    <div class="chat-num-messages">2 new messages</div>
+                                </div>
+                            </div>
+                            <div class="chat-history" id="chat-conversation">
+                                <ul>
+                                    <li class="clearfix">
+                                        <div class="message-data text-right">
+                                            <span class="message-data-time">10:10 AM, Today
+                                            </span>
+                                            &nbsp; &nbsp;
+                                            <span class="message-data-name">Michael</span>
+                                            <i class="zmdi zmdi-circle me"></i>
+                                        </div>
+                                        <div class="message other-message float-right"> Hi Aiden, how are you? How is the project coming along? </div>
+                                    </li>
+                                    <li>
+                                        <div class="message-data">
+                                            <span class="message-data-name">
+                                                <i class="zmdi zmdi-circle online"></i>
+                                                Aiden</span>
+                                            <span class="message-data-time">10:12 AM, Today</span>
+                                        </div>
+                                        <div class="message my-message">
+                                            <p>Are we meeting today? Project has been already finished and I have results to
+                                                show you.</p>
+                                            <div class="row">
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="message-data">
+                                            <span class="message-data-name">
+                                                <i class="zmdi zmdi-circle online"></i>
+                                                Aiden</span>
+                                            <span class="message-data-time">10:12 AM, Today</span>
+                                        </div>
+                                        <div class="message my-message">
+                                            <p>Are we meeting today? Project has been already finished and I have results to
+                                                show you.</p>
+                                            <div class="row">
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="clearfix">
+                                        <div class="message-data text-right">
+                                            <span class="message-data-time">10:10 AM, Today
+                                            </span>
+                                            &nbsp; &nbsp;
+                                            <span class="message-data-name">Michael</span>
+                                            <i class="zmdi zmdi-circle me"></i>
+                                        </div>
+                                        <div class="message other-message float-right"> Hi Aiden, how are you? How is the project coming along? </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="chat-message clearfix">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <input type="text" class="form-control" placeholder="Enter text here.." />
+                                    </div>
+                                </div>
+                                <div class="chat-upload">
+                                    <a href="#">
+                                        <i class="material-icons">attach_file</i>
+                                    </a>
+                                    <a href="#">
+                                        <i class="material-icons">insert_emoticon</i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row clearfix">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="card">
+                        <div class="header">
+                            <div class="row clearfix">
+                                <div class="col-xs-12 col-sm-6">
+                                    <h2>Annual Sales Report</h2>
+                                </div>
+                            </div>
+                            <ul class="header-dropdown m-r--5">
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">more_vert</i>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li>
+                                            <a href="javascript:void(0);">Action</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);">Another action</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);">Something else here</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="body">
+                            <div class="row">
+                                <div class="col-lg-9 col-md-8 col-sm-12 col-xs-12">
+                                    <div id="worldMap2"></div>
+                                </div>
+
+                                <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
+                                    <div class="progress-list m-b-10">
+                                        <div class="details">
+                                            <div class="title">USA</div>
+                                        </div>
+                                        <div class="status">
+                                            <span>40</span>% </div>
+                                        <div class="progress-xs not-rounded progress">
+                                            <div class="progress-bar progress-bar-warning width-per-40" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">
+                                                <span class="sr-only">40%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="progress-list m-b-10">
+                                        <div class="details">
+                                            <div class="title">Canada</div>
+                                        </div>
+                                        <div class="status">
+                                            <span>38</span>% </div>
+                                        <div class="progress-xs not-rounded progress">
+                                            <div class="progress-bar progress-bar-success width-per-31" role="progressbar" aria-valuenow="38" aria-valuemin="0" aria-valuemax="100">
+                                                <span class="sr-only">38%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="progress-list m-b-10">
+                                        <div class="details">
+                                            <div class="title">Asia</div>
+                                        </div>
+                                        <div class="status">
+                                            <span>12</span>% </div>
+                                        <div class="progress-xs not-rounded progress">
+                                            <div class="progress-bar progress-bar-lightred width-per-22" role="progressbar" aria-valuenow="12" aria-valuemin="0" aria-valuemax="100">
+                                                <span class="sr-only">12%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="progress-list m-b-10">
+                                        <div class="details">
+                                            <div class="title">Germany</div>
+                                        </div>
+                                        <div class="status">
+                                            <span>49</span>% </div>
+                                        <div class="progress-xs not-rounded progress">
+                                            <div class="progress-bar progress-bar-danger width-per-49" role="progressbar" aria-valuenow="49" aria-valuemin="0" aria-valuemax="100">
+                                                <span class="sr-only">49%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="progress-list m-b-10">
+                                        <div class="details">
+                                            <div class="title">France</div>
+                                        </div>
+                                        <div class="status">
+                                            <span>65</span>% </div>
+                                        <div class="progress-xs not-rounded progress">
+                                            <div class="progress-bar progress-bar-blue width-per-65" role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">
+                                                <span class="sr-only">65%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="progress-list m-b-10">
+                                        <div class="details">
+                                            <div class="title">India</div>
+                                        </div>
+                                        <div class="status">
+                                            <span>28</span>% </div>
+                                        <div class="progress-xs not-rounded progress">
+                                            <div class="progress-bar progress-bar-success width-per-28" role="progressbar" aria-valuenow="28" aria-valuemin="0" aria-valuemax="100">
+                                                <span class="sr-only">28%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="progress-list m-b-10">
+                                        <div class="details">
+                                            <div class="title">Other</div>
+                                        </div>
+                                        <div class="status">
+                                            <span>16</span>% </div>
+                                        <div class="progress-xs not-rounded progress">
+                                            <div class="progress-bar progress-bar-hotpink width-per-16" role="progressbar" aria-valuenow="16" aria-valuemin="0" aria-valuemax="100">
+                                                <span class="sr-only">16%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+   
+ {% endblock %} 
+
+{% block body_javascript %}
+ 	    <!-- Plugins Js -->
+        <script src="{{asset('adminlte/assets/js/app.min.js')}}"></script>
+	    <script src="{{asset('adminlte/assets/js/chart.min.js')}}"></script>
+	    <script src="{{asset('adminlte/assets/js/map.min.js')}}"></script>
+
+	    <!-- Custom Js -->
+	    <script src="{{asset('adminlte/assets/js/admin.js')}}"></script>
+	    <script src="{{asset('adminlte/assets/js/pages/index.js')}}"></script>
+	    <script src="{{asset('adminlte/assets/js/demo.js')}}"></script>
+	    <script src="{{asset('adminlte/assets/js/pages/charts/jquery-knob.js')}}"></script>
+	    <script src="{{asset('adminlte/assets/js/pages/sparkline/sparkline-data.js')}}"></script>
+	    <script src="{{asset('adminlte/assets/js/pages/medias/carousel.js')}}"></script>
+{% endblock body_javascript %}

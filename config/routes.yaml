@@ -5,5 +5,8 @@ easy_admin_bundle:
     resource: '@EasyAdminBundle/Controller/EasyAdminController.php'
     prefix: /admin
     type: annotation
+homepage:
+    path: /admin/home
+    controller: App\Controller\AdminController::index
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"

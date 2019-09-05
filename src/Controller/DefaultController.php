@@ -18,9 +18,22 @@ class DefaultController extends Controller
   public function index(Request $request)
   {
       // en index pagina con datos generales de la app
-      return $this->render('home/index.html.twig', [
+      
+  	   	$user=($this->getUser());
 
-      ]);
+          if(!$user){
+               return $this->redirect('login');
+          }
+          else{
+
+            if($user->getRoles()[0]=="ROLE_ADMIN"){
+                return $this->redirect('admin/home');
+            }
+
+          }
+
+
+    
   }
 }
 

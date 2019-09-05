@@ -1,4 +1,7 @@
 easy_admin:
+    design:
+        menu: 
+          - { label: 'Public Homepage', route: 'homepage' ,default: true }
     entities:
         # List the entity class name you want to manage
         - App\Entity\Ciudades
