@@ -1,0 +1,48 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<form action="{{ path("fos_user_security_check") }}" method="post" class="login100-form validate-form">
+                    {% if csrf_token %}
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                    {% endif %}
+               
+                    <span class="login100-form-logo">
+                        <img alt="" src="{{asset('adminlte/assets/images/loading.png')}}">
+                    </span>
+                    <span class="login100-form-title p-b-34 p-t-27">
+                        Login
+                    </span>
+                     {% if error %}
+                    <div style="color: red">{{ error.messageKey|trans(error.messageData, 'security') }}
+                    </div>
+                    {% endif %}    
+                    <br/>
+                    <div class="wrap-input100 validate-input" data-validate="Enter username">
+                        <input class="input100" type="text" id="username" name="_username" value="{{ last_username }}" placeholder="Nombre de usuario">
+                        <i class="material-icons focus-input1001">person</i>
+                    </div>
+                    <div class="wrap-input100 validate-input" data-validate="Enter password">
+                        <input class="input100" type="password" id="password" name="_password" required="required" autocomplete="current-password" placeholder="Contraseña">
+                        <i class="material-icons focus-input1001">lock</i>
+                    </div>
+                    <div class="contact100-form-checkbox">
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" id="remember_me" name="_remember_me" type="checkbox" value="on"> Remember me
+                                <span class="form-check-sign">
+                                    <span class="check"></span>
+                                </span>
+                                
+                            </label>
+                        </div>
+                    </div>
+                    <div class="container-login100-form-btn">
+                        <button class="login100-form-btn">
+                            Login
+                        </button>
+                    </div>
+                    <div class="text-center p-t-50">
+                        <a class="txt1" href="forgot-password.html">
+                            Forgot Password?
+                        </a>
+                    </div>
+                </form>
