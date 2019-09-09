@@ -2,6 +2,19 @@
 
 {% block content_title %}Nuevo Cliente{% endblock %}
 
+{% block global_actions %}
+ <div class="form-action form-action-search  action-search">
+    <form method="get" action="/admin/">
+                                          
+    </form>
+    <div class="button-action">
+        <a class="btn btn-default" href="{{ path('clientes_new') }}">Nuevo Cliente</a> 
+    </div>
+</div>
+
+
+  
+{% endblock %}
 
 {% block main %}
 
@@ -17,7 +30,7 @@
                 <th>Placa</th>
                 <th>CreatedAt</th>
                 <th>Tipo</th>
-                <th>actions</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -33,8 +46,9 @@
                 <td>{{ cliente.createdAt ? cliente.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ cliente.tipo }}</td>
                 <td>
-                    <a href="{{ path('clientes_show', {'id': cliente.id}) }}">Ver</a>
-                    <a href="{{ path('clientes_edit', {'id': cliente.id}) }}">Editar</a>
+                    <a href="{{ path('clientes_edit', {'id': cliente.id}) }}">
+                        <i class="fa fa-fw fa-pencil"></i>
+                    </a>
                 </td>
             </tr>
         {% else %}
@@ -45,6 +59,6 @@
         </tbody>
     </table>
 
-     <a href="{{ path('clientes_new') }}">Create new</a>
+   
 {% endblock %}
 

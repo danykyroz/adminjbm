@@ -3,6 +3,11 @@ easy_admin:
         menu: 
           - { label: 'Public Homepage', route: 'homepage' ,default: true }
         form_theme: ['@EasyAdmin/form/bootstrap_4.html.twig', '@EasyAdmin/form/bootstrap_4.html.twig']
+    list:
+        actions:
+          - { name: 'edit', icon: 'pencil' , label: false }
+          - { name: 'delete', icon: 'trash' , label: false }
+        max_results: 50
     entities:
         # List the entity class name you want to manage
         FosUser:

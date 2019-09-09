@@ -14463,10 +14463,9 @@ span.badge {
     color: #555;
     font-size: 14px;
     margin: 0px 3px;
-    color: gray;
     margin: 5px;
     border-radius: 50%;
-    color: gray;
+    color: white;
     min-width: 30px;
     text-transform: uppercase;
     padding: .5rem .75rem;
@@ -14474,7 +14473,7 @@ span.badge {
   .pagination > li > a:hover {
     font-weight: bold;
     background-color: transparent;
-    color: #8c8b8b;
+    color: #fbf8f8;
     border-radius: 50%;
     font-size: 14px; }
   .pagination > li:first-child > a,
