@@ -2,8 +2,20 @@ easy_admin:
     design:
         menu: 
           - { label: 'Public Homepage', route: 'homepage' ,default: true }
+        form_theme: ['@EasyAdmin/form/bootstrap_4.html.twig', '@EasyAdmin/form/bootstrap_4.html.twig']
     entities:
         # List the entity class name you want to manage
-        - App\Entity\Ciudades
-        - App\Entity\Clientes
-        - App\Entity\Contactos
+        FosUser:
+            class: App\Entity\FosUser
+        Municipios:
+              class: App\Entity\Municipios
+        Estados:
+              class: App\Entity\Estados
+        Flotillas:
+              class: App\Entity\Flotillas
+              form:  # <-- 'form' is applied to both 'new' and 'edit' views
+                fields:
+                    - { property: 'nombre', type: 'text', label: 'Nombre' }
+                    - { property: 'documento', type: 'text', label: 'Documento' }
+        Clientes:
+              class: App\Entity\Clientes

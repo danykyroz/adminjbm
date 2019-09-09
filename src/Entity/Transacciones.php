@@ -66,20 +66,6 @@ class Transacciones
     /**
      * @var int|null
      *
-     * @ORM\Column(name="punto_venta_id", type="integer", nullable=true)
-     */
-    private $puntoVentaId;
-
-    /**
-     * @var int|null
-     *
-     * @ORM\Column(name="flotilla_id", type="integer", nullable=true)
-     */
-    private $flotillaId;
-
-    /**
-     * @var int|null
-     *
      * @ORM\Column(name="tipo_transaccion", type="integer", nullable=true, options={"comment"="1=Pago,2=Recarga"})
      */
     private $tipoTransaccion;
@@ -87,9 +73,9 @@ class Transacciones
     /**
      * @var int|null
      *
-     * @ORM\Column(name="usuario", type="integer", nullable=true)
+     * @ORM\Column(name="usuario_id", type="integer", nullable=true)
      */
-    private $usuario;
+    private $usuarioId;
 
     /**
      * @var string|null
@@ -125,6 +111,27 @@ class Transacciones
      * @ORM\Column(name="dispositivo", type="string", length=200, nullable=true)
      */
     private $dispositivo;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="comprobante", type="text", length=65535, nullable=true)
+     */
+    private $comprobante;
+
+    /**
+     * @var float|null
+     *
+     * @ORM\Column(name="latitud", type="float", precision=10, scale=0, nullable=true)
+     */
+    private $latitud;
+
+    /**
+     * @var float|null
+     *
+     * @ORM\Column(name="longitud", type="float", precision=10, scale=0, nullable=true)
+     */
+    private $longitud;
 
     public function getId(): ?int
     {
@@ -203,30 +210,6 @@ class Transacciones
         return $this;
     }
 
-    public function getPuntoVentaId(): ?int
-    {
-        return $this->puntoVentaId;
-    }
-
-    public function setPuntoVentaId(?int $puntoVentaId): self
-    {
-        $this->puntoVentaId = $puntoVentaId;
-
-        return $this;
-    }
-
-    public function getFlotillaId(): ?int
-    {
-        return $this->flotillaId;
-    }
-
-    public function setFlotillaId(?int $flotillaId): self
-    {
-        $this->flotillaId = $flotillaId;
-
-        return $this;
-    }
-
     public function getTipoTransaccion(): ?int
     {
         return $this->tipoTransaccion;
@@ -239,14 +222,14 @@ class Transacciones
         return $this;
     }
 
-    public function getUsuario(): ?int
+    public function getUsuarioId(): ?int
     {
-        return $this->usuario;
+        return $this->usuarioId;
     }
 
-    public function setUsuario(?int $usuario): self
+    public function setUsuarioId(?int $usuarioId): self
     {
-        $this->usuario = $usuario;
+        $this->usuarioId = $usuarioId;
 
         return $this;
     }
@@ -307,6 +290,42 @@ class Transacciones
     public function setDispositivo(?string $dispositivo): self
     {
         $this->dispositivo = $dispositivo;
+
+        return $this;
+    }
+
+    public function getComprobante(): ?string
+    {
+        return $this->comprobante;
+    }
+
+    public function setComprobante(?string $comprobante): self
+    {
+        $this->comprobante = $comprobante;
+
+        return $this;
+    }
+
+    public function getLatitud(): ?float
+    {
+        return $this->latitud;
+    }
+
+    public function setLatitud(?float $latitud): self
+    {
+        $this->latitud = $latitud;
+
+        return $this;
+    }
+
+    public function getLongitud(): ?float
+    {
+        return $this->longitud;
+    }
+
+    public function setLongitud(?float $longitud): self
+    {
+        $this->longitud = $longitud;
 
         return $this;
     }

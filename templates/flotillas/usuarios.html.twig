@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block content_title %}Usuarios Flotilla ({{flotilla.nombre}}){% endblock %}
+
+{% block body %}
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Email</th>
+                <th>Username</th>
+                <th>Acciones</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+        {% for usuario in usuarios %}
+            <tr>
+                <td>{{ usuario.id }}</td>
+                <td>{{ usuario.email }}</td>
+                <td>{{ usuario.username }}</td>
+                <td>
+                    <a href="{{ path('flotillas_usuarios_delete', {'id': usuario.id}) }}">borrar</a>
+                    
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">Sin Resultados</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-default" href="{{ path('flotillas_usuarios_new',{id:flotilla.id}) }}">Nuevo Usuario Flotilla</a>
+
+     <a class="btn" href="{{ path('flotillas_index')}}">Volver al listado</a>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block content_title %}Listado Flotillas{% endblock %}
+
+{% block body %}
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Documento</th>
+                <th>CreatedAt</th>
+                <th>UpdatedAt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for flotilla in flotillas %}
+            <tr>
+                <td>{{ flotilla.id }}</td>
+                <td>{{ flotilla.nombre }}</td>
+                <td>{{ flotilla.documento }}</td>
+                <td>{{ flotilla.createdAt ? flotilla.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ flotilla.updatedAt ? flotilla.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td class="actions">
+                    <a href="{{ path('flotillas_show', {'id': flotilla.id}) }}">ver</a> | 
+                    <a href="{{ path('flotillas_edit', {'id': flotilla.id}) }}">editar</a> |  
+                    <a href="{{ path('flotillas_usuarios', {'id': flotilla.id}) }}">usuarios</a>
+                    
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-default" href="{{ path('flotillas_new') }}">Nueva Flotilla</a>
+{% endblock %}

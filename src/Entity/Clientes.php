@@ -43,18 +43,18 @@ class Clientes
     private $apellidos;
 
     /**
-     * @var int|null
-     *
-     * @ORM\Column(name="indicativo", type="integer", nullable=true)
-     */
-    private $indicativo;
-
-    /**
      * @var string|null
      *
      * @ORM\Column(name="email", type="string", length=255, nullable=true)
      */
     private $email;
+
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="indicativo", type="integer", nullable=true, options={"default"="52"})
+     */
+    private $indicativo = '52';
 
     /**
      * @var string|null
@@ -66,16 +66,23 @@ class Clientes
     /**
      * @var string|null
      *
-     * @ORM\Column(name="pais", type="string", length=11, nullable=true)
+     * @ORM\Column(name="pais", type="string", length=11, nullable=true, options={"default"="MX"})
      */
-    private $pais;
+    private $pais = 'MX';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="logo", type="string", length=255, nullable=true)
+     * @ORM\Column(name="avatar", type="string", length=255, nullable=true)
      */
-    private $logo;
+    private $avatar;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="placa", type="string", length=10, nullable=true)
+     */
+    private $placa = '';
 
     /**
      * @var \DateTime|null
@@ -104,6 +111,13 @@ class Clientes
      * @ORM\Column(name="politicas", type="string", length=2, nullable=true)
      */
     private $politicas;
+
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="tipo", type="integer", nullable=true, options={"comment"="1=Normal,2=Flotilla"})
+     */
+    private $tipo;
 
     public function getId(): ?int
     {
@@ -146,18 +160,6 @@ class Clientes
         return $this;
     }
 
-    public function getIndicativo(): ?int
-    {
-        return $this->indicativo;
-    }
-
-    public function setIndicativo(?int $indicativo): self
-    {
-        $this->indicativo = $indicativo;
-
-        return $this;
-    }
-
     public function getEmail(): ?string
     {
         return $this->email;
@@ -166,6 +168,18 @@ class Clientes
     public function setEmail(?string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function getIndicativo(): ?int
+    {
+        return $this->indicativo;
+    }
+
+    public function setIndicativo(?int $indicativo): self
+    {
+        $this->indicativo = $indicativo;
 
         return $this;
     }
@@ -194,14 +208,26 @@ class Clientes
         return $this;
     }
 
-    public function getLogo(): ?string
+    public function getAvatar(): ?string
     {
-        return $this->logo;
+        return $this->avatar;
     }
 
-    public function setLogo(?string $logo): self
+    public function setAvatar(?string $avatar): self
     {
-        $this->logo = $logo;
+        $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    public function getPlaca(): ?string
+    {
+        return $this->placa;
+    }
+
+    public function setPlaca(?string $placa): self
+    {
+        $this->placa = $placa;
 
         return $this;
     }
@@ -250,6 +276,18 @@ class Clientes
     public function setPoliticas(?string $politicas): self
     {
         $this->politicas = $politicas;
+
+        return $this;
+    }
+
+    public function getTipo(): ?int
+    {
+        return $this->tipo;
+    }
+
+    public function setTipo(?int $tipo): self
+    {
+        $this->tipo = $tipo;
 
         return $this;
     }

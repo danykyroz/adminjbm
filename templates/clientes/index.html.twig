@@ -1,0 +1,50 @@
+{% extends '@EasyAdmin/default/layout.html.twig' %}
+
+{% block content_title %}Nuevo Cliente{% endblock %}
+
+
+{% block main %}
+
+    <table class="table datagrid">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th class="string">Documento</th>
+                <th>Nombres</th>
+                <th>Apellidos</th>
+                <th>Email</th>
+                <th>Celular</th>
+                <th>Placa</th>
+                <th>CreatedAt</th>
+                <th>Tipo</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for cliente in clientes %}
+            <tr>
+                <td>{{ cliente.id }}</td>
+                <td>{{ cliente.documento }}</td>
+                <td>{{ cliente.nombres }}</td>
+                <td>{{ cliente.apellidos }}</td>
+                <td>{{ cliente.email }}</td>
+                <td>{{ cliente.celular }}</td>
+                <td>{{ cliente.placa }}</td>
+                <td>{{ cliente.createdAt ? cliente.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ cliente.tipo }}</td>
+                <td>
+                    <a href="{{ path('clientes_show', {'id': cliente.id}) }}">Ver</a>
+                    <a href="{{ path('clientes_edit', {'id': cliente.id}) }}">Editar</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="16">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+     <a href="{{ path('clientes_new') }}">Create new</a>
+{% endblock %}
+

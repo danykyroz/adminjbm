@@ -2,12 +2,14 @@
 
 namespace App\Entity;
 
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Flotillas
  *
- * @ORM\Table(name="flotillas", indexes={@ORM\Index(name="contacto_id", columns={"contacto_id"})})
+ * @ORM\Table(name="flotillas")
+
  * @ORM\Entity
  */
 class Flotillas
@@ -36,14 +38,18 @@ class Flotillas
     private $documento;
 
     /**
-     * @var \Contactos
-     *
-     * @ORM\ManyToOne(targetEntity="Contactos")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="contacto_id", referencedColumnName="id")
-     * })
+     * @var \DateTime|null
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(name="created_at", type="datetime", nullable=true)
      */
-    private $contacto;
+    private $createdAt;
+
+    /**
+     * @var \DateTime|null
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
+    */
+    private $updatedAt;
 
     public function getId(): ?int
     {
@@ -74,14 +80,26 @@ class Flotillas
         return $this;
     }
 
-    public function getContacto(): ?Contactos
+    public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->contacto;
+        return $this->createdAt;
     }
 
-    public function setContacto(?Contactos $contacto): self
+    public function setCreatedAt(?\DateTimeInterface $createdAt): self
     {
-        $this->contacto = $contacto;
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Movimientos
  *
- * @ORM\Table(name="movimientos", indexes={@ORM\Index(name="fos_user_id", columns={"fos_user_id"}), @ORM\Index(name="cliente_id", columns={"cliente_id"}), @ORM\Index(name="tipo_movimoento_id", columns={"tipo_movimoento_id"})})
+ * @ORM\Table(name="movimientos", indexes={@ORM\Index(name="fos_user_id", columns={"fos_user_id"}), @ORM\Index(name="cliente_id", columns={"wallet_id"}), @ORM\Index(name="tipo_movimoento_id", columns={"tipo_movimiento_id"})})
  * @ORM\Entity
  */
 class Movimientos
@@ -54,10 +54,10 @@ class Movimientos
      *
      * @ORM\ManyToOne(targetEntity="Clientes")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="cliente_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="wallet_id", referencedColumnName="id")
      * })
      */
-    private $cliente;
+    private $wallet;
 
     /**
      * @var \FosUser
@@ -74,10 +74,10 @@ class Movimientos
      *
      * @ORM\ManyToOne(targetEntity="TipoMovimientos")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="tipo_movimoento_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="tipo_movimiento_id", referencedColumnName="id")
      * })
      */
-    private $tipoMovimoento;
+    private $tipoMovimiento;
 
     public function getId(): ?int
     {
@@ -132,14 +132,14 @@ class Movimientos
         return $this;
     }
 
-    public function getCliente(): ?Clientes
+    public function getWallet(): ?Clientes
     {
-        return $this->cliente;
+        return $this->wallet;
     }
 
-    public function setCliente(?Clientes $cliente): self
+    public function setWallet(?Clientes $wallet): self
     {
-        $this->cliente = $cliente;
+        $this->wallet = $wallet;
 
         return $this;
     }
@@ -156,14 +156,14 @@ class Movimientos
         return $this;
     }
 
-    public function getTipoMovimoento(): ?TipoMovimientos
+    public function getTipoMovimiento(): ?TipoMovimientos
     {
-        return $this->tipoMovimoento;
+        return $this->tipoMovimiento;
     }
 
-    public function setTipoMovimoento(?TipoMovimientos $tipoMovimoento): self
+    public function setTipoMovimiento(?TipoMovimientos $tipoMovimiento): self
     {
-        $this->tipoMovimoento = $tipoMovimoento;
+        $this->tipoMovimiento = $tipoMovimiento;
 
         return $this;
     }

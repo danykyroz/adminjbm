@@ -5,12 +5,12 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Ciudades
+ * TipoUsuarios
  *
- * @ORM\Table(name="ciudades")
+ * @ORM\Table(name="tipo_usuarios")
  * @ORM\Entity
  */
-class Ciudades
+class TipoUsuarios
 {
     /**
      * @var int
@@ -24,16 +24,9 @@ class Ciudades
     /**
      * @var string|null
      *
-     * @ORM\Column(name="nombre", type="string", length=200, nullable=true)
+     * @ORM\Column(name="nombre", type="string", length=255, nullable=true)
      */
     private $nombre;
-
-    /**
-     * @var int|null
-     *
-     * @ORM\Column(name="estado_id", type="integer", nullable=true)
-     */
-    private $estadoId;
 
     public function getId(): ?int
     {
@@ -48,18 +41,6 @@ class Ciudades
     public function setNombre(?string $nombre): self
     {
         $this->nombre = $nombre;
-
-        return $this;
-    }
-
-    public function getEstadoId(): ?int
-    {
-        return $this->estadoId;
-    }
-
-    public function setEstadoId(?int $estadoId): self
-    {
-        $this->estadoId = $estadoId;
 
         return $this;
     }

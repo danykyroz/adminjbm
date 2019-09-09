@@ -1,0 +1,7 @@
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn btn-success">{{ button_label|default('Guardar') }}</button>
+        <a class="btn" href="{{ path('flotillas_index') }}">Volver a la lista</a>
+	
+{{ form_end(form) }}
+ 

@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block content_title %} Nuevo Usuario Flotillas{% endblock %}
+
+{% block body %}
+   
+  <form name="fos_user_registration" method="post" action="{{path('flotillas_usuarios_save')}}">
+  	<input type="hidden" name="flotilla_id" value="{{flotilla.id}}" >
+    <div>
+    	<p>
+            <b>Selecciona un usuario</b>
+        </p>
+        <div class="form-group">
+	    	<select name="usuario_id">
+	    	{% for usuario in usuarios %}
+	    	<option value="{{usuario.id}}">{{usuario.email}}</option>
+	    	{% endfor %}
+	    	</select>
+    	</div>
+    <br>
+        <input type="submit" class="btn btn-success" value="Guardar">
+        <a class="btn " href="{{path('flotillas_usuarios',{id:flotilla.id})}}">Volver a la lista</a>
+    </div>
+</form>
+{% endblock %}

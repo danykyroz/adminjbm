@@ -15,4 +15,14 @@ class AdminController extends EasyAdminController
     {
        return $this->render('@EasyAdmin/home/index.html.twig');
     }
+
+    protected function createNewFlotillaEntity()
+	{
+	    $flotilla = new Flotilla();
+	    echo "aa";
+	    die();
+	    // ...
+
+	    return $flotilla;
+	}
 }
