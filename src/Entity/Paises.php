@@ -22,16 +22,16 @@ class Paises
     private $id;
 
     /**
-     * @var int|null
+     * @var string|null
      *
-     * @ORM\Column(name="nombre", type="integer", nullable=true)
+     * @ORM\Column(name="nombre", type="string", length=255, nullable=true)
      */
     private $nombre;
 
     /**
-     * @var int|null
+     * @var string|null
      *
-     * @ORM\Column(name="codigo_iso", type="integer", nullable=true)
+     * @ORM\Column(name="codigo_iso", type="string", length=20, nullable=true)
      */
     private $codigoIso;
 
@@ -47,24 +47,24 @@ class Paises
         return $this->id;
     }
 
-    public function getNombre(): ?int
+    public function getNombre(): ?string
     {
         return $this->nombre;
     }
 
-    public function setNombre(?int $nombre): self
+    public function setNombre(?string $nombre): self
     {
         $this->nombre = $nombre;
 
         return $this;
     }
 
-    public function getCodigoIso(): ?int
+    public function getCodigoIso(): ?string
     {
         return $this->codigoIso;
     }
 
-    public function setCodigoIso(?int $codigoIso): self
+    public function setCodigoIso(?string $codigoIso): self
     {
         $this->codigoIso = $codigoIso;
 

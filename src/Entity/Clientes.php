@@ -22,53 +22,60 @@ class Clientes
     private $id;
 
     /**
-     * @var string|null
+     * @var string
      *
-     * @ORM\Column(name="documento", type="string", length=11, nullable=true)
+     * @ORM\Column(name="documento", type="string", length=11, nullable=false)
      */
-    private $documento;
+    private $documento = '';
 
     /**
-     * @var string|null
+     * @var string
      *
-     * @ORM\Column(name="nombres", type="string", length=50, nullable=true)
+     * @ORM\Column(name="nombres", type="string", length=50, nullable=false)
      */
-    private $nombres;
+    private $nombres = '';
 
     /**
-     * @var string|null
+     * @var string
      *
-     * @ORM\Column(name="apellidos", type="string", length=50, nullable=true)
+     * @ORM\Column(name="apellidos", type="string", length=50, nullable=false)
      */
-    private $apellidos;
+    private $apellidos = '';
 
     /**
-     * @var string|null
+     * @var string
      *
-     * @ORM\Column(name="email", type="string", length=255, nullable=true)
+     * @ORM\Column(name="email", type="string", length=255, nullable=false)
      */
-    private $email;
+    private $email = '';
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="pais", type="string", length=11, nullable=false, options={"default"="MX"})
+     */
+    private $pais = 'MX';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="indicativo", type="integer", nullable=true, options={"default"="52"})
+     * @ORM\Column(name="municipio_id", type="integer", nullable=true)
+     */
+    private $municipioId;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="indicativo", type="integer", nullable=false, options={"default"="52"})
      */
     private $indicativo = '52';
 
     /**
-     * @var string|null
+     * @var string
      *
-     * @ORM\Column(name="celular", type="string", length=20, nullable=true)
+     * @ORM\Column(name="celular", type="string", length=20, nullable=false)
      */
-    private $celular;
-
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="pais", type="string", length=11, nullable=true, options={"default"="MX"})
-     */
-    private $pais = 'MX';
+    private $celular = '';
 
     /**
      * @var string|null
@@ -99,25 +106,25 @@ class Clientes
     private $updatedAt;
 
     /**
-     * @var string|null
+     * @var bool|null
      *
-     * @ORM\Column(name="terminos", type="string", length=2, nullable=true)
+     * @ORM\Column(name="terminos", type="boolean", nullable=true, options={"default"="1"})
      */
-    private $terminos;
+    private $terminos = '1';
 
     /**
-     * @var string|null
+     * @var bool|null
      *
-     * @ORM\Column(name="politicas", type="string", length=2, nullable=true)
+     * @ORM\Column(name="politicas", type="boolean", nullable=true, options={"default"="1"})
      */
-    private $politicas;
+    private $politicas = '1';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="tipo", type="integer", nullable=true, options={"comment"="1=Normal,2=Flotilla"})
+     * @ORM\Column(name="tipo", type="integer", nullable=true, options={"default"="1","comment"="1=Normal,2=Flotilla"})
      */
-    private $tipo;
+    private $tipo = '1';
 
     public function getId(): ?int
     {
@@ -129,7 +136,7 @@ class Clientes
         return $this->documento;
     }
 
-    public function setDocumento(?string $documento): self
+    public function setDocumento(string $documento): self
     {
         $this->documento = $documento;
 
@@ -141,7 +148,7 @@ class Clientes
         return $this->nombres;
     }
 
-    public function setNombres(?string $nombres): self
+    public function setNombres(string $nombres): self
     {
         $this->nombres = $nombres;
 
@@ -153,7 +160,7 @@ class Clientes
         return $this->apellidos;
     }
 
-    public function setApellidos(?string $apellidos): self
+    public function setApellidos(string $apellidos): self
     {
         $this->apellidos = $apellidos;
 
@@ -165,9 +172,33 @@ class Clientes
         return $this->email;
     }
 
-    public function setEmail(?string $email): self
+    public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function getPais(): ?string
+    {
+        return $this->pais;
+    }
+
+    public function setPais(string $pais): self
+    {
+        $this->pais = $pais;
+
+        return $this;
+    }
+
+    public function getMunicipioId(): ?int
+    {
+        return $this->municipioId;
+    }
+
+    public function setMunicipioId(?int $municipioId): self
+    {
+        $this->municipioId = $municipioId;
 
         return $this;
     }
@@ -177,7 +208,7 @@ class Clientes
         return $this->indicativo;
     }
 
-    public function setIndicativo(?int $indicativo): self
+    public function setIndicativo(int $indicativo): self
     {
         $this->indicativo = $indicativo;
 
@@ -189,21 +220,9 @@ class Clientes
         return $this->celular;
     }
 
-    public function setCelular(?string $celular): self
+    public function setCelular(string $celular): self
     {
         $this->celular = $celular;
-
-        return $this;
-    }
-
-    public function getPais(): ?string
-    {
-        return $this->pais;
-    }
-
-    public function setPais(?string $pais): self
-    {
-        $this->pais = $pais;
 
         return $this;
     }
@@ -256,24 +275,24 @@ class Clientes
         return $this;
     }
 
-    public function getTerminos(): ?string
+    public function getTerminos(): ?bool
     {
         return $this->terminos;
     }
 
-    public function setTerminos(?string $terminos): self
+    public function setTerminos(?bool $terminos): self
     {
         $this->terminos = $terminos;
 
         return $this;
     }
 
-    public function getPoliticas(): ?string
+    public function getPoliticas(): ?bool
     {
         return $this->politicas;
     }
 
-    public function setPoliticas(?string $politicas): self
+    public function setPoliticas(?bool $politicas): self
     {
         $this->politicas = $politicas;
 

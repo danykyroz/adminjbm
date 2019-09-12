@@ -1,0 +1,125 @@
+<?php
+
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * PuntoVenta
+ *
+ * @ORM\Table(name="punto_venta")
+ * @ORM\Entity
+ */
+class PuntoVenta
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="documento", type="integer", nullable=true)
+     */
+    private $documento;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="nombres", type="string", length=255, nullable=true)
+     */
+    private $nombres;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="apellidos", type="string", length=255, nullable=true)
+     */
+    private $apellidos;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="email", type="string", length=255, nullable=true)
+     */
+    private $email;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="celular", type="string", length=20, nullable=true)
+     */
+    private $celular;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getDocumento(): ?int
+    {
+        return $this->documento;
+    }
+
+    public function setDocumento(?int $documento): self
+    {
+        $this->documento = $documento;
+
+        return $this;
+    }
+
+    public function getNombres(): ?string
+    {
+        return $this->nombres;
+    }
+
+    public function setNombres(?string $nombres): self
+    {
+        $this->nombres = $nombres;
+
+        return $this;
+    }
+
+    public function getApellidos(): ?string
+    {
+        return $this->apellidos;
+    }
+
+    public function setApellidos(?string $apellidos): self
+    {
+        $this->apellidos = $apellidos;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(?string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getCelular(): ?string
+    {
+        return $this->celular;
+    }
+
+    public function setCelular(?string $celular): self
+    {
+        $this->celular = $celular;
+
+        return $this;
+    }
+
+
+}

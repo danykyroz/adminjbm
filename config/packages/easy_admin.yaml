@@ -12,8 +12,8 @@ easy_admin:
         # List the entity class name you want to manage
         FosUser:
             class: App\Entity\FosUser
-        Municipios:
-              class: App\Entity\Municipios
+        Delegacion:
+              class: App\Entity\Delegacion
         Estados:
               class: App\Entity\Estados
         Flotillas:
@@ -24,3 +24,16 @@ easy_admin:
                     - { property: 'documento', type: 'text', label: 'Documento' }
         Clientes:
               class: App\Entity\Clientes
+        Gasolineras:
+              class: App\Entity\Gasolineras
+              form:  # <-- 'form' is applied to both 'new' and 'edit' views
+                fields:
+                    - { property: 'nombre', type: 'text', label: 'Nombre' }
+                    - { property: 'direccion', type: 'text', label: 'Direccion' }
+                    - { property: 'codigoPostal', type: 'text', label: 'Código Postal' }
+                    - { property: 'nombreEncargado', type: 'text', label: 'Nombre Encargado' }
+                    - { property: 'telefonoEncargado', type: 'text', label: 'Teléfono Encargado' }
+                    - { property: 'delegacion', type: 'entity', label: 'Delegacion', type_options: { class: 'App\Entity\Delegacion', required: true, multiple: false } }
+
+        PuntosVenta:
+              class: App\Entity\PuntoVenta

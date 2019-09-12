@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Delegacion as Delegacion;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Gasolineras
@@ -12,6 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Gasolineras
 {
+    
     /**
      * @var int
      *
@@ -21,47 +24,26 @@ class Gasolineras
      */
     private $id;
 
-    /**
+     /**
      * @var \DateTime|null
-     *
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="created_at", type="datetime", nullable=true)
      */
     private $createdAt;
 
-    /**
+     /**
      * @var \DateTime|null
-     *
+     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
     private $updatedAt;
 
     /**
-     * @var int|null
+     * @var string|null
      *
-     * @ORM\Column(name="nombre", type="integer", nullable=true)
+     * @ORM\Column(name="nombre", type="string", length=11, nullable=true)
      */
     private $nombre;
-
-    /**
-     * @var int|null
-     *
-     * @ORM\Column(name="ciudad_id", type="integer", nullable=true)
-     */
-    private $ciudadId;
-
-    /**
-     * @var int|null
-     *
-     * @ORM\Column(name="latitud", type="integer", nullable=true)
-     */
-    private $latitud;
-
-    /**
-     * @var int|null
-     *
-     * @ORM\Column(name="longitud", type="integer", nullable=true)
-     */
-    private $longitud;
 
     /**
      * @var string|null
@@ -77,7 +59,51 @@ class Gasolineras
      */
     private $telefonoEncargado;
 
-    public function getId(): ?int
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="delegacion_id", type="integer", nullable=true)
+     */
+    private $delegacionId;
+
+    /**
+     * Many-to-one relationship between documents and course
+     *
+     * @var ArrayCollection
+     * @ORM\ManyToOne(targetEntity="App\Entity\Delegacion")
+     * @ORM\JoinColumn(name="delegacion_id", referencedColumnName="id")
+    */
+    private $delegacion;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="direccion", type="string", length=255, nullable=true)
+     */
+    private $direccion;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="codigo_postal", type="string", length=11, nullable=true)
+     */
+    private $codigoPostal;
+
+    /**
+     * @var float|null
+     *
+     * @ORM\Column(name="latitud", type="float", precision=10, scale=0, nullable=true)
+     */
+    private $latitud;
+
+    /**
+     * @var float|null
+     *
+     * @ORM\Column(name="longitud", type="float", precision=10, scale=0, nullable=true)
+     */
+    private $longitud;
+
+   public function getId(): ?int
     {
         return $this->id;
     }
@@ -106,50 +132,14 @@ class Gasolineras
         return $this;
     }
 
-    public function getNombre(): ?int
+    public function getNombre(): ?string
     {
         return $this->nombre;
     }
 
-    public function setNombre(?int $nombre): self
+    public function setNombre(?string $nombre): self
     {
         $this->nombre = $nombre;
-
-        return $this;
-    }
-
-    public function getCiudadId(): ?int
-    {
-        return $this->ciudadId;
-    }
-
-    public function setCiudadId(?int $ciudadId): self
-    {
-        $this->ciudadId = $ciudadId;
-
-        return $this;
-    }
-
-    public function getLatitud(): ?int
-    {
-        return $this->latitud;
-    }
-
-    public function setLatitud(?int $latitud): self
-    {
-        $this->latitud = $latitud;
-
-        return $this;
-    }
-
-    public function getLongitud(): ?int
-    {
-        return $this->longitud;
-    }
-
-    public function setLongitud(?int $longitud): self
-    {
-        $this->longitud = $longitud;
 
         return $this;
     }
@@ -178,5 +168,78 @@ class Gasolineras
         return $this;
     }
 
+    public function getDelegacionId(): ?int
+    {
+        return $this->delegacionId;
+    }
+
+    public function setDelegacionId($delegacionId): self
+    {
+        $this->delegacionId = $delegacionId;
+
+        return $this;
+    }
+
+    public function getDireccion(): ?string
+    {
+        return $this->direccion;
+    }
+
+    public function setDireccion(?string $direccion): self
+    {
+        $this->direccion = $direccion;
+
+        return $this;
+    }
+
+    public function getCodigoPostal(): ?string
+    {
+        return $this->codigoPostal;
+    }
+
+    public function setCodigoPostal(?string $codigoPostal): self
+    {
+        $this->codigoPostal = $codigoPostal;
+
+        return $this;
+    }
+
+    public function getLatitud(): ?float
+    {
+        return $this->latitud;
+    }
+
+    public function setLatitud(?float $latitud): self
+    {
+        $this->latitud = $latitud;
+
+        return $this;
+    }
+
+    public function getLongitud(): ?float
+    {
+        return $this->longitud;
+    }
+
+    public function setLongitud(?float $longitud): self
+    {
+        $this->longitud = $longitud;
+
+        return $this;
+    }
+
+    public function getDelegacion(): ?Delegacion
+    {
+        return $this->delegacion;
+    }
+
+    public function setDelegacion(?Delegacion $delegacion): self
+    {
+        $this->delegacion = $delegacion;
+
+        return $this;
+    }
+
+    
 
 }

@@ -3,14 +3,23 @@
 {% block content_title %}Nuevo Cliente{% endblock %}
 
 {% block global_actions %}
+
 <div class="form-action form-action-search  action-search">
     <form method="get" action="/admin/">
-                                          
-    </form>
+    <input type="hidden" name="action" value="search">
+    <input type="hidden" name="entity" value="Clientes">
+    <input type="hidden" name="submenuIndex" value="">
+    <div class="form-group">
+        <div class="form-widget">
+        <input class="form-control" type="search" name="query" value="" placeholder="Buscar">
+        </div>
+    </div>
+</form>
+</div>
     <div class="button-action">
         <a class="btn btn-default" href="{{ path('clientes_new') }}">Nuevo Cliente</a> 
     </div>
-</div>
+
 
 
   

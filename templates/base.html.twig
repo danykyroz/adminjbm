@@ -32,6 +32,9 @@
         .global-actions .button-action{
             float: right;
         }
+        .selection{
+            display: none;
+        }
         
     </style>
 
@@ -175,7 +178,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{asset('/admin/?action=list&entity=Municipios')}}">
+                        <a href="{{asset('/admin/?action=list&entity=Delegacion')}}">
                             <i class="far fa-calendar"></i>
                             <span>Delegacion</span>
                         </a>
@@ -187,10 +190,22 @@
                             <span>Flotillas</span>
                         </a>
                     </li>
-                     <li>
+                    <li>
                         <a href="{{asset('/admin/clientes')}}">
                             <i class="far fa-calendar"></i>
                             <span>Clientes</span>
+                        </a>
+                    </li>
+                     <li>
+                        <a href="{{asset('/admin/?action=list&entity=Gasolineras')}}">
+                            <i class="far fa-calendar"></i>
+                            <span>Gasolineras</span>
+                        </a>
+                    </li>
+                     <li>
+                        <a href="{{asset('/admin/?action=list&entity=PuntosVenta')}}">
+                            <i class="far fa-calendar"></i>
+                            <span>Puntos de Venta</span>
                         </a>
                     </li>
 
@@ -276,8 +291,17 @@
         
 
         {% block body_javascript %}
-         <script src="{{asset('adminlte/assets/js/app.min.js')}}"></script>
+        
+        <script src="{{asset('adminlte/assets/js/app.min.js')}}"></script>
         <!-- Custom Js -->
+         <script src="{{asset('bundles/easyadmin/select2/i18n/es.js')}}"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.AreYouSure/1.9.0/jquery.are-you-sure.min.js" defer></script>
+        
+
+
         <script src="{{asset('adminlte/assets/js/admin.js')}}"></script>
         <script src="{{asset('adminlte/assets/js/bundles/multiselect/js/jquery.multi-select.js')}}"></script>
         <script src="{{asset('adminlte/assets/js/bundles/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js')}}"></script>
