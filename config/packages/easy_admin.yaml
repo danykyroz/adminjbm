@@ -12,6 +12,8 @@ easy_admin:
         # List the entity class name you want to manage
         FosUser:
             class: App\Entity\FosUser
+            list:
+              actions: ['-new',{ name: 'edit', icon: 'pencil' , label: false },{ name: 'delete', icon: 'trash' , label: false }]
         Delegacion:
               class: App\Entity\Delegacion
         Estados:
