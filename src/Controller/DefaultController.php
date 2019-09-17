@@ -34,10 +34,21 @@ class DefaultController extends Controller
             }
 
           }
-
-
     
   }
+
+  /**
+   * @Route("/test", name="default_test")
+   */
+  public function test(Request $request){
+
+       $em=$this->getDoctrine()->getManager();
+       $user=$em->getRepository("App:FosUser")->find(1);
+       var_dump($user->getUsername());
+       die();
+
+  }
+
   /**
    * @Route("/menu", name="default_menu")
    */
