@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Delegacion
  *
  * @ORM\Table(name="delegacion")
+ * @ORM\Entity(repositoryClass="App\Repository\DelegacionRepository")
  * @ORM\Entity
  */
 class Delegacion
@@ -35,7 +36,7 @@ class Delegacion
 
     public function getMunicipio(): ?string
     {
-        return $this->municipio;
+        return utf8_decode($this->municipio);
     }
 
     public function setMunicipio(string $municipio): self

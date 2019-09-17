@@ -8989,7 +8989,7 @@ readers do not read off random characters that represent icons */
   font-size: 18px; }
 
 .form-control-label {
-  text-align: right; }
+  text-align: left; }
   .form-control-label label {
     margin-top: 8px; }
 
