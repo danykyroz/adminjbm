@@ -1,5 +1,6 @@
 'use strict';
 $(function () {
+    
     $('#form_validation').validate({
         rules: {
             'checkbox': {

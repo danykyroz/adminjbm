@@ -150,14 +150,90 @@ class ClientesController extends AbstractController
      */
     public function show(Clientes $cliente): Response
     {
+        $user_admin=($this->getUser());
+        $em=$this->getDoctrine()->getManager();
+        $wallet_flotilla=false;
+        $wallet_cliente=false;
+
+        if($user_admin->getRoles()[0]=="ROLE_ADMIN_FLOTILLA"){
+
+        $flotilla_user=$em->getRepository('App:FlotillaUsuarios','u')->findOneBy(array('usuarioId'=>$user_admin->getId()));
         
-        //$wallet_flotilla;
+        $flotilla_cliente=$em->getRepository('App:Clientes','c')->findOneBy(array('email'=>$user_admin->getEmail()));
 
+        $wallet_flotilla=$em->getRepository('App:Wallet','w')->findOneBy(array('clienteId'=>$flotilla_cliente->getId()));
+        
+        $wallet_cliente=$em->getRepository('App:Wallet','w')->findOneBy(array('clienteId'=>$cliente->getId()));
 
+        }
+        
         return $this->render('clientes/show.html.twig', [
             'cliente' => $cliente,
+            'wallet_flotilla'=>$wallet_flotilla,
+            'wallet_cliente'=>$wallet_cliente
         ]);
     }
+
+     /**
+     * @Route("/actualizar/saldo/{id}", name="cliente_actualizar_saldo", methods={"POST"})
+     */
+    public function actualizar_saldo(Clientes $cliente, Request $request): Response
+    {
+        $user_admin=($this->getUser());
+        $em=$this->getDoctrine()->getManager();
+        $wallet_flotilla=false;
+        $wallet_cliente=false;
+
+        if($user_admin->getRoles()[0]=="ROLE_ADMIN_FLOTILLA"){
+
+        $flotilla_user=$em->getRepository('App:FlotillaUsuarios','u')->findOneBy(array('usuarioId'=>$user_admin->getId()));
+        
+        $flotilla_cliente=$em->getRepository('App:Clientes','c')->findOneBy(array('email'=>$user_admin->getEmail()));
+
+        $wallet_flotilla=$em->getRepository('App:Wallet','w')->findOneBy(array('clienteId'=>$flotilla_cliente->getId()));
+        
+        $wallet_cliente=$em->getRepository('App:Wallet','w')->findOneBy(array('clienteId'=>$cliente->getId()));
+
+
+        if($wallet_cliente->getId()==$request->get('wallet_cliente') and $wallet_flotilla->getId()==$request->get('wallet_flotilla') ){
+
+            if($request->get('accion')=="agregar"){
+                
+                $wallet_cliente->setSaldo($wallet_cliente->getSaldo()+$request->get('valor'));
+
+                $wallet_flotilla->setSaldo($wallet_flotilla->getSaldo()-$request->get('valor'));
+
+              $this->addFlash('success', 'Saldo transferido exitosamente.');
+   
+            }
+            if($request->get('accion')=="quitar"){
+
+                $wallet_cliente->setSaldo($wallet_cliente->getSaldo()-$request->get('valor'));
+
+                 $this->addFlash('success', 'Saldo actualizado exitosamente.');
+
+
+            }
+
+            $em->persist($wallet_cliente);
+            $em->persist($wallet_flotilla);
+
+            $em->flush();
+
+           
+            return $this->redirectToRoute('clientes_show',array('id'=>$cliente->getId()));
+
+        }
+
+        }
+        
+        return $this->render('clientes/show.html.twig', [
+            'cliente' => $cliente,
+            'wallet_flotilla'=>$wallet_flotilla,
+            'wallet_cliente'=>$wallet_cliente
+        ]);
+    }
+    
 
     /**
      * @Route("/{id}/edit", name="clientes_edit", methods={"GET","POST"})
