@@ -19,7 +19,7 @@ class DefaultController extends Controller
   {
       // en index pagina con datos generales de la app
       
-  	   	$user=($this->getUser());
+  	   	  $user=($this->getUser());
 
           if(!$user){
                return $this->redirect('login');
@@ -29,11 +29,36 @@ class DefaultController extends Controller
             if($user->getRoles()[0]=="ROLE_ADMIN"){
                 return $this->redirect('admin/home');
             }
+            if($user->getRoles()[0]=="ROLE_ADMIN_FLOTILLA"){
+                 return $this->render('@EasyAdmin/home/index.html.twig');
+            }
 
           }
 
 
     
+  }
+  /**
+   * @Route("/menu", name="default_menu")
+   */
+  public function menu(Request $request){
+
+        $user=($this->getUser());
+
+          if(!$user){
+               return $this->redirect('login');
+          }
+          else{
+
+            if($user->getRoles()[0]=="ROLE_ADMIN"){
+                return $this->render('home/menu_admin.html.twig');
+            }
+            if($user->getRoles()[0]=="ROLE_ADMIN_FLOTILLA"){
+                 return $this->render('home/menu_flotilla.html.twig');
+            }
+
+          }
+
   }
 }
 

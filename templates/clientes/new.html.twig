@@ -1,11 +1,7 @@
 {% extends '@EasyAdmin/default/layout.html.twig' %}
 
-{% block title %}New Clientes{% endblock %}
+{% block content_title %}Nuevo Cliente{% endblock %}
 
 {% block main %}
-    <h1>Create new Clientes</h1>
-
     {{ include('clientes/_form.html.twig') }}
-
-    <a href="{{ path('clientes_index') }}">back to list</a>
 {% endblock %}

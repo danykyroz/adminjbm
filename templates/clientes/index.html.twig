@@ -58,7 +58,11 @@
                     <a href="{{ path('clientes_edit', {'id': cliente.id}) }}">
                         <i class="fa fa-fw fa-pencil"></i>
                     </a>
+                       <a href="{{ path('clientes_show', {'id': cliente.id}) }}">
+                        <i class="fa fa-fw fa-eye"></i>
+                    </a>
                 </td>
+                
             </tr>
         {% else %}
             <tr>
@@ -68,6 +72,8 @@
         </tbody>
     </table>
 
-   
+   <div class="pagerfanta">
+        
+    </div>
 {% endblock %}
 

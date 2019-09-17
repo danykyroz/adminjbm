@@ -1,11 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Clientes{% endblock %}
+{% block content_title %}Detalle Cliente{% endblock %}
 
 {% block body %}
-    <h1>Clientes</h1>
-
-    <table class="table">
+<div class="row">
+<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+    <div class="card">
+        <div class="header">
+            <h2>
+                <strong>{{cliente.nombres}}</strong>
+            </h2>
+            
+        </div>
+    <div class="card-body table-responsive">
+    <table class="table table-condensed">
         <tbody>
             <tr>
                 <th>Id</th>
@@ -57,11 +65,11 @@
             </tr>
             <tr>
                 <th>Terminos</th>
-                <td>{{ cliente.terminos }}</td>
+                <td>Si</td>
             </tr>
             <tr>
                 <th>Politicas</th>
-                <td>{{ cliente.politicas }}</td>
+                <td>Si</td>
             </tr>
             <tr>
                 <th>Tipo</th>
@@ -70,9 +78,115 @@
         </tbody>
     </table>
 
-    <a href="{{ path('clientes_index') }}">back to list</a>
+    <a class="btn btn-default" href="{{ path('clientes_index') }}">Volver a la lista</a>
 
-    <a href="{{ path('clientes_edit', {'id': cliente.id}) }}">edit</a>
-
+    <a class="btn btn-success" href="{{ path('clientes_edit', {'id': cliente.id}) }}">Editar</a>
+    <br/><br/>
     {{ include('clientes/_delete_form.html.twig') }}
+
+</div>
+</div>
+</div>
+<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+    <div class="card">
+        <div class="header bg-cyan ">
+            <h2>
+                Saldo Wallet / {{cliente.nombres}}
+            </h2>
+            
+        </div>
+        <div class="card-body ">
+           <h2>$ 20,000 MX</h2>
+
+        </div>
+        <div class="card-footer">
+
+            <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#modal_agregar_saldo" >Agregar Saldo</button>
+            <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#modal_quitar_saldo">Quitar Saldo</button>
+        </div>
+
+   
+
+    </div>
+    </div>
+</div>
+
+
+<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+<div class="modal fade" id="modal_agregar_saldo" tabindex="-1" role="dialog" aria-labelledby="modal_agregar_saldo" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Agregar Saldo Cliente ( {{cliente.nombres}} )</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <label for="email_address">Saldo Wallet Flotilla</label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <input type="text" id="email_address1" class="form-control" placeholder="Enter your email address" value="$200,000 MX">
+                        </div>
+                    </div>
+                    <label for="password">Valor a transferir</label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <input type="number" id="valor_transferencia" class="form-control" placeholder="$ valor en pesos mexicanos">
+                        </div>
+                    </div>
+
+                    <br>
+                    
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info waves-effect">Guardar</button>
+                <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+<div class="modal fade" id="modal_quitar_saldo" tabindex="-1" role="dialog" aria-labelledby="modal_quitar_saldo" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Quitar Saldo Cliente ( {{cliente.nombres}} )</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <label for="email_address">Saldo Wallet Cliente</label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <input type="text" id="email_address1" class="form-control" placeholder="Enter your email address" value="$200,000 MX">
+                        </div>
+                    </div>
+                    <label for="password">Valor a transferir</label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <input type="number" id="valor_transferencia" class="form-control" placeholder="$ valor en pesos mexicanos">
+                        </div>
+                    </div>
+
+                    <br>
+                    
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info waves-effect">Guardar</button>
+                <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
 {% endblock %}

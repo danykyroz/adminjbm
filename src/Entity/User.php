@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Entity;
+
+use Gedmo\Mapping\Annotation as Gedmo;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -19,6 +21,13 @@ class User extends BaseUser
      */
     protected $id;
 
+     /**
+     * @var \DateTime|null
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(name="created_at", type="datetime", nullable=true)
+     */
+    private $createdAt;
+
 
     public function getId()
     {
@@ -29,6 +38,18 @@ class User extends BaseUser
     {
         parent::__construct();
         // your own logic
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(?\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
     }
 
   

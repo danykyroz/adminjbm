@@ -155,60 +155,9 @@
                             <span>Inicio</span>
                         </a>
                     </li>
-                   <li>
-
-                    <li >
-                        <a href="javascript:void(0);" class="menu-toggle">
-                            <i class="fas fa-user"></i>
-                            <span>Usuarios</span>
-                        </a>
-                        <ul class="ml-menu">
-                            <li class="active">
-                                <a href="{{asset('/admin/?action=list&entity=FosUser')}}">Listar Usuarios</a>
-                            </li>
-                            <li>
-                                <a href="{{asset('/admin/new/user')}}">Nuevo Usuario</a>
-                            </li>
-                            
-                        </ul>
-                    </li>
-                        <a href="{{asset('/admin/?action=list&entity=Estados')}}">
-                            <i class="far fa-calendar"></i>
-                            <span>Estados</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{asset('/admin/?action=list&entity=Delegacion')}}">
-                            <i class="far fa-calendar"></i>
-                            <span>Delegacion</span>
-                        </a>
-                    </li>
-
-                     <li>
-                        <a href="{{asset('/admin/flotillas')}}">
-                            <i class="far fa-calendar"></i>
-                            <span>Flotillas</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{asset('/admin/clientes')}}">
-                            <i class="far fa-calendar"></i>
-                            <span>Clientes</span>
-                        </a>
-                    </li>
-                     <li>
-                        <a href="{{asset('/admin/?action=list&entity=Gasolineras')}}">
-                            <i class="far fa-calendar"></i>
-                            <span>Gasolineras</span>
-                        </a>
-                    </li>
-                     <li>
-                        <a href="{{asset('/admin/?action=list&entity=PuntosVenta')}}">
-                            <i class="far fa-calendar"></i>
-                            <span>Puntos de Venta</span>
-                        </a>
-                    </li>
-
+                    {{ render(path('default_menu')) }}
+                   
+                  
                 </ul>
             </div>
             <!-- #Menu -->

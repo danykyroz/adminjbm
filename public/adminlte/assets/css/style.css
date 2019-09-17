@@ -8897,7 +8897,9 @@ readers do not read off random characters that represent icons */
   font-size: 14px;
   line-height: 1.42857;
   color: #414244;
-  font-weight: 400; }
+  font-weight: 400; 
+  width: 100%
+}
 
 .input-group {
   width: 100%;
