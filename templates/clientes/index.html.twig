@@ -1,8 +1,10 @@
 {% extends '@EasyAdmin/default/layout.html.twig' %}
 
-{% block content_title %}Nuevo Cliente{% endblock %}
+{% block content_title %}Clientes{% endblock %}
 
 {% block global_actions %}
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
 <div class="form-action form-action-search  action-search">
     <form method="get" action="/admin/">
@@ -19,15 +21,25 @@
     <div class="button-action">
         <a class="btn btn-default" href="{{ path('clientes_new') }}">Nuevo Cliente</a> 
     </div>
-
-
+</div>
+</div>
 
   
 {% endblock %}
 
 {% block main %}
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
 
-    <table class="table datagrid">
+        <div class="header">
+            <h2>
+                <strong>Lista Clientes</strong>
+            </h2>
+            
+        </div>
+    <div class="card-body table-responsive">
+    <table class="table table-condensed">
         <thead>
             <tr>
                 <th>Id</th>
@@ -71,9 +83,8 @@
         {% endfor %}
         </tbody>
     </table>
-
-   <div class="pagerfanta">
-        
-    </div>
+</div>
+</div>
+</div>
 {% endblock %}
 

@@ -87,7 +87,7 @@
 </div>
 </div>
 </div>
-{% if (wallet_flotilla) %}
+{% if (wallet_cliente) %}
 
 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
     <div class="card">
@@ -111,8 +111,12 @@
 
     </div>
     </div>
+    {% else %}
+
   {% endif%}  
 </div>
+
+{% if (wallet_flotilla) %}
 
 
 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
@@ -198,7 +202,7 @@
     </div>
 </div>
 </div>
-
+{% endif %}
 {% endblock %}
 
 {% block body_javascript %}

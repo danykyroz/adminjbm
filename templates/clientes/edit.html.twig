@@ -4,9 +4,7 @@
 
 {% block main %}
     
-    {{ include('clientes/_form.html.twig', {'button_label': 'Guardar'}) }}
-	<br/>
-	{{ include('clientes/_delete_form.html.twig') }}
-
+    {{ include('clientes/_form.html.twig', {'button_label': 'Guardar','eliminar':true}) }}
+	
 
 {% endblock %}

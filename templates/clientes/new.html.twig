@@ -3,5 +3,5 @@
 {% block content_title %}Nuevo Cliente{% endblock %}
 
 {% block main %}
-    {{ include('clientes/_form.html.twig') }}
+    {{ include('clientes/_form.html.twig',{eliminar:false}) }}
 {% endblock %}

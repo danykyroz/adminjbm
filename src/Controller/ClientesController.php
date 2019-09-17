@@ -36,12 +36,16 @@ class ClientesController extends AbstractController
         
         $em=$this->getDoctrine()->getManager();
         $user_admin=($this->getUser());
-        $flotilla_user=$em->getRepository('App:FlotillaUsuarios','u')->findOneBy(array('usuarioId'=>$user_admin->getId()));
-
-        $flotilla_id=$flotilla_user->getFlotilla()->getId();
-        $page=$request->get('page',1);
+        
 
         if($user_admin->getRoles()[0]=="ROLE_ADMIN_FLOTILLA"){
+            
+            $flotilla_user=$em->getRepository('App:FlotillaUsuarios','u')->findOneBy(array('usuarioId'=>$user_admin->getId()));
+
+            $flotilla_id=$flotilla_user->getFlotilla()->getId();
+            $page=$request->get('page',1);
+
+
             $qb=$em->createQueryBuilder();
             $qb->select('c')->from('App:FlotillasClientes','f')
                             ->innerJoin('App:Clientes','c','WITH','f.clienteId=c')
@@ -50,18 +54,25 @@ class ClientesController extends AbstractController
 
             $qb->setParameter("flotillaId",$flotilla_id);
 
-            $clientes=$qb->getQuery()->getResult();                
+            $clientes=$qb->getQuery()->getResult();    
+
+            $adapter = new DoctrineORMAdapter($qb);
+            $pagerfanta=new Pagerfanta($adapter);
+            $pagerfanta->setMaxPerPage(50);
+                    
            
         }
         if($user_admin->getRoles()[0]=="ROLE_ADMIN"){
          $clientes = $this->getDoctrine()
             ->getRepository(Clientes::class)
             ->findAll();
+
+            $adapter = new DoctrineORMAdapter($clientes);
+            $pagerfanta=new Pagerfanta($adapter);
+            $pagerfanta->setMaxPerPage(50);
+            
         }
        
-        $adapter = new DoctrineORMAdapter($qb);
-        $pagerfanta=new Pagerfanta($adapter);
-        $pagerfanta->setMaxPerPage(50);
         //$pagerfanta->setCurrentPage($page);
 
         return $this->render('clientes/index.html.twig', [
@@ -163,10 +174,11 @@ class ClientesController extends AbstractController
 
         $wallet_flotilla=$em->getRepository('App:Wallet','w')->findOneBy(array('clienteId'=>$flotilla_cliente->getId()));
         
-        $wallet_cliente=$em->getRepository('App:Wallet','w')->findOneBy(array('clienteId'=>$cliente->getId()));
-
+       
         }
         
+         $wallet_cliente=$em->getRepository('App:Wallet','w')->findOneBy(array('clienteId'=>$cliente->getId()));
+ 
         return $this->render('clientes/show.html.twig', [
             'cliente' => $cliente,
             'wallet_flotilla'=>$wallet_flotilla,
