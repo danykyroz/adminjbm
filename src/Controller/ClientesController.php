@@ -303,8 +303,9 @@ class ClientesController extends AbstractController
 
             $user = $entityManager->getRepository("App:FosUser")->findOneBy(["email" => $cliente->getEmail()]);
 
-            $entityManager->remove($user);
-
+            if($user){
+                $entityManager->remove($user);
+            }
             $entityManager->remove($cliente);
             $entityManager->flush();
         }
