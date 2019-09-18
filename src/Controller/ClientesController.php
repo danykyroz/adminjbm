@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use FOS\UserBundle\Model\UserManagerInterface;
 use Symfony\Component\Security\Core\UserProviderInterface;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @Route("/admin/clientes")
@@ -23,9 +24,10 @@ class ClientesController extends AbstractController
 {
     
     private $userManager;
-
-    public function __construct(UserManagerInterface $userManager){
+    private $paginator;
+    public function __construct(UserManagerInterface $userManager, PaginatorInterface $paginator){
         $this->userManager=$userManager;
+        $this->paginator=$paginator;
     }  
 
     /**
@@ -56,28 +58,51 @@ class ClientesController extends AbstractController
 
             $clientes=$qb->getQuery()->getResult();    
 
-            $adapter = new DoctrineORMAdapter($qb);
-            $pagerfanta=new Pagerfanta($adapter);
-            $pagerfanta->setMaxPerPage(50);
-                    
+           
            
         }
         if($user_admin->getRoles()[0]=="ROLE_ADMIN"){
-         $clientes = $this->getDoctrine()
-            ->getRepository(Clientes::class)
-            ->findAll();
-
-            $adapter = new DoctrineORMAdapter($clientes);
-            $pagerfanta=new Pagerfanta($adapter);
-            $pagerfanta->setMaxPerPage(50);
+            $qb=$em->createQueryBuilder();
+            $qb->select('c')->from('App:Clientes','c');
             
         }
+        //Busquedas
+        if($request->get('query')!=""){
+
+            $qb->orWhere(sprintf('LOWER(%s.%s) LIKE :fuzzy_query', 'c', 'id'));
+            
+            $qb->orWhere(sprintf('LOWER(%s.%s) LIKE :fuzzy_query', 'c', 'nombres'));
+            
+            $qb->orWhere(sprintf('LOWER(%s.%s) LIKE :fuzzy_query', 'c', 'apellidos'));
+
+            $qb->orWhere(sprintf('LOWER(%s.%s) LIKE :fuzzy_query', 'c', 'documento'));
+                
+            $qb->orWhere(sprintf('LOWER(%s.%s) LIKE :fuzzy_query', 'c', 'email'));
+            
+            $qb->orWhere(sprintf('LOWER(%s.%s) LIKE :fuzzy_query', 'c', 'celular'));
+            
+             $qb->orWhere(sprintf('LOWER(%s.%s) LIKE :fuzzy_query', 'c', 'placa'));
+            
+            $lowerSearchQuery=strtolower($request->get('query'));
+            $qb->setParameter('fuzzy_query','%'.$lowerSearchQuery.'%');;
+
+        }
+
+        $paginator  = $this->paginator;
+        $pagination = $paginator->paginate(
+            $qb, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            2 /*limit per page*/
+        );
+         
        
         //$pagerfanta->setCurrentPage($page);
 
         return $this->render('clientes/index.html.twig', [
-            'clientes' => $clientes,
-            'pager_fanta'=>$pagerfanta
+            'clientes' => $pagination,
+            'pagination'=>$pagination,
+            'query'=>$request->get('query',''),
+            'tipo'=>array('1'=>'Cliente Waller','2'=>'Admin Flotilla')
         ]);
     }
 

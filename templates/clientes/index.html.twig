@@ -7,13 +7,13 @@
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
 <div class="form-action form-action-search  action-search">
-    <form method="get" action="/admin/">
+    <form method="get" action="/admin/clientes">
     <input type="hidden" name="action" value="search">
     <input type="hidden" name="entity" value="Clientes">
     <input type="hidden" name="submenuIndex" value="">
     <div class="form-group">
         <div class="form-widget">
-        <input class="form-control" type="search" name="query" value="" placeholder="Buscar">
+        <input class="form-control" type="search" name="query" value="{{query}}" placeholder="Buscar">
         </div>
     </div>
 </form>
@@ -42,15 +42,15 @@
     <table class="table table-condensed">
         <thead>
             <tr>
-                <th>Id</th>
-                <th class="string">Documento</th>
-                <th>Nombres</th>
-                <th>Apellidos</th>
-                <th>Email</th>
-                <th>Celular</th>
-                <th>Placa</th>
-                <th>CreatedAt</th>
-                <th>Tipo</th>
+                <th class="sorted integer">{{ knp_pagination_sortable(pagination, 'Id', 'c.id') }}</th>
+                <th class="string">{{ knp_pagination_sortable(pagination, 'Documento', 'c.documento') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'Nombres', 'c.nombres') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'Apellidos', 'c.apellidos') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'Email', 'c.email') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'Celular', 'c.celular') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'Placa', 'c.placa') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'Fecha Registro', 'c.createdAt') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'Tipo', 'c.tipo') }}</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -65,7 +65,7 @@
                 <td>{{ cliente.celular }}</td>
                 <td>{{ cliente.placa }}</td>
                 <td>{{ cliente.createdAt ? cliente.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ cliente.tipo }}</td>
+                <td>{{ tipo[cliente.tipo] }}</td>
                 <td>
                     <a href="{{ path('clientes_edit', {'id': cliente.id}) }}">
                         <i class="fa fa-fw fa-pencil"></i>
@@ -84,6 +84,9 @@
         </tbody>
     </table>
 </div>
+<div class="navigation">
+            {{ knp_pagination_render(clientes) }}
+        </div>
 </div>
 </div>
 {% endblock %}

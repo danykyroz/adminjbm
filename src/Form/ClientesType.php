@@ -3,12 +3,16 @@
 namespace App\Form;
 
 use App\Entity\Clientes;
+use App\Entity\Delegacion;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+
+use App\Repository\DelegacionRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-
 
 class ClientesType extends AbstractType
 {
@@ -21,6 +25,13 @@ class ClientesType extends AbstractType
             ->add('email', EmailType::class, array('label' => 'Email'))
             ->add('celular',null,array('required'=>true))
             ->add('avatar')
+           ->add('delegacion', EntityType::class, [
+                'class'         => Delegacion::class,
+                'query_builder' => function(EntityRepository $repo) {
+
+                    return $repo->createQueryBuilder('d')->orderBy('d.municipio','Asc');
+                }
+            ])
             ->add('placa',null,array('required'=>true))
             ->add('tipo', ChoiceType::class, [
                    

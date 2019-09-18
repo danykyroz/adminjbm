@@ -2,8 +2,10 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 
+use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Delegacion as Delegacion;
+use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * Clientes
  *
@@ -56,12 +58,15 @@ class Clientes
      */
     private $pais = 'MX';
 
+   
     /**
-     * @var int|null
+     * Many-to-one relationship between documents and course
      *
-     * @ORM\Column(name="municipio_id", type="integer", nullable=true)
-     */
-    private $municipioId;
+     * @var ArrayCollection
+     * @ORM\ManyToOne(targetEntity="App\Entity\Delegacion")
+     * @ORM\JoinColumn(name="delegacion_id", referencedColumnName="id")
+    */
+    private $delegacion;
 
     /**
      * @var int
@@ -93,14 +98,14 @@ class Clientes
 
     /**
      * @var \DateTime|null
-     *
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="created_at", type="datetime", nullable=true)
      */
     private $createdAt;
 
     /**
      * @var \DateTime|null
-     *
+     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
     private $updatedAt;
@@ -191,17 +196,18 @@ class Clientes
         return $this;
     }
 
-    public function getMunicipioId(): ?int
+     public function getDelegacion(): ?Delegacion
     {
-        return $this->municipioId;
+        return $this->delegacion;
     }
 
-    public function setMunicipioId(?int $municipioId): self
+    public function setDelegacion(?Delegacion $delegacion): self
     {
-        $this->municipioId = $municipioId;
+        $this->delegacion = $delegacion;
 
         return $this;
     }
+
 
     public function getIndicativo(): ?int
     {
