@@ -102,7 +102,7 @@ class ClientesController extends AbstractController
             'clientes' => $pagination,
             'pagination'=>$pagination,
             'query'=>$request->get('query',''),
-            'tipo'=>array('1'=>'Cliente Waller','2'=>'Admin Flotilla')
+            'tipo'=>array('1'=>'Cliente Wallet','2'=>'Admin Flotilla')
         ]);
     }
 
