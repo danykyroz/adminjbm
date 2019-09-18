@@ -1,6 +1,6 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
-<form action="{{ path("fos_user_security_check") }}" method="post" class="login100-form validate-form">
+<form action="{{ path("user_check_login") }}" method="post" class="login100-form validate-form">
                     {% if csrf_token %}
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
                     {% endif %}
@@ -11,10 +11,14 @@
                     <span class="login100-form-title p-b-34 p-t-27">
                         Login
                     </span>
-                     {% if error %}
-                    <div style="color: red">{{ error.messageKey|trans(error.messageData, 'security') }}
-                    </div>
-                    {% endif %}    
+                    {% for message in app.flashes('bad') %}
+                <div class="alert bg-pink alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    {{message}}
+                </div>
+             {% endfor %} 
                     <br/>
                     <div class="wrap-input100 validate-input" data-validate="Enter username">
                         <input class="input100" type="text" id="username" name="_username" value="{{ last_username }}" placeholder="Nombre de usuario">
