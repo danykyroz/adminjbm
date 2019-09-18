@@ -83,7 +83,7 @@ class ClientesController extends AbstractController
             
              $qb->orWhere(sprintf('LOWER(%s.%s) LIKE :fuzzy_query', 'c', 'placa'));
             
-            $lowerSearchQuery=strtolower($request->get('query'));
+            $lowerSearchQuery=trim(strtolower($request->get('query')));
             $qb->setParameter('fuzzy_query','%'.$lowerSearchQuery.'%');;
 
         }
@@ -92,7 +92,7 @@ class ClientesController extends AbstractController
         $pagination = $paginator->paginate(
             $qb, /* query NOT result */
             $request->query->getInt('page', 1), /*page number*/
-            2 /*limit per page*/
+            50 /*limit per page*/
         );
          
        
