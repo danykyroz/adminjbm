@@ -1,11 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New PuntoVenta{% endblock %}
+{% block content_title %}Nuevo Punto De Venta{% endblock %}
 
 {% block body %}
-    <h1>Create new PuntoVenta</h1>
-
-    {{ include('punto_venta/_form.html.twig') }}
-
-    <a href="{{ path('punto_venta_index') }}">back to list</a>
+    {{ include('punto_venta/_form.html.twig',{eliminar:false}) }}
 {% endblock %}

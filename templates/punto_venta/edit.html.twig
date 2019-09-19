@@ -1,13 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit PuntoVenta{% endblock %}
+{% block content_title %}Editar Punto De Venta{% endblock %}
 
 {% block body %}
-    <h1>Edit PuntoVenta</h1>
-
-    {{ include('punto_venta/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('punto_venta_index') }}">back to list</a>
-
-    {{ include('punto_venta/_delete_form.html.twig') }}
+    {{ include('punto_venta/_form.html.twig', {'button_label': 'Actualizar',eliminar:true}) }}
 {% endblock %}
