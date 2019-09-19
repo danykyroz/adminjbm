@@ -20,6 +20,12 @@
 {% block content_footer_wrapper '' %}
 
 {% block main %}
+<div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="card">
+
+            <div class="card-body table-responsive">
+
     {% block entity_form %}
         {{ form(form) }}
     {% endblock entity_form %}
@@ -34,6 +40,10 @@
             _entity_config: _entity_config,
         }, with_context = false) }}
     {% endblock delete_form %}
+         </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block body_javascript %}

@@ -36,7 +36,7 @@ class Delegacion
 
     public function getMunicipio(): ?string
     {
-        return utf8_decode($this->municipio);
+        return $this->municipio;
     }
 
     public function setMunicipio(string $municipio): self
