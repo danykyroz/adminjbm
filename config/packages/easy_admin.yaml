@@ -22,16 +22,16 @@ easy_admin:
               class: App\Entity\Flotillas
               form:  # <-- 'form' is applied to both 'new' and 'edit' views
                 fields:
-                    - { property: 'nombre', type: 'text', label: 'Nombre' }
-                    - { property: 'documento', type: 'text', label: 'Documento' }
+                    - { property: 'nombre', type: 'text', label: 'Nombre', type_options: { required: true } }
+                    - { property: 'documento', type: 'text', label: 'Documento' , type_options: { required: true } }
         Clientes:
               class: App\Entity\Clientes
         Gasolineras:
               class: App\Entity\Gasolineras
               form:  # <-- 'form' is applied to both 'new' and 'edit' views
                 fields:
-                    - { property: 'nombre', type: 'text', label: 'Nombre' }
-                    - { property: 'direccion', type: 'text', label: 'Direccion' }
+                    - { property: 'nombre', type: 'text', label: 'Nombre', type_options: { required: true } }
+                    - { property: 'direccion', type: 'text', label: 'Direccion', type_options: { required: true } }
                     - { property: 'codigoPostal', type: 'text', label: 'Código Postal' }
                     - { property: 'nombreEncargado', type: 'text', label: 'Nombre Encargado' }
                     - { property: 'telefonoEncargado', type: 'text', label: 'Teléfono Encargado' }
@@ -39,3 +39,10 @@ easy_admin:
 
         PuntosVenta:
               class: App\Entity\PuntoVenta
+              form:  # <-- 'form' is applied to both 'new' and 'edit' views
+                fields:
+                    - { property: 'documento', type: 'text', label: 'Documento', type_options: { required: true } }
+                    - { property: 'nombres', type: 'text', label: 'Nombre', type_options: { required: true } }
+                    - { property: 'apellidos', type: 'text', label: 'Apellidos', type_options: { required: true } }
+                    - { property: 'email', type: 'email', label: 'Email' ,type_options: { required: true } }
+                    - { property: 'celular', type: 'text', label: 'Celular' }

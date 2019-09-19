@@ -1,12 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Flotillas{% endblock %}
+{% block content_title %}Editar Flotillas{% endblock %}
 
 {% block body %}
-    <h1>Edit Flotillas</h1>
-
-    {{ include('flotillas/_form.html.twig', {'button_label': 'Guardar'}) }}
-    <br/>
-{{ include('flotillas/_delete_form.html.twig') }}
+    
+    {{ include('flotillas/_form.html.twig', {'button_label': 'Guardar','delete':true}) }}
+    
 
 {% endblock %}
