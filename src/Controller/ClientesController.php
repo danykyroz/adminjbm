@@ -135,6 +135,7 @@ class ClientesController extends AbstractController
                 $this->addFlash('bad', 'Ya existe un cliente o usuario con este correo');
             }
             else{
+
                 $entityManager->persist($cliente);
                 $entityManager->flush();
                 
@@ -166,9 +167,9 @@ class ClientesController extends AbstractController
 
                     
                 }
-
-
-                 $this->addFlash('success', 'Cliente creado exitosamente!');
+                
+                $this->addFlash('success', 'Cliente creado exitosamente!');
+                
                 return $this->redirectToRoute('clientes_index');
             }
       
@@ -338,5 +339,5 @@ class ClientesController extends AbstractController
             }else{
                 return false;
             }
-        }
+    }
 }

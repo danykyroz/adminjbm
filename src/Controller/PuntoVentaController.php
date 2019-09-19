@@ -8,12 +8,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\EasyAdminController;
-
+use App\Controller\HelperController;
 /**
  * @Route("/admin/puntos/venta")
  */
-class PuntoVentaController extends AbstractController
+class PuntoVentaController extends HelperController
 {
     /**
      * @Route("/", name="punto_venta_index", methods={"GET"})
@@ -39,11 +38,26 @@ class PuntoVentaController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($puntoVentum);
-            $entityManager->flush();
+           
+            $rol="ROLE_PUNTO_VENTA";
 
-            return $this->redirectToRoute('punto_venta_index');
+            $user=$this->createUserClient($puntoVentum,$rol);    
+            if(!$user){
+                $this->addFlash('bad', 'Ya existe un cliente o usuario con este correo');
+
+
+            }else{
+
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($puntoVentum);
+                $entityManager->flush();
+
+                $this->addFlash('success', 'Cliente creado exitosamente!');
+                return $this->redirectToRoute('punto_venta_index');
+
+                
+            }
+            
         }
 
         return $this->render('punto_venta/new.html.twig', [
@@ -89,6 +103,13 @@ class PuntoVentaController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$puntoVentum->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
+            
+            $user = $entityManager->getRepository("App:FosUser")->findOneBy(["email" => $puntoVentum->getEmail()]);
+
+            if($user){
+                $entityManager->remove($user);
+            }
+
             $entityManager->remove($puntoVentum);
             $entityManager->flush();
         }
