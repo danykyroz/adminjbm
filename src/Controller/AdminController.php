@@ -25,7 +25,7 @@ class AdminController extends EasyAdminController
         }
     }
 
-    protected function createNewFlotillaEntity()
+    protected function createNewPuntoVentaEntity()
 	{
 	    $flotilla = new Flotilla();
 	    echo "aa";

@@ -33,18 +33,14 @@ class FlotillaUsuariosRepository extends EntityRepository
         $em = $this->getEntityManager();
         $qb = $em->createQueryBuilder()->from("App:FosUser", "f")
             ->innerJoin('App:FlotillaUsuarios','u','WITH','f.id=u.usuarioId')
-            ->select("f.id")
-            ->addselect("f.email")
-            ->addSelect("f.username")
+            ->select("f")
             ->where("f.roles LIKE :roles")
-            ->andWhere('u.flotillaId=:flotillaId')
             ->andWhere("f.enabled = 1")
-            ->orderBy("f.id", "ASC");
+            ->andWhere('u.flotillaId=:flotillaId')
+            ->setParameter('flotillaId',$flotillaId)
+            ->setParameter('roles',"%flotilla%");
         
-        $qb->setParameter('flotillaId',$flotillaId);
-        $qb->setParameter('roles',"%flotilla%");
-
-        return $qb->getQuery()->getResult();
+        return $qb;
 
 
     }

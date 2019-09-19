@@ -67,14 +67,41 @@ class FlotillasController extends AbstractController
     /**
      * @Route("/usuarios/{id}", name="flotillas_usuarios", methods={"GET"})
      */
-    public function usuarios(Flotillas $flotilla): Response
+    public function usuarios(Flotillas $flotilla, PaginatorInterface $paginator, Request $request): Response
     {
         $em=$this->getDoctrine()->getManager();
-        $usuarios=$em->getRepository('App:FlotillaUsuarios')->listaUsuariosFlotilla($flotilla->getId());
+        
+        $qb=$em->getRepository('App:FlotillaUsuarios')->listaUsuariosFlotilla($flotilla->getId());
+
+        
+        if($request->get('query')!=""){
+            
+            $qb->andwhere('f.username LIKE :fuzzy_query OR f.email LIKE :fuzzy_query');
+            
+            $lowerSearchQuery=trim(strtolower($request->get('query')));
+            $qb->setParameter('fuzzy_query','%'.$lowerSearchQuery.'%');;
+
+        }
+        
+
+        $qb->andWhere('u.flotillaId=:flotillaId')
+            ->setParameter('flotillaId',$flotilla->getId());
+            
+
+       
+        $pagination = $paginator->paginate(
+            $qb, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            50 /*limit per page*/
+        );
+    
+
 
          return $this->render('flotillas/usuarios.html.twig', [
             'flotilla' => $flotilla,
-            'usuarios'=>$usuarios
+            'usuarios'=>$pagination,
+            'pagination'=>$pagination,
+            'query'=>$request->get('query','')
         ]);
     }
 
@@ -104,11 +131,12 @@ class FlotillasController extends AbstractController
         $usuario_id=$request->get("usuario_id");
         $existe=$em->getRepository('App:FlotillaUsuarios','f')->findOneBy(array('flotillaId'=>$flotilla_id,'usuarioId'=>$usuario_id));
 
+        $flotilla=$em->getRepository('App:Flotillas','f')->find($flotilla_id);
         if($existe){
             $flotillas_usuarios=$existe;
         }else{
             $flotillas_usuarios=new FlotillaUsuarios();
-            $flotillas_usuarios->setFlotillaId($flotilla_id);
+            $flotillas_usuarios->setFlotilla($flotilla);
         }
         $flotillas_usuarios->setUsuarioId($usuario_id);
         $em->persist($flotillas_usuarios);
