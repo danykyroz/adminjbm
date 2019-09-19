@@ -12,6 +12,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Knp\Component\Pager\PaginatorInterface;
+
 
 /**
  * @Route("/admin/flotillas")
@@ -21,14 +23,44 @@ class FlotillasController extends AbstractController
     /**
      * @Route("/", name="flotillas_index", methods={"GET"})
      */
-    public function index(): Response
+    public function index(PaginatorInterface $paginator, Request $request): Response
     {
         $flotillas = $this->getDoctrine()
             ->getRepository(Flotillas::class)
             ->findAll();
+        
+        $em=$this->getDoctrine()->getManager();
+        
+        $qb=$em->createQueryBuilder();
 
+        $qb->select('f')->from('App:Flotillas','f');
+        
+
+        if($request->get('query')!=""){
+
+            $qb->orWhere(sprintf('LOWER(%s.%s) LIKE :fuzzy_query', 'f', 'id'));
+            
+            $qb->orWhere(sprintf('LOWER(%s.%s) LIKE :fuzzy_query', 'f', 'nombre'));
+            
+            
+            $qb->orWhere(sprintf('LOWER(%s.%s) LIKE :fuzzy_query', 'f', 'documento'));
+                
+            
+            $lowerSearchQuery=trim(strtolower($request->get('query')));
+            $qb->setParameter('fuzzy_query','%'.$lowerSearchQuery.'%');;
+
+        }
+
+        $pagination = $paginator->paginate(
+            $qb, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            50 /*limit per page*/
+        );
+    
         return $this->render('flotillas/index.html.twig', [
-            'flotillas' => $flotillas,
+            'flotillas' => $pagination,
+            'pagination'=> $pagination,
+            'query'=>$request->get('query',''),
         ]);
     }
 

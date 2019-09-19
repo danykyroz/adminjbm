@@ -23,7 +23,6 @@
     </div>
 </div>
 </div>
-
   
 {% endblock %}
 
@@ -42,8 +41,8 @@
     <table class="table table-condensed">
         <thead>
             <tr>
-                <th class="sorted integer">{{ knp_pagination_sortable(pagination, 'Id', 'c.id') }}</th>
-                <th class="string">{{ knp_pagination_sortable(pagination, 'Documento', 'c.documento') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'Id', 'c.id') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'Documento', 'c.documento') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'Nombres', 'c.nombres') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'Apellidos', 'c.apellidos') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'Email', 'c.email') }}</th>

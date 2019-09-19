@@ -38,7 +38,6 @@ class ClientesController extends AbstractController
         
         $em=$this->getDoctrine()->getManager();
         $user_admin=($this->getUser());
-        
 
         if($user_admin->getRoles()[0]=="ROLE_ADMIN_FLOTILLA"){
             
