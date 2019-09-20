@@ -39,7 +39,7 @@ class PuntoVentaController extends HelperController
 
         if ($form->isSubmitted() && $form->isValid()) {
            
-            $rol="ROLE_PUNTO_VENTA";
+            $rol="ROLE_VENDEDOR";
 
             $user=$this->createUserClient($puntoVentum,$rol);    
             if(!$user){
