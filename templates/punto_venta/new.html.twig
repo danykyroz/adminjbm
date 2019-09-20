@@ -1,0 +1,7 @@
+{% extends 'base.html.twig' %}
+
+{% block content_title %}Nuevo Punto De Venta{% endblock %}
+
+{% block body %}
+    {{ include('punto_venta/_form.html.twig',{eliminar:false}) }}
+{% endblock %}

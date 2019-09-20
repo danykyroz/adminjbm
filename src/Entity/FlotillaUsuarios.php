@@ -1,15 +1,13 @@
 <?php
 
 namespace App\Entity;
-
+use App\Repository\FlotillaUsuariosRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * FlotillaUsuarios
- *
- * @ORM\Table(name="flotilla_usuarios", indexes={@ORM\Index(name="flotilla_id", columns={"flotilla_id"})})
- * @ORM\Entity
- */
+ * @ORM\Entity(repositoryClass="App\Repository\FlotillaUsuariosRepository")
+*/
 class FlotillaUsuarios
 {
     /**
@@ -27,6 +25,13 @@ class FlotillaUsuarios
      * @ORM\Column(name="usuario_id", type="integer", nullable=true)
      */
     private $usuarioId;
+
+     /**
+     * @var int|null
+     *
+     * @ORM\Column(name="flotilla_id", type="integer", nullable=true)
+     */
+    private $flotillaId;
 
     /**
      * @var \Flotillas
@@ -51,6 +56,18 @@ class FlotillaUsuarios
     public function setUsuarioId(?int $usuarioId): self
     {
         $this->usuarioId = $usuarioId;
+
+        return $this;
+    }
+
+    public function getFlotillaId(): ?int
+    {
+        return $this->flotillaId;
+    }
+
+    public function setFlotillaId(?int $flotillaId): self
+    {
+        $this->flotillaId = $flotillaId;
 
         return $this;
     }
