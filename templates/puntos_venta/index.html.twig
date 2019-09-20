@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PuntosVenta index{% endblock %}
+
+{% block body %}
+    <h1>PuntosVenta index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>CreatedAt</th>
+                <th>UpdatedAt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for puntos_ventum in puntos_ventas %}
+            <tr>
+                <td>{{ puntos_ventum.id }}</td>
+                <td>{{ puntos_ventum.nombre }}</td>
+                <td>{{ puntos_ventum.createdAt ? puntos_ventum.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ puntos_ventum.updatedAt ? puntos_ventum.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('puntos_venta_show', {'id': puntos_ventum.id}) }}">show</a>
+                    <a href="{{ path('puntos_venta_edit', {'id': puntos_ventum.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('puntos_venta_new') }}">Create new</a>
+{% endblock %}

@@ -38,7 +38,7 @@ easy_admin:
                     - { property: 'delegacion', type: 'entity', label: 'Delegacion', type_options: { class: 'App\Entity\Delegacion', required: true, multiple: false } }
 
         PuntosVenta:
-              class: App\Entity\PuntoVenta
+              class: App\Entity\PuntosVenta
               form:  # <-- 'form' is applied to both 'new' and 'edit' views
                 fields:
                     - { property: 'documento', type: 'text', label: 'Documento', type_options: { required: true } }

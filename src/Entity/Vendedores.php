@@ -4,15 +4,15 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-
+use App\Entity\PuntoVenta;
 
 /**
- * PuntoVenta
+ * Vendedores
  *
- * @ORM\Table(name="punto_venta")
+ * @ORM\Table(name="vendedores")
  * @ORM\Entity
  */
-class PuntoVenta
+class Vendedores
 {
     /**
      * @var int
@@ -72,6 +72,15 @@ class PuntoVenta
     */
     private $updatedAt;
 
+
+    /**
+     * Many-to-one relationship between vendedor and puntos de ventas
+     *
+     * @var ArrayCollection
+     * @ORM\ManyToOne(targetEntity="App\Entity\PuntosVenta")
+     * @ORM\JoinColumn(name="punto_venta_id", referencedColumnName="id")
+    */
+    private $puntoVenta;
 
     public function getId(): ?int
     {
@@ -158,6 +167,18 @@ class PuntoVenta
     public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getPuntoVenta(): ?PuntoVenta
+    {
+        return $this->puntoVenta;
+    }
+
+    public function setPuntoVenta(?PuntoVenta $puntoVenta): self
+    {
+        $this->puntoVenta = $puntoVenta;
 
         return $this;
     }

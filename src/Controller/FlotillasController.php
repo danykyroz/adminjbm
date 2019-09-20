@@ -25,31 +25,27 @@ class FlotillasController extends AbstractController
      */
     public function index(PaginatorInterface $paginator, Request $request): Response
     {
-        $flotillas = $this->getDoctrine()
-            ->getRepository(Flotillas::class)
-            ->findAll();
-        
+        //Conectarme a la bd
         $em=$this->getDoctrine()->getManager();
-        
+        //Inicializar una consulta
         $qb=$em->createQueryBuilder();
-
+        //Select from flotillas 
         $qb->select('f')->from('App:Flotillas','f');
         
 
         if($request->get('query')!=""){
-
+            //where f.id like '%query%'
             $qb->orWhere(sprintf('LOWER(%s.%s) LIKE :fuzzy_query', 'f', 'id'));
-            
+            //or f.nombre like '%query%'
+
             $qb->orWhere(sprintf('LOWER(%s.%s) LIKE :fuzzy_query', 'f', 'nombre'));
-            
-            
+            //or f.nombre like '%query%'
             $qb->orWhere(sprintf('LOWER(%s.%s) LIKE :fuzzy_query', 'f', 'documento'));
-                
             
             $lowerSearchQuery=trim(strtolower($request->get('query')));
             $qb->setParameter('fuzzy_query','%'.$lowerSearchQuery.'%');;
 
-        }
+        }   
 
         $pagination = $paginator->paginate(
             $qb, /* query NOT result */

@@ -36,6 +36,33 @@ class UserController extends Controller
         $this->tokenManager = $tokenManager;  
         $this->managerInterface= $managerInterface;
     }
+    
+    /**
+     * @Route("/login", name="login")
+    */
+    public function login(Request $request)
+    {
+        
+        $user=($this->getUser());
+        if(is_object($user)){
+            return $this->redirect('admin/home');
+        }
+
+         $csrfToken = $this->tokenManager
+            ? $this->tokenManager->getToken('authenticate')->getValue()
+            : null;
+
+
+         $data=array(
+            'last_username' => '',
+            'error' => '',
+            'csrf_token' => $csrfToken,
+            );
+            return $this->render('@FOSUser/Security/login.html.twig', $data);
+        
+    }
+
+
     /**
      * @Route("/user/chek_login", name="user_check_login")
     */
