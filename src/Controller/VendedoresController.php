@@ -87,7 +87,7 @@ class VendedoresController extends HelperController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('vendedores_index');
+            return $this->redirectToRoute('vendedor_index');
         }
 
         return $this->render('vendedores/edit.html.twig', [
@@ -104,7 +104,7 @@ class VendedoresController extends HelperController
         if ($this->isCsrfTokenValid('delete'.$vendedores->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             
-            $user = $entityManager->getRepository("App:FosUser")->findOneBy(["email" => $Vendedores->getEmail()]);
+            $user = $entityManager->getRepository("App:FosUser")->findOneBy(["email" => $vendedores->getEmail()]);
 
             if($user){
                 $entityManager->remove($user);
@@ -114,7 +114,7 @@ class VendedoresController extends HelperController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('vendedores_index');
+        return $this->redirectToRoute('vendedor_index');
     }
 
     

@@ -4,7 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use App\Entity\PuntoVenta;
+use App\Entity\PuntosVenta;
 
 /**
  * Vendedores
@@ -171,12 +171,12 @@ class Vendedores
         return $this;
     }
 
-    public function getPuntoVenta(): ?PuntoVenta
+    public function getPuntoVenta(): ?PuntosVenta
     {
         return $this->puntoVenta;
     }
 
-    public function setPuntoVenta(?PuntoVenta $puntoVenta): self
+    public function setPuntoVenta(?PuntosVenta $puntoVenta): self
     {
         $this->puntoVenta = $puntoVenta;
 
