@@ -1,18 +1,52 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}PuntosVenta index{% endblock %}
+{% block content_title %}Puntos De Venta{% endblock %}
+
+
+{% block global_actions %}
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+        <div class="form-action form-action-search  action-search">
+            <form method="get" action="/admin/puntos/venta">
+                <input type="hidden" name="action" value="search">
+                <input type="hidden" name="entity" value="Flotillas">
+                <input type="hidden" name="submenuIndex" value="">
+                <div class="form-group">
+                    <div class="form-widget">
+                        <input class="form-control" type="search" name="query" value="" placeholder="Buscar">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="button-action">
+            <a class="btn btn-default" href="{{ path('puntos_venta_new') }}">Nuevo Punto Venta</a> 
+        </div>
+    </div>
+</div>
+
+{% endblock %}
 
 {% block body %}
-    <h1>PuntosVenta index</h1>
+   <div class="row">
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+<div class="card">
 
-    <table class="table">
-        <thead>
+    <div class="header">
+        <h2>
+            <strong>Lista Vendedores</strong>
+        </h2>
+    </div>
+    <div class="card-body table-responsive">
+        <table class="table table-condensed">    
+         <thead>
             <tr>
                 <th>Id</th>
                 <th>Nombre</th>
-                <th>CreatedAt</th>
-                <th>UpdatedAt</th>
-                <th>actions</th>
+                <th>Gasolinera</th>
+                <th>Fecha Creación</th>
+                
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -20,11 +54,24 @@
             <tr>
                 <td>{{ puntos_ventum.id }}</td>
                 <td>{{ puntos_ventum.nombre }}</td>
+                <td>{{ puntos_ventum.gasolinera.nombre }}</td>
                 <td>{{ puntos_ventum.createdAt ? puntos_ventum.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ puntos_ventum.updatedAt ? puntos_ventum.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                
                 <td>
-                    <a href="{{ path('puntos_venta_show', {'id': puntos_ventum.id}) }}">show</a>
-                    <a href="{{ path('puntos_venta_edit', {'id': puntos_ventum.id}) }}">edit</a>
+                    <a title="Editar" href="{{ path('puntos_venta_edit', {'id': puntos_ventum.id}) }}">
+                        <i class="fa fa-fw fa-pencil"></i>
+                    </a>
+
+                    <a title="Ver" href="{{ path('puntos_venta_show', {'id': puntos_ventum.id}) }}">
+                        <i class="fa fa-fw fa-eye"></i>
+
+                    </a>
+
+                     <a title="Usuarios" href="{{ path('puntos_venta_usuarios', {'id': puntos_ventum.id}) }}">
+                        <i class="fa fa-fw fa-user"></i>
+
+                    </a>
+                    
                 </td>
             </tr>
         {% else %}
@@ -34,6 +81,8 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('puntos_venta_new') }}">Create new</a>
+</div>
+</div>
+</div>
+</div>
 {% endblock %}

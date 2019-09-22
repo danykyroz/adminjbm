@@ -1,11 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}PuntosVenta{% endblock %}
+{% block content_title %}Puntos Venta {% endblock %}
 
 {% block body %}
-    <h1>PuntosVenta</h1>
 
-    <table class="table">
+<div class="row">
+<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+    <div class="card">
+        <div class="header">
+            <h2>
+                <strong>{{puntos_ventum.nombre}}</strong>
+            </h2>
+            
+        </div>
+    <div class="card-body table-responsive">
+    <table class="table table-condensed">
+    
         <tbody>
             <tr>
                 <th>Id</th>
@@ -25,10 +35,10 @@
             </tr>
         </tbody>
     </table>
+     <a class="btn btn-success" href="{{ path('puntos_venta_edit', {'id': puntos_ventum.id}) }}">Editar</a>
 
-    <a href="{{ path('puntos_venta_index') }}">back to list</a>
-
-    <a href="{{ path('puntos_venta_edit', {'id': puntos_ventum.id}) }}">edit</a>
-
+    <a class="btn" href="{{ path('puntos_venta_index') }}">Volver al Listado</a>
+    <br/><br/>
+   
     {{ include('puntos_venta/_delete_form.html.twig') }}
 {% endblock %}

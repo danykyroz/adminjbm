@@ -7,9 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Delegacion
  *
- * @ORM\Table(name="delegacion")
  * @ORM\Entity(repositoryClass="App\Repository\DelegacionRepository")
- * @ORM\Entity
  */
 class Delegacion
 {

@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\Type\RegistroUsuariosFormType;
-
+use App\Entity\FosUser;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\UserBundle\Model\UserManagerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -203,6 +203,7 @@ class UserController extends Controller
 
        return $this->render('/user/new.html.twig',['form'=>$form->createView()]);
     }
+    
 
     /**
      * @param $user GrantUser
