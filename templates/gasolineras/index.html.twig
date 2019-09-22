@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block content_title %}Gasolineras{% endblock %}
+
+{% block global_actions %}
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+        <div class="form-action form-action-search  action-search">
+            <form method="get" action="/admin/gasolineras">
+                <input type="hidden" name="action" value="search">
+                <input type="hidden" name="entity" value="Flotillas">
+                <input type="hidden" name="submenuIndex" value="">
+                <div class="form-group">
+                    <div class="form-widget">
+                        <input class="form-control" type="search" name="query" value="" placeholder="Buscar">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="button-action">
+            <a class="btn btn-default" href="{{ path('gasolineras_new') }}">Nueva Gasolinera</a> 
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block body %}
+<div class="row">
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+<div class="card">
+
+    <div class="header">
+        <h2>
+            <strong>Lista Gasolineras</strong>
+        </h2>
+    </div>
+
+    <div class="card-body table-responsive">
+    <table class="table table-condensed">
+    <thead>
+            <tr>
+                <th>Id</th>
+                <th>Fecha Creación</th>
+                <th>Nombre</th>
+                <th>Nombre Encargado</th>
+                <th>Teléfono Encargado</th>
+                <th>Delegación</th>
+                <th>Dirección</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for gasolinera in gasolineras %}
+            <tr>
+                <td>{{ gasolinera.id }}</td>
+                <td>{{ gasolinera.createdAt ? gasolinera.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ gasolinera.nombre }}</td>
+                <td>{{ gasolinera.nombreEncargado }}</td>
+                <td>{{ gasolinera.telefonoEncargado }}</td>
+                <td>{{ gasolinera.delegacion }}</td>
+                <td>{{ gasolinera.direccion }}</td>
+                <td>
+                     <a href="{{ path('gasolineras_edit', {'id': gasolinera.id}) }}">
+                         <i class="fa fa-fw fa-pencil"></i>      
+                     </a>
+                   
+                    <a href="{{ path('gasolineras_show', {'id': gasolinera.id}) }}">
+                         <i class="fa fa-fw fa-eye"></i> 
+                    </a>
+
+                     <a href="{{ path('puntos_venta_list_gasolinera', {'id': gasolinera.id}) }}">
+                          <i class="fa fa-fw fa-shopping-basket"></i> 
+                     </a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="12">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+    </div> 
+</div>
+</div> 
+{% endblock %}

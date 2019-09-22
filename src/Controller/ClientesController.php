@@ -87,6 +87,26 @@ class ClientesController extends AbstractController
 
         }
 
+        if($request->get('tipo_cliente')!=""){
+            $qb->andWhere('c.tipo=:tipo')
+            ->setParameter('tipo',$request->get('tipo_cliente'));
+        }
+        if($request->get('delegacion')!=""){
+
+           $delegacion=$em->getRepository('App:Delegacion')->find($request->get('delegacion'));
+
+            $qb->andWhere('c.delegacion=:delegacion')
+            ->setParameter('delegacion',$delegacion);
+        }
+
+        if($request->get('estado')!=""){
+
+          $qb->andWhere('c.estado=:estado')
+            ->setParameter('estado',$request->get('estado'));
+        }
+
+        $delegaciones=$em->getRepository('App:Delegacion')->orderByName();
+
         $paginator  = $this->paginator;
         $pagination = $paginator->paginate(
             $qb, /* query NOT result */
@@ -101,7 +121,11 @@ class ClientesController extends AbstractController
             'clientes' => $pagination,
             'pagination'=>$pagination,
             'query'=>$request->get('query',''),
-            'tipo'=>array('1'=>'Cliente Wallet','2'=>'Admin Flotilla')
+            'tipo'=>array('1'=>'Cliente Wallet','2'=>'Admin Flotilla'),
+            'delegaciones'=>$delegaciones,
+            'tipo_cliente'=>$request->get('tipo_cliente',""),
+            'delegacion_form'=>$request->get('delegacion',""),
+            'estado'=>$request->get('estado',""),
         ]);
     }
 

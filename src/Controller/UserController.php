@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\Type\RegistroUsuariosFormType;
-
+use App\Entity\FosUser;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\UserBundle\Model\UserManagerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -36,6 +36,33 @@ class UserController extends Controller
         $this->tokenManager = $tokenManager;  
         $this->managerInterface= $managerInterface;
     }
+    
+    /**
+     * @Route("/login", name="login")
+    */
+    public function login(Request $request)
+    {
+        
+        $user=($this->getUser());
+        if(is_object($user)){
+            return $this->redirect('admin/home');
+        }
+
+         $csrfToken = $this->tokenManager
+            ? $this->tokenManager->getToken('authenticate')->getValue()
+            : null;
+
+
+         $data=array(
+            'last_username' => '',
+            'error' => '',
+            'csrf_token' => $csrfToken,
+            );
+            return $this->render('@FOSUser/Security/login.html.twig', $data);
+        
+    }
+
+
     /**
      * @Route("/user/chek_login", name="user_check_login")
     */
@@ -176,6 +203,7 @@ class UserController extends Controller
 
        return $this->render('/user/new.html.twig',['form'=>$form->createView()]);
     }
+    
 
     /**
      * @param $user GrantUser

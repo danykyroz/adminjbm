@@ -1,0 +1,7 @@
+{% extends 'base.html.twig' %}
+
+{% block content_title %}Nueva Gasolineras{% endblock %}
+
+{% block body %}
+    {{ include('gasolineras/_form.html.twig',{'delete':false}) }}
+{% endblock %}

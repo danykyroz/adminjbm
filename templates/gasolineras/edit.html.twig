@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editar Gasolinera{% endblock %}
+
+{% block body %}
+   
+    {{ include('gasolineras/_form.html.twig', {'button_label': 'Actualizar','delete':true}) }}
+
+   
+{% endblock %}

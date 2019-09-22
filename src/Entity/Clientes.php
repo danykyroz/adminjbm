@@ -131,6 +131,13 @@ class Clientes
      */
     private $tipo = '1';
 
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="estado", type="integer", nullable=true, options={"default"="1","comment"="1=Normal,2=Flotilla"})
+     */
+    private $estado= '1';
+
     public function getId(): ?int
     {
         return $this->id;
@@ -313,6 +320,24 @@ class Clientes
     public function setTipo(?int $tipo): self
     {
         $this->tipo = $tipo;
+
+        return $this;
+    }
+
+    public function getEstado()
+    {
+        if($this->estado==0){
+            return 'suspendido';
+        }else{
+             return 'Activo';   
+        }
+    }
+
+    public function setEstado(?int $estado): self
+    {
+       
+
+        $this->estado = $estado;
 
         return $this;
     }

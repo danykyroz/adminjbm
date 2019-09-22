@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block content_title %}Puntos Venta {% endblock %}
+
+{% block body %}
+
+<div class="row">
+<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+    <div class="card">
+        <div class="header">
+            <h2>
+                <strong>{{puntos_ventum.nombre}}</strong>
+            </h2>
+            
+        </div>
+    <div class="card-body table-responsive">
+    <table class="table table-condensed">
+    
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ puntos_ventum.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ puntos_ventum.nombre }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ puntos_ventum.createdAt ? puntos_ventum.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ puntos_ventum.updatedAt ? puntos_ventum.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+     <a class="btn btn-success" href="{{ path('puntos_venta_edit', {'id': puntos_ventum.id}) }}">Editar</a>
+
+    <a class="btn" href="{{ path('puntos_venta_index') }}">Volver al Listado</a>
+    <br/><br/>
+   
+    {{ include('puntos_venta/_delete_form.html.twig') }}
+{% endblock %}

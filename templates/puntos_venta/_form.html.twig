@@ -4,7 +4,7 @@
 
         <div class="header">
             <h2>
-                <strong>Formulario Punto de Venta</strong>
+                <strong>Formulario Punto Venta</strong>
             </h2>
             
         </div>
@@ -12,15 +12,12 @@
 
 {{ form_start(form) }}
     {{ form_widget(form) }}
+    <br/>
     <button class="btn btn-success">{{ button_label|default('Guardar') }}</button>
-
-     <a class="btn btn-default" href="{{ path('punto_venta_index') }}">Volver al listado</a>
-
 {{ form_end(form) }}
-
 {% if(eliminar) %}
 <br/>
-    {{ include('punto_venta/_delete_form.html.twig') }}
+    {{ include('puntos_venta/_delete_form.html.twig') }}
 
 {% endif%}
 </div>
