@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block content_title %}Nuevo Usuario{% endblock %}
+{% block busqueda_general %}
+{% endblock %}
+{% block body %}
+   
+    {{ include('usuarios/_form.html.twig',{'delete':false}) }}
+
+   
+{% endblock %}

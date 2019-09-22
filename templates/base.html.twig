@@ -67,12 +67,14 @@
                         </a>
                     </li>
                     <li>
+                        {% block busqueda_general %}
                         <div class="search-box">
                             <input type="search" id="search" placeholder="Search..." />
                             <button class="icon">
                                 <i class="fa fa-search"></i>
                             </button>
                         </div>
+                        {% endblock %}
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">

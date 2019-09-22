@@ -28,6 +28,20 @@ class GasolinerasController extends AbstractController
         ]);
     }
 
+     /**
+     * @Route("/", name="gasolineras_usuarios", methods={"GET"})
+     */
+    public function usuarios(): Response
+    {
+        $gasolineras = $this->getDoctrine()
+            ->getRepository(Gasolineras::class)
+            ->findAll();
+
+        return $this->render('gasolineras/usuarios.html.twig', [
+            'gasolineras' => $gasolineras,
+        ]);
+    }
+
     /**
      * @Route("/new", name="gasolineras_new", methods={"GET","POST"})
      */
