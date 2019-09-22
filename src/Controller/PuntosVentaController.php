@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\PuntosVenta;
+use App\Entity\Gasolineras;
 use App\Entity\PuntosVentaUsuarios;
 use App\Entity\FosUser;
 use App\Form\PuntosVentaType;
@@ -25,6 +26,20 @@ class PuntosVentaController extends AbstractController
         $puntosVentas = $this->getDoctrine()
             ->getRepository(PuntosVenta::class)
             ->findAll();
+
+        return $this->render('puntos_venta/index.html.twig', [
+            'puntos_ventas' => $puntosVentas,
+        ]);
+    }
+
+    /**
+     * @Route("/gasolinera/{id}", name="puntos_venta_list_gasolinera", methods={"GET"})
+     */
+    public function lista_por_gasolinera(Gasolineras $gasolinera , Request $request): Response
+    {
+        $puntosVentas = $this->getDoctrine()
+            ->getRepository(PuntosVenta::class)
+            ->findByGasolinera($gasolinera);
 
         return $this->render('puntos_venta/index.html.twig', [
             'puntos_ventas' => $puntosVentas,
