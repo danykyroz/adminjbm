@@ -17,8 +17,5 @@ return [
     EasyCorp\Bundle\EasyAdminBundle\EasyAdminBundle::class => ['all' => true],
     FOS\UserBundle\FOSUserBundle::class => ['all' => true],
     Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle::class => ['all' => true],
-<<<<<<< HEAD
-=======
-    Knp\Bundle\PaginatorBundle\KnpPaginatorBundle::class => ['all' => true],
->>>>>>> ce6cd427f8474e6ff8cdc06ce1fced75579e108e
+    Knp\Bundle\PaginatorBundle\KnpPaginatorBundle::class => ['all' => true]
 ];
