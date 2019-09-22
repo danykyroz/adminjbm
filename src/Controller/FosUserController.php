@@ -57,7 +57,7 @@ class FosUserController extends AbstractController
     public function show(FosUser $fosUser): Response
     {
         return $this->render('usuarios/show.html.twig', [
-            'usuarios' => $fosUser,
+            'fos_user' => $fosUser,
         ]);
     }
 
@@ -76,7 +76,7 @@ class FosUserController extends AbstractController
         }
 
         return $this->render('usuarios/edit.html.twig', [
-            'usuarios' => $fosUser,
+            'fos_user' => $fosUser,
             'form' => $form->createView(),
         ]);
     }

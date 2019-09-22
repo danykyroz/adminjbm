@@ -1,16 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit FosUser{% endblock %}
+{% block content_title %}Editar Usuario{% endblock %}
 
 {% block busqueda_general %}
 {% endblock %}
 
 {% block body %}
-    <h1>Edit FosUser</h1>
+    
+    {{ include('usuarios/_form.html.twig', {'button_label': 'Actualizar','delete':true}) }}
 
-    {{ include('fos_user/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('fos_user_index') }}">back to list</a>
-
-    {{ include('fos_user/_delete_form.html.twig') }}
 {% endblock %}
