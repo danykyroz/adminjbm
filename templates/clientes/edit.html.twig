@@ -2,6 +2,9 @@
 
 {% block content_title %}Editar Cliente{% endblock %}
 
+{% block busqueda_general %}
+{% endblock %}
+
 {% block main %}
     
     {{ include('clientes/_form.html.twig', {'button_label': 'Guardar','eliminar':true}) }}
