@@ -184,8 +184,6 @@ class UserController extends Controller
 
         if(!$fosuser){
 
-            $fosuser = $this->managerInterface->getRepository("App:User")->findOneBy(["email" => $username]);
-
         }else{
             $password=$request->get('_password'); 
             $encoder = $this->factory->getEncoder($fosuser);
