@@ -290,7 +290,7 @@ class UserController extends Controller
 
             	if($existe){
 
-            	$this->addFlash('bad', 'Article Created! Knowledge is power!');
+            	$this->addFlash('bad', 'usuario ya existe!');
 
 
             		return $this->render('/user/new.html.twig',['form'=>$form->createView()]);
@@ -304,7 +304,7 @@ class UserController extends Controller
 
 		}
 
-       return $this->render('/user/new.html.twig',['form'=>$form->createView()]);
+       return $this->redirect($this->generateUrl('usuarios_index'));
     }
     
 

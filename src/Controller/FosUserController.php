@@ -9,11 +9,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
+use App\Controller\HelperController;
 
 /**
  * @Route("/admin/usuarios")
  */
-class FosUserController extends AbstractController
+class FosUserController extends HelperController
 {
     /**
      * @Route("/", name="usuarios_index", methods={"GET"})
@@ -86,10 +87,18 @@ class FosUserController extends AbstractController
     {
         $form = $this->createForm(FosUserType::class, $fosUser);
         $form->handleRequest($request);
+        $em=$this->getDoctrine()->getManager();
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
+            $em->flush();
+            $role = $form->get('roles')->getData();
+           
+            
+            $fosUser->setRoles(array($role));
+            
+            $em->persist($fosUser);
+            $em->flush();
+                
             return $this->redirectToRoute('usuarios_index');
         }
 

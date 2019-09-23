@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\ORM\EntityManagerInterface;
 use FOS\UserBundle\Model\UserManagerInterface;
 use Symfony\Component\Security\Core\UserProviderInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -15,10 +16,12 @@ use Knp\Component\Pager\PaginatorInterface;
 class HelperController extends Controller
 {
 
-	private $userManager;
-    private $paginator;
-    public function __construct(UserManagerInterface $userManager, PaginatorInterface $paginator){
+	public $userManager;
+    public $paginator;
+    public $managerInterface;
+    public function __construct(UserManagerInterface $userManager,EntityManagerInterface $managerInterface, PaginatorInterface $paginator){
         $this->userManager=$userManager;
+        $this->managerInterface=$managerInterface;
         $this->paginator=$paginator;
     }
 
