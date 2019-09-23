@@ -230,4 +230,54 @@ class FlotillasController extends AbstractController
 
         return $this->redirectToRoute('flotillas_index');
     }
+
+    /**
+     * @Route("/clientes/{id}", name="flotillas_clientes", methods={"GET"})
+     */
+    public function clientes(Flotillas $flotilla, PaginatorInterface $paginator, Request $request): Response
+    {
+        $em=$this->getDoctrine()->getManager();
+
+        $qb=$em->getRepository('App:FlotillasClientes')->listaClientesFlotilla($flotilla->getId());
+
+
+        if($request->get('query')!=""){
+
+            $qb->orWhere(sprintf('LOWER(%s.%s) LIKE :fuzzy_query', 'c', 'id'));
+
+            $qb->orWhere(sprintf('LOWER(%s.%s) LIKE :fuzzy_query', 'c', 'nombres'));
+
+            $qb->orWhere(sprintf('LOWER(%s.%s) LIKE :fuzzy_query', 'c', 'apellidos'));
+
+            $qb->orWhere(sprintf('LOWER(%s.%s) LIKE :fuzzy_query', 'c', 'documento'));
+
+            $qb->orWhere(sprintf('LOWER(%s.%s) LIKE :fuzzy_query', 'c', 'email'));
+
+            $qb->orWhere(sprintf('LOWER(%s.%s) LIKE :fuzzy_query', 'c', 'celular'));
+
+            $qb->orWhere(sprintf('LOWER(%s.%s) LIKE :fuzzy_query', 'c', 'placa'));
+
+        }
+
+
+        $qb->andWhere('c.flotillaId=:flotillaId')
+            ->setParameter('flotillaId',$flotilla->getId());
+
+
+
+        $pagination = $paginator->paginate(
+            $qb, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            50 /*limit per page*/
+        );
+
+
+
+        return $this->render('flotillas/usuarios.html.twig', [
+            'flotilla' => $flotilla,
+            'clientes'=>$pagination,
+            'pagination'=>$pagination,
+            'query'=>$request->get('query','')
+        ]);
+    }
 }
