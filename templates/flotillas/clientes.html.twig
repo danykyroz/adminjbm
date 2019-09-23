@@ -68,6 +68,9 @@
                                 <a href="{{ path('clientes_show', {'id': cliente.id}) }}">
                                     <i class="fa fa-fw fa-eye"></i>
                                 </a>
+                                <a title="recuperar password" href="{{ path('email_reset_password', {'email': cliente.email}) }}" class="email_reset_password">
+                                     <i class="fa fa-fw fa-envelope-o"></i>
+                                </a>
                             </td>
 
                         </tr>

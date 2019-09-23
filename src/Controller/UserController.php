@@ -146,6 +146,7 @@ class UserController extends Controller
             $token=$request->get('token',''); 
             $em=$this->getDoctrine()->getManager();
             $password_correcto=false;
+            $url_login = $this->generateUrl('login');
 
             $fosuser = $this->managerInterface->getRepository("App:User")->findOneBy(["confirmationToken" => $token]);
 
@@ -156,7 +157,7 @@ class UserController extends Controller
             }else{
                 echo "no encontre usuario";
                 $this->addFlash('bad', 'token no existe en el sistema');
-                //return $this->redirect('login');
+                return $this->redirect($url_login);
             }
 
     }   

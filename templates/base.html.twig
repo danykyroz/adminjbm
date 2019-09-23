@@ -241,7 +241,27 @@
                 {% endblock content %}
         {% endblock wrapper %}
         
-
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+<div class="modal fade" id="modal_layout" tabindex="-1" role="dialog" aria-labelledby="modal_layout" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Alerta</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body" id="body_modal_layout">
+               
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success waves-effect" data-dismiss="modal">Aceptar</button>
+                <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
         
         <script src="{{asset('adminlte/assets/js/app.min.js')}}"></script>
         <!-- Custom Js -->
@@ -261,6 +281,18 @@
         <script src="{{asset('adminlte/assets/js/form.min.js')}}"></script>
         <script src="{{asset('adminlte/assets/js/pages/forms/advanced-form-elements.js')}}"></script>
 
+        <script type="text/javascript">
+            
+            $('document').ready(function(){
+                $('.email_reset_password').click(function(e){
+                    e.preventDefault();
+                    $.get($(this).attr('href'),function(data){
+                        $('#body_modal_layout').html(data);
+                        $('#modal_layout').modal('show');
+                    })
+                })
+            })
+        </script>
         {% block body_javascript %}
        
         {% endblock body_javascript %}

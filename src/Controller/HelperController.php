@@ -22,7 +22,7 @@ class HelperController extends Controller
         $this->paginator=$paginator;
     }
 
-	   public function createUserClient($cliente,$rol){
+	public function createUserClient($cliente,$rol){
 
             $userManager = $this->userManager;
             
@@ -48,5 +48,11 @@ class HelperController extends Controller
             }else{
                 return false;
             }
+    }
+
+    public function generateToken($email){
+
+        $token=\hash('sha256',$email.time().rand(0,100));
+        return $token;
     }
 }

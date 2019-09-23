@@ -66,9 +66,10 @@
                          <i class="fa fa-fw fa-pencil"></i>
                     </a>
                     <a href="{{ path('usuarios_show', {'id': fos_user.id}) }}">
-                        <a href="{{ path('usuarios_show', {'id': fos_user.id}) }}">
-                         <i class="fa fa-fw fa-eye"></i>
+                    <a title="recuperar password" href="{{ path('email_reset_password', {'email': fos_user.email}) }}" class="email_reset_password">
+                         <i class="fa fa-fw fa-envelope-o"></i>
                     </a>
+
                     </a>
                     
                 </td>

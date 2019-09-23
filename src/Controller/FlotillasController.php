@@ -245,6 +245,7 @@ class FlotillasController extends AbstractController
 
             $qb->andWhere(sprintf('LOWER(%s.%s) LIKE :fuzzy_query', 'c', 'id'));
 
+            $qb->orWhere(sprintf('LOWER(%s.%s) LIKE :fuzzy_query', 'c', 'id'));
             $qb->orWhere(sprintf('LOWER(%s.%s) LIKE :fuzzy_query', 'c', 'nombres'));
 
             $qb->orWhere(sprintf('LOWER(%s.%s) LIKE :fuzzy_query', 'c', 'apellidos'));
@@ -261,6 +262,7 @@ class FlotillasController extends AbstractController
             $qb->setParameter('fuzzy_query','%'.$lowerSearchQuery.'%');;
 
         }
+
         $qb->andWhere('fc.flotillaId=:flotillaId')
             ->setParameter('flotillaId',$flotilla->getId());
 
