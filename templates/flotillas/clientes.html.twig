@@ -5,9 +5,9 @@
 {% block busqueda_general %}
 
     <div class="search-box">
-        <form method="get" action="/admin/flotillas/cliente/{flotilla.id}">
+        <form method="get" action="/admin/flotillas/clientes/{{flotilla.id}}">
             <input type="hidden" name="action" value="search">
-            <input id="search" type="search" name="query" value="" placeholder="Buscar">
+            <input id="search" type="search" name="query" value="{{query}}" placeholder="Buscar">
             <button class="icon">
                 <i class="fa fa-search"></i>
             </button>

@@ -12,9 +12,9 @@ class FlotillaClientesRepository extends EntityRepository
 
         $em = $this->getEntityManager();
         $qb = $em->createQueryBuilder()->from("App:Clientes", "c")
-            ->innerJoin('App:FlotillasClientes','fc','WITH','c.id=fc.clienteId')
+            ->innerJoin('App:FlotillasClientes','fc','WITH','fc.clienteId=c')
             ->select("c")
-            ->Where('fc.flotillaId=:flotillaId')
+            ->where('fc.flotillaId=:flotillaId')
             ->setParameter('flotillaId',$flotillaId);
 
         return $qb;

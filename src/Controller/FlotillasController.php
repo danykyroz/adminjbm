@@ -243,7 +243,7 @@ class FlotillasController extends AbstractController
 
         if($request->get('query')!=""){
 
-            $qb->orWhere(sprintf('LOWER(%s.%s) LIKE :fuzzy_query', 'c', 'id'));
+            $qb->andWhere(sprintf('LOWER(%s.%s) LIKE :fuzzy_query', 'c', 'id'));
 
             $qb->orWhere(sprintf('LOWER(%s.%s) LIKE :fuzzy_query', 'c', 'nombres'));
 
@@ -257,13 +257,12 @@ class FlotillasController extends AbstractController
 
             $qb->orWhere(sprintf('LOWER(%s.%s) LIKE :fuzzy_query', 'c', 'placa'));
 
+             $lowerSearchQuery=trim(strtolower($request->get('query')));
+            $qb->setParameter('fuzzy_query','%'.$lowerSearchQuery.'%');;
+
         }
-
-
-        $qb->andWhere('c.flotillaId=:flotillaId')
+        $qb->andWhere('fc.flotillaId=:flotillaId')
             ->setParameter('flotillaId',$flotilla->getId());
-
-
 
         $pagination = $paginator->paginate(
             $qb, /* query NOT result */
@@ -273,11 +272,14 @@ class FlotillasController extends AbstractController
 
 
 
-        return $this->render('flotillas/usuarios.html.twig', [
+        return $this->render('flotillas/clientes.html.twig', [
             'flotilla' => $flotilla,
             'clientes'=>$pagination,
             'pagination'=>$pagination,
+            'query'=>$request->get('query',''),
+            'tipo'=>array('1'=>'Cliente Wallet','2'=>'Admin Flotilla'),
             'query'=>$request->get('query','')
+
         ]);
     }
 }
