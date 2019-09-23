@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * FosUser
  *
  * @ORM\Table(name="fos_user", uniqueConstraints={@ORM\UniqueConstraint(name="UNIQ_957A6479A0D96FBF", columns={"email_canonical"}), @ORM\UniqueConstraint(name="UNIQ_957A647992FC23A8", columns={"username_canonical"}), @ORM\UniqueConstraint(name="UNIQ_957A6479C05FB297", columns={"confirmation_token"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\FosUserRepository")
  */
 class FosUser
 {

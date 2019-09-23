@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @Route("/admin/usuarios")
@@ -17,14 +18,31 @@ class FosUserController extends AbstractController
     /**
      * @Route("/", name="usuarios_index", methods={"GET"})
      */
-    public function index(): Response
+    public function index(PaginatorInterface $paginator, Request $request): Response
     {
-        $fosUsers = $this->getDoctrine()
-            ->getRepository(FosUser::class)
-            ->findAll();
+        $qb = $this->getDoctrine()
+            ->getRepository(FosUser::class)->ListarUsuarios();
+        
+
+        if($request->get('query')!=""){
+
+            $qb->andWhere('(f.email LIKE :fuzzy_query OR f.username LIKE :fuzzy_query)');
+
+            $lowerSearchQuery=trim(strtolower($request->get('query')));
+            $qb->setParameter('fuzzy_query','%'.$lowerSearchQuery.'%');;
+
+        }    
+        
+        $pagination = $paginator->paginate(
+            $qb, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            50 /*limit per page*/
+        );
 
         return $this->render('usuarios/index.html.twig', [
-            'usuarios' => $fosUsers,
+            'usuarios' => $pagination,
+            'query'=>$request->get('query','')
+
         ]);
     }
 
