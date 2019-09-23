@@ -9,7 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
  * FlotillasClientes
  *
  * @ORM\Table(name="flotillas_clientes")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\FlotillaClientesRepository")
+ *
  */
 class FlotillasClientes
 {
