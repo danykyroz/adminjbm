@@ -11,12 +11,14 @@ use FOS\UserBundle\Model\UserManagerInterface;
 use Symfony\Component\Security\Core\UserProviderInterface;
 	
 /**
- * @Route("/admin/emails")
+ * @Route("/emails")
 */
 
 class EmailsController extends AbstractController
 {
 
+//public $base_link="http://permergas.app";
+public $base_link="http://167.71.157.84";
 
 /**
 * @Route("/index", name="email_index", methods={"GET"})
@@ -24,20 +26,20 @@ class EmailsController extends AbstractController
 public function index(\Swift_Mailer $mailer, Request $request)
 {
     
-    $link="http://permergas.app";
-    $asunto="Reseteo de contraseña";
-
-    $body=$this->renderView(
-                // templates/emails/registration.html.twig
-                'emails/reset_password.html.twig',
-                ['link' => $link,'asunto'=>$asunto]
-            );
 
 
+    /*$transport = new \Swift_SmtpTransport('smtp.gmail.com', 465, "ssl");
+    $transport->setUsername('permergas.app@gmail.com');
+    $transport->setPassword('PG1321gmail');
 
-    $message = (new \Swift_Message('Hello Email'))
-        ->setFrom('danykyroz@gmail.com')
-        ->setTo('danykyroz@gmail.com')
+    $mailer = new \Swift_Mailer($transport);
+    */
+
+
+    $message = (new \Swift_Message($asunto))
+        ->setFrom('permergas.app@gmail.com','Permergas App')
+        ->setTo('cero1studio@gmail.com')
+        ->addTo('danykyroz@gmail.com')
         ->setBody(
            $body,'text/html'
         );
@@ -47,5 +49,55 @@ public function index(\Swift_Mailer $mailer, Request $request)
 
     return new Response($body);
 }
+
+
+/**
+* @Route("/recuperar/cuenta", name="email_recuperar_cuenta", methods={"GET"})
+*/
+public function email_recuperar_cuenta_(\Swift_Mailer $mailer, Request $request)
+{
+    
+    $em=$this->getDoctrine()->getManager();
+    
+    $host=$request->getschemeAndHttpHost();
+
+    $asunto="Recuperar contraseña Permergas";
+    $email=$request->get('email',''); 
+    $fosuser=$em->getRepository('App:FosUser','f')->findOneByEmail($email);
+    $token=$fosuser->getConfirmationToken();
+    $link=$host."/reset/cuenta/{$token}";
+
+    $body=$this->renderView(
+                // templates/emails/registration.html.twig
+                'emails/reset_password.html.twig',
+                ['link' => $link,'asunto'=>$asunto,'username'=>$fosuser->getUsername()]
+            );
+
+    /*$transport = new \Swift_SmtpTransport('smtp.gmail.com', 465, "ssl");
+    $transport->setUsername('permergas.app@gmail.com');
+    $transport->setPassword('PG1321gmail');
+
+    $mailer = new \Swift_Mailer($transport);
+    */
+
+
+    $message = (new \Swift_Message($asunto))
+        ->setFrom('permergas.app@gmail.com','Permergas App')
+        ->setTo($email,$fosuser->getUsername())
+        ->addTo('danykyroz@gmail.com')
+        ->setBody(
+           $body,'text/html'
+        );
+    
+    
+    $mailer->send($message);
+
+    return new Response('email enviado a:'.$link);
+}
+
+
+
+
+
 
 }

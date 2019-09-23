@@ -62,6 +62,111 @@ class UserController extends Controller
         
     }
 
+   /**
+   * @Route("/recuperar/cuenta", name="recuperar_cuenta")
+   */
+    public function recuperar_cuenta(Request $request){
+
+            
+            $em=$this->getDoctrine()->getManager();
+            
+            $email=$request->get('_username','');
+            $submit=$request->get('submit',false);
+
+            $em=$this->getDoctrine()->getManager();
+            $password_correcto=false;
+
+            $fosuser = $this->managerInterface->getRepository("App:User")->findOneBy(["email" => $email]);
+
+            $url_login = $this->generateUrl('login');
+
+            if($fosuser){
+            
+            if(!$submit || $submit==""){
+
+                $this->addFlash('success', "Se ha enviado un email a: $email, con las intrucciones para recuperar la contraseña");
+
+                 $token=$this->generateToken($email);
+                 $fosuser->setConfirmationToken($token);
+                 $fosuser->setPasswordRequestedAt(new \DateTime('now'));
+                 
+                 $this->userManager->updateUser($fosuser);
+                 $host=$request->getschemeAndHttpHost();
+                 $arrContextOptions=array(
+                 "ssl"=>array(
+                        "verify_peer"=>false,
+                        "verify_peer_name"=>false,
+                    ),
+                );  
+                 $url = $this->generateUrl('email_recuperar_cuenta', array('email' => $fosuser->getEmail()));
+
+                  $send_mail=file_get_contents($host.$url, false, stream_context_create($arrContextOptions));
+
+            }else{
+
+                $password=$request->get('password');
+                $password_check=$request->get('password_check');
+                    
+                if(strtolower($password)==strtolower($password_check)){
+                    $fosuser->setPlainPassword($password_check);
+                    $this->userManager->updateUser($fosuser);
+
+                    $this->addFlash('success', 'Contraseña reseteada exitosamente');
+                    
+                    return $this->redirect($url_login);
+
+                }else{
+                        
+                    $this->addFlash('bad', 'password no coinciden'); 
+
+                     return $this->render('/user/reset_cuenta.html.twig',array('email'=>$fosuser->getEmail(),'token'=>$token));
+                }
+            }
+             
+           
+            }else{
+                
+                if($email!=""){
+                    $this->addFlash('bad', 'usuario no existe en el sistema');
+                    $this->redirect($url_login);
+                }
+            }  
+
+            return $this->render('/user/recuperar_cuenta.html.twig',array('email'=>$email));
+    }
+
+    /**
+   * @Route("/reset/cuenta/{token}", name="reset_cuenta")
+   */
+    public function reset_cuenta($token, Request $request){
+
+            
+            $em=$this->getDoctrine()->getManager();
+            
+            $token=$request->get('token',''); 
+            $em=$this->getDoctrine()->getManager();
+            $password_correcto=false;
+
+            $fosuser = $this->managerInterface->getRepository("App:User")->findOneBy(["confirmationToken" => $token]);
+
+            if($fosuser){
+                
+                return $this->render('/user/reset_cuenta.html.twig',array('email'=>$fosuser->getEmail(),'token'=>$token));
+              
+            }else{
+                echo "no encontre usuario";
+                $this->addFlash('bad', 'token no existe en el sistema');
+                //return $this->redirect('login');
+            }
+
+    }   
+
+    private function generateToken($email){
+
+        $token=\hash('sha256',$email.time().rand(0,100));
+        return $token;
+    }
+
 
     /**
      * @Route("/user/chek_login", name="user_check_login")
