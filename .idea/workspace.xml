@@ -2,21 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="53766351-143f-4fbb-a56c-642f46e9fe67" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/clientes/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/clientes/edit.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/clientes/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/clientes/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/clientes/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/clientes/new.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/flotillas/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/flotillas/edit.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/flotillas/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/flotillas/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/flotillas/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/flotillas/new.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/flotillas/usuarios.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/flotillas/usuarios.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/gasolineras/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/gasolineras/edit.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/GasolinerasController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/GasolinerasController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/GasolineraUsuarios.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/GasolineraUsuarios.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Gasolineras.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Gasolineras.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/gasolineras/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/gasolineras/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/gasolineras/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/gasolineras/new.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/usuarios/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/usuarios/edit.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/usuarios/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/usuarios/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/usuarios/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/usuarios/new.html.twig" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -33,60 +22,114 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/flotillas/index.html.twig">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="4" selection-start-line="4" selection-end-line="16" selection-end-column="14" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/gasolineras/index.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="15" selection-start-line="15" selection-end-line="15" />
+            <state relative-caret-position="247">
+              <caret line="74" column="58" selection-start-line="74" selection-start-column="38" selection-end-line="74" selection-end-column="58" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/gasolineras/new.html.twig">
+        <entry file="file://$PROJECT_DIR$/src/Controller/GasolinerasController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" column="14" selection-start-line="5" selection-start-column="14" selection-end-line="5" selection-end-column="14" />
+            <state relative-caret-position="157">
+              <caret line="118" column="34" lean-forward="true" selection-start-line="118" selection-start-column="34" selection-end-line="118" selection-end-column="34" />
+              <folding>
+                <element signature="e#34#57#0#PHP" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/gasolineras/edit.html.twig">
+        <entry file="file://$PROJECT_DIR$/src/Entity/GasolineraUsuarios.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" column="14" selection-start-line="5" selection-start-column="14" selection-end-line="5" selection-end-column="14" />
+            <state relative-caret-position="622">
+              <caret line="73" column="5" selection-start-line="73" selection-start-column="5" selection-end-line="73" selection-end-column="5" />
+              <folding>
+                <element signature="e#30#62#0#PHP" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/clientes/index.html.twig">
+        <entry file="file://$PROJECT_DIR$/src/Entity/FlotillaUsuarios.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="22" column="21" lean-forward="true" selection-start-line="22" selection-start-column="21" selection-end-line="22" selection-end-column="21" />
+            <state relative-caret-position="262">
+              <caret line="74" selection-start-line="74" selection-end-line="77" selection-end-column="5" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
+        <entry file="file://$PROJECT_DIR$/templates/gasolineras/nuevo_usuario.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="192">
+              <caret line="19" column="73" lean-forward="true" selection-start-line="19" selection-start-column="73" selection-end-line="19" selection-end-column="73" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/gasolineras/usuarios.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="855">
+              <caret line="57" column="66" selection-start-line="57" selection-start-column="66" selection-end-line="57" selection-end-column="66" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Entity/Gasolineras.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="180">
+              <caret line="14" column="6" selection-start-line="14" selection-start-column="6" selection-end-line="14" selection-end-column="6" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Controller/FlotillasController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="120">
+              <caret line="125" column="43" selection-start-line="125" selection-start-column="43" selection-end-line="125" selection-end-column="43" />
+              <folding>
+                <element signature="e#34#59#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Repository/GasolinerasRepository.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="292">
+              <caret line="32" column="54" selection-start-line="32" selection-start-column="54" selection-end-line="32" selection-end-column="54" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Repository/FlotillaUsuariosRepository.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="45">
-              <caret line="3" column="2" selection-start-line="3" selection-start-column="2" selection-end-line="3" selection-end-column="2" />
+              <caret line="9" column="55" selection-start-line="9" selection-start-column="55" selection-end-line="9" selection-end-column="55" />
             </state>
           </provider>
         </entry>
       </file>
     </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>gasolineras_usuarios</find>
+      <find>flot</find>
+      <find>GasolineraUsuarios</find>
+      <find>FlotillaUsuarios</find>
+      <find>floti</find>
+    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -106,11 +149,18 @@
         <option value="$PROJECT_DIR$/templates/flotillas/index.html.twig" />
         <option value="$PROJECT_DIR$/templates/clientes/new.html.twig" />
         <option value="$PROJECT_DIR$/templates/clientes/edit.html.twig" />
-        <option value="$PROJECT_DIR$/templates/gasolineras/index.html.twig" />
         <option value="$PROJECT_DIR$/templates/gasolineras/new.html.twig" />
         <option value="$PROJECT_DIR$/templates/gasolineras/edit.html.twig" />
         <option value="$PROJECT_DIR$/templates/clientes/index.html.twig" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/src/Controller/ClientesController.php" />
+        <option value="$PROJECT_DIR$/src/Entity/Gasolineras.php" />
+        <option value="$PROJECT_DIR$/templates/gasolineras/index.html.twig" />
+        <option value="$PROJECT_DIR$/src/Repository/GasolinerasRepository.php" />
+        <option value="$PROJECT_DIR$/templates/gasolineras/nuevo_usuario.html.twig" />
+        <option value="$PROJECT_DIR$/src/Entity/GasolineraUsuarios.php" />
+        <option value="$PROJECT_DIR$/templates/gasolineras/usuarios.html.twig" />
+        <option value="$PROJECT_DIR$/src/Controller/GasolinerasController.php" />
       </list>
     </option>
   </component>
@@ -233,17 +283,6 @@
       <path value="$PROJECT_DIR$/vendor/knplabs/knp-components" />
     </include_path>
   </component>
-  <component name="ProjectConfigurationFiles">
-    <option name="files">
-      <list>
-        <option value="$PROJECT_DIR$/.idea/permergas.iml" />
-        <option value="$PROJECT_DIR$/.idea/misc.xml" />
-        <option value="$PROJECT_DIR$/.idea/modules.xml" />
-        <option value="$PROJECT_DIR$/.idea/vcs.xml" />
-        <option value="$PROJECT_DIR$/.idea/php.xml" />
-      </list>
-    </option>
-  </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="67" />
     <option name="y" value="157" />
@@ -264,6 +303,40 @@
               <item name="permergas" type="b2602c69:ProjectViewProjectNode" />
               <item name="permergas" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="permergas" type="b2602c69:ProjectViewProjectNode" />
+              <item name="permergas" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="permergas" type="b2602c69:ProjectViewProjectNode" />
+              <item name="permergas" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Entity" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="permergas" type="b2602c69:ProjectViewProjectNode" />
+              <item name="permergas" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Repository" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="permergas" type="b2602c69:ProjectViewProjectNode" />
+              <item name="permergas" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="permergas" type="b2602c69:ProjectViewProjectNode" />
+              <item name="permergas" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="flotillas" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="permergas" type="b2602c69:ProjectViewProjectNode" />
+              <item name="permergas" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="gasolineras" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -273,8 +346,14 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/templates/gasolineras" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/templates/gasolineras" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -287,6 +366,16 @@
         </RuleState>
       </list>
     </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="GasolinerasRepository.php" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63343/permergas/Repository/GasolinerasRepository.php" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JavaScript Debug.GasolinerasRepository.php" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -303,7 +392,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="4345000" />
+    <option name="totallyTimeSpent" value="15613000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1299" height="743" extended-state="6" />
@@ -329,6 +418,27 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Database" order="3" />
     </layout>
+    <layout-to-restore>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26177174" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" />
+      <window_info anchor="bottom" id="Database Changes" order="9" />
+      <window_info anchor="bottom" id="Terminal" order="10" />
+      <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Database" order="3" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -380,13 +490,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="16" column="6" selection-start-line="16" selection-start-column="6" selection-end-line="16" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/FlotillasController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="35" column="39" selection-start-line="35" selection-start-column="39" selection-end-line="35" selection-end-column="39" />
         </state>
       </provider>
     </entry>
@@ -448,20 +551,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/flotillas/index.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" selection-start-line="4" selection-end-line="16" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/gasolineras/index.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" selection-start-line="15" selection-end-line="15" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/usuarios/new.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
@@ -483,17 +572,117 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/clientes/index.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="22" column="21" lean-forward="true" selection-start-line="22" selection-start-column="21" selection-end-line="22" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
           <caret line="3" column="2" selection-start-line="3" selection-start-column="2" selection-end-line="3" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Repository/DelegacionRepository.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="20" column="1" lean-forward="true" selection-end-line="20" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/ClientesController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="122" column="22" selection-start-line="122" selection-end-line="123" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/clientes/index.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1290">
+          <caret line="22" column="21" selection-start-line="22" selection-start-column="21" selection-end-line="22" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/flotillas/index.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="67" column="33" selection-start-line="67" selection-start-column="33" selection-end-line="67" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/gasolineras/index.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="74" column="58" selection-start-line="74" selection-start-column="38" selection-end-line="74" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Repository/FlotillaUsuariosRepository.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="9" column="55" selection-start-line="9" selection-start-column="55" selection-end-line="9" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Repository/GasolinerasRepository.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="292">
+          <caret line="32" column="54" selection-start-line="32" selection-start-column="54" selection-end-line="32" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Entity/Gasolineras.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="14" column="6" selection-start-line="14" selection-start-column="6" selection-end-line="14" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Entity/FlotillaUsuarios.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="262">
+          <caret line="74" selection-start-line="74" selection-end-line="77" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/gasolineras/usuarios.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="855">
+          <caret line="57" column="66" selection-start-line="57" selection-start-column="66" selection-end-line="57" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/FlotillasController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="125" column="43" selection-start-line="125" selection-start-column="43" selection-end-line="125" selection-end-column="43" />
+          <folding>
+            <element signature="e#34#59#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Entity/GasolineraUsuarios.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="622">
+          <caret line="73" column="5" selection-start-line="73" selection-start-column="5" selection-end-line="73" selection-end-column="5" />
+          <folding>
+            <element signature="e#30#62#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/GasolinerasController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="157">
+          <caret line="118" column="34" lean-forward="true" selection-start-line="118" selection-start-column="34" selection-end-line="118" selection-end-column="34" />
+          <folding>
+            <element signature="e#34#57#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/gasolineras/nuevo_usuario.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="19" column="73" lean-forward="true" selection-start-line="19" selection-start-column="73" selection-end-line="19" selection-end-column="73" />
         </state>
       </provider>
     </entry>

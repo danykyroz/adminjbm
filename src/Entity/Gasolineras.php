@@ -10,7 +10,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * Gasolineras
  *
  * @ORM\Table(name="gasolineras")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\GasolinerasRepository")
  */
 class Gasolineras
 {
