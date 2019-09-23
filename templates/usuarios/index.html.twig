@@ -6,7 +6,7 @@
     <div class="search-box">
         <form method="get" action="/admin/usuarios">
             <input type="hidden" name="action" value="search">
-            <input id="search" type="search" name="query" value="" placeholder="Buscar">
+            <input id="search" type="search" name="query" value="{{query}}" placeholder="Buscar">
             <button class="icon">
                     <i class="fa fa-search"></i>
             </button>
@@ -80,6 +80,9 @@
         {% endfor %}
         </tbody>
     </table>
+</div>
+<div class="navigation">
+    {{ knp_pagination_render(usuarios) }}
 </div>
 </div>
 </div>

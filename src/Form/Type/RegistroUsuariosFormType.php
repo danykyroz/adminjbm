@@ -51,7 +51,7 @@ class RegistroUsuariosFormType extends AbstractType
                     'choices'  => [
                         'Selecciona un Rol' => '',
                         'Administrador' => 'ROLE_ADMIN',
-                        'Administrador Gasolinera' => 'ROLE_ADMIN_GASOLINERA',
+                        'Administrador Gasolinera' => 'ROLE_GASOLINERA',
                         'Vendedor' => 'ROLE_VENDEDOR',
                     ]
                 ]

@@ -32,7 +32,7 @@ class ClientesController extends AbstractController
 
     /**
      * @Route("/", name="clientes_index", methods={"GET"})
-     */
+    */
     public function index(Request $request): Response
     {
         

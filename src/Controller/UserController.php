@@ -70,11 +70,11 @@ class UserController extends Controller
     {
        
         $user = $this->userManager->createUser();
-        $username=$request->get('_username'); 
+        $email=$request->get('_username'); 
         $em=$this->getDoctrine()->getManager();
         $password_correcto=false;
 
-        $fosuser = $this->managerInterface->getRepository("App:User")->findOneBy(["username" => $username]);
+        $fosuser = $this->managerInterface->getRepository("App:User")->findOneBy(["email" => $email]);
 
         if(!$fosuser){
 
@@ -143,8 +143,7 @@ class UserController extends Controller
             );
             return $this->render('@FOSUser/Security/login.html.twig', $data);
             //return $this->renderLogin();
-        }
-           
+        }  
     }
 
 
