@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Gasolineras;
 
 /**
  * GasolineraUsuarios
@@ -60,6 +61,18 @@ class GasolineraUsuarios
     public function setUsuarioId(?int $usuarioId): self
     {
         $this->usuarioId = $usuarioId;
+
+        return $this;
+    }
+
+    public function Gasolinera(): ?Gasolineras
+    {
+        return $this->gasolinera;
+    }
+
+    public function setGasolinera(?Gasolineras $gasolinera): self
+    {
+        $this->gasolinera = $gasolinera;
 
         return $this;
     }

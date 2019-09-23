@@ -2,12 +2,18 @@
 
 namespace App\Controller;
 
+use App\Entity\FosUser;
 use App\Entity\Gasolineras;
+use App\Entity\GasolineraUsuarios;
+
 use App\Form\GasolinerasType;
+use App\Repository\GasolinerasRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Knp\Component\Pager\PaginatorInterface;
+
 
 /**
  * @Route("/admin/gasolineras")
@@ -17,29 +23,136 @@ class GasolinerasController extends AbstractController
     /**
      * @Route("/", name="gasolineras_index", methods={"GET"})
      */
-    public function index(): Response
+    public function index(PaginatorInterface $paginator, Request $request): Response
     {
-        $gasolineras = $this->getDoctrine()
-            ->getRepository(Gasolineras::class)
-            ->findAll();
+        $qb = $this->getDoctrine()
+            ->getRepository(Gasolineras::class)->orderById();
+
+        if($request->get('query')!=""){
+            //where f.id like '%query%'
+            $qb->orWhere(sprintf('LOWER(%s.%s) LIKE :fuzzy_query', 'g', 'id'));
+            //or f.nombre like '%query%'
+            $qb->orWhere(sprintf('LOWER(%s.%s) LIKE :fuzzy_query', 'g', 'nombre'));
+            //or f.nombre like '%query%'
+            $qb->orWhere(sprintf('LOWER(%s.%s) LIKE :fuzzy_query', 'g', 'nombreEncargado'));
+
+            $qb->orWhere(sprintf('LOWER(%s.%s) LIKE :fuzzy_query', 'g', 'telefonoEncargado'));
+
+            $qb->orWhere(sprintf('LOWER(%s.%s) LIKE :fuzzy_query', 'g', 'direccion'));
+
+            $lowerSearchQuery=trim(strtolower($request->get('query')));
+            $qb->setParameter('fuzzy_query','%'.$lowerSearchQuery.'%');;
+
+        }
+
+        $pagination = $paginator->paginate(
+            $qb, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            50 /*limit per page*/
+        );
 
         return $this->render('gasolineras/index.html.twig', [
-            'gasolineras' => $gasolineras,
+            'gasolineras' => $pagination,
+            'pagination'=> $pagination,
+            'query'=>$request->get('query',''),
         ]);
     }
 
      /**
-     * @Route("/", name="gasolineras_usuarios", methods={"GET"})
+     * @Route("/usuarios/{id}", name="gasolineras_usuarios", methods={"GET"})
      */
-    public function usuarios(): Response
+    public function usuarios(Gasolineras $gasolinera, PaginatorInterface $paginator, Request $request): Response
     {
-        $gasolineras = $this->getDoctrine()
-            ->getRepository(Gasolineras::class)
-            ->findAll();
+        $em=$this->getDoctrine()->getManager();
+
+        $qb=$em->getRepository(Gasolineras::class)->listaUsuariosGasolinera($gasolinera->getId());
+
+        if($request->get('query')!=""){
+
+            $qb->andwhere('f.username LIKE :fuzzy_query OR f.email LIKE :fuzzy_query');
+
+            $lowerSearchQuery=trim(strtolower($request->get('query')));
+            $qb->setParameter('fuzzy_query','%'.$lowerSearchQuery.'%');;
+
+        }
+
+
+        $qb->andWhere('u.gasolineraId=:gasolineraId')
+            ->setParameter('gasolineraId',$gasolinera->getId());
+
+        $pagination = $paginator->paginate(
+            $qb, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            50 /*limit per page*/
+        );
 
         return $this->render('gasolineras/usuarios.html.twig', [
-            'gasolineras' => $gasolineras,
+            'gasolinera' => $gasolinera,
+            'usuarios'=>$pagination,
+            'pagination'=>$pagination,
+            'query'=>$request->get('query','')
         ]);
+    }
+
+    /**
+     * @Route("/usuarios/{id}/new", name="gasolineras_usuarios_new", methods={"GET"})
+     */
+    public function usuarios_new(Gasolineras $gasolinera): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+        $usuarios = $em->getRepository(Gasolineras::class)->SelectUsuariosGasolinera($gasolinera->getId());
+
+        return $this->render('gasolineras/nuevo_usuario.html.twig', [
+            'gasolinera' => $gasolinera,
+            'usuarios' => $usuarios
+        ]);
+    }
+
+    /**
+     * @Route("/save/user", name="gasolineras_usuarios_save", methods={"POST"})
+     */
+    public function usuarios_save(Request $request): Response
+    {
+
+        $em=$this->getDoctrine()->getManager();
+
+        $gasolinera_id=$request->get("gasolinera_id");
+        $usuario_id=$request->get("usuario_id");
+        $existe=$em->getRepository('App:GasolineraUsuarios','f')->findOneBy(array('gasolineraId'=>$gasolinera_id,'usuarioId'=>$usuario_id));
+
+        $gasolinera=$em->getRepository('App:Gasolineras','f')->find($gasolinera_id);
+        if($existe){
+            $gasolineras_usuarios=$existe;
+        }else{
+            $gasolineras_usuarios=new GasolineraUsuarios();
+            $gasolineras_usuarios->setGasolineraId($gasolinera_id);
+        }
+        $gasolineras_usuarios->setUsuarioId($usuario_id);
+        $em->persist($gasolineras_usuarios);
+        $em->flush();
+
+        return $this->redirectToRoute('gasolineras_usuarios',array('id'=>$gasolinera_id));
+
+    }
+
+    /**
+     * @Route("/usuarios/delete/{id}", name="gasolineras_usuarios_delete", methods={"GET"})
+     */
+    public function usuarios_delete(FosUser $FosUser): Response
+    {
+
+        $em=$this->getDoctrine()->getManager();
+
+        $gasolinera_usuario=$em->getRepository('App:GasolineraUsuarios')->findOneBy(array('usuarioId'=>$FosUser->getId()));
+
+        $gasolinera_id=$gasolinera_usuario->getGasolineraId();
+        if(is_object($gasolinera_usuario)){
+            $em->remove($gasolinera_usuario);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('gasolineras_usuarios',array('id'=>$gasolinera_id));
+
     }
 
     /**
@@ -108,4 +221,6 @@ class GasolinerasController extends AbstractController
 
         return $this->redirectToRoute('gasolineras_index');
     }
+
+
 }
