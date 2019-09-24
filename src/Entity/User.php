@@ -28,6 +28,18 @@ class User extends BaseUser
      */
     private $createdAt;
 
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="telefono", type="string", length=20, nullable=true)
+     */
+    private $telefono;
+     /**
+     * @var string|null
+     *
+     * @ORM\Column(name="documento", type="string", length=20, nullable=true)
+     */
+    private $documento;
 
     public function getId()
     {
@@ -48,6 +60,29 @@ class User extends BaseUser
     public function setCreatedAt(?\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+     public function getDocumento(): ?string
+    {
+        return $this->documento;
+    }
+
+    public function setDocumento(string $documento): self
+    {
+        $this->documento = $documento;
+
+        return $this;
+    }
+
+     public function getTelefono(): ?string
+    {
+        return $this->telefono;
+    }
+
+    public function setTelefono(string $telefono): self
+    {
+        $this->telefono = $telefono;
 
         return $this;
     }

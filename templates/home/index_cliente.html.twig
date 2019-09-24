@@ -1,5 +1,40 @@
 {% extends 'base.html.twig' %}
+{% block content_title %}Dashboard Cliente{% endblock %}
 
-{% block content %}
-
+{% block body %}
+<div class="row">
+	<div class="col-lg-4">
+        <div class="plain-card">
+            <div class="card-inner">
+                <h6 class="tx-primary m-b-10">Recargas Wallet</h6>
+                <div class="row">
+                    <div class="col col-block">
+                        <label class="font-14">Hoy</label>
+                        <p>0</p>
+                    </div>
+                    <div class="col col-block">
+                        <label class="font-14">Semana</label>
+                        <p>1,898</p>
+                    </div>
+                    <div class="col col-block">
+                        <label class="font-14">Mes</label>
+                        <p>1,898</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="plain-card">
+            <div class="card-inner">
+                <h6 class="tx-primary m-b-10">Saldo Wallet</h6>
+                <div class="row">
+                    <div class="col col-block">
+                        <h4>1,898</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

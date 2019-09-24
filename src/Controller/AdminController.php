@@ -18,12 +18,15 @@ class AdminController extends EasyAdminController
         $user=($this->getUser());
         $em=$this->getDoctrine()->getManager();
         $session=$request->getSession();
-        
+
         if($user->getRoles()[0]=="ROLE_ADMIN"){
              return $this->render('@EasyAdmin/home/index.html.twig');
         }
         if($user->getRoles()[0]=="ROLE_ADMIN_FLOTILLA"){
              return $this->render('home/index_flotilla.html.twig');
+        }
+        if($user->getRoles()[0]=="ROLE_GASOLINERA"){
+             return $this->render('home/index_gasolinera.html.twig');
         }
         if($user->getRoles()[0]=="ROLE_CLIENTE"){
                  

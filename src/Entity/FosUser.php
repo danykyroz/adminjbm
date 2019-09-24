@@ -139,6 +139,20 @@ class FosUser
      * @ORM\Column(name="tipo_usuario", type="integer", nullable=true, options={"comment"="1=Cliente,2=Gasolinera,3=Flotilla,4=Punto de venta,5 "})
      */
     private $tipoUsuario;
+     /**
+     * @var string|null
+     *
+     * @ORM\Column(name="telefono", type="string", length=20, nullable=true)
+     */
+    private $telefono;
+     /**
+     * @var string|null
+     *
+     * @ORM\Column(name="documento", type="string", length=20, nullable=true)
+     */
+    private $documento;
+
+
 
     public function getId(): ?int
     {
@@ -348,6 +362,32 @@ class FosUser
 
         return $this;
     }
+
+
+     public function getDocumento(): ?string
+    {
+        return $this->documento;
+    }
+
+    public function setDocumento(string $documento): self
+    {
+        $this->documento = $documento;
+
+        return $this;
+    }
+
+     public function getTelefono(): ?string
+    {
+        return $this->telefono;
+    }
+
+    public function setTelefono(string $telefono): self
+    {
+        $this->telefono = $telefono;
+
+        return $this;
+    }
+
 
 
 }

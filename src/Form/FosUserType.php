@@ -21,6 +21,10 @@ class FosUserType extends AbstractType
        $builder
             ->add('email', EmailType::class, array('label' => 'form.email', 'translation_domain' => 'FOSUserBundle'))
             ->add('username', null, array('label' => 'form.username', 'translation_domain' => 'FOSUserBundle'))
+
+             ->add('documento',null,array('required'=>true))
+             ->add('telefono',null,array('required'=>true,'label'=>'Teléfono'))
+            
             ->add('roles', ChoiceType::class, [
                     'label'=>"",
                     'mapped' => false,
