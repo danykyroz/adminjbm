@@ -43,10 +43,12 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Username</th>
+                <th>Documento</th>
+                <th>Nombres</th>
                 <th>Email</th>
-                <th>Activo</th>
+                <th>Teléfono</th>
                 <th>Rol Usuario</th>
+                <th>Activo</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -54,13 +56,16 @@
         {% for fos_user in usuarios %}
             <tr>
                 <td>{{ fos_user.id }}</td>
+                 <td>{{ fos_user.documento }}</td>
                 <td>{{ fos_user.username }}</td>
                 <td>{{ fos_user.email }}</td>
-                <td>{{ fos_user.enabled ? 'Si' : 'No' }}</td>
+                <td>{{ fos_user.telefono }}</td>
+                
                 <td>{% for rol in fos_user.roles %}
                     {{rol}}
                     {% endfor %}
                 </td>
+                <td>{{ fos_user.enabled ? 'Si' : 'No' }}</td>
                 <td>
                     <a href="{{ path('usuarios_edit', {'id': fos_user.id}) }}">
                          <i class="fa fa-fw fa-pencil"></i>
