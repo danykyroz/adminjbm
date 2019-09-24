@@ -96,7 +96,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/admin/precio", name="precio")
+     * @Route("/admin/precio/gasolina", name="precio")
      */
     public function precio(Request $request){
 
