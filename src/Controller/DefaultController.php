@@ -73,6 +73,33 @@ class DefaultController extends Controller
           }
 
   }
+
+    /**
+     * @Route("/admin/publicidad", name="publicidad")
+     */
+    public function publicidad(Request $request){
+
+    return $this->render('home/publicidad.html.twig');
+
+    }
+
+    /**
+     * @Route("/admin/promociones", name="promociones")
+     */
+    public function promociones(Request $request){
+
+        return $this->render('home/promociones.html.twig');
+
+    }
+
+    /**
+     * @Route("/admin/precio", name="precio")
+     */
+    public function precio(Request $request){
+
+        return $this->render('home/precio.html.twig');
+
+    }
 }
 
 
