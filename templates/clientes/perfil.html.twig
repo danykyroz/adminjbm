@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block content_title %}Detalle Cliente{% endblock %}
+{% block content_title %}Mi Cuenta{% endblock %}
 
 {% block body %}
 <div class="row">
@@ -85,29 +85,53 @@
 </div>
 </div>
 </div>
+<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+
 {% if (wallet_cliente) %}
 
-<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
     <div class="card">
         <div class="header bg-cyan ">
             <h2>
                 Saldo Wallet / {{cliente.nombres}}
             </h2>
-            
         </div>
         <div class="card-body ">
            <h2>$ {{wallet_cliente.saldo |number_format(2)}} MX</h2>
-
         </div>
-        
-   
-
     </div>
+    <div class="card">
+     <form>
+        <div class="header">
+            <h2>
+                Cambiar Contraseña
+            </h2>
+        </div>
+        <div class="card-body ">
+         
+          <div><label for="user_password" class="required active">Nueva Contraseña</label>
+          <input type="password" id="new_password" name="password" required="required" maxlength="10" value=""></div>
+
+           <div><label for="user_password" class="required active">Confirmar Contraseña</label>
+          <input type="password" id="new_password" name="confirmar_password" required="required" maxlength="10" value=""></div>
+          
+        </div>
+         <div class="card-footer">
+
+            <button type="submit" class="btn btn-outline-success" >Modificar</button>
+            <button type="reset" class="btn btn-outline-danger" >Cancelar</button>
+        </div>
+        </form>
     </div>
     {% else %}
 
   {% endif%}  
 </div>
+
+<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+    
+</div>
+
+
 
 {% if (wallet_flotilla) %}
 
