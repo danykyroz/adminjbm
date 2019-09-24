@@ -24,7 +24,11 @@ class FosUserController extends HelperController
         $qb = $this->getDoctrine()
             ->getRepository(FosUser::class)->ListarUsuarios();
         
-
+        $qb->orWhere('f.roles LIKE :role_admin');
+        $qb->setParameter('role_admin',"%ROLE_ADMIN%");
+        $qb->andWhere('f.roles NOT LIKE :role_flotilla');
+        $qb->setParameter('role_flotilla',"%ROLE_ADMIN_FLOTILLA%");
+        
         if($request->get('query')!=""){
 
             $qb->andWhere('(f.email LIKE :fuzzy_query OR f.username LIKE :fuzzy_query)');

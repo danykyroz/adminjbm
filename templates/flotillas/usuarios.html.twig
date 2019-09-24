@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block content_title %}Usuarios Flotilla ({{flotilla.nombre}}){% endblock %}
+{% block content_title %}Usuarios Admin Flotilla ({{flotilla.nombre}}){% endblock %}
 
 {% block busqueda_general %}
 
@@ -42,20 +42,23 @@
         <thead>
             <tr>
                 <th>Id</th>
+                <th>Nombre Usuario</th>
                 <th>Email</th>
-                <th>Username</th>
+                <td>Saldo</td>
+               
                 <th>Acciones</th>
                 
             </tr>
         </thead>
         <tbody>
-        {% for usuario in usuarios %}
+        {% for usuario in lista_usuarios %}
             <tr>
-                <td>{{ usuario.id }}</td>
-                <td>{{ usuario.email }}</td>
-                <td>{{ usuario.username }}</td>
+                <td>{{ usuario.row.id }}</td>
+                <td>{{ usuario.row.username }}</td>
+                <td>{{ usuario.row.email }}</td>
+                 <td>{{ usuario.saldo|number_format(2) }}</td>
                 <td>
-                    <a title="eliminar" href="{{ path('flotillas_usuarios_delete', {'id': usuario.id}) }}">
+                    <a title="eliminar" href="{{ path('flotillas_usuarios_delete', {'id': usuario.row.id}) }}">
                           <i class="fa fa-fw fa-trash"></i>
                     </a>
                     

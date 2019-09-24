@@ -25,12 +25,13 @@ class FlotillasController extends AbstractController
      */
     public function index(PaginatorInterface $paginator, Request $request): Response
     {
-        //Conectarme a la bd
+        
         $em=$this->getDoctrine()->getManager();
-        //Inicializar una consulta
+        
         $qb=$em->createQueryBuilder();
-        //Select from flotillas 
-        $qb->select('f')->from('App:Flotillas','f');
+        $qb->select('f')->from('App:Flotillas','f')
+        ->GroupBy('f.id');
+
         
 
         if($request->get('query')!=""){
@@ -52,12 +53,32 @@ class FlotillasController extends AbstractController
             $request->query->getInt('page', 1), /*page number*/
             50 /*limit per page*/
         );
-    
+
+        $lista_flotillas=array();
+        foreach ($pagination as $key => $flotilla) {
+             $lista_flotillas[]=array('row'=>$flotilla,'saldo'=>$this->getSaldoFlotilla($flotilla->getId()));
+        }
+
         return $this->render('flotillas/index.html.twig', [
             'flotillas' => $pagination,
             'pagination'=> $pagination,
+            'lista_flotillas'=>$lista_flotillas,
             'query'=>$request->get('query',''),
         ]);
+    }
+
+    private function getSaldoFlotilla($id){
+
+        $em=$this->getDoctrine()->getManager();
+        
+        $qb=$em->createQueryBuilder();
+        $qb->select('sum(w.saldo) as saldo')->from('App:Flotillas','f')
+        ->innerJoin('App:FlotillasClientes', 'fc', 'WITH', 'fc.flotillaId = f')
+        ->innerJoin('App:Clientes', 'c', 'WITH', 'fc.clienteId = c')
+        ->innerJoin('App:Wallet', 'w', 'WITH', 'w.clienteId = c')
+        ->where('f.id=:id')->setParameter('id',$id);
+        return $qb->getQuery()->getSingleScalarResult();
+        
     }
 
     /**
@@ -90,15 +111,40 @@ class FlotillasController extends AbstractController
             $request->query->getInt('page', 1), /*page number*/
             50 /*limit per page*/
         );
-    
 
 
+        $lista_usuarios=array();
+        foreach ($pagination as $key => $usuario) {
+             $lista_usuarios[]=array('row'=>$usuario,'saldo'=>$this->getClienteUsuarioFlotilla($usuario));
+        }
+
+       
          return $this->render('flotillas/usuarios.html.twig', [
             'flotilla' => $flotilla,
             'usuarios'=>$pagination,
+            'lista_usuarios'=>$lista_usuarios,
             'pagination'=>$pagination,
             'query'=>$request->get('query','')
         ]);
+    }
+
+    private function getClienteUsuarioFlotilla($user_admin){
+        
+        $em=$this->getDoctrine()->getManager();
+        $saldo=0;
+
+        $flotilla_cliente=$em->getRepository('App:Clientes','c')->findOneBy(array('email'=>$user_admin->getEmail()));
+
+        if($flotilla_cliente){
+            
+            $wallet_flotilla=$em->getRepository('App:Wallet','w')->findOneBy(array('clienteId'=>$flotilla_cliente->getId()));
+
+            if($wallet_flotilla){
+                $saldo=$wallet_flotilla->getSaldo();
+            }
+        }
+        return $saldo;
+        
     }
 
     /**
@@ -272,11 +318,23 @@ class FlotillasController extends AbstractController
             50 /*limit per page*/
         );
 
+        $lista_clientes=array();
+
+        foreach ($pagination as $key=>$cliente){
+                
+                $wallet_cliente=$em->getRepository('App:Wallet','w')->findOneBy(array('clienteId'=>$cliente->getId()));
+
+                $lista_clientes[]=array('row'=>$cliente,'saldo'=>$wallet_cliente->getSaldo());
+        }
+         
+        
+ 
 
 
         return $this->render('flotillas/clientes.html.twig', [
             'flotilla' => $flotilla,
             'clientes'=>$pagination,
+            'lista_clientes'=>$lista_clientes,
             'pagination'=>$pagination,
             'query'=>$request->get('query',''),
             'tipo'=>array('1'=>'Cliente Wallet','2'=>'Admin Flotilla'),

@@ -49,32 +49,34 @@
                         <th>{{ knp_pagination_sortable(pagination, 'Nombre', 'f.nombre') }}</th>
                         <th>{{ knp_pagination_sortable(pagination, 'Documento', 'f.documento') }}</th>
                         <th>{{ knp_pagination_sortable(pagination, 'Fecha Creación', 'f.createdAt') }}</th>
-                        <th>{{ knp_pagination_sortable(pagination, 'Fecha Actualización', 'f.updatedAt') }}</th>
+                        <th>Saldo Flotilla</th>
+                       
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for flotilla in flotillas %}
+                    {% for flotilla in lista_flotillas %}
                     <tr>
-                        <td>{{ flotilla.id }}</td>
-                        <td>{{ flotilla.nombre }}</td>
-                        <td>{{ flotilla.documento }}</td>
-                        <td>{{ flotilla.createdAt ? flotilla.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                        <td>{{ flotilla.updatedAt ? flotilla.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                        <td>{{ flotilla.row.id }}</td>
+                        <td>{{ flotilla.row.nombre }}</td>
+                        <td>{{ flotilla.row.documento }}</td>
+                        <td>{{ flotilla.row.createdAt ? flotilla.row.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                        <td>{{ flotilla.saldo | number_format(2) }}</td>
+
                         <td class="actions">
                             
-                            <a href="{{ path('flotillas_edit', {'id': flotilla.id}) }}">
+                            <a href="{{ path('flotillas_edit', {'id': flotilla.row.id}) }}">
                              <i class="fa fa-fw fa-pencil"></i>    
                             </a> 
-                            <a href="{{ path('flotillas_show', {'id': flotilla.id}) }}">
+                            <a href="{{ path('flotillas_show', {'id': flotilla.row.id}) }}">
                                 <i class="fa fa-fw fa-eye"></i>
                             </a> 
 
-                            <a title="usuarios" href="{{ path('flotillas_usuarios', {'id': flotilla.id}) }}">
+                            <a title="usuarios" href="{{ path('flotillas_usuarios', {'id': flotilla.row.id}) }}">
                                 <i class="fa fa-fw fa-user"></i>
                             </a>
 
-                            <a title="clientes" href="{{ path('flotillas_clientes', {'id': flotilla.id}) }}">
+                            <a title="clientes" href="{{ path('flotillas_clientes', {'id': flotilla.row.id}) }}">
                                 <i class="fa fa-fw fa-wallet"></i>
                             </a>
                             

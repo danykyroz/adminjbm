@@ -15,6 +15,17 @@
     </div>
 {% endblock %}
 
+{% block global_actions %}
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="button-action">
+                <a class="btn btn-default" href="{{ path('flotillas_new') }}">Nuevo Cliente Flotilla</a>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
 
 {% block main %}
 
@@ -36,31 +47,35 @@
                     <thead>
                     <tr>
                         <th>{{ knp_pagination_sortable(pagination, 'Id', 'c.id') }}</th>
+                        <th>{{ knp_pagination_sortable(pagination, 'Fecha', 'c.createdAt') }}</th>
                         <th>{{ knp_pagination_sortable(pagination, 'Documento', 'c.documento') }}</th>
                         <th>{{ knp_pagination_sortable(pagination, 'Nombres', 'c.nombres') }}</th>
                         <th>{{ knp_pagination_sortable(pagination, 'Apellidos', 'c.apellidos') }}</th>
                         <th>{{ knp_pagination_sortable(pagination, 'Email', 'c.email') }}</th>
                         <th>{{ knp_pagination_sortable(pagination, 'Celular', 'c.celular') }}</th>
-                        <th>{{ knp_pagination_sortable(pagination, 'Placa', 'c.placa') }}</th>
-                        <th>{{ knp_pagination_sortable(pagination, 'Fecha', 'c.createdAt') }}</th>
                         <th>{{ knp_pagination_sortable(pagination, 'Tipo', 'c.tipo') }}</th>
                         <th>{{ knp_pagination_sortable(pagination, 'Estado', 'c.estado') }}</th>
+                        <th>Saldo</th>
+                        
                         <th></th>
                     </tr>
                     </thead>
                     <tbody>
-                    {% for cliente in clientes %}
+                    {% for objcliente in lista_clientes %}
+                    {% set cliente= objcliente.row %}
                         <tr>
                             <td>{{ cliente.id }}</td>
+                            <td>{{ cliente.createdAt ? cliente.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                             <td>{{ cliente.documento }}</td>
                             <td>{{ cliente.nombres }}</td>
                             <td>{{ cliente.apellidos }}</td>
                             <td>{{ cliente.email }}</td>
                             <td>{{ cliente.celular }}</td>
-                            <td>{{ cliente.placa }}</td>
-                            <td>{{ cliente.createdAt ? cliente.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                            
                             <td>{{ tipo[cliente.tipo] }}</td>
                             <td>{{ cliente.estado }}</td>
+                             <td>{{ objcliente.saldo|number_format(2) }}</td>
+                           
                             <td>
                                 <a href="{{ path('clientes_edit', {'id': cliente.id}) }}">
                                     <i class="fa fa-fw fa-pencil"></i>

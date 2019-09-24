@@ -23,6 +23,12 @@ class AdminController extends EasyAdminController
         if($user->getRoles()[0]=="ROLE_ADMIN_FLOTILLA"){
              return $this->render('home/index_flotilla.html.twig');
         }
+        if($user->getRoles()[0]=="ROLE_CLIENTE"){
+             return $this->render('home/index_cliente.html.twig');
+        }
+        if($user->getRoles()[0]=="ROLE_GASOLINERA"){
+             return $this->render('home/index_gasolinera.html.twig');
+        }
     }
 
     protected function createNewPuntoVentaEntity()

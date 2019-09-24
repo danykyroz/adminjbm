@@ -22,8 +22,21 @@
     </style>
 
     <style type="text/css">
+    .content-header {
+        width: 100%;
+        display:block;
+        float: left;
+        margin-bottom: 10px;
+        margin-top: 5px;
+    }
+     .content-header-title{
+            float: left;
+            width: 80%
+        }
         .global-actions {
-            width: 100%;
+            float: left;
+            width: 20%;
+           
         }
         .global-actions .action-search{
             width: 300px;
@@ -35,6 +48,7 @@
         .selection{
             display: none;
         }
+       
         
     </style>
 
@@ -101,14 +115,14 @@
                                 <ul class="user_dw_menu">
                                     <li>
                                         <a href="javascript:void(0);">
-                                            <i class="material-icons">person</i>Perfil
+                                            <i class="material-icons">person</i>Mi Cuenta
                                         </a>
                                     </li>
                                    
                                     
                                     <li>
                                         <a href="{{asset('logout')}}">
-                                            <i class="material-icons">power_settings_new</i>Salir
+                                            <i class="material-icons">power_settings_new</i>Cerrar Sesión
                                         </a>
                                     </li>
                                 </ul>
