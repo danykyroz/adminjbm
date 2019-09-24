@@ -176,9 +176,7 @@ class ClientesController extends AbstractController
 
                 if($user_admin->getRoles()[0]=="ROLE_ADMIN_FLOTILLA"){
                   //Buscarmos dentro de lo user flotilla el id  
-                    
-
-
+                   
                     if($flotilla_user){
                         $flotilla_id=$flotilla_user->getFlotilla()->getId();
                         $flotilla_cliente=new FlotillasClientes();
@@ -191,7 +189,23 @@ class ClientesController extends AbstractController
 
                     
                 }
-                
+                //Enviar mail
+                 $fosuser = $entityManager->getRepository("App:User")->findOneBy(["email" => $cliente->getEmail()]);
+
+                 $host=$request->getschemeAndHttpHost();
+                 $arrContextOptions=array(
+                 "ssl"=>array(
+                        "verify_peer"=>false,
+                        "verify_peer_name"=>false,
+                    ),
+                );  
+                 
+                 $url = $this->generateUrl('email_nueva_cuenta', array('email' => $fosuser->getEmail()));
+
+                  $send_mail=file_get_contents($host.$url, false, stream_context_create($arrContextOptions));
+
+
+
                 $this->addFlash('success', 'Cliente creado exitosamente!');
                 
                 return $this->redirectToRoute('clientes_index');
@@ -348,7 +362,7 @@ class ClientesController extends AbstractController
             if (!$user) {
                 /** @var  $user GrantUser */
                 $expusername=explode("@",$cliente->getEmail());
-                $username=$expusername[0];   
+                $username=$cliente->getNombres().' '.$cliente->getApellidos();   
                 $user = $userManager->createUser();
                 $user->setUsername($username);
                 //$user->setCreatedAt(new DateTime('now'));

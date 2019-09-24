@@ -98,6 +98,7 @@ class UserController extends Controller
                         "verify_peer_name"=>false,
                     ),
                 );  
+                 
                  $url = $this->generateUrl('email_recuperar_cuenta', array('email' => $fosuser->getEmail()));
 
                   $send_mail=file_get_contents($host.$url, false, stream_context_create($arrContextOptions));
@@ -162,11 +163,6 @@ class UserController extends Controller
 
     }   
 
-    private function generateToken($email){
-
-        $token=\hash('sha256',$email.time().rand(0,100));
-        return $token;
-    }
 
 
     /**
@@ -297,7 +293,20 @@ class UserController extends Controller
             	}
                
     			$user->setRoles(array($role));
+                $user->setPlainPassword('permergas123456');
                 $this->userManager->updateUser($user);
+
+                $host=$request->getschemeAndHttpHost();
+                 $arrContextOptions=array(
+                 "ssl"=>array(
+                        "verify_peer"=>false,
+                        "verify_peer_name"=>false,
+                    ),
+                );  
+                 
+                 $url = $this->generateUrl('email_nueva_cuenta', array('email' => $user->getEmail()));
+
+                  $send_mail=file_get_contents($host.$url, false, stream_context_create($arrContextOptions));
                 
             }
 
@@ -305,6 +314,12 @@ class UserController extends Controller
 		}
 
        return $this->redirect($this->generateUrl('usuarios_index'));
+    }
+    
+    private function generateToken($email){
+
+        $token=\hash('sha256',$email.time().rand(0,100));
+        return $token;
     }
     
 
