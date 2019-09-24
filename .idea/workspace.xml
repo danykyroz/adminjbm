@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="53766351-143f-4fbb-a56c-642f46e9fe67" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/Controller/DefaultController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/DefaultController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/home/menu_admin.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home/menu_admin.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/home/menu_flotilla.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home/menu_flotilla.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/home/publicidad.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home/publicidad.html.twig" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -20,15 +18,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Resources/FOSUserBundle/views/Security/login_content.html.twig">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" selection-start-line="10" selection-end-line="10" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/user/recuperar_cuenta.html.twig">
           <provider selected="true" editor-type-id="text-editor">
@@ -51,7 +40,7 @@
         <entry file="file://$PROJECT_DIR$/templates/gasolineras/index.html.twig">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="30">
-              <caret line="2" column="50" lean-forward="true" selection-start-line="2" selection-end-line="3" />
+              <caret line="2" column="50" selection-start-line="2" selection-end-line="3" />
             </state>
           </provider>
         </entry>
@@ -83,11 +72,20 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/home/publicidad.html.twig">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="30">
-              <caret line="2" column="35" selection-start-line="2" selection-start-column="35" selection-end-line="2" selection-end-column="35" />
+              <caret line="2" column="36" selection-start-line="2" selection-start-column="36" selection-end-line="2" selection-end-column="36" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Form/Type/RegistroUsuariosFormType.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="525">
+              <caret line="49" column="34" selection-start-line="49" selection-start-column="34" selection-end-line="49" selection-end-column="34" />
             </state>
           </provider>
         </entry>
@@ -105,7 +103,7 @@
         <entry file="file://$PROJECT_DIR$/templates/home/precio.html.twig">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="30">
-              <caret line="2" column="48" lean-forward="true" selection-start-line="2" selection-end-line="3" />
+              <caret line="2" column="48" selection-start-line="2" selection-end-line="3" />
             </state>
           </provider>
         </entry>
@@ -318,37 +316,14 @@
               <item name="permergas" type="b2602c69:ProjectViewProjectNode" />
               <item name="permergas" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Controller" type="462c0819:PsiDirectoryNode" />
+              <item name="Form" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="permergas" type="b2602c69:ProjectViewProjectNode" />
               <item name="permergas" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Resources" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="permergas" type="b2602c69:ProjectViewProjectNode" />
-              <item name="permergas" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Resources" type="462c0819:PsiDirectoryNode" />
-              <item name="FOSUserBundle" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="permergas" type="b2602c69:ProjectViewProjectNode" />
-              <item name="permergas" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Resources" type="462c0819:PsiDirectoryNode" />
-              <item name="FOSUserBundle" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="permergas" type="b2602c69:ProjectViewProjectNode" />
-              <item name="permergas" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Resources" type="462c0819:PsiDirectoryNode" />
-              <item name="FOSUserBundle" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="Security" type="462c0819:PsiDirectoryNode" />
+              <item name="Form" type="462c0819:PsiDirectoryNode" />
+              <item name="Type" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="permergas" type="b2602c69:ProjectViewProjectNode" />
@@ -425,12 +400,12 @@
       <option name="presentableId" value="Default" />
       <updated>1568776904270</updated>
       <workItem from="1568776907562" duration="1996000" />
-      <workItem from="1569292215385" duration="2759000" />
+      <workItem from="1569292215385" duration="3159000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="21012000" />
+    <option name="totallyTimeSpent" value="21412000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1299" height="743" extended-state="6" />
@@ -758,7 +733,7 @@
     <entry file="file://$PROJECT_DIR$/templates/gasolineras/index.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
-          <caret line="2" column="50" lean-forward="true" selection-start-line="2" selection-end-line="3" />
+          <caret line="2" column="50" selection-start-line="2" selection-end-line="3" />
         </state>
       </provider>
     </entry>
@@ -772,7 +747,7 @@
     <entry file="file://$PROJECT_DIR$/templates/home/precio.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
-          <caret line="2" column="48" lean-forward="true" selection-start-line="2" selection-end-line="3" />
+          <caret line="2" column="48" selection-start-line="2" selection-end-line="3" />
         </state>
       </provider>
     </entry>
@@ -786,7 +761,14 @@
     <entry file="file://$PROJECT_DIR$/templates/home/publicidad.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
-          <caret line="2" column="35" selection-start-line="2" selection-start-column="35" selection-end-line="2" selection-end-column="35" />
+          <caret line="2" column="36" selection-start-line="2" selection-start-column="36" selection-end-line="2" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Form/Type/RegistroUsuariosFormType.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="49" column="34" selection-start-line="49" selection-start-column="34" selection-end-line="49" selection-end-column="34" />
         </state>
       </provider>
     </entry>
