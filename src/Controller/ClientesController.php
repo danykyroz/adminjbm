@@ -219,6 +219,47 @@ class ClientesController extends AbstractController
         ]);
     }
 
+
+
+    /**
+     * @Route("/perfil", name="perfil", methods={"GET"})
+     */
+    public function perfil(Request $request): Response
+    {
+        $user_admin=($this->getUser());
+        $em=$this->getDoctrine()->getManager();
+        $wallet_flotilla=false;
+        $wallet_cliente=false;
+        
+        $cliente=$em->getRepository('App:Clientes','c')->findOneBy(array('email'=>$user_admin->getEmail()));
+
+        if($user_admin->getRoles()[0]=="ROLE_ADMIN_FLOTILLA"){
+
+            $flotilla_user=$em->getRepository('App:FlotillaUsuarios','u')->findOneBy(array('usuarioId'=>$user_admin->getId()));
+            
+            $flotilla_cliente=$em->getRepository('App:Clientes','c')->findOneBy(array('email'=>$user_admin->getEmail()));
+            
+            if($flotilla_cliente){
+                $wallet_flotilla=$em->getRepository('App:Wallet','w')->findOneBy(array('clienteId'=>$flotilla_cliente->getId()));
+            }
+        
+        }
+
+        if($cliente){
+            
+           $wallet_cliente=$em->getRepository('App:Wallet','w')->findOneBy(array('clienteId'=>$cliente->getId()));
+     
+        }
+        
+        return $this->render('clientes/show.html.twig', [
+            'cliente' => $cliente,
+            'wallet_flotilla'=>$wallet_flotilla,
+            'wallet_cliente'=>$wallet_cliente
+        ]);
+    }
+
+
+
     /**
      * @Route("/{id}", name="clientes_show", methods={"GET"})
      */

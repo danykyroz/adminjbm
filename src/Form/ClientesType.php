@@ -13,6 +13,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+
 
 class ClientesType extends AbstractType
 {
@@ -24,15 +26,16 @@ class ClientesType extends AbstractType
             ->add('apellidos',null,array('required'=>true))
             ->add('email', EmailType::class, array('label' => 'Email'))
             ->add('celular',null,array('required'=>true))
-            ->add('avatar')
-           ->add('delegacion', EntityType::class, [
+            ->add('avatar',FileType::class)
+            ->add('placa',null,array('required'=>true))
+            ->add('delegacion', EntityType::class, [
                 'class'         => Delegacion::class,
+                'label'=>'Delegación',
                 'query_builder' => function(EntityRepository $repo) {
 
                     return $repo->createQueryBuilder('d')->orderBy('d.municipio','Asc');
                 }
             ])
-            ->add('placa',null,array('required'=>true))
             ->add('tipo', ChoiceType::class, [
                    
                     'mapped' => true,

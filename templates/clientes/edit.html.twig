@@ -11,3 +11,17 @@
 	
 
 {% endblock %}
+
+{% block body_javascript %}
+<script type="text/javascript">
+    
+    $('document').ready(function(){
+        
+        $("#clientes_documento").attr("disabled",true);
+        $("#clientes_nombres").attr("disabled",true);
+        $("#clientes_apellidos").attr("disabled",true);
+        $("#clientes_tipo").attr("disabled",true);
+    })
+</script>
+       
+{% endblock %}

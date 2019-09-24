@@ -181,9 +181,9 @@ class UserController extends Controller
         if(!$fosuser){
 
         }else{
-            $password=$request->get('_password'); 
+            $password=$request->get('_password');
             $encoder = $this->factory->getEncoder($fosuser);
-
+            
                     if ($encoder->isPasswordValid($fosuser->getPassword(),
                         $password,
                         $fosuser->getSalt())) {
