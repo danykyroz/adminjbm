@@ -69,6 +69,9 @@ class DefaultController extends Controller
             if($user->getRoles()[0]=="ROLE_ADMIN_FLOTILLA"){
                  return $this->render('home/menu_flotilla.html.twig');
             }
+            if($user->getRoles()[0]=="ROLE_GASOLINERA"){
+                 return $this->render('home/menu_gasolinera.html.twig');
+            }
 
           }
 

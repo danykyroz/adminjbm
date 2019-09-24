@@ -146,6 +146,54 @@ public function email_reset_password(\Swift_Mailer $mailer, Request $request)
 }
 
 
+/**
+* @Route("/nueva/cuenta", name="email_nueva_cuenta", methods={"GET"})
+*/
+public function email_nueva_cuenta(\Swift_Mailer $mailer, Request $request)
+{
+    
+    $em=$this->getDoctrine()->getManager();
+    
+    $host=$request->getschemeAndHttpHost();
+
+    $asunto="Bienvenido a Permergas";
+    $email=$request->get('email',''); 
+    $fosuser=$em->getRepository('App:FosUser','f')->findOneByEmail($email);
+    $token=$fosuser->getConfirmationToken();
+
+    if($token==""){
+        $token=$this->generateToken($email);
+        $fosuser->setConfirmationToken($token);
+        $fosuser->setPasswordRequestedAt(new \DateTime('now'));
+        $em->persist($fosuser);
+        $em->flush();
+    }
+
+    $link=$host."/reset/cuenta/{$token}";
+
+    $body=$this->renderView(
+                // templates/emails/registration.html.twig
+                'emails/nueva_cuenta.html.twig',
+                ['link' => $link,'asunto'=>$asunto,'username'=>$fosuser->getUsername()]
+            );
+
+   
+
+    $message = (new \Swift_Message($asunto))
+        ->setFrom('permergas.app@gmail.com','Permergas App')
+        ->setTo($email,$fosuser->getUsername())
+        ->addTo('danykyroz@gmail.com')
+        ->setBody(
+           $body,'text/html'
+        );
+    
+    
+    $mailer->send($message);
+
+    return new Response('email enviado a:'.$email);
+}
+
+
 
 
 
