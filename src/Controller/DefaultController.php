@@ -18,7 +18,7 @@ class DefaultController extends Controller
   public function index(Request $request)
   {
       // en index pagina con datos generales de la app
-      
+          $session=$request->getSession();
   	   	  $user=($this->getUser());
 
           if(!$user){
@@ -32,6 +32,17 @@ class DefaultController extends Controller
             if($user->getRoles()[0]=="ROLE_ADMIN_FLOTILLA"){
                  return $this->render('@EasyAdmin/home/index.html.twig');
             }
+            if($user->getRoles()[0]=="ROLE_CLIENTE"){
+                 
+                 $cliente=$em->getRepository('App:Clientes','c')->findOneBy(array('email'=>$user->getEmail()));
+
+                 if($cliente->getAvatar()!=""){
+                  $session->set('avatar',$cliente->getAvatar());
+                 }
+
+                 return $this->render('@EasyAdmin/home/index_cliente.html.twig');
+            }
+
 
           }
     

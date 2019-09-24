@@ -108,7 +108,12 @@
                     <!-- #END# Message-->
                     <li class="dropdown user_profile">
                         <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
+                            {% if app.session.get('avatar')!="" %}
+                            <img src="{{asset(app.session.get('avatar'))}}" width="32" height="32" alt="User">
+                            {% else %}
                             <img src="{{asset('adminlte/assets/images/user.jpg')}}" width="32" height="32" alt="User">
+                            {% endif%}
+                            
                         </a>
                         <ul class="dropdown-menu pullDown">
                             <li class="body">
@@ -145,7 +150,15 @@
                     <li class="sidebar-user-panel active">
                         <div class="user-panel">
                             <div class=" image">
-                                <img src="{{asset('adminlte/assets/images/usrbig.jpg')}}" class="img-circle user-img-circle" alt="User Image" />
+                                
+                                {% if app.session.get('avatar')!="" %}
+                                <img src="{{asset(app.session.get('avatar'))}}" class="img-circle user-img-circle" alt="User">
+                                {% else %}
+                                 <img src="{{asset('adminlte/assets/images/usrbig.jpg')}}" class="img-circle user-img-circle" alt="User Image" />
+                                {% endif%}
+
+
+                               
                             </div>
                         </div>
                         <div class="profile-usertitle">

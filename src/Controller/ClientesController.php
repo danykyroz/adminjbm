@@ -16,6 +16,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use FOS\UserBundle\Model\UserManagerInterface;
 use Symfony\Component\Security\Core\UserProviderInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * @Route("/admin/clientes")
@@ -25,9 +27,11 @@ class ClientesController extends AbstractController
     
     private $userManager;
     private $paginator;
-    public function __construct(UserManagerInterface $userManager, PaginatorInterface $paginator){
+    public $session;
+    public function __construct(UserManagerInterface $userManager, PaginatorInterface $paginator,SessionInterface $session){
         $this->userManager=$userManager;
         $this->paginator=$paginator;
+        $this->session=$session;
     }  
 
     /**
@@ -246,12 +250,12 @@ class ClientesController extends AbstractController
         }
 
         if($cliente){
-            
+
            $wallet_cliente=$em->getRepository('App:Wallet','w')->findOneBy(array('clienteId'=>$cliente->getId()));
      
         }
         
-        return $this->render('clientes/show.html.twig', [
+        return $this->render('clientes/perfil.html.twig', [
             'cliente' => $cliente,
             'wallet_flotilla'=>$wallet_flotilla,
             'wallet_cliente'=>$wallet_cliente
@@ -358,11 +362,29 @@ class ClientesController extends AbstractController
     {
         $form = $this->createForm(ClientesType::class, $cliente);
         $form->handleRequest($request);
+        $em=$this->getDoctrine()->getManager();
+        $session=$this->session;
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $em->flush();
 
-            return $this->redirectToRoute('clientes_index');
+            $file = $form['avatar']->getData();
+            if($file){
+             $name='perfil'.$cliente->getId().'.'.$file->getClientOriginalExtension();
+            $path_image='uploads/'.$name;
+            $name_image='uploads/'.$name;
+            $file->move('uploads/',$name);
+            $cliente->setAvatar($name_image);
+            $em->persist($cliente);
+            $em->flush();
+     
+            }
+           
+            $session->set('avatar',$cliente->getAvatar());
+
+            $this->addFlash('success', 'Perfil actualizado exitosamente.');
+
+            return $this->redirectToRoute('clientes_edit',array('id'=>$cliente->getId()));
         }
 
         return $this->render('clientes/edit.html.twig', [

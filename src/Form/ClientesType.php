@@ -26,7 +26,12 @@ class ClientesType extends AbstractType
             ->add('apellidos',null,array('required'=>true))
             ->add('email', EmailType::class, array('label' => 'Email'))
             ->add('celular',null,array('required'=>true))
-            ->add('avatar',FileType::class)
+            ->add('avatar',FileType::class,array(
+                            "label" => "Avatar",
+                            "attr" =>array("class" => ""),
+                             "data_class" => null,
+                             "required"=>false,
+            ))
             ->add('placa',null,array('required'=>true))
             ->add('delegacion', EntityType::class, [
                 'class'         => Delegacion::class,
