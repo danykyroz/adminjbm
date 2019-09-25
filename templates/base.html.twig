@@ -115,7 +115,7 @@
                             {% if app.session.get('avatar')!="" %}
                             <img src="{{asset(app.session.get('avatar'))}}" width="32" height="32" alt="User">
                             {% else %}
-                            <img src="{{asset('adminlte/assets/images/user.jpg')}}" width="32" height="32" alt="User">
+                            <img src="{{asset('adminlte/assets/images/user.png')}}" width="32" height="32" alt="User">
                             {% endif%}
                             
                         </a>
@@ -158,7 +158,7 @@
                                 {% if app.session.get('avatar')!="" %}
                                 <img src="{{asset(app.session.get('avatar'))}}" class="img-circle user-img-circle" alt="User">
                                 {% else %}
-                                 <img src="{{asset('adminlte/assets/images/usrbig.jpg')}}" class="img-circle user-img-circle" alt="User Image" />
+                                 <img src="{{asset('adminlte/assets/images/user.png')}}" class="img-circle user-img-circle" alt="User Image" />
                                 {% endif%}
 
 
@@ -208,9 +208,30 @@
                   <section class="content">
                      <div class="container-fluid">
                     <div class="content">
+
+                           {% for message in app.flashes('success') %}
+                             <div class="alert alert-success" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                {{message}}
+                            </div>
+                            {% endfor %}
+                            {% for message in app.flashes('bad') %}
+                            <div class="alert bg-pink alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                {{message}}
+                            </div>
+                            {% endfor %}
+                        
                         {% block content_header_wrapper %}
                         {% set _has_content_help = _entity_config is defined and _entity_config[app.request.query.get('action')]['help']|default(false) %}
                         <section class="content-header {{ _has_content_help ? 'has-content-help' }}">
+
+
+
                             {% block content_header %}
                                 <div class="">
                                     <div class="content-header-title">
@@ -237,22 +258,7 @@
                         {% endblock content_header_wrapper %}
 
                         <section id="main" class="content-body">
-                            {% for message in app.flashes('success') %}
-                             <div class="alert alert-success" role="alert">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">×</span>
-                                </button>
-                                {{message}}
-                            </div>
-                            {% endfor %}
-                            {% for message in app.flashes('bad') %}
-                            <div class="alert bg-pink alert-dismissible" role="alert">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">×</span>
-                                </button>
-                                {{message}}
-                            </div>
-                            {% endfor %}
+                         
                             <br/>
                             
                             {% block main %}

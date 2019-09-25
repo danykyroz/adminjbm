@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\FosUser;
 use App\Form\FosUserType;
+use App\Form\UsuarioEditType;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -89,21 +91,35 @@ class FosUserController extends HelperController
      */
     public function edit(Request $request, FosUser $fosUser): Response
     {
-        $form = $this->createForm(FosUserType::class, $fosUser);
+       
+         $user=($this->getUser());
+
+        if($user->getRoles()[0]=="ROLE_ADMIN"){
+              $form = $this->createForm(FosUserType::class, $fosUser);
+        }else{
+           $form = $this->createForm(UsuarioEditType::class, $fosUser); 
+        }
+      
         $form->handleRequest($request);
         $em=$this->getDoctrine()->getManager();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
-            $role = $form->get('roles')->getData();
-           
             
-            $fosUser->setRoles(array($role));
+            if($user->getRoles()[0]=="ROLE_ADMIN"){
+                 $role = $form->get('roles')->getData();
+                 $fosUser->setRoles(array($role));
+                 $em->persist($fosUser);
+                 $em->flush();
+                return $this->redirectToRoute('usuarios_index');
+            }else{
+
+                 $this->addFlash('success', 'Información actualizada exitosamente');
+                return $this->redirectToRoute('perfil');
+            }
             
-            $em->persist($fosUser);
-            $em->flush();
                 
-            return $this->redirectToRoute('usuarios_index');
+            
         }
 
         return $this->render('usuarios/edit.html.twig', [

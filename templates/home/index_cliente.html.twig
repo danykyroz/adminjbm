@@ -6,19 +6,19 @@
 	<div class="col-lg-4">
         <div class="plain-card">
             <div class="card-inner">
-                <h6 class="tx-primary m-b-10">Recargas Wallet</h6>
+                <h6 class="tx-primary m-b-10">Precio Gasolina</h6>
                 <div class="row">
                     <div class="col col-block">
-                        <label class="font-14">Hoy</label>
-                        <p>0</p>
+                        <label class="font-14">Premium</label>
+                        <p>{{gasolina_premium}}</p>
                     </div>
                     <div class="col col-block">
-                        <label class="font-14">Semana</label>
-                        <p>1,898</p>
+                        <label class="font-14">Diesel</label>
+                        <p>{{gasolina_diesel}}</p>
                     </div>
                     <div class="col col-block">
-                        <label class="font-14">Mes</label>
-                        <p>1,898</p>
+                       <label class="font-14">Corriente</label>
+                        <p>{{gasolina_diesel}}</p>
                     </div>
                 </div>
             </div>
@@ -30,7 +30,19 @@
                 <h6 class="tx-primary m-b-10">Saldo Wallet</h6>
                 <div class="row">
                     <div class="col col-block">
-                        <h4>1,898</h4>
+                        <h4>{{wallet.saldo}}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+     <div class="col-lg-4">
+        <div class="plain-card">
+            <div class="card-inner">
+                <h6 class="tx-primary m-b-10">Saldo Crédito</h6>
+                <div class="row">
+                    <div class="col col-block">
+                        <h4>0</h4>
                     </div>
                 </div>
             </div>
@@ -38,3 +50,5 @@
     </div>
 </div>
 {% endblock %}
+
+

@@ -15,15 +15,22 @@
     {{ form_widget(form) }}
     <br/>
     <button class="btn btn-success">{{ button_label|default('Guardar') }}</button>
-        <a class="btn" href="{{ path('usuarios_index') }}">Volver a la lista</a>
+    {% if is_granted('ROLE_ADMIN') %}
+
+    <a class="btn" href="{{ path('usuarios_index') }}">Volver a la lista</a>
+
+    {% endif %}
 	
 {{ form_end(form) }}
 <br/>
+{% if is_granted('ROLE_ADMIN') %}
+
 {% if delete %}
 {{ include('usuarios/_delete_form.html.twig') }}
 {% endif %}
- </div>
+{% endif%}
 
+ </div>
 </div>
 </div>
 </div>

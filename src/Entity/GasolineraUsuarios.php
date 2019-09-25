@@ -36,6 +36,16 @@ class GasolineraUsuarios
      */
     private $usuarioId;
 
+    /**
+     * @var \Gasolineras
+     *
+     * @ORM\ManyToOne(targetEntity="Gasolineras")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="gasolinera_id", referencedColumnName="id")
+     * })
+     */
+    private $gasolinera;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -65,7 +75,7 @@ class GasolineraUsuarios
         return $this;
     }
 
-    public function Gasolinera(): ?Gasolineras
+    public function getGasolinera(): ?Gasolineras
     {
         return $this->gasolinera;
     }

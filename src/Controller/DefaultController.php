@@ -68,6 +68,7 @@ class DefaultController extends Controller
   public function menu(Request $request){
 
         $user=($this->getUser());
+        $em=$this->getDoctrine()->getManager();
 
           if(!$user){
                return $this->redirect('login');
@@ -81,7 +82,15 @@ class DefaultController extends Controller
                  return $this->render('home/menu_flotilla.html.twig');
             }
             if($user->getRoles()[0]=="ROLE_GASOLINERA"){
-                 return $this->render('home/menu_gasolinera.html.twig');
+                
+              $gasolinera_usuario=$em->getRepository('App:GasolineraUsuarios','g')->findOneBy(array('usuarioId'=>$user->getId()));
+        
+              $gasolinera=$gasolinera_usuario->getGasolinera();
+
+              $data=array('gasolinera'=>$gasolinera);
+
+              return $this->render('home/menu_gasolinera.html.twig',$data);
+
             }
             if($user->getRoles()[0]=="ROLE_CLIENTE"){
                  return $this->render('home/menu_cliente.html.twig');

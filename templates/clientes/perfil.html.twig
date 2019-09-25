@@ -2,8 +2,17 @@
 
 {% block content_title %}Mi Cuenta{% endblock %}
 
+{% block busqueda_general %}
+{% endblock %}
+
+
 {% block body %}
+
+
 <div class="row">
+
+{% if cliente %}
+
 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
     <div class="card">
         <div class="header">
@@ -85,9 +94,11 @@
 </div>
 </div>
 </div>
-<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+{% endif %}
+
 
 {% if (wallet_cliente) %}
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
 
     <div class="card">
         <div class="header bg-cyan ">
@@ -99,8 +110,53 @@
            <h2>$ {{wallet_cliente.saldo |number_format(2)}} MX</h2>
         </div>
     </div>
+
+    </div>
+    {% else %}
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+
     <div class="card">
-     <form>
+        <div class="header">
+            <h2>
+                <strong>{{app.user.username}}</strong>
+            </h2>
+            
+        </div>
+    <div class="card-body table-responsive">
+        <table class="table table-condensed">
+            <tbody>
+                <tr>
+                    <th>Id:</th>
+                    <td>{{ app.user.id }}</td>
+                </tr>
+                 <tr>
+                    <th>Documento:</th>
+                    <td>{{ app.user.documento }}</td>
+                 </tr>
+                 <tr>
+                    <th>Nombres:</th>
+                    <td>{{ app.user.username }}</td>
+                </tr>
+                <tr>
+                    <th>Email:</th>
+                    <td>{{ app.user.email }}</td>
+                </tr>
+                <tr>
+                    <th>Teléfono:</th>
+                    <td>{{ app.user.telefono }}</td>
+                </tr>
+                <tr>
+                   <td> <a class="btn btn-success" href="{{path('usuarios_edit',{id:app.user.id})}}" >Editar</a></td>
+                </tr>
+        </tbody>
+        </table>
+    </div>
+    </div>
+</div>
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+
+    <div class="card">
+     <form action="{{path('cambiar_password')}}" method="POST">
         <div class="header">
             <h2>
                 Cambiar Contraseña
@@ -109,10 +165,10 @@
         <div class="card-body ">
          
           <div><label for="user_password" class="required active">Nueva Contraseña</label>
-          <input type="password" id="new_password" name="password" required="required" maxlength="10" value=""></div>
+          <input type="password" id="new_password" name="_password" required="required" maxlength="10" value=""></div>
 
            <div><label for="user_password" class="required active">Confirmar Contraseña</label>
-          <input type="password" id="new_password" name="confirmar_password" required="required" maxlength="10" value=""></div>
+          <input type="password" id="new_password" name="_password_check" required="required" maxlength="10" value=""></div>
           
         </div>
          <div class="card-footer">
@@ -122,15 +178,13 @@
         </div>
         </form>
     </div>
-    {% else %}
+</div>
 
   {% endif%}  
-</div>
 
 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
     
 </div>
-
 
 
 {% if (wallet_flotilla) %}

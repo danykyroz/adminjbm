@@ -223,6 +223,37 @@ class ClientesController extends AbstractController
         ]);
     }
 
+    /**
+   * @Route("/cambiar/password", name="cambiar_password")
+   */
+    public function cambiar_password(Request $request){
+
+            
+            $em=$this->getDoctrine()->getManager();
+            
+            $fosuser=($this->getUser());
+            $submit=$request->get('submit');
+            
+            $password=$request->get('_password');
+            $password_check=$request->get('_password_check');
+                
+            if(strtolower($password)==strtolower($password_check)){
+                $fosuser->setPlainPassword($password_check);
+                $this->userManager->updateUser($fosuser);
+
+                $this->addFlash('success', 'Contraseña reseteada exitosamente');
+                
+               
+
+            }else{
+                    
+                $this->addFlash('bad', 'password no coinciden'); 
+
+               
+            }  
+
+           return $this->redirect($this->generateUrl('perfil'));
+    }
 
 
     /**
@@ -253,6 +284,8 @@ class ClientesController extends AbstractController
 
            $wallet_cliente=$em->getRepository('App:Wallet','w')->findOneBy(array('clienteId'=>$cliente->getId()));
      
+        }else{
+            $cliente=false;
         }
         
         return $this->render('clientes/perfil.html.twig', [
