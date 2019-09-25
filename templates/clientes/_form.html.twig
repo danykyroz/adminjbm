@@ -11,6 +11,14 @@
     <div class="card-body table-responsive">
 
 {{ form_start(form) }}
+
+ {% if(cliente.avatar) %}
+
+    <img src="{{asset(cliente.avatar)}}" width="64" height="64" alt="User">
+    {% else%}
+
+    {% endif%}
+<br/><br/>
 {{ form_widget(form) }}
 
     <br/>
