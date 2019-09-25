@@ -16,15 +16,16 @@
     <br/>
     <button class="btn btn-success">{{ button_label|default('Guardar') }}</button>
 
+ <a class="btn btn-default" href="{{ path('clientes_index') }}">Volver a la Lista</a>
+
    
 {{ form_end(form) }}
 {% if eliminar %}
 
 {% if is_granted('ROLE_CLIENTE') %}
-{% else %}
- <a class="btn btn-default" href="{{ path('clientes_index') }}">Volver a la Lista</a>
 
-<br/><br/>
+{% else %}
+<br/>
     {{ include('clientes/_delete_form.html.twig') }}
 {% endif %}
 {% endif %}

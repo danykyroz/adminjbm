@@ -7,6 +7,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\EasyAdminController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
+use App\Entity\FlotillasClientes;
+
 class AdminController extends EasyAdminController
 {
     /**
@@ -21,7 +23,7 @@ class AdminController extends EasyAdminController
              return $this->render('@EasyAdmin/home/index.html.twig');
         }
         if($user->getRoles()[0]=="ROLE_ADMIN_FLOTILLA"){
-             return $this->render('home/index_flotilla.html.twig');
+              return  $this->redirect($this->generateUrl('dashboard_flotilla'));
         }
         if($user->getRoles()[0]=="ROLE_GASOLINERA"){
               return  $this->redirect($this->generateUrl('dashboard_gasolinera'));
@@ -81,6 +83,42 @@ class AdminController extends EasyAdminController
             'gasolina_premium'=>0);
 
         return $this->render('home/index_gasolinera.html.twig',$data);
+    }
+
+    /**
+     * @Route("/dashboard/flotilla", name="dashboard_flotilla")
+     */
+    public function dashboard_flotilla(Request $request)
+    {
+        
+        $user=($this->getUser());
+        $em=$this->getDoctrine()->getManager();
+        $session=$request->getSession();
+
+        $flotilla_usuario=$em->getRepository('App:FlotillaUsuarios','f')->findOneBy(array('usuarioId'=>$user->getId()));
+        
+        $flotilla=$flotilla_usuario->getFlotilla();
+        $cliente=$em->getRepository('App:Clientes','c')->findOneBy(array('email'=>$user->getEmail()));
+         $wallet=$em->getRepository('App:Wallet','w')->findOneBy(array('clienteId'=>$cliente->getId()));
+
+
+        $qb_clientes=$em->getRepository('App:FlotillasClientes')->listaClientesFlotilla($flotilla->getId());
+
+
+        $total_clientes=count($qb_clientes->getQuery()->getResult());
+
+        $saldo_clientes=$em->getRepository(FlotillasClientes::class)->getSaldoClientesFlotilla($flotilla->getId());
+
+        $session->set("flotilla",$flotilla);
+        
+        $data=array('flotilla'=>$flotilla,
+                    'wallet'=>$wallet,
+                    'total_clientes'=>$total_clientes,
+                    'saldo_clientes'=>$saldo_clientes,
+                    'gasolina_diesel'=>0,
+                    'gasolina_premium'=>0,);
+
+        return $this->render('home/index_flotilla.html.twig',$data);
     }
 
 

@@ -363,6 +363,8 @@ class ClientesController extends AbstractController
 
                 $wallet_cliente->setSaldo($wallet_cliente->getSaldo()-$request->get('valor'));
 
+                $wallet_flotilla->setSaldo($wallet_flotilla->getSaldo()+$request->get('valor'));
+
                  $this->addFlash('success', 'Saldo actualizado exitosamente.');
 
 

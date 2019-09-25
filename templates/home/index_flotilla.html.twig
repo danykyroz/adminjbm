@@ -9,7 +9,7 @@
                 <h6 class="tx-primary m-b-10">Total Clientes</h6>
                 <div class="row">
                     <div class="col col-block">
-                        <h2>0</h2>
+                        <h2>{{total_clientes}}</h2>
                     </div>
                 </div>
             </div>
@@ -21,7 +21,7 @@
                 <h6 class="tx-primary m-b-10">Saldo Wallet Admin</h6>
                 <div class="row">
                     <div class="col col-block">
-                        <h2>1,898</h2>
+                        <h2>{{wallet.saldo|number_format(2)}}</h2>
                     </div>
                 </div>
             </div>
@@ -33,7 +33,7 @@
                 <h6 class="tx-primary m-b-10">Saldo Wallet Clientes</h6>
                 <div class="row">
                     <div class="col col-block">
-                        <h2>0</h2>
+                        <h2>{{saldo_clientes|number_format(2)}}</h2>
                     </div>
                 </div>
             </div>

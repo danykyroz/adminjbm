@@ -41,7 +41,5 @@ class FlotillaUsuariosRepository extends EntityRepository
             ->setParameter('roles',"%flotilla%");
         
         return $qb;
-
-
     }
 }

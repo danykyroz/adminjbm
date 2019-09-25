@@ -21,4 +21,17 @@ class FlotillaClientesRepository extends EntityRepository
 
 
     }
+
+    public function getSaldoClientesFlotilla($flotillaId)
+    {
+        $em = $this->getEntityManager();
+        $qb=$em->createQueryBuilder();
+        $qb->select('sum(w.saldo) as saldo')->from('App:Flotillas','f')
+        ->innerJoin('App:FlotillasClientes', 'fc', 'WITH', 'fc.flotillaId = f')
+        ->innerJoin('App:Clientes', 'c', 'WITH', 'fc.clienteId = c')
+        ->innerJoin('App:Wallet', 'w', 'WITH', 'w.clienteId = c')
+        ->where('f.id=:id')->setParameter('id',$flotillaId);
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+   
 }

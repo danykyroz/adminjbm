@@ -79,7 +79,12 @@ class DefaultController extends Controller
                 return $this->render('home/menu_admin.html.twig');
             }
             if($user->getRoles()[0]=="ROLE_ADMIN_FLOTILLA"){
-                 return $this->render('home/menu_flotilla.html.twig');
+                 
+              $flotilla_usuario=$em->getRepository('App:FlotillaUsuarios','f')->findOneBy(array('usuarioId'=>$user->getId()));
+        
+              $flotilla=$flotilla_usuario->getFlotilla();
+        
+                 return $this->render('home/menu_flotilla.html.twig',['flotilla'=>$flotilla]);
             }
             if($user->getRoles()[0]=="ROLE_GASOLINERA"){
                 
