@@ -105,8 +105,8 @@ class UserController extends Controller
 
             }else{
 
-                $password=$request->get('password');
-                $password_check=$request->get('password_check');
+                $password=$request->get('_password');
+                $password_check=$request->get('_password_check');
                     
                 if(strtolower($password)==strtolower($password_check)){
                     $fosuser->setPlainPassword($password_check);
