@@ -41,6 +41,13 @@ class User extends BaseUser
      */
     private $documento;
 
+     /**
+     * @var string|null
+     *
+     * @ORM\Column(name="avatar", type="string", length=200, nullable=true)
+     */
+    private $avatar;
+
     public function getId()
     {
         return $this->id;
@@ -83,6 +90,19 @@ class User extends BaseUser
     public function setTelefono(string $telefono): self
     {
         $this->telefono = $telefono;
+
+        return $this;
+    }
+
+
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar($avatar): self
+    {
+        $this->avatar = $avatar;
 
         return $this;
     }

@@ -152,6 +152,13 @@ class FosUser
      */
     private $documento;
 
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="avatar", type="string", length=200, nullable=true)
+     */
+    private $avatar;
+
 
 
     public function getId(): ?int
@@ -388,6 +395,17 @@ class FosUser
         return $this;
     }
 
+      public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(?string $avatar): self
+    {
+        $this->avatar = $avatar;
+
+        return $this;
+    }
 
 
 }

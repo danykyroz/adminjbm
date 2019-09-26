@@ -18,9 +18,13 @@ class AdminController extends EasyAdminController
     {
       
         $user=($this->getUser());
-
+        $session=$request->getSession();
+        if($user->getAvatar()!=""){
+            $session->set('avatar',$user->getAvatar());
+        }
+      
         if($user->getRoles()[0]=="ROLE_ADMIN"){
-             return $this->render('@EasyAdmin/home/index.html.twig');
+           return  $this->redirect($this->generateUrl('dashboard_admin'));
         }
         if($user->getRoles()[0]=="ROLE_ADMIN_FLOTILLA"){
               return  $this->redirect($this->generateUrl('dashboard_flotilla'));
@@ -31,11 +35,17 @@ class AdminController extends EasyAdminController
         if($user->getRoles()[0]=="ROLE_CLIENTE"){
                 return  $this->redirect($this->generateUrl('dashboard_cliente'));
         }
-        if($user->getRoles()[0]=="ROLE_GASOLINERA"){
-             return $this->render('home/index_gasolinera.html.twig');
-        }
+       
     }
 
+    /**
+     * @Route("/dashboard/admin", name="dashboard_admin")
+    */
+    public function dashboard_admin(Request $request){
+       
+
+        return $this->render('home/index_admin.html.twig');
+    }
 
     /**
      * @Route("/dashboard/cliente", name="dashboard_cliente")

@@ -19,6 +19,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use App\Entity\User;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 
 class RegistroUsuariosFormType extends AbstractType
@@ -35,6 +36,13 @@ class RegistroUsuariosFormType extends AbstractType
             ->add('telefono',null,array('required'=>true,'label'=>'Teléfono'))
             ->add('email', EmailType::class, array('label' => 'form.email', 'translation_domain' => 'FOSUserBundle'))
             
+            ->add('avatar',FileType::class,array(
+                            "label" => "Avatar",
+                            "attr" =>array("class" => ""),
+                             "data_class" => null,
+                             "required"=>false,
+            )) 
+
             ->add('roles', ChoiceType::class, [
                     'label'=>"",
                     'mapped' => false,

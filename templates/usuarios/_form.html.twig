@@ -12,9 +12,18 @@
 
 
 {{ form_start(form) }}
+
+     {% if(fos_user.avatar!="") %}
+
+        <img src="{{asset(fos_user.avatar)}}" width="64" height="64" alt="User">
+        {% else%}
+
+        {% endif%}
+    <br/><br/>
     {{ form_widget(form) }}
     <br/>
     <button class="btn btn-success">{{ button_label|default('Guardar') }}</button>
+
     {% if is_granted('ROLE_ADMIN') %}
 
     <a class="btn" href="{{ path('usuarios_index') }}">Volver a la lista</a>

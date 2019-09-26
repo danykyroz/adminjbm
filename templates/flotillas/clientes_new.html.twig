@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block content_title %}Nueva Flotilla{% endblock %}
+
+{% block busqueda_general %}
+{% endblock %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+
+        <div class="header">
+            <h2>
+                <strong>Formulario Clientes</strong>
+            </h2>
+            
+        </div>
+    <div class="card-body table-responsive">
+
+{{ form_start(form) }}
+
+ {% if(cliente.avatar) %}
+
+    <img src="{{asset(cliente.avatar)}}" width="64" height="64" alt="User">
+    {% else%}
+
+    {% endif%}
+<br/><br/>
+{{ form_widget(form) }}
+
+    <br/>
+    <button class="btn btn-success">{{ button_label|default('Guardar') }}</button>
+
+ <a class="btn btn-default" href="{{ path('flotillas_clientes',{id:flotilla.id}) }}">Volver a la Lista</a>
+
+   
+{{ form_end(form) }}
+
+
+</div>
+</div>
+</div>
+</div>
+
+{% endblock %}

@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
 use App\Controller\HelperController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * @Route("/admin/usuarios")
@@ -93,19 +95,35 @@ class FosUserController extends HelperController
     {
        
          $user=($this->getUser());
+         $session=$request->getSession();
 
         if($user->getRoles()[0]=="ROLE_ADMIN"){
-              $form = $this->createForm(FosUserType::class, $fosUser);
+            $form = $this->createForm(FosUserType::class, $fosUser);
         }else{
            $form = $this->createForm(UsuarioEditType::class, $fosUser); 
         }
-      
+        
         $form->handleRequest($request);
-        $em=$this->getDoctrine()->getManager();
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        $em=$this->getDoctrine()->getManager();
+        
+        if ($form->isSubmitted()) {
+
             $em->flush();
             
+            $file = $form['avatar']->getData();
+            
+            if($file){
+             $name='perfil'.$user->getId().'.'.$file->getClientOriginalExtension();
+            $path_image='uploads/'.$name;
+            $name_image='uploads/'.$name;
+            $file->move('uploads/',$name);
+            $fosUser->setAvatar($name_image);
+            $em->flush();
+           // $session->set('avatar',$fosUser->getAvatar());
+            }
+
+
             if($user->getRoles()[0]=="ROLE_ADMIN"){
                  $role = $form->get('roles')->getData();
                  $fosUser->setRoles(array($role));

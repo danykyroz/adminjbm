@@ -5,20 +5,25 @@ namespace App\Controller;
 use App\Entity\Flotillas;
 use App\Entity\FlotillaUsuarios;
 use App\Entity\FosUser;
+use App\Entity\Clientes;
+use App\Entity\Wallet;
 
 
 use App\Form\FlotillasType;
+use App\Form\ClientesType;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
-
+use App\Controller\HelperController;
+use App\Entity\FlotillasClientes;
 
 /**
  * @Route("/admin/flotillas")
  */
-class FlotillasController extends AbstractController
+class FlotillasController extends HelperController
 {
     /**
      * @Route("/", name="flotillas_index", methods={"GET"})
@@ -327,10 +332,6 @@ class FlotillasController extends AbstractController
                 $lista_clientes[]=array('row'=>$cliente,'saldo'=>$wallet_cliente->getSaldo());
         }
          
-        
- 
-
-
         return $this->render('flotillas/clientes.html.twig', [
             'flotilla' => $flotilla,
             'clientes'=>$pagination,
@@ -340,6 +341,95 @@ class FlotillasController extends AbstractController
             'tipo'=>array('1'=>'Cliente Wallet','2'=>'Admin Flotilla'),
             'query'=>$request->get('query','')
 
+        ]);
+    }
+
+    /**
+     * @Route("/clientes/new/{id}", name="flotillas_clientes_new", methods={"GET","POST"})
+     */
+    public function clientes_new(Flotillas $flotilla, Request $request): Response
+    {
+        $cliente = new Clientes();
+        $form = $this->createForm(ClientesType::class, $cliente);
+        $form->handleRequest($request);
+        $entityManager = $this->getDoctrine()->getManager();
+        $em=$this->getDoctrine()->getManager();
+
+       
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            //Crear un usuario grant_user con clave = documento
+            $tipo_cliente=$form->get('tipo')->getData();
+            if($tipo_cliente==1){
+                $rol="ROLE_CLIENTE";
+            }
+            if($tipo_cliente==2){
+                $rol="ROLE_ADMIN_FLOTILLA";
+            }
+
+            $user=$this->createUserClient($cliente,$rol);    
+            if(!$user){
+                $this->addFlash('bad', 'Ya existe un cliente o usuario con este correo');
+            }
+            else{
+
+                $entityManager->persist($cliente);
+                $entityManager->flush();
+                
+
+                $wallet=new Wallet();
+                $wallet->setCreatedAt(new \DateTime('now'));
+                $wallet->setClienteId($cliente->getId());
+                $wallet->setSaldo(0);
+                $wallet->setQr(base64_encode($cliente->getId().$cliente->getDocumento().time()));
+
+                $entityManager->persist($wallet);
+                $entityManager->flush();
+
+
+                if($flotilla){
+                  //Buscarmos dentro de lo user flotilla el id  
+                   
+                    if($flotilla){
+                        $flotilla_id=$flotilla->getId();
+                        $flotilla_cliente=new FlotillasClientes();
+                        $flotilla_cliente->setClienteId($cliente->getId());
+                        $flotilla_cliente->setFlotillaId($flotilla_id);
+                        $entityManager->persist($flotilla_cliente);
+                        $entityManager->flush();
+
+                    }
+
+                    
+                }
+                //Enviar mail
+                 $fosuser = $entityManager->getRepository("App:User")->findOneBy(["email" => $cliente->getEmail()]);
+
+                 $host=$request->getschemeAndHttpHost();
+                 $arrContextOptions=array(
+                 "ssl"=>array(
+                        "verify_peer"=>false,
+                        "verify_peer_name"=>false,
+                    ),
+                );  
+                 
+                 $url = $this->generateUrl('email_nueva_cuenta', array('email' => $fosuser->getEmail()));
+
+                  $send_mail=file_get_contents($host.$url, false, stream_context_create($arrContextOptions));
+
+
+
+                $this->addFlash('success', 'Cliente creado exitosamente!');
+                
+                return $this->redirectToRoute('flotillas_clientes',array('id'=>$flotilla->getId()));
+            }
+      
+        }
+
+        return $this->render('flotillas/clientes_new.html.twig', [
+            'cliente' => $cliente,
+            'form' => $form->createView(),
+            'flotilla'=>$flotilla
         ]);
     }
 }
