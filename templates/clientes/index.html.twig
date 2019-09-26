@@ -58,13 +58,26 @@
                               <select name="estado" id="estado">
                                     <option value="">Estado</option>
                                     <option value="1" {% if estado==1 %} selected='true' {% endif %}>Activo   </option>
-                                   
                                      <option value="0" {% if estado==0 %} selected='true' {% endif %}>Suspendido</option>
                                     
                               </select>
                             </div>
                         </div>
                     </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                       <div class="form-group">
+                            <div class="form-line">
+                              <select name="estados" id="estados" data-url="{{asset('admin/delegaciones')}}" >
+                                    <option value="">Estados</option>
+                                   {% for depto in estados %}
+                                   <option {% if estados_form==depto.id %} selected='true' {% endif %}< value="{{depto.id}}">{{depto.estado}}</option>
+                                   {% endfor %}
+                              </select>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
                        <div class="form-group">
                             <div class="form-line">
@@ -173,7 +186,31 @@
 {% block body_javascript %}
 
 <script type="text/javascript">
+
   $(document).ready(function(){
+
+    var id=$("#estados").val();
+    if(id!=""){
+         var id=$("#estados").val();
+        var url=$("#estados").data('url');
+        $.get(url,{'id':id},function(html){
+            $('#delegacion').html(html);
+            $('#delegacion').trigger("onchange");
+            $('#delegacion').formSelect();
+        })
+    }
+
+    $("#estados").change(function(e){
+        var id=$(this).val();
+        var url=$(this).data('url');
+        $.get(url,{'id':id},function(html){
+            $('#delegacion').html(html);
+            $('#delegacion').trigger("onchange");
+            $('#delegacion').formSelect();
+        })
+        
+    })
+
      $("#btn-reset").click(function(e){
         e.preventDefault();
         $('#tipo_cliente').val("");

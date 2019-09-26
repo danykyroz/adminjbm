@@ -5,6 +5,8 @@ namespace App\Controller;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\EasyAdminController;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
 use Symfony\Component\Routing\Annotation\Route;
 
 use App\Entity\FlotillasClientes;
@@ -131,6 +133,26 @@ class AdminController extends EasyAdminController
         return $this->render('home/index_flotilla.html.twig',$data);
     }
 
+    /**
+     * @Route("/admin/delegaciones", name="admin_delegaciones")
+     */
+    public function admin_delegaciones(Request $request)
+    {
+        
+        $em=$this->getDoctrine()->getManager();
+        $id=$request->get('id');
+        $delegaciones=$em->getRepository('App:Delegacion')->listarPorEstado($id);
+
+        $arr_delegaciones="";
+       foreach($delegaciones as $delegacion){
+        $id=$delegacion->getId();
+        $nombre=$delegacion->getMunicipio();
+        $arr_delegaciones.="<option value='$id'>$nombre</option>";
+       }
+
+       return new Response($arr_delegaciones);
+
+    }
 
     protected function createNewPuntoVentaEntity()
 	{

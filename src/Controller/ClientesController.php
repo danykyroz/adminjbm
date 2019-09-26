@@ -113,7 +113,7 @@ class ClientesController extends AbstractController
         }
 
         $delegaciones=$em->getRepository('App:Delegacion')->orderByName();
-
+        $estados=$em->getRepository('App:Estados')->orderByName();
         $paginator  = $this->paginator;
         $pagination = $paginator->paginate(
             $qb, /* query NOT result */
@@ -132,7 +132,9 @@ class ClientesController extends AbstractController
             'delegaciones'=>$delegaciones,
             'tipo_cliente'=>$request->get('tipo_cliente',""),
             'delegacion_form'=>$request->get('delegacion',""),
-            'estado'=>$request->get('estado',""),
+            'estados'=>$estados,
+            'estados_form'=>$request->get('estados',""),
+            'estado'=>$request->get('estado',"1"),
         ]);
     }
 
@@ -414,7 +416,7 @@ class ClientesController extends AbstractController
 
             $em->persist($wallet_cliente);
             $em->flush();
-            
+
             return $this->redirectToRoute('clientes_show',array('id'=>$cliente->getId()));
 
         }
