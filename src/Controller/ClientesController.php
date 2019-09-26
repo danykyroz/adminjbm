@@ -385,6 +385,44 @@ class ClientesController extends AbstractController
 
         }
         
+
+        //Si es super admin
+        if($user_admin->getRoles()[0]=="ROLE_ADMIN"){
+
+        
+        $wallet_cliente=$em->getRepository('App:Wallet','w')->findOneBy(array('clienteId'=>$cliente->getId()));
+
+
+        if($wallet_cliente->getId()==$request->get('wallet_cliente')){
+
+            if($request->get('accion')=="agregar"){
+                
+                $wallet_cliente->setSaldo($wallet_cliente->getSaldo()+$request->get('valor'));
+
+
+              $this->addFlash('success', 'Saldo transferido exitosamente.');
+   
+            }
+            if($request->get('accion')=="quitar"){
+
+                $wallet_cliente->setSaldo($wallet_cliente->getSaldo()-$request->get('valor'));
+
+                 $this->addFlash('success', 'Saldo actualizado exitosamente.');
+
+
+            }
+
+            $em->persist($wallet_cliente);
+            $em->flush();
+            
+            return $this->redirectToRoute('clientes_show',array('id'=>$cliente->getId()));
+
+        }
+
+        }
+
+
+
         return $this->render('clientes/show.html.twig', [
             'cliente' => $cliente,
             'wallet_flotilla'=>$wallet_flotilla,
