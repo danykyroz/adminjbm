@@ -22,7 +22,7 @@ class DefaultController extends Controller
   	   	  $user=($this->getUser());
 
           if(!$user){
-               return $this->redirect('login');
+               return $this->redirect('landing');
           }
           else{
 
@@ -46,6 +46,16 @@ class DefaultController extends Controller
 
           }
     
+  }
+
+  /**
+   * @Route("/", name="landing")
+   */
+
+  public function landing(Request $request)
+  {
+      // en index pagina con datos generales de la app
+        return $this->render('landing/index.html.twig'); 
   }
 
  
