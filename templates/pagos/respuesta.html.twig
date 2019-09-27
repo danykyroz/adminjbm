@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block content_title %}Respuesta Pagos{% endblock %}
+
+{% block busqueda_general %}
+{% endblock %}
+
+{% block body %}
+ 
+  <div class="row">
+
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+    <div class="card">
+        <div class="header bg-cyan ">
+            <h2>
+               Respuesta Pago
+            </h2>
+            
+        </div>
+            <div class="card-body table-responsive">
+    <table class="table table-condensed">
+            <tbody>
+            <tr>
+                <th>Estado Orden</th>
+                <td>{{orden._values.payment_status}}</td>
+            </tr>
+            </tbody>
+            </table>
+          
+
+        </div>
+    </div>
+    </div>
+   </div>
+
+
+
+
+{% endblock %}
