@@ -19,8 +19,17 @@
         </div>
             <div class="card-body table-responsive">
     <table class="table table-condensed">
+       
             <tbody>
             <tr>
+                <th>Orden Id</th>
+                <td>{{orden._values.id}}</td>
+            </tr>
+            <tr>
+                <th>Valor</th>
+                <td>{{orden._values.amount|slice(0,-2)|number_format(2)}}</td>
+               </tr>
+               <tr>
                 <th>Estado Orden</th>
                 <td>{{orden._values.payment_status}}</td>
             </tr>
