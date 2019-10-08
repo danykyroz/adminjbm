@@ -1,0 +1,118 @@
+ {% extends 'base_app.html.twig' %}
+ {% block header %}
+    <nav>
+      <div class="nav-wrapper principal_bg">
+        <a href="#!" class="brand-logo">Permergas</a>
+        <ul class="right">
+          <li><a href="#"><i class="material-icons">more_vert</i></a></li>
+        </ul>
+      </div>
+    </nav>
+ {% endblock %}
+{% block body %}
+   <section class="body_splash valign-wrapper">
+    <div class="container">
+      <div class="row ">
+        <div class="col s12 text-center center">
+          <img class="logo" src="{{asset('themeapp/img/isotipo.svg')}}" height="120px" alt="">
+        </div>
+        <div class="clearfix">
+
+        </div>
+       <!-- <form class="login_form" action="index.html" method="post">
+          <div class="input-field col s12">
+            <input id="last_name" type="email" class="validate input_round">
+            <label for="last_name"> Correo electrónico</label>
+          </div>
+          <div class="input-field col s12">
+            <input id="last_name" type="password" class="validate input_round">
+            <label for="last_name"> Contraseña </label>
+          </div>
+          <div class="col s12">
+            <a class="btn-app  bg_principal waves-effect waves-darken btn">Iniciar Sesión</a>
+
+          </div>
+          <div class="  col s12">
+              <a class="btn-app-login btn-flat  btn"> Recuperar contraseña </a>
+          </div>
+          <div class="clearfix">
+
+          </div>
+          <div class="col s12">
+          <hr class="divisor_login">
+          </div>
+          <div class="input-field  col s12">
+            <a class="btn-app left-align-btn  bg_fb waves-effect waves-darken btn"> <i class="icon-btn fa fa-3x fa-facebook-square" aria-hidden="true"></i> Continuar con Facebook</a>
+          </div>
+          <div class="input-field  col s12">
+            <a class="btn-app left-align-btn bg_white bg_principal waves-effect waves-darken btn"> <img class="img-btn" src="img/google_svg.svg" height="20px" alt="">Continuar con Gmail</a>
+          </div>
+
+          <div class="input-field  col s12">
+          </div>
+            <a class="btn-app-login btn-flat  btn"> Crear cuenta con email </a>
+          </div>
+        </form>
+	!-->
+
+        <form action="{{ path("user_check_login") }}" method="post" class="login100-form validate-form">
+    {% if csrf_token %}
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+    {% endif %}
+
+    <span class="login100-form-logo">
+        <img alt="" src="{{asset('adminlte/assets/images/loading.png')}}">
+    </span>
+    <br/>
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+        {{message}}
+        </div>
+    {% endfor %} 
+    {% for message in app.flashes('bad') %}
+<div class="alert bg-pink alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">×</span>
+    </button>
+    {{message}}
+</div>
+{% endfor %} 
+    <br/>
+    <div class="wrap-input100 validate-input" data-validate="Enter username">
+        <input class="input100" type="text" id="username" name="_username" value="{{ last_username }}" placeholder="email">
+        <i class="material-icons focus-input1001">person</i>
+    </div>
+    <div class="wrap-input100 validate-input" data-validate="Enter password">
+        <input class="input100" type="password" id="password" name="_password" required="required" autocomplete="current-password" placeholder="Contraseña">
+        <i class="material-icons focus-input1001">lock</i>
+    </div>
+    <div class="contact100-form-checkbox">
+        <div class="form-check">
+            <label class="form-check-label">
+                <input class="form-check-input" id="remember_me" name="_remember_me" type="checkbox" value="on"> Recordarme
+                <span class="form-check-sign">
+                    <span class="check"></span>
+                </span>
+                
+            </label>
+        </div>
+    </div>
+    <div class="container-login100-form-btn">
+        <button class="login100-form-btn">
+            iniciar sesión
+        </button>
+    </div>
+    <div class="text-center p-t-50">
+        <a class="txt1" href="{{path('recuperar_cuenta')}}">
+            Recuperar Contraseña
+        </a>
+    </div>
+</form>
+
+      </div>
+    </div>
+  </section>
+ {% endblock %}
