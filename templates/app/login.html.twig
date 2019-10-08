@@ -63,16 +63,15 @@
         </div>
     {% endfor %} 
     {% for message in app.flashes('bad') %}
-	<div class="alert bg-pink alert-dismissible" role="alert">
-	    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-	        <span aria-hidden="true">×</span>
-	    </button>
-    {{message}}
+	<div class="alert bg-pink alert-dismissible" role="alert" style="width: 100%; text-align: center;margin-top: 10px">
+	   
+   <span style="color: white; margin-left: 20px"> {{message}} </span>
 	</div>
 {% endfor %} 
     <br/>
 
     <div class="input-field col s12">
+        <input type="hidden" name="_login_origin" value="app">
         <input class="validate input_round" type="text" id="username" name="_username" value="{{ last_username }}" placeholder="Correo electrónico">
          <label for="last_name"> Correo electrónico</label>
     </div>
@@ -81,6 +80,10 @@
         <input class="validate input_round" type="password" id="password" name="_password" required="required" autocomplete="current-password" placeholder="Contraseña">
          <label for="last_name"> Contraseña</label>
     </div>
+     <div class="col s12">
+       <button type="submit" class="btn-app  bg_principal waves-effect waves-darken btn">Iniciar Sesión</button>
+
+          </div>
  	 <div class="  col s12">
               <a class="btn-app-login btn-flat  btn"> Recuperar contraseña </a>
           </div>

@@ -243,7 +243,14 @@ class UserController extends Controller
             'error' => $error,
             'csrf_token' => $csrfToken,
             );
-            return $this->render('@FOSUser/Security/login.html.twig', $data);
+
+            $origin=$request->get('_login_origin','admin');
+            if($origin=='admin'){
+              return $this->render('@FOSUser/Security/login.html.twig', $data);
+                
+            }else{
+              return $this->render('app/login.html.twig', $data);  
+            }
             //return $this->renderLogin();
         }  
     }

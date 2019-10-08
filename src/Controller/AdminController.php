@@ -71,7 +71,7 @@ class AdminController extends EasyAdminController
         $data=array('wallet'=>$wallet,'gasolina_diesel'=>0,
             'gasolina_premium'=>0,'creditos'=>0);
 
-        return $this->render('home/index_cliente.html.twig',$data);
+        return $this->render('app/dashboard.html.twig',$data);
     }
 
 

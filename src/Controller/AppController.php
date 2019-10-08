@@ -86,7 +86,7 @@ class AppController extends UserController
 
   public function dashboard(Request $request)
   {
-		return $this->render('app/dashboard.html.twig'); 
+		return  $this->redirect($this->generateUrl('dashboard_cliente'));
   }
 
 
