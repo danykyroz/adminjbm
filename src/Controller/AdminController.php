@@ -69,7 +69,7 @@ class AdminController extends EasyAdminController
         }
 
         $data=array('wallet'=>$wallet,'gasolina_diesel'=>0,
-            'gasolina_premium'=>0,'creditos'=>0);
+            'gasolina_premium'=>0,'creditos'=>0,'fecha'=>date('Y-m-d'));
 
         return $this->render('app/dashboard.html.twig',$data);
     }
