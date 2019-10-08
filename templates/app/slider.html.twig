@@ -1,0 +1,55 @@
+  
+ {% extends 'base_app.html.twig' %}
+
+{% block header %}
+   
+{% endblock%} 
+{% block body %}
+
+
+  <section class="body_tuto valign-wrapper">
+
+  <div class="carousel  carousel-slide carousel-slider center" data-indicators="true">
+    <div class="carousel-fixed-item center">
+      <a href="{{path('app_login')}}" class="btn-flat waves-effect darken-text-2">Omitir</a>
+    </div>
+    <div class="carousel-item" href="#one!">
+      <h2>Administrar tu gasolina <br> ahora es fácil</h2>
+      <div class="divisor">
+      </div>
+      <img class="img_slider" src="{{asset('themeapp/img/sliders/slider1.svg')}}" alt="">
+      <p>Agrega <b>fondos</b> a tu app <br> con <b>cualquier metodo de pago</b></p>
+    </div>
+    <div class="carousel-item " href="#two!">
+      <h2>Administrar tu gasolina <br> ahora es fácil</h2>
+      <div class="divisor">
+      </div>
+      <img class="img_slider" src="{{asset('themeapp/img/sliders/slider2.svg')}}" alt="">
+      <p>Canjéa <b>PermerCoins</b> <br> por gasolina </p>
+    </div>
+    <div class="carousel-item" href="#three!">
+      <h2>Administrar tu gasolina <br> ahora es fácil</h2>
+      <div class="divisor">
+      </div>
+      <img class="img_slider" src="{{asset('themeapp/img/sliders/slider3.svg')}}" alt="">
+      <p><b>Ten el control</b> de tus consumos <br> donde quiera que vayas</p>
+    </div>
+    <!-- <div class="carousel-item" href="#four!">
+      <h2>Administrar tu gasolina <br> ahora es fácil</h2>
+      <div class="divisor">
+      </div>
+      <img class="img_slider" src="img/sliders/slider1.svg" alt="">
+      <p>Agrega <b>fondos</b> a tu app <br> con <b>cualquier metodo de pago</b></p>
+    </div> -->
+  </div>
+  </section>
+
+  {% endblock %}
+
+
+  {% block javascripts %}
+   <script type="text/javascript">
+  $('.carousel.carousel-slider').carousel({fullWidth: true});
+
+  </script>
+  {% endblock %}

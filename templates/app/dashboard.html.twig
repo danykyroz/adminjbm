@@ -1,4 +1,15 @@
  {% extends 'base_app.html.twig' %}
+
+{% block header %}
+   <nav>
+      <div class="nav-wrapper principal_bg">
+        <a href="#!" class="brand-logo">Permergas</a>
+        <ul class="right">
+          <li><a href="#"><i class="material-icons">more_vert</i></a></li>
+        </ul>
+      </div>
+    </nav>
+{% endblock%} 
 {% block body %}
   <section class="center">
     <div class="circle valign-wrapper">
@@ -24,4 +35,17 @@
       </div>
     </div>
   </section>
+
+   <div class="app-bar">
+     <div class="bar">
+       <a class="action_bottom" href="#"> <i class="material-icons">map</i> </a>
+       <a class="action_bottom" href="#"> <i class="material-icons">trending_up</i> </a>
+       <a class="action_bottom"> </a>
+       <a class="action_bottom" href="#"> > </a>
+       <a class="action_bottom" href="#"> <i class="material-icons">card_giftcard</i </a>
+       <a class="circle_btn button">
+        <i class="material-icons gas-img">local_gas_station </i>
+       </a>
+       <a class="action_bottom" href="#"> <i class="material-icons">person</i> </a>
+     </div>
  {% endblock %}

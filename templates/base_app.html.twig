@@ -25,7 +25,7 @@
 
   <header>
   {% block header %}
-  
+
   {% endblock %}
   </header>
   {% block body %}
@@ -35,5 +35,8 @@
   <script src="{{asset('themeapp/js/materialize.min.js')}}"></script>
   <footer>
   </footer>
+  {% block javascripts %}
+  
+  {% endblock %}
 </body>
 </html>
