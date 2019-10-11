@@ -48,7 +48,7 @@
         </form>
 	!-->
 
-        <form action="{{ path("user_check_login") }}" method="post" class="login-form validate-form">
+        <form id="frm-login" action="{{ path("user_check_login") }}" method="post" class="login-form validate-form">
     {% if csrf_token %}
         <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
     {% endif %}
@@ -72,16 +72,16 @@
 
     <div class="input-field col s12">
         <input type="hidden" name="_login_origin" value="app">
-        <input class="validate input_round" type="text" id="username" name="_username" value="{{ last_username }}" placeholder="Correo electrónico">
+        <input class="validate input_round" type="email" id="username" name="_username" value="{{ last_username }}" placeholder="Correo electrónico">
          <label for="last_name"> Correo electrónico</label>
     </div>
 
     <div class="input-field col s12">
-        <input class="validate input_round" type="password" id="password" name="_password" required="required" autocomplete="current-password" placeholder="Contraseña">
+        <input class="validate input_round" type="password" id="password" name="_password"  autocomplete="current-password" placeholder="Contraseña">
          <label for="last_name"> Contraseña</label>
     </div>
      <div class="col s12">
-       <button type="submit" class="btn-app  bg_principal waves-effect waves-darken btn">Iniciar Sesión</button>
+       <button type="btn" id="iniciar-sesion" class="btn-app  bg_principal waves-effect waves-darken btn">Iniciar Sesión</button>
 
           </div>
  	 <div class="  col s12">
@@ -97,7 +97,7 @@
             <a class="btn-app left-align-btn  bg_fb waves-effect waves-darken btn"> <i class="icon-btn fa fa-3x fa-facebook-square" aria-hidden="true"></i> Continuar con Facebook</a>
           </div>
           <div class="input-field  col s12">
-            <a class="btn-app left-align-btn bg_white bg_principal waves-effect waves-darken btn"> <img class="img-btn" src="img/google_svg.svg" height="20px" alt="">Continuar con Gmail</a>
+            <a class="btn-app left-align-btn bg_white bg_principal waves-effect waves-darken btn"> <img class="img-btn" src="{{asset('themeapp/img/google_svg.svg')}}" height="20px" alt="">Continuar con Gmail</a>
           </div>
 
           <div class="input-field  col s12">
@@ -110,3 +110,61 @@
     </div>
   </section>
  {% endblock %}
+
+
+
+{% block javascripts %}
+
+<script type="text/javascript">
+
+    $('#frm-login').validate({
+        rules: {
+            '_username':{
+                required:true,
+                email:true
+            },
+            '_password': {
+                required: true,
+            },
+        },
+        messages:{
+            '_username':{
+                required:'El campo email es obligatorio',
+                email:'Ingrese un email valido'
+            },
+            '_password':{
+                required:'El campo password es obligatorio',
+            }
+        },
+        highlight: function (input) {
+            
+            $(input).addClass('data-error');
+        },
+        unhighlight: function (input) {
+            $(input).removeClass('data-succes');
+        },
+        errorPlacement: function (error, element) {
+            var errorspan=$("<span class='error'>"+$(error[0]).html()+"</span>");
+            $(element).parents('.input-field').find('span').remove();
+            $(element).parents('.input-field').append(errorspan);
+        }
+    });
+
+    
+
+
+  $(document).ready(function(){
+    $('#frm-login').validate();
+    $("#iniciar-sesion").click(function(e){
+      e.preventDefault();
+      var valid=$("#frm-login").valid();
+      if(valid){
+        $("#frm-login").submit();
+      }else{
+
+      }
+    });
+
+  });
+</script>
+{% endblock %}
