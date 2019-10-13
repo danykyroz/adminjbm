@@ -52,6 +52,15 @@ class AppController extends UserController
 
 
   /**
+   * @Route("/recuperar/cuenta", name="app_recuperar_cuenta")
+   */
+
+  public function recuperar_cuenta(Request $request)
+  {
+     return $this->render('app/recuperar_cuenta.html.twig'); 
+  }
+
+  /**
    * @Route("/slider", name="app_slider")
   */
 

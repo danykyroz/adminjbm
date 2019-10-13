@@ -135,6 +135,10 @@ class UserController extends Controller
                 }
             }  
 
+            $loginOrigin=$request->get('_login_origin','');
+            if($loginOrigin=='app'){
+                 return $this->render('/app/recuperar_cuenta.html.twig',array('email'=>$email));
+            }
             return $this->render('/user/recuperar_cuenta.html.twig',array('email'=>$email));
     }
 
