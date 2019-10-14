@@ -49,6 +49,16 @@ class Transacciones
      */
     private $valor;
 
+     /**
+     * @var \Wallet
+     *
+     * @ORM\ManyToOne(targetEntity="Wallet")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="wallet_id", referencedColumnName="id")
+     * })
+     */
+    private $wallet;
+    
     /**
      * @var int|null
      *
@@ -191,10 +201,10 @@ class Transacciones
         return $this->walletId;
     }
 
+
     public function setWalletId(?int $walletId): self
     {
         $this->walletId = $walletId;
-
         return $this;
     }
 
@@ -326,6 +336,18 @@ class Transacciones
     public function setLongitud(?float $longitud): self
     {
         $this->longitud = $longitud;
+
+        return $this;
+    }
+
+    public function getWallet(): ?Wallet
+    {
+        return $this->wallet;
+    }
+
+    public function setWallet(?Wallet $wallet): self
+    {
+        $this->wallet = $wallet;
 
         return $this;
     }

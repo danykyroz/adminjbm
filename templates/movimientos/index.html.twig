@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block content_title %}Transacciones{% endblock %}
+{% block content_title %}Movimientos{% endblock %}
 
 {% block busqueda_general %}
 
     <div class="search-box">
-        <form method="get" action="/admin/transacciones">
+        <form method="get" action="/admin/transacciones/movimientos">
             <input type="hidden" name="action" value="search">
             <input id="search" type="search" name="query" value="" placeholder="Buscar">
             <button class="icon">
@@ -42,18 +42,20 @@
                         <th>Cliente</th>
                         <th>Moneda</th>
                         <th>Valor</th>
-                        <th>Estado</th>
+                        <th>Usuario</th>
+                        
                     </tr>
                 </thead>
                 <tbody>  
-                {% for transaccion in transacciones %}
+                {% for movimiento in movimientos %}
                     <tr>
-                       <td>{{transaccion.id}}</td>
-                       <td>{{transaccion.createdAt|date('Y-m-d H:i:s')}}</td>
-                       <td>{{transaccion.wallet.cliente.nombres}} {{transaccion.wallet.cliente.apellidos}}</td>
+                       <td>{{movimiento.id}}</td>
+                       <td>{{movimiento.createdAt|date('Y-m-d H:i:s')}}</td>
+                       <td>{{movimiento.wallet.cliente.nombres}} {{movimiento.wallet.cliente.apellidos}}</td>
                        <td>MX</td>
-                       <td>{{transaccion.valor|number_format(2)}}</td>
-                       <td>{{transaccion.estado}}</td>
+                       <td>{{movimiento.valor|number_format(2)}}</td>
+                       <td>{{movimiento.fosUser.username}}</td>
+                       
                     </tr>
                 {% endfor %} 
                 </tbody>

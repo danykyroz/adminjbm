@@ -19,6 +19,31 @@ class TransaccionesController extends Controller
 */
 public function index(Request $request)
 {
-	return $this->render('transacciones/index.html.twig');
+	
+	$em=$this->getDoctrine()->getManager();
+
+	$qb=$em->createQueryBuilder();
+    
+    $transacciones=$qb->select('t')->from('App:Transacciones','t')->getQuery()->getResult();
+           
+    $data=array('transacciones'=>$transacciones);
+	return $this->render('transacciones/index.html.twig',$data);
 }
+
+/**
+* @Route("/movimientos", name="transacciones_movimientos", methods={"GET"})
+*/
+public function movimientos(Request $request)
+{
+	
+	$em=$this->getDoctrine()->getManager();
+
+	$qb=$em->createQueryBuilder();
+    
+    $movimientos=$qb->select('m')->from('App:Movimientos','m')->getQuery()->getResult();
+           
+    $data=array('movimientos'=>$movimientos);
+	return $this->render('movimientos/index.html.twig',$data);
+}	
+
 }

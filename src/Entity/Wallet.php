@@ -22,6 +22,18 @@ class Wallet
     private $id;
 
     /**
+     * @var \Cliente
+     *
+     * @ORM\ManyToOne(targetEntity="Clientes")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="cliente_id", referencedColumnName="id")
+     * })
+     */
+    private $cliente;
+    
+
+
+    /**
      * @var int|null
      *
      * @ORM\Column(name="cliente_id", type="integer", nullable=true)
@@ -136,6 +148,18 @@ class Wallet
     public function setSaldoCredito(?float $saldoCredito): self
     {
         $this->saldoCredito = $saldoCredito;
+
+        return $this;
+    }
+
+    public function getCliente(): ?Clientes
+    {
+        return $this->cliente;
+    }
+
+    public function setCliente(?Clientes $cliente): self
+    {
+        $this->cliente = $cliente;
 
         return $this;
     }
