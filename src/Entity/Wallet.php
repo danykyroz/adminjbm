@@ -56,6 +56,13 @@ class Wallet
      */
     private $saldo;
 
+    /**
+     * @var float|null
+     *
+     * @ORM\Column(name="saldo_credito", type="float", precision=19, scale=2, nullable=true)
+     */
+    private $saldoCredito;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -117,6 +124,18 @@ class Wallet
     public function setSaldo(?float $saldo): self
     {
         $this->saldo = $saldo;
+
+        return $this;
+    }
+
+    public function getSaldoCredito(): ?float
+    {
+        return $this->saldoCredito;
+    }
+
+    public function setSaldoCredito(?float $saldoCredito): self
+    {
+        $this->saldoCredito = $saldoCredito;
 
         return $this;
     }

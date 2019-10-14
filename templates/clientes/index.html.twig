@@ -90,6 +90,19 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                       <div class="form-group">
+                            <div class="form-line">
+                              <select name="flotilla" id="flotilla">
+                                    <option value="">Flotillas</option>
+                                   {% for flotilla in flotillas %}
+                                   <option {% if flotilla_form==flotilla.id %} selected='true' {% endif %} value="{{flotilla.id}}"> {{flotilla.nombre}}</option>
+                                   {% endfor %}
+                              </select>
+                            </div>
+                        </div>
+                    </div>
                   
                 </div>
                 <div class="row clearfix">
@@ -128,30 +141,33 @@
         <thead>
             <tr>
                 <th>{{ knp_pagination_sortable(pagination, 'Id', 'c.id') }}</th>
+                 <th>{{ knp_pagination_sortable(pagination, 'Fecha', 'c.createdAt') }}</th>
+               
                 <th>{{ knp_pagination_sortable(pagination, 'Documento', 'c.documento') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'Nombres', 'c.nombres') }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'Apellidos', 'c.apellidos') }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'Email', 'c.email') }}</th>
+               
                 <th>{{ knp_pagination_sortable(pagination, 'Celular', 'c.celular') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'Placa', 'c.placa') }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'Fecha', 'c.createdAt') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'Tipo', 'c.tipo') }}</th>
+                <th>Flotillas</th>
                 <th>{{ knp_pagination_sortable(pagination, 'Estado', 'c.estado') }}</th>
+                
                 <th></th>
             </tr>
         </thead>
         <tbody>
-        {% for cliente in clientes %}
+        {% for row in clientes %}
+        {% set cliente=row.row %}
             <tr>
                 <td>{{ cliente.id }}</td>
+                <td>{{ cliente.createdAt ? cliente.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ cliente.documento }}</td>
-                <td>{{ cliente.nombres }}</td>
-                <td>{{ cliente.apellidos }}</td>
-                <td>{{ cliente.email }}</td>
+                <td>{{ cliente.nombres }} {{ cliente.apellidos }}</td>
                 <td>{{ cliente.celular }}</td>
                 <td>{{ cliente.placa }}</td>
-                <td>{{ cliente.createdAt ? cliente.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ tipo[cliente.tipo] }}</td>
+                <td>{{row.flotilla}}
+                
                 <td>{{ cliente.estado }}</td>
                 <td>
                     <a href="{{ path('clientes_edit', {'id': cliente.id}) }}">
@@ -176,7 +192,7 @@
     </table>
 </div>
 <div class="navigation">
-            {{ knp_pagination_render(clientes) }}
+            {{ knp_pagination_render(pagination) }}
 </div>
 </div>
 </div>

@@ -5,6 +5,9 @@ namespace App\Controller;
 use App\Entity\Clientes;
 use App\Entity\Wallet;
 use App\Entity\FlotillasClientes;
+use App\Entity\Transacciones AS Transaccion;
+use App\Entity\Movimientos AS Movimiento;
+use App\Entity\MovimientoSaldos;
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 
@@ -72,6 +75,17 @@ class ClientesController extends AbstractController
             $qb->select('c')->from('App:Clientes','c');
             
         }
+        if($request->get('flotilla')!=""){
+
+            $qb=$em->createQueryBuilder();
+            $qb->select('c')->from('App:FlotillasClientes','f')
+                            ->innerJoin('App:Clientes','c','WITH','f.clienteId=c')
+                            ->where('f.flotillaId=:flotillaId');
+
+
+            $qb->setParameter("flotillaId",$request->get('flotilla'));
+
+        }
         //Busquedas
         if($request->get('query')!=""){
 
@@ -120,12 +134,17 @@ class ClientesController extends AbstractController
             $request->query->getInt('page', 1), /*page number*/
             50 /*limit per page*/
         );
-         
-       
+        
+        $lista_clientes=array();
+        foreach ($pagination as $key => $cliente) {
+             $lista_clientes[]=array('row'=>$cliente,'flotilla'=>$this->getFlotillaCliente($cliente->getId()));
+        } 
+
+        $flotillas=$em->getRepository('App:Flotillas','f')->findAll();
         //$pagerfanta->setCurrentPage($page);
 
         return $this->render('clientes/index.html.twig', [
-            'clientes' => $pagination,
+            'clientes' => $lista_clientes,
             'pagination'=>$pagination,
             'query'=>$request->get('query',''),
             'tipo'=>array('1'=>'Cliente Wallet','2'=>'Admin Flotilla'),
@@ -135,7 +154,27 @@ class ClientesController extends AbstractController
             'estados'=>$estados,
             'estados_form'=>$request->get('estados',""),
             'estado'=>$request->get('estado',"1"),
+            'flotillas'=>$flotillas,
+            'flotilla_form'=>$request->get('flotilla',"")
         ]);
+    }
+
+    private function getFlotillaCliente($id){
+
+        $em=$this->getDoctrine()->getManager();
+        $qb=$em->createQueryBuilder();
+        $qb->select('fc')->from('App:FlotillasClientes','fc')
+        ->innerJoin('App:Clientes', 'c', 'WITH', 'fc.clienteId = c')
+        ->where('fc.clienteId=:id')->setParameter('id',$id);
+        $result= $qb->getQuery()->getResult();
+        if(is_array($result) && count($result)>0){
+             $flotilla=$em->getRepository('App:Flotillas','f')->find($result[0]->getFlotillaId());   
+             return $flotilla->getNombre();
+        }else{
+            return 'NA';
+        }
+
+       
     }
 
     /**
@@ -324,11 +363,14 @@ class ClientesController extends AbstractController
         }
         
          $wallet_cliente=$em->getRepository('App:Wallet','w')->findOneBy(array('clienteId'=>$cliente->getId()));
+
+         $flotilla=$this->getFlotillaCliente($cliente->getId());
  
         return $this->render('clientes/show.html.twig', [
             'cliente' => $cliente,
             'wallet_flotilla'=>$wallet_flotilla,
-            'wallet_cliente'=>$wallet_cliente
+            'wallet_cliente'=>$wallet_cliente,
+            'flotilla'=>$flotilla
         ]);
     }
 
@@ -342,6 +384,7 @@ class ClientesController extends AbstractController
         $wallet_flotilla=false;
         $wallet_cliente=false;
 
+
         if($user_admin->getRoles()[0]=="ROLE_ADMIN_FLOTILLA"){
 
         $flotilla_user=$em->getRepository('App:FlotillaUsuarios','u')->findOneBy(array('usuarioId'=>$user_admin->getId()));
@@ -352,18 +395,23 @@ class ClientesController extends AbstractController
         
         $wallet_cliente=$em->getRepository('App:Wallet','w')->findOneBy(array('clienteId'=>$cliente->getId()));
 
+        $saldo_anterior=$wallet_cliente->getSaldo();
 
         if($wallet_cliente->getId()==$request->get('wallet_cliente') and $wallet_flotilla->getId()==$request->get('wallet_flotilla') ){
 
             if($request->get('accion')=="agregar"){
                 
+                $valor=$request->get('valor');
+
                 $wallet_cliente->setSaldo($wallet_cliente->getSaldo()+$request->get('valor'));
 
                 $wallet_flotilla->setSaldo($wallet_flotilla->getSaldo()-$request->get('valor'));
 
               $this->addFlash('success', 'Saldo transferido exitosamente.');
-   
+                $operacion="suma";
+ 
             }
+
             if($request->get('accion')=="quitar"){
 
                 $wallet_cliente->setSaldo($wallet_cliente->getSaldo()-$request->get('valor'));
@@ -372,15 +420,17 @@ class ClientesController extends AbstractController
 
                  $this->addFlash('success', 'Saldo actualizado exitosamente.');
 
+                 $operacion="resta";
 
             }
 
             $em->persist($wallet_cliente);
             $em->persist($wallet_flotilla);
-
             $em->flush();
 
-           
+            $this->crearTransaccion($saldo_anterior,$valor,$operacion,$wallet_cliente,$request->getClientIp());
+
+            
             return $this->redirectToRoute('clientes_show',array('id'=>$cliente->getId()));
 
         }
@@ -394,25 +444,42 @@ class ClientesController extends AbstractController
         
         $wallet_cliente=$em->getRepository('App:Wallet','w')->findOneBy(array('clienteId'=>$cliente->getId()));
 
+        $saldo_anterior=$wallet_cliente->getSaldo();
 
         if($wallet_cliente->getId()==$request->get('wallet_cliente')){
 
             if($request->get('accion')=="agregar"){
                 
-                $wallet_cliente->setSaldo($wallet_cliente->getSaldo()+$request->get('valor'));
+                if($request->get('escredito')==0){
+                    $wallet_cliente->setSaldo($wallet_cliente->getSaldo()+$request->get('valor'));
+                }
 
+                if($request->get('escredito')==1){
+                    $wallet_cliente->setSaldoCredito($wallet_cliente->getSaldoCredito()+$request->get('valor'));
+                }
 
-              $this->addFlash('success', 'Saldo transferido exitosamente.');
-   
+                $this->addFlash('success', 'Saldo transferido exitosamente.');
+                
+                $operacion="suma";
+                $valor=$request->get('valor');
+           
             }
+
             if($request->get('accion')=="quitar"){
 
-                $wallet_cliente->setSaldo($wallet_cliente->getSaldo()-$request->get('valor'));
+                if($request->get('escredito')==1){
+                    $wallet_cliente->setSaldoCredito($wallet_cliente->getSaldoCredito()-$request->get('valor'));
+                }else{
+                    $wallet_cliente->setSaldo($wallet_cliente->getSaldo()-$request->get('valor'));
+                }
+                
+                $this->addFlash('success', 'Saldo actualizado exitosamente.');
 
-                 $this->addFlash('success', 'Saldo actualizado exitosamente.');
-
-
+                 $operacion="resta";
+                 $valor=$request->get('valor');
             }
+
+            $this->crearTransaccion($saldo_anterior,$valor,$operacion,$wallet_cliente,$request->getClientIp());
 
             $em->persist($wallet_cliente);
             $em->flush();
@@ -518,5 +585,65 @@ class ClientesController extends AbstractController
             }else{
                 return false;
             }
+    }
+
+
+    private function crearTransaccion($saldo_anterior,$valor,$operacion,$wallet,$ip){
+        
+
+        $em = $this->getDoctrine()->getManager();
+        $tipo_movimiento=1;
+        $fos_user=$em->getRepository('App:FosUser','f')->find($this->getUser()->getId());
+        if($operacion=='resta'){
+            $valor=-$valor;
+            $tipo_movimiento=2;
+        }
+        
+        $obj_tipo_movimiento=$em->getRepository('App:TipoMovimientos','t')->find($tipo_movimiento);
+
+        if($operacion=="suma"){
+
+            $tr=new Transaccion();
+            $tr->setCreatedAt(new \DateTime('now'));
+            $tr->setUpdatedAt(new \DateTime('now'));
+            $tr->setWalletId($wallet->getId());
+            $tr->setValor($valor);
+            $tr->setGasolineraId(1);
+            $tr->setTipoTransaccion(1);
+            $tr->setUsuarioId($this->getUser()->getId());
+            $tr->setEstado('Aceptada');
+            $tr->setRespuesta('Aprobada');
+            $tr->setCodRespuesta(00);
+            $tr->setIp($ip);
+            $tr->setDispositivo('admin');
+
+            $em->persist($tr);
+            $em->flush();
+
+        }
+        
+
+
+        $movimiento=new Movimiento();
+        $movimiento->setWallet($wallet);
+        $movimiento->setCreatedAt(new \DateTime('now'));
+        $movimiento->setUpdatedAt(new \DateTime('now'));
+        $movimiento->setValor($valor);
+        $movimiento->setTipoMovimiento($obj_tipo_movimiento);
+        $movimiento->setSincronizado(1);
+        $movimiento->setFosUser($fos_user);
+        $em->persist($movimiento);
+        $em->flush();
+
+        $movimiento_saldo=new MovimientoSaldos();
+        $movimiento_saldo->setCreatedAt(new \DateTime('now'));
+        $movimiento_saldo->setUpdatedAt(new \DateTime('now'));
+        $movimiento_saldo->setMovimiento($movimiento);
+        $movimiento_saldo->setSaldoAnterior($saldo_anterior);
+        $movimiento_saldo->setValor($valor);
+        $movimiento_saldo->setNuevoSaldo($saldo_anterior+$valor);
+        $em->persist($movimiento_saldo);
+        $em->flush();
+
     }
 }

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Wallet;
+use App\Entity\FosUser;
 
 /**
  * Movimientos
@@ -50,9 +52,9 @@ class Movimientos
     private $sincronizado;
 
     /**
-     * @var \Clientes
+     * @var \wallet
      *
-     * @ORM\ManyToOne(targetEntity="Clientes")
+     * @ORM\ManyToOne(targetEntity="Wallet")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="wallet_id", referencedColumnName="id")
      * })
@@ -132,12 +134,12 @@ class Movimientos
         return $this;
     }
 
-    public function getWallet(): ?Clientes
+    public function getWallet(): ?Wallet
     {
         return $this->wallet;
     }
 
-    public function setWallet(?Clientes $wallet): self
+    public function setWallet(?Wallet $wallet): self
     {
         $this->wallet = $wallet;
 
