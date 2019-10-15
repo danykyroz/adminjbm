@@ -169,6 +169,8 @@ class GasolinerasController extends AbstractController
             $entityManager->persist($gasolinera);
             $entityManager->flush();
 
+            $this->setGeoLocation($gasolinera);
+
             return $this->redirectToRoute('gasolineras_index');
         }
 
@@ -176,6 +178,34 @@ class GasolinerasController extends AbstractController
             'gasolinera' => $gasolinera,
             'form' => $form->createView(),
         ]);
+    }
+
+
+    private function setGeoLocation($gasolinera){
+
+        $em = $this->getDoctrine()->getManager();
+
+        $delegacion=$gasolinera->getDelegacion()->getMunicipio();
+        $pais="Mexico";
+        $address = $gasolinera->getDireccion().','.$delegacion.','.$pais;
+        $url = "https://maps.google.com/maps/api/geocode/json?address=".urlencode($address).'&key=AIzaSyC5NO176eQLzjtHKdfew1EUFMY-pVqPCqU';
+
+        $response=json_decode(file_get_contents($url));
+
+        if ($response->status == 'OK') {
+            
+            $latitude = $response->results[0]->geometry->location->lat;
+            $longitude = $response->results[0]->geometry->location->lng;
+            $gasolinera->setLatitud($latitude);
+            $gasolinera->setLongitud($longitude);
+            $em->persist($gasolinera);
+            $em->flush();
+
+            
+        } else {
+           
+        } 
+        
     }
 
     /**
@@ -198,7 +228,7 @@ class GasolinerasController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
+            $this->setGeoLocation($gasolinera);
             return $this->redirectToRoute('gasolineras_index');
         }
 

@@ -141,13 +141,50 @@ class AppController extends UserController
   	 return $this->render('app/login.html.twig',$data); 
   }
 
-    /**
+  /**
    * @Route("/profile", name="app_profile")
    */
 
   public function profile(Request $request)
   {
-     $data=array();
+      $user=($this->getUser());
+      $em=$this->getDoctrine()->getManager();
+
+      $cliente=$em->getRepository('App:Clientes','c')->findOneBy(array('email'=>$user->getEmail()));
+        
+     $data=array('cliente'=>$cliente);
+
+     return $this->render('app/profile.html.twig',$data); 
+  }
+
+
+  /**
+   * @Route("/update/profile", name="app_update_profile")
+   */
+
+  public function update_profile(Request $request)
+  {
+      $user=($this->getUser());
+      $em=$this->getDoctrine()->getManager();
+
+      $cliente=$em->getRepository('App:Clientes','c')->findOneBy(array('email'=>$user->getEmail()));
+        
+     $data=array('cliente'=>$cliente);
+
+     $nombres=$request->get('nombres');
+     $apellidos=$request->get('apellidos');
+     $celular=$request->get('celular');
+     $placa=$request->get('placa');
+
+     $cliente->setNombres($nombres);
+     $cliente->setApellidos($apellidos);
+     $cliente->setCelular($celular);
+     $cliente->setPlaca($placa);
+     $em->persist($cliente);
+     $em->flush();
+
+      $this->addFlash('success', 'Perfil actualizado exitosamente.');
+
      return $this->render('app/profile.html.twig',$data); 
   }
 
