@@ -21,8 +21,8 @@ jQuery(document).ready(function($) {
           // Right PIN!
           $("#fields .numberfield").addClass("right");
           $("#numbers").addClass("hide");
-          $("#anleitung p").html("Amazing!<br>You entered the correct Code!");
-
+          $("#anleitung p").html("Ok!<br>Pin ingresado exitosamente!");
+          $("#pincode").hide();
         } else {
           // Wrong PIN!
           $("#fields").addClass("miss");

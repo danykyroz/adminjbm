@@ -11,3 +11,52 @@
 
    
 {% endblock %}
+
+{% block body_javascript %}
+
+<script type="text/javascript">
+    
+	function mostarMapa(latitude,longitude){
+	
+	
+	var myLatLng = {lat: parseFloat(latitude), lng: parseFloat(longitude)};
+	 	map = new google.maps.Map(document.getElementById('map'), {
+          center: myLatLng	,
+          zoom: 16,
+          fullscreenControl: false,
+          mapTypeControl: false,
+          streetViewControl: false,
+          zoomControl: true,
+          zoomControlOptions: {
+              position: google.maps.ControlPosition.RIGHT_TOP
+          },
+          scaleControl: true,
+          
+     });
+
+
+
+   marker = new google.maps.Marker({
+    position: myLatLng,
+    map: map,
+    title: 'Ubicación Actual'
+  });
+      $("#map").show();
+
+   console.log(map)
+
+}
+
+function initMap(){
+	var latitude="{{gasolinera.latitud}}";
+    var longitude="{{gasolinera.longitud}}";
+    mostarMapa(latitude,longitude);
+}
+
+   
+
+</script>
+   
+   <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyC5NO176eQLzjtHKdfew1EUFMY-pVqPCqU&&libraries=places,geometry&callback=initMap"
+    async defer></script>
+{% endblock %}

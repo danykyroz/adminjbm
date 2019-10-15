@@ -20,6 +20,10 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+use App\Entity\Gasolineras;
+
+
+
 /**
  * @Route("/app")
  */
@@ -65,7 +69,24 @@ class AppController extends UserController
 
   public function gasolineras(Request $request)
   {
-     return $this->render('app/gasolineras.html.twig'); 
+    
+     $qb = $this->getDoctrine()
+            ->getRepository(Gasolineras::class)->orderById();
+
+     $gasolineras=$qb->getQuery()->getResult();
+     unset($gasolineras[0]);       
+     return $this->render('app/gasolineras.html.twig',['gasolineras'=>$gasolineras]); 
+  }
+
+  /**
+   * @Route("/gasolineras/detalle/{id}", name="app_gasolinera_detalle")
+   */
+
+  public function gasolinera_detalle(Gasolineras $gasolinera, Request $request)
+  {
+    
+    
+     return $this->render('app/gasolinera_detalle.html.twig',['gasolinera'=>$gasolinera]); 
   }
 
   /**

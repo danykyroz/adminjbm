@@ -193,7 +193,7 @@ class GasolinerasController extends AbstractController
         $response=json_decode(file_get_contents($url));
 
         if ($response->status == 'OK') {
-            
+
             $latitude = $response->results[0]->geometry->location->lat;
             $longitude = $response->results[0]->geometry->location->lng;
             $gasolinera->setLatitud($latitude);
@@ -229,7 +229,7 @@ class GasolinerasController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
             $this->setGeoLocation($gasolinera);
-            return $this->redirectToRoute('gasolineras_index');
+            //return $this->redirectToRoute('gasolineras_index');
         }
 
         return $this->render('gasolineras/edit.html.twig', [

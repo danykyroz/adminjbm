@@ -1,5 +1,10 @@
 {% extends 'base_app.html.twig' %}
 {% block style %}
+  
+
+  <link type="text/css" rel="stylesheet" href="{{asset('themeapp/css/pincode.css')}}" media="screen,projection" />  
+
+ 
   <link type="text/css" rel="stylesheet" href="{{asset('themeapp/css/qr.css')}}" media="screen,projection" />  
 {% endblock %}
  
@@ -24,6 +29,54 @@
     </nav>
 {% endblock%} 
 {% block body %}
+  
+    <div id="pincode">
+    <div class="table">
+      <div class="cell">
+
+        <div id="anleitung">
+          <p>
+            <strong>Ingresa tu código pin</strong>
+          </p>
+        </div>
+
+        <div id="fields">
+          <div class="grid">
+            <div class="grid__col grid__col--1-of-4 numberfield"><span></span></div>
+            <div class="grid__col grid__col--1-of-4 numberfield"><span></span></div>
+            <div class="grid__col grid__col--1-of-4 numberfield"><span></span></div>
+            <div class="grid__col grid__col--1-of-4 numberfield"><span></span></div>
+          </div>
+        </div>
+
+        <div id="numbers">
+          <div class="grid">
+            <div class="grid__col grid__col--1-of-3"><button>1</button></div>
+            <div class="grid__col grid__col--1-of-3"><button>2</button></div>
+            <div class="grid__col grid__col--1-of-3"><button>3</button></div>
+
+            <div class="grid__col grid__col--1-of-3"><button>4</button></div>
+            <div class="grid__col grid__col--1-of-3"><button>5</button></div>
+            <div class="grid__col grid__col--1-of-3"><button>6</button></div>
+
+            <div class="grid__col grid__col--1-of-3"><button>7</button></div>
+            <div class="grid__col grid__col--1-of-3"><button>8</button></div>
+            <div class="grid__col grid__col--1-of-3"><button>9</button></div>
+
+            <div class="grid__col grid__col--1-of-3"></div>
+            <div class="grid__col grid__col--1-of-3"><button>0</button></div>
+            <div class="grid__col grid__col--1-of-3"></div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  <div id="restartbtn">RESTART</div>
+
+  </div>
+  
+
    <section class="qrcontainer valign-wrapper">
     <div class="container">
       <div class="row">
@@ -38,4 +91,7 @@
       </div>
     </div>
   </section>
-{% endblock%} 
+{% endblock %} 
+{% block javascripts %}
+  <script src="{{asset('themeapp/js/codepin.js')}}"></script>
+{% endblock %} 

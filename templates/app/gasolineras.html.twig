@@ -20,34 +20,23 @@
 
 <section class="mt-2">
   <div class="row">
+    {% for gasolinera in gasolineras %}
     <div class="col s12 m6">
       <div class="card">
         <div class="card-image">
           <img src="{{asset('themeapp/img/maprecorte.jpg')}}">
-          <span class="card-title">Card Title</span>
-          <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">location_on</i></a>
+          <span class="card-title">{{gasolinera.nombre}}</span>
+          <a href="{{path('app_gasolinera_detalle',{id:gasolinera.id})}}" class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">location_on</i></a>
         </div>
         <div class="card-content">
-          <p><b>Xola</b></p>
+          <p><b>{{gasolinera.delegacion.municipio}}</b></p>
           <p><span style="color: #e7711b">4.1  ★★★☆</span> (22)</p>
-          <p>Calzada Xola 284</p>
+          <p>{{gasolinera.direccion}}</p>
         </div>
       </div>
     </div>
-    <div class="col s12 m6">
-      <div class="card">
-        <div class="card-image">
-          <img src="{{asset('themeapp/img/maprecorte.jpg')}}">
-          <span class="card-title">Card Title</span>
-          <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">location_on</i></a>
-        </div>
-        <div class="card-content">
-          <p><b>Xola</b></p>
-          <p><span style="color: #e7711b">4.1  ★★★☆</span> (22)</p>
-          <p>Calzada Xola 284</p>
-        </div>
-      </div>
-    </div>
+    {% endfor %}
+
   </div>
 </section>
 {% endblock %}
