@@ -19,53 +19,65 @@
   <!--Import materialize.css-->
   <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
   <link type="text/css" rel="stylesheet" href="css/main.css" media="screen,projection" />
+  <link type="text/css" rel="stylesheet" href="css/profile.css" media="screen,projection" />
+
   <script src="js/modernizr.js"></script>
+  
 </head>
 
 <body class="">
   <header>
     <nav>
       <div class="nav-wrapper principal_bg">
-        <a href="#!" class="brand-logo">Permergas</a>
+        <ul class="left">
+          <li><a href="#"><i class="material-icons">keyboard_backspace</i></a></li>
+        </ul>
         <ul class="right">
-          <li><a class='dropdown-button' href='#' data-activates='menu2'><i class="material-icons">more_vert</i></a></li>
+          <li><a href="#"><i class="material-icons">edit</i></a></li>
         </ul>
-        <!-- Menu 2 -->
-        <ul id='menu2' class='dropdown-content'>
-          <li><a href="#!">Ajustes de Seguridad</a></li>
-          <li><a href="#!">Solicitar Credito</a></li>
-          <li class="divider"></li>
-          <li><a href="#!">Información</a></li>
-          <li><a href="#">Cerrar Sesión</a></li>
-        </ul>
-
       </div>
     </nav>
   </header>
-  <section class="center">
-    <div class="circle valign-wrapper">
-      <div class="value_container">
-        <h2 class="value_grl">3887</h2>
-        <span>MXN</span>
-      </div>
-    </div>
-    <p class="center">Saldo disponible para canje por Gasolina</p>
-    <a class="waves-effect waves-darken btn sec_btn">Agregar Saldo</a>
-
-  </section>
-
-  <section class="pricing-table">
+  <img class="bg_profile" src="img/bg_profile.svg" alt="">
+  <section>
     <div class="container">
       <div class="row ">
-        <div class="col s6">
-          <h4 class="date_title"> <span>Valor por litro</span> <br> 12/08/19 </h4>
+        <div class="col s7 mt-4">
+          <h5 class="name-title white-text">Jhon Doe</h5>
+          <span  class="white-text"> jhondoe@example.com</span>
         </div>
-        <div class="col s6">
-          <h3 class="gas_price">1090<span>MXN</span> </h3>
+        <div class="col s5">
+          <img src="img/avatar.jpg" class="circle" alt="">
         </div>
       </div>
     </div>
   </section>
+  <div class="container mt-10">
+    <form>
+      <div class="row">
+        <div class="input-field col s12">
+          <i class="material-icons prefix">account_circle</i>
+          <input disabled id="icon_prefix" type="text" value="Jhon Doe" class="validate">
+          <label class="active" for="icon_prefix">Nombre</label>
+        </div>
+        <div class="input-field col s12">
+          <i class="material-icons prefix">phone</i>
+          <input disabled id="icon_telephone" type="tel" value="55 4344 43434" class="validate">
+          <label class="active" for="icon_telephone">Teléfono</label>
+        </div>
+        <div class="input-field col s12">
+          <i class="material-icons prefix">mail</i>
+          <input disabled id="icon_telephone" value="alguien@ejemplo.com" type="tel" class="validate">
+          <label class="active" for="icon_telephone">Email</label>
+        </div>
+        <div class="input-field col s12">
+          <i class="material-icons prefix">directions_car</i>
+          <input disabled id="icon_telephone" value="XHB-75S" type="tel" class="validate">
+          <label class="active" for="icon_telephone">PLaca</label>
+        </div>
+      </div>
+    </form>
+  </div>
 
   <div class="app-bar">
      <div class="bar">
@@ -80,8 +92,8 @@
        <a class="action_bottom" href="#"> <i class="material-icons">person</i> </a>
      </div>
 
-  <script src="js/jquery-3.4.1.min.js"></script>
-  <script src="js/materialize.min.js"></script>
+     <script src="js/jquery-3.4.1.min.js"></script>
+     <script src="js/materialize.min.js"></script>
   <footer>
   </footer>
 </body>

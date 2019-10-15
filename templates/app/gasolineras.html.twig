@@ -1,0 +1,53 @@
+{% extends 'base_app.html.twig' %}
+{% block style %}
+	<link type="text/css" rel="stylesheet" href="{{asset('themeapp/css/picode.css')}}" media="screen,projection" />  
+{% endblock %}
+
+{% block header %}
+    <nav>
+      <div class="nav-wrapper principal_bg">
+        <ul class="left">
+          <li><a href="javascript:window.history.back();"><i class="material-icons">keyboard_backspace</i></a></li>
+        </ul>
+        <a href="#!" class="brand-logo">Gasolineras</a>
+        <ul class="right">
+          <li><a href="#"><i class="material-icons">filter_list</i></a></li>
+        </ul>
+      </div>
+    </nav>
+{% endblock %}
+{% block body %}
+
+<section class="mt-2">
+  <div class="row">
+    <div class="col s12 m6">
+      <div class="card">
+        <div class="card-image">
+          <img src="{{asset('themeapp/img/maprecorte.jpg')}}">
+          <span class="card-title">Card Title</span>
+          <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">location_on</i></a>
+        </div>
+        <div class="card-content">
+          <p><b>Xola</b></p>
+          <p><span style="color: #e7711b">4.1  ★★★☆</span> (22)</p>
+          <p>Calzada Xola 284</p>
+        </div>
+      </div>
+    </div>
+    <div class="col s12 m6">
+      <div class="card">
+        <div class="card-image">
+          <img src="{{asset('themeapp/img/maprecorte.jpg')}}">
+          <span class="card-title">Card Title</span>
+          <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">location_on</i></a>
+        </div>
+        <div class="card-content">
+          <p><b>Xola</b></p>
+          <p><span style="color: #e7711b">4.1  ★★★☆</span> (22)</p>
+          <p>Calzada Xola 284</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

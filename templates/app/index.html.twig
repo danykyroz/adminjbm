@@ -1,18 +1,19 @@
- {% extends 'base_app.html.twig' %}
+{% extends 'base_app.html.twig' %}
 {% block body %}
  <section class="body_splash valign-wrapper">
     <img class="logo" src="{{asset('themeapp/img/logo.svg')}}" height="150px" alt="">
   </section>
- 
-
+ {% endblock %}
+{% block footer %}
 
  {% endblock %}
- {% block javascripts %}
-<script type="text/javascript">
-$(document).ready(function(){
-	setTimeout(function(){
-	location.href='slider';
-	},3000)
-})
-</script>
- {% endblock %}
+
+{% block javascripts %}
+	 <script type="text/javascript">
+		$(document).ready(function(){
+			setTimeout(function(){
+			location.href='slider';
+			},3000)
+		});
+	</script>
+{% endblock %}

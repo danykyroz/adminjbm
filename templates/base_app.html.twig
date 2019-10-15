@@ -6,6 +6,7 @@
 <html class="no-js" lang="es">
 <!--<![endif]-->
 <!-- Mirrored from wowthemez.com/demos/appdent/templates/demo-4/image/ by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 16 Aug 2019 18:28:19 GMT -->
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,9 +18,16 @@
   <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
   <!--Import materialize.css-->
   <link type="text/css" rel="stylesheet" href="{{asset('themeapp/css/materialize.min.css')}}" media="screen,projection" />
-  <link type="text/css" rel="stylesheet" href="{{asset('themeapp/css/main.css')}}" media="screen,projection" />
-  <script src="{{asset('themeapp/js/modernizr.js')}}"></script>
+ 
+ <link type="text/css" rel="stylesheet" href="{{asset('themeapp/css/main.css')}}" media="screen,projection" />
+  
 
+  {% block style %}
+
+  {% endblock %}
+
+  <script src="{{asset('themeapp/js/modernizr.js')}}"></script>
+  
   <style type="text/css">
     .msg-info{
   border-color: #0288d1;
@@ -29,6 +37,8 @@
   border-radius:10px;
 }
   </style>
+
+ 
 
 </head>
 
@@ -42,12 +52,36 @@
   {% block body %}
  
   {% endblock %}
+  
+  {% block footer %}
+
+    <div class="app-bar">
+     <div class="bar">
+       <a class="action_bottom" href="{{asset('app/gasolineras')}}"> <i class="material-icons">map</i> </a>
+       <a class="action_bottom" href="{{asset('app/transacciones')}}"> <i class="material-icons">trending_up</i> </a>
+       <a class="action_bottom"> </a>
+       <a class="action_bottom" href="{{asset('app/dashboard')}}"> > </a>
+       
+       <a href="{{asset('app/dashboard')}}" class="circle_btn button" >
+        <i class="material-icons gas-img">local_gas_station </i>
+       </a>
+       <a class="action_bottom" href="{{asset('app/promociones')}}"> <i class="material-icons">card_giftcard</i </a>
+       
+       <a class="action_bottom" href="{{asset('app/profile')}}"> <i class="material-icons">person</i> </a>
+     </div>
+
+  <footer>
+  </footer>
+{% endblock %}
   <script src="{{asset('themeapp/js/jquery-3.4.1.min.js')}}"></script>
   <script src="{{asset('themeapp/js/materialize.min.js')}}"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 
-  <footer>
-  </footer>
+  <script type="text/javascript">
+    $(document).ready(function(){
+
+    })
+  </script>
   {% block javascripts %}
   
   {% endblock %}

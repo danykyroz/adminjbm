@@ -27,7 +27,7 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 class AppController extends UserController
 {
 
-	private $userManager;
+	  private $userManager;
     private $factory;
     private $tokenManager;
     private $managerInterface;
@@ -48,6 +48,42 @@ class AppController extends UserController
   public function index(Request $request)
   {
   	 return $this->render('app/index.html.twig'); 
+  }
+
+  /**
+   * @Route("/qr", name="app_qr")
+   */
+
+  public function qr(Request $request)
+  {
+     return $this->render('app/qr.html.twig'); 
+  }
+
+  /**
+   * @Route("/gasolineras", name="app_gasolineras")
+   */
+
+  public function gasolineras(Request $request)
+  {
+     return $this->render('app/gasolineras.html.twig'); 
+  }
+
+  /**
+   * @Route("/transacciones", name="app_transacciones")
+   */
+
+  public function transacciones(Request $request)
+  {
+     return $this->render('app/transacciones.html.twig'); 
+  }
+
+  /**
+   * @Route("/promociones", name="app_promociones")
+   */
+
+  public function promociones(Request $request)
+  {
+     return $this->render('app/promociones.html.twig'); 
   }
 
 
@@ -87,6 +123,16 @@ class AppController extends UserController
             );
 
   	 return $this->render('app/login.html.twig',$data); 
+  }
+
+    /**
+   * @Route("/profile", name="app_profile")
+   */
+
+  public function profile(Request $request)
+  {
+     $data=array();
+     return $this->render('app/profile.html.twig',$data); 
   }
 
   /**
