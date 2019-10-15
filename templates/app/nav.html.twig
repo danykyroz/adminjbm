@@ -1,15 +1,10 @@
-{% extends 'base_app.html.twig' %}
-
-{% block header %}
-      <nav>
+<nav>
       <div class="nav-wrapper principal_bg">
         <ul class="left">
           <li><a href="javascript:window.history.back();"><i class="material-icons">keyboard_backspace</i></a></li>
         </ul>
-        <a href="#!" class="brand-logo">Promociones</a>
-        <ul class="right">
-          <li><a class='dropdown-button' href='#' data-activates='menu2'><i class="material-icons">more_vert</i></a></li>
-        </ul>
+                <a href="#!" class="brand-logo">Agregar Saldo</a>
+
         <!-- Menu 2 -->
         <ul id='menu2' class='dropdown-content'>
           <li><a href="#!">Ajustes de Seguridad</a></li>
@@ -21,9 +16,3 @@
 
       </div>
     </nav>
-{% endblock%} 
-{% block body %}
- <section class="body_splash valign-wrapper">
-    <img class="logo" src="{{asset('themeapp/img/logo.svg')}}" height="150px" alt="">
-  </section>
-{% endblock%} 
