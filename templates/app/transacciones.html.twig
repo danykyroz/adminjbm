@@ -3,6 +3,9 @@
 {% block header %}
       <nav>
       <div class="nav-wrapper principal_bg">
+        <ul class="left">
+          <li><a href="javascript:window.history.back();"><i class="material-icons">keyboard_backspace</i></a></li>
+        </ul>
         <a href="#!" class="brand-logo">Transacciones</a>
         <ul class="right">
           <li><a class='dropdown-button' href='#' data-activates='menu2'><i class="material-icons">more_vert</i></a></li>
@@ -20,7 +23,46 @@
     </nav>
 {% endblock%} 
 {% block body %}
- <section class="body_splash valign-wrapper">
-    <img class="logo" src="{{asset('themeapp/img/logo.svg')}}" height="150px" alt="">
+ 
+    <section class="pricing-table">
+    <div class="container">
+      <div class="row ">
+        <div class="col s12">
+          <h4 class="date_title"> Transaciones</h4>
+          <div id="no-more-tables" class="card-body table-responsive">
+        <table class="table table-condensed">
+            <thead>
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Fecha</th>
+                        <th>Cliente</th>
+                        <th>Moneda</th>
+                        <th>Valor</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>  
+                {% for transaccion in transacciones %}
+                    <tr>
+                       <td data-title="Id">{{transaccion.id}}</td>
+                       <td data-title="Fecha">{{transaccion.createdAt|date('Y-m-d H:i:s')}}</td>
+                       <td data-title="Cliente">{{transaccion.wallet.cliente.nombres}} {{transaccion.wallet.cliente.apellidos}}</td>
+                       <td data-title="Moneda">MX</td>
+                       <td data-title="Valor">
+                        <span {% if transaccion.tipoTransaccion==1 %} class="success-transaccion" {% else %} class="danger-transaccion" {% endif%} >                       {{transaccion.valor|number_format(2)}}
+                        </span>
+                        </td>
+                       <td data-title="Estado">{{transaccion.estado}}</td>
+                    </tr>
+                {% endfor %} 
+                </tbody>
+            </table>
+        </div>
+        </div>
+        
+      </div>
+    </div>
   </section>
+
 {% endblock%} 

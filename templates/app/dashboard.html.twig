@@ -1,8 +1,13 @@
 {% extends 'base_app.html.twig' %}
+{% block style %}
 
+{% endblock %}
 {% block header %}
       <nav>
       <div class="nav-wrapper principal_bg">
+        <ul class="left">
+          <li><a href="javascript:window.history.back();"><i class="material-icons">keyboard_backspace</i></a></li>
+        </ul>
         <a href="#!" class="brand-logo">Permergas</a>
         <ul class="right">
           <li><a class='dropdown-button' href='#' data-activates='menu2'><i class="material-icons">more_vert</i></a></li>
@@ -45,16 +50,48 @@
     </div>
   </section>
 
-   <div class="app-bar">
-     <div class="bar">
-       <a class="action_bottom" href="#"> <i class="material-icons">map</i> </a>
-       <a class="action_bottom" href="#"> <i class="material-icons">trending_up</i> </a>
-       <a class="action_bottom"> </a>
-       <a class="action_bottom" href="#"> > </a>
-       <a class="action_bottom" href="#"> <i class="material-icons">card_giftcard</i </a>
-       <a class="circle_btn button">
-        <i class="material-icons gas-img">local_gas_station </i>
-       </a>
-       <a class="action_bottom" href="#"> <i class="material-icons">person</i> </a>
-     </div>
+    <section class="pricing-table">
+    <div class="container">
+      <div class="row ">
+        <div class="col s12">
+          <h4 class="date_title"> Transaciones</h4>
+          <div id="no-more-tables" class="card-body table-responsive">
+        <table class="table table-condensed">
+            <thead>
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Fecha</th>
+                        <th>Cliente</th>
+                        <th>Moneda</th>
+                        <th>Valor</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>  
+                {% for transaccion in transacciones %}
+                    <tr>
+                       <td data-title="Id">{{transaccion.id}}</td>
+                       <td data-title="Fecha">{{transaccion.createdAt|date('Y-m-d H:i:s')}}</td>
+                       <td data-title="Cliente">{{transaccion.wallet.cliente.nombres}} {{transaccion.wallet.cliente.apellidos}}</td>
+                       <td data-title="Moneda">MX</td>
+                       <td data-title="Valor">
+                        <span {% if transaccion.tipoTransaccion==1 %} class="success" {% else %} class="danger" {% endif%} >                       {{transaccion.valor|number_format(2)}}
+                        </span>
+                        </td>
+                       <td data-title="Estado">{{transaccion.estado}}</td>
+                    </tr>
+                {% endfor %} 
+                </tbody>
+            </table>
+        </div>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+
+
+
+ 
  {% endblock %}

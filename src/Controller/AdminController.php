@@ -63,13 +63,21 @@ class AdminController extends EasyAdminController
         
         $wallet=$em->getRepository('App:Wallet','w')->findOneBy(array('clienteId'=>$cliente->getId()));
 
+        
+        $qb=$em->createQueryBuilder();
+        $qb->select('t')->from('App:Transacciones','t')->where('t.wallet=:wallet')->orderBy('t.createdAt','DESC');
+
+        $qb->setParameter('wallet',$wallet);
+
+        $transacciones=$qb->getQuery()->getResult();
+
         if($cliente->getAvatar()!=""){
 
             $session->set('avatar',$cliente->getAvatar());
         }
 
         $data=array('wallet'=>$wallet,'gasolina_diesel'=>0,
-            'gasolina_premium'=>0,'creditos'=>0,'fecha'=>date('Y-m-d'));
+            'gasolina_premium'=>0,'creditos'=>0,'fecha'=>date('Y-m-d'),'transacciones'=>$transacciones);
 
         return $this->render('app/dashboard.html.twig',$data);
     }

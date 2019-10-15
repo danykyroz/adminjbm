@@ -74,7 +74,23 @@ class AppController extends UserController
 
   public function transacciones(Request $request)
   {
-     return $this->render('app/transacciones.html.twig'); 
+        $user=($this->getUser());
+        $em=$this->getDoctrine()->getManager();
+        $session=$request->getSession();
+
+        $cliente=$em->getRepository('App:Clientes','c')->findOneBy(array('email'=>$user->getEmail()));
+        
+        $wallet=$em->getRepository('App:Wallet','w')->findOneBy(array('clienteId'=>$cliente->getId()));
+
+        
+        $qb=$em->createQueryBuilder();
+        $qb->select('t')->from('App:Transacciones','t')->where('t.wallet=:wallet')->orderBy('t.createdAt','DESC');
+
+        $qb->setParameter('wallet',$wallet);
+
+        $transacciones=$qb->getQuery()->getResult();
+
+     return $this->render('app/transacciones.html.twig',['transacciones'=>$transacciones]); 
   }
 
   /**
@@ -141,7 +157,8 @@ class AppController extends UserController
 
   public function dashboard(Request $request)
   {
-		return  $this->redirect($this->generateUrl('dashboard_cliente'));
+		
+    return  $this->redirect($this->generateUrl('dashboard_cliente'));
   }
 
 
