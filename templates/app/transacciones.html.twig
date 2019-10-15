@@ -29,15 +29,12 @@
       <div class="row ">
         <div class="col s12">
           <h4 class="date_title"> Transaciones</h4>
-          <div id="no-more-tables" class="card-body table-responsive">
+          <div id="no-more-" class="card-body table-responsive">
         <table class="table table-condensed">
             <thead>
                 <thead>
                     <tr>
-                        <th>Id</th>
                         <th>Fecha</th>
-                        <th>Cliente</th>
-                        <th>Moneda</th>
                         <th>Valor</th>
                         <th>Estado</th>
                     </tr>
@@ -45,10 +42,7 @@
                 <tbody>  
                 {% for transaccion in transacciones %}
                     <tr>
-                       <td data-title="Id">{{transaccion.id}}</td>
-                       <td data-title="Fecha">{{transaccion.createdAt|date('Y-m-d H:i:s')}}</td>
-                       <td data-title="Cliente">{{transaccion.wallet.cliente.nombres}} {{transaccion.wallet.cliente.apellidos}}</td>
-                       <td data-title="Moneda">MX</td>
+                       <td data-title="Fecha">{{transaccion.createdAt|date('d/m/d h:i A')}}</td>
                        <td data-title="Valor">
                         <span {% if transaccion.tipoTransaccion==1 %} class="success-transaccion" {% else %} class="danger-transaccion" {% endif%} >                       {{transaccion.valor|number_format(2)}}
                         </span>
