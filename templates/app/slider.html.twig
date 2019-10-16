@@ -51,6 +51,15 @@
 
 
   {% block javascripts %}
+
+   <script type="text/javascript">
+    $(document).ready(function(){
+      setTimeout(function(){
+      location.href='slider';
+      },5000)
+    });
+  </script>
+
    <script type="text/javascript">
     $("#omitir").click(function(e){
       e.preventDefault();
