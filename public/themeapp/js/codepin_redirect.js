@@ -23,7 +23,9 @@ jQuery(document).ready(function($) {
           $("#numbers").addClass("hide");
           $("#anleitung p").html("Ok!<br>Pin ingresado exitosamente!");
           $("#pincode").hide();
+
           location.href="app/qr";
+          
         } else {
           // Wrong PIN!
           $("#fields").addClass("miss");
