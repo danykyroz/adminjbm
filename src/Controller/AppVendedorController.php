@@ -82,7 +82,7 @@ class AppVendedorController extends UserController
   }
 
   /**
-   * @Route("/qr", name="app_qr")
+   * @Route("/qr", name="app_vendedor_qr")
    */
 
   public function qr(Request $request)
@@ -90,9 +90,24 @@ class AppVendedorController extends UserController
      return $this->render('app_vendedor/qr.html.twig'); 
   }
 
+  /**
+   * @Route("/qr/scan", name="app_vendedor_qr_scan")
+  */
+
+  public function qr_scanner(Request $request)
+  {
+    
+     $qb = $this->getDoctrine()
+            ->getRepository(Gasolineras::class)->orderById();
+
+     $gasolineras=$qb->getQuery()->getResult();
+     unset($gasolineras[0]);       
+     return $this->render('app_vendedor/qr_scanner.html.twig'); 
+  }
+
 
   /**
-   * @Route("/recargar", name="app_recargar")
+   * @Route("/recargar", name="app_vendedor_recargar")
    */
 
   public function recargar(Request $request)
@@ -105,6 +120,9 @@ class AppVendedorController extends UserController
      unset($gasolineras[0]);       
      return $this->render('app_vendedor/recarga.html.twig'); 
   }
+
+
+
 
 
   /**
