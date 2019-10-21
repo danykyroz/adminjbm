@@ -105,7 +105,7 @@ class PaymentController extends ClientesController
         $this->crearTransaccion($saldo_anterior,$valor,$operacion,$wallet_cliente,$request->getClientIp());
 
 
-        $wallet_cliente->setSaldo($wallet_cliente->getSaldo()+$valor);
+        $wallet_cliente->setSaldo($wallet_cliente->getSaldo()-$valor);
          
          $em->persist($wallet_cliente);
          $em->flush();
