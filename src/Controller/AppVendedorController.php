@@ -205,7 +205,7 @@ class AppVendedorController extends UserController
   }
 
   /**
-   * @Route("/slider", name="app_slider")
+   * @Route("/slider", name="app_vendedor_slider")
   */
 
   public function slider(Request $request)
