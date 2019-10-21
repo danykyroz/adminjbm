@@ -158,7 +158,7 @@ class AppVendedorController extends UserController
   }
 
   /**
-   * @Route("/transacciones", name="app_transacciones")
+   * @Route("/transacciones", name="app_vendedor_transacciones")
    */
 
   public function transacciones(Request $request)
@@ -186,7 +186,7 @@ class AppVendedorController extends UserController
   }
 
   /**
-   * @Route("/promociones", name="app_promociones")
+   * @Route("/promociones", name="app_vendedor_promociones")
    */
 
   public function promociones(Request $request)
@@ -214,7 +214,7 @@ class AppVendedorController extends UserController
   }
 
   /**
-   * @Route("/login", name="app_login")
+   * @Route("/login", name="app_vendedor_login")
    */
 
   public function login(Request $request)
@@ -234,7 +234,7 @@ class AppVendedorController extends UserController
   }
 
   /**
-   * @Route("/profile", name="app_profile")
+   * @Route("/profile", name="app_vendedor_profile")
    */
 
   public function profile(Request $request)
@@ -251,7 +251,7 @@ class AppVendedorController extends UserController
 
 
   /**
-   * @Route("/update/profile", name="app_update_profile")
+   * @Route("/update/profile", name="app_vendedor_update_profile")
    */
 
   public function update_profile(Request $request)
