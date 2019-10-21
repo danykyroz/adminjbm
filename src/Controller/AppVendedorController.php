@@ -147,7 +147,7 @@ class AppVendedorController extends UserController
   }
 
   /**
-   * @Route("/gasolineras/detalle/{id}", name="app_gasolinera_detalle")
+   * @Route("/gasolineras/detalle/{id}", name="app_vendedor_gasolinera_detalle")
    */
 
   public function gasolinera_detalle(Gasolineras $gasolinera, Request $request)
