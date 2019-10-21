@@ -86,12 +86,25 @@
       </div>
       <div class="row">
         <div class="col s12 center">
-          <img src="https://images.samsung.com/is/image/samsung/p5/au/faq/os-pie-updates/QR-code.png" alt="">
+            
+          <div id="qrcode">
+            
+          </div>
+
+          
         </div>
       </div>
     </div>
   </section>
 {% endblock %} 
 {% block javascripts %}
+ <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js" ></script>
   <script src="{{asset('themeapp/js/codepin_redirect.js')}}"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('#qrcode').qrcode("danykyroz@gmail.com");
+
+    })
+  </script>
 {% endblock %} 
