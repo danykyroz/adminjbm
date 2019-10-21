@@ -621,6 +621,28 @@ class ClientesController extends AbstractController
             $em->flush();
 
         }
+
+
+        if($operacion=="resta"){
+
+            $tr=new Transaccion();
+            $tr->setCreatedAt(new \DateTime('now'));
+            $tr->setUpdatedAt(new \DateTime('now'));
+            $tr->setWallet($wallet);
+            $tr->setValor($valor);
+            $tr->setGasolineraId(1);
+            $tr->setTipoTransaccion(2);
+            $tr->setUsuarioId($this->getUser()->getId());
+            $tr->setEstado('Aceptada');
+            $tr->setRespuesta('Aprobada');
+            $tr->setCodRespuesta(00);
+            $tr->setIp($ip);
+            $tr->setDispositivo('admin');
+
+            $em->persist($tr);
+            $em->flush();
+
+        }
         
 
 

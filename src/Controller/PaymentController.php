@@ -94,7 +94,7 @@ class PaymentController extends ClientesController
 
      $cliente=$em->getRepository('App:Clientes','c')->findOneBy(array('email'=>$request->get('email_user')));
     
-
+     
       $wallet_cliente=$em->getRepository('App:Wallet','w')->findOneBy(array('clienteId'=>$cliente->getId()));
 
         $saldo_anterior=$wallet_cliente->getSaldo();
