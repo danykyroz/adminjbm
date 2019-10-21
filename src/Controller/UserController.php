@@ -44,7 +44,6 @@ class UserController extends Controller
     */
     public function login(Request $request)
     {
-        
         $user=($this->getUser());
         if(is_object($user)){
             return $this->redirect('admin/home');
