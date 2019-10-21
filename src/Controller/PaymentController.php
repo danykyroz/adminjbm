@@ -70,7 +70,7 @@ class PaymentController extends ClientesController
         
         $this->crearTransaccion($saldo_anterior,$valor,$operacion,$wallet_cliente,$request->getClientIp());
 
-         $wallet_cliente->setSaldoCredito($wallet_cliente->getSaldoCredito()+$valor);
+         $wallet_cliente->setSaldo($wallet_cliente->getSaldo()+$valor);
          
          $em->persist($wallet_cliente);
          $em->flush();
@@ -84,6 +84,34 @@ class PaymentController extends ClientesController
 
         die();
   
+  }
+   /**
+   * @Route("/payment/descontar/qr", name="payment_descontar_qr_credito",methods={"POST","GET"})
+   */
+  public function payment_descontar_qr(Request $request){
+
+    $em=$this->getDoctrine()->getManager();
+
+     $cliente=$em->getRepository('App:Clientes','c')->findOneBy(array('email'=>$request->get('email_user')));
+    
+
+      $wallet_cliente=$em->getRepository('App:Wallet','w')->findOneBy(array('clienteId'=>$cliente->getId()));
+
+        $saldo_anterior=$wallet_cliente->getSaldo();
+        $operacion="resta";
+        
+        $valor=$request->get('valor');
+
+        $this->crearTransaccion($saldo_anterior,$valor,$operacion,$wallet_cliente,$request->getClientIp());
+
+
+        $wallet_cliente->setSaldo($wallet_cliente->getSaldo()+$valor);
+         
+         $em->persist($wallet_cliente);
+         $em->flush();
+
+        return  $this->redirect($this->generateUrl('dashboard_vendedor'));
+
   }
 
 	private function getOrder($valor,$cliente,$token_id,$type){
