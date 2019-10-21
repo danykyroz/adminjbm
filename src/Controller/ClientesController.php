@@ -588,7 +588,7 @@ class ClientesController extends AbstractController
     }
 
 
-    private function crearTransaccion($saldo_anterior,$valor,$operacion,$wallet,$ip){
+    public function crearTransaccion($saldo_anterior,$valor,$operacion,$wallet,$ip){
         
 
         $em = $this->getDoctrine()->getManager();
@@ -606,7 +606,7 @@ class ClientesController extends AbstractController
             $tr=new Transaccion();
             $tr->setCreatedAt(new \DateTime('now'));
             $tr->setUpdatedAt(new \DateTime('now'));
-            $tr->setWalletId($wallet->getId());
+            $tr->setWallet($wallet);
             $tr->setValor($valor);
             $tr->setGasolineraId(1);
             $tr->setTipoTransaccion(1);

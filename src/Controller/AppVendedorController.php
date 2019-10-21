@@ -21,14 +21,16 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use App\Entity\Gasolineras;
+use App\Entity\PuntosVenta;
+
 
 
 
 /**
- * @Route("/app")
+ * @Route("/vendedor")
  */
 
-class AppController extends UserController
+class AppVendedorController extends UserController
 {
 
 	  private $userManager;
@@ -46,12 +48,37 @@ class AppController extends UserController
 
 
   /**
-   * @Route("/", name="app_index")
+   * @Route("/", name="app_vendedor_index")
    */
 
   public function index(Request $request)
   {
-  	 return $this->render('app/index.html.twig'); 
+  	 return $this->render('app_vendedor/index.html.twig'); 
+  }
+
+  /**
+   * @Route("/configuracion", name="app_vendedor_configuracion")
+   */
+
+  public function configuracion(Request $request)
+  {
+    $user=($this->getUser());
+    $em=$this->getDoctrine()->getManager();
+      
+    if($user->getRoles()[0]=="ROLE_GASOLINERA"){
+      
+      $gasolinera_user=$em->getRepository('App:GasolineraUsuarios','u')->findOneBy(array('usuarioId'=>$user->getId()));
+
+      $gasolinera=$gasolinera_user->getGasolinera();
+
+      $puntosVentas = $this->getDoctrine()
+            ->getRepository(PuntosVenta::class)
+            ->findByGasolinera($gasolinera);
+ 
+      return $this->render('app_vendedor/configuracion.html.twig',['puntos'=>$puntosVentas]); 
+    
+
+    }
   }
 
   /**
@@ -60,7 +87,7 @@ class AppController extends UserController
 
   public function qr(Request $request)
   {
-     return $this->render('app/qr.html.twig'); 
+     return $this->render('app_vendedor/qr.html.twig'); 
   }
 
 
@@ -76,23 +103,29 @@ class AppController extends UserController
 
      $gasolineras=$qb->getQuery()->getResult();
      unset($gasolineras[0]);       
-     return $this->render('app/recarga.html.twig'); 
+     return $this->render('app_vendedor/recarga.html.twig'); 
   }
 
 
   /**
-   * @Route("/gasolineras", name="app_gasolineras")
+   * @Route("/gasolineras", name="app_vendedor_gasolineras")
    */
 
   public function gasolineras(Request $request)
   {
     
-     $qb = $this->getDoctrine()
-            ->getRepository(Gasolineras::class)->orderById();
+       $user=($this->getUser());
+        $em=$this->getDoctrine()->getManager();
 
-     $gasolineras=$qb->getQuery()->getResult();
-     unset($gasolineras[0]);       
-     return $this->render('app/gasolineras.html.twig',['gasolineras'=>$gasolineras]); 
+      $gasolinera_usuario=$em->getRepository('App:GasolineraUsuarios','g')->findOneBy(array('usuarioId'=>$user->getId()));
+        
+        
+        $gasolinera=$gasolinera_usuario->getGasolinera();
+
+        $gasolineras[0]=$gasolinera;
+
+     
+     return $this->render('app_vendedor/gasolineras.html.twig',['gasolineras'=>$gasolineras]); 
   }
 
   /**
@@ -103,7 +136,7 @@ class AppController extends UserController
   {
     
     
-     return $this->render('app/gasolinera_detalle.html.twig',['gasolinera'=>$gasolinera]); 
+     return $this->render('app_vendedor/gasolinera_detalle.html.twig',['gasolinera'=>$gasolinera]); 
   }
 
   /**
@@ -116,19 +149,22 @@ class AppController extends UserController
         $em=$this->getDoctrine()->getManager();
         $session=$request->getSession();
 
-        $cliente=$em->getRepository('App:Clientes','c')->findOneBy(array('email'=>$user->getEmail()));
+        $gasolinera_usuario=$em->getRepository('App:GasolineraUsuarios','g')->findOneBy(array('usuarioId'=>$user->getId()));
         
-        $wallet=$em->getRepository('App:Wallet','w')->findOneBy(array('clienteId'=>$cliente->getId()));
+        
+        $gasolinera=$gasolinera_usuario->getGasolinera();
 
+        $gasolinera->getId();
         
         $qb=$em->createQueryBuilder();
-        $qb->select('t')->from('App:Transacciones','t')->where('t.wallet=:wallet')->orderBy('t.createdAt','DESC');
+        $qb->select('t')->from('App:Transacciones','t')->where('t.gasolineraId=:gasolineraId');
 
-        $qb->setParameter('wallet',$wallet);
+        $qb->setParameter('gasolineraId',$gasolinera->getId());
 
         $transacciones=$qb->getQuery()->getResult();
-
-     return $this->render('app/transacciones.html.twig',['transacciones'=>$transacciones]); 
+       
+        
+     return $this->render('app_vendedor/transacciones.html.twig',['transacciones'=>$transacciones]); 
   }
 
   /**
@@ -137,7 +173,7 @@ class AppController extends UserController
 
   public function promociones(Request $request)
   {
-     return $this->render('app/promociones.html.twig'); 
+     return $this->render('app_vendedor/promociones.html.twig'); 
   }
 
 
@@ -147,7 +183,7 @@ class AppController extends UserController
 
   public function recuperar_cuenta(Request $request)
   {
-     return $this->render('app/recuperar_cuenta.html.twig'); 
+     return $this->render('app_vendedor/recuperar_cuenta.html.twig'); 
   }
 
   /**
@@ -156,7 +192,7 @@ class AppController extends UserController
 
   public function slider(Request $request)
   {
-		return $this->render('app/slider.html.twig'); 
+		return $this->render('app_vendedor/slider.html.twig'); 
   }
 
   /**
@@ -176,7 +212,7 @@ class AppController extends UserController
             'csrf_token' => $csrfToken,
             );
 
-  	 return $this->render('app/login.html.twig',$data); 
+  	 return $this->render('app_vendedor/login.html.twig',$data); 
   }
 
   /**
@@ -192,7 +228,7 @@ class AppController extends UserController
         
      $data=array('cliente'=>$cliente);
 
-     return $this->render('app/profile.html.twig',$data); 
+     return $this->render('app_vendedor/profile.html.twig',$data); 
   }
 
 
@@ -223,17 +259,19 @@ class AppController extends UserController
 
       $this->addFlash('success', 'Perfil actualizado exitosamente.');
 
-     return $this->render('app/profile.html.twig',$data); 
+     return $this->render('app_vendedor/profile.html.twig',$data); 
   }
 
   /**
-   * @Route("/dashboard", name="app_dashboard")
+   * @Route("/dashboard", name="app_vendedor_dashboard")
   */
 
   public function dashboard(Request $request)
   {
-		
-    return  $this->redirect($this->generateUrl('dashboard_cliente'));
+		$punto_venta=$request->get('punto_venta');
+    $session=$request->getSession();
+    $session->set('punto_venta',$punto_venta);
+    return  $this->redirect($this->generateUrl('dashboard_vendedor'));
   }
 
 

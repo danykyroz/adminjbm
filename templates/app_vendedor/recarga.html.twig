@@ -1,0 +1,162 @@
+{% extends 'base_app.html.twig' %}
+{% block style %}
+	 <link type="text/css" rel="stylesheet" href="{{asset('themeapp/css/profile.css')}}" media="screen,projection" />  
+
+{% endblock %}
+
+{% block header %}
+    <nav>
+      <div class="nav-wrapper principal_bg">
+        <ul class="left">
+          <li><a href="javascript:window.history.back();"><i class="material-icons">keyboard_backspace</i></a></li>
+        </ul>
+        <a href="#!" class="brand-logo">Recargar Cuenta</a>
+        <ul class="right">
+          <li><a class='dropdown-button' href='#' data-activates='menu2'><i class="material-icons">more_vert</i></a></li>
+        </ul>
+        <!-- Menu 2 -->
+        <ul id='menu2' class='dropdown-content'>
+          <li><a href="#!">Ajustes de Seguridad</a></li>
+          <li><a href="#!">Solicitar Credito</a></li>
+          <li class="divider"></li>
+          <li><a href="#!">Información</a></li>
+          <li><a href="{{asset('logout')}}">Cerrar Sesión</a></li>
+        </ul>
+      </div>
+    </nav>
+{% endblock %}
+{% block body %}
+
+<section class="container mt-10">
+  <div class="row">
+<form action="{{asset('payment/credito')}}" method="POST" id="card-form">
+<h4>Recarga con Tarjeta de Crédito</h4>
+
+  <span class="card-errors"></span>
+
+  <div class="input-value col s12">
+    <label>
+      <span>Valor A Recargar</span>
+      <input name="valor" type="text" size="20" onkeydown="return soloNumeros(event)" >
+    </label>
+  </div>
+  <div class="input-value col s12">
+    <label>
+      <span>Nombre del tarjetahabiente</span>
+      <input name="nombres" type="text" size="20" data-conekta="card[name]">
+    </label>
+  </div>
+  <div class="input-value col s12">
+    <label>
+      <span>Número de tarjeta de crédito</span>
+      <input type="text" size="20" name="card_number" maxlength="16" data-conekta="card[number]">
+    </label>
+  </div>
+  <div class="input-value col s12">
+    <label>
+      <span>CVC</span>
+      <input type="text" size="4" style="width: 60px" name="card_cvv" data-conekta="card[cvc]">
+    </label>
+  </div>
+  <div>
+    <label>
+      <span>Fecha de expiración (MM/AAAA) </span>
+      <input type="text"  name="card_month" placeholder="mm" style="width:20px;margin-left:20px; " size="2" data-conekta="card[exp_month]">
+    </label>
+    <span style="margin: 10px">/</span>
+    <input type="text" name="card_year" placeholder="yyyy" style="width:60px;margin-left:0px " size="4" data-conekta="card[exp_year]">
+  </div>
+  <button type="submit" class="btn btn-success">Recargar</button>
+</form>
+
+  </div>
+</section>
+{% endblock %}
+
+
+{% block javascripts %}
+<script type="text/javascript">
+
+  function soloNumeros(e)
+  {
+    var key = window.Event ? e.which : e.keyCode
+    return ((key >= 48 && key <= 57) || (key==8))
+  }
+
+  $('#card-form').validate({
+        rules: {
+            'valor':{
+                required:true,
+            },
+            'nombres': {
+                required: true,
+            },
+            'card_number': {
+                required: true,
+            },
+           
+        },
+        messages:{
+            'valor':{
+                required:'El campo valor es obligatorio',
+            },
+            'nombres':{
+                required:'El campo nombres es obligatorio',
+            },
+            'card_number':{
+                required:'El número de tarjeta es obligatorio',
+            },
+           
+        },
+        highlight: function (input) {
+            
+            $(input).addClass('data-error');
+        },
+        unhighlight: function (input) {
+            $(input).removeClass('data-succes');
+        },
+        
+    });
+</script>
+
+
+<script type="text/javascript" src="https://cdn.conekta.io/js/latest/conekta.js"></script>
+
+<script type="text/javascript" >
+  Conekta.setPublicKey('key_KJysdbf6PotS2ut2');
+
+  var conektaSuccessResponseHandler = function(token) {
+    var $form = $("#card-form");
+    //Inserta el token_id en la forma para que se envíe al servidor
+     $form.append($('<input type="hidden" name="conektaTokenId" id="conektaTokenId">').val(token.id));
+    $form.get(0).submit(); //Hace submit
+  };
+  var conektaErrorResponseHandler = function(response) {
+    var $form = $("#card-form");
+    $form.find(".card-errors").text(response.message_to_purchaser);
+    $form.find("button").prop("disabled", false);
+  };
+
+  //jQuery para que genere el token después de dar click en submit
+  $(function () {
+
+    $('#card-form').validate();
+
+    $("#card-form").submit(function(event) {
+      var $form = $(this);
+      $form.find("button").prop("disabled", true);
+
+      // Previene hacer submit más de una vez
+      if($('#card-form').valid()){
+         Conekta.Token.create($form, conektaSuccessResponseHandler, conektaErrorResponseHandler);
+        return false;
+      }
+      else{
+      $form.find("button").prop("disabled", false);
+
+      }
+    });
+  });
+</script>
+
+{% endblock %}

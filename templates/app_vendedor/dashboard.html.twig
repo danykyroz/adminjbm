@@ -1,4 +1,4 @@
-{% extends 'base_app.html.twig' %}
+{% extends 'base_app_vendedor.html.twig' %}
 {% block style %}
 
 {% endblock %}
@@ -25,17 +25,7 @@
     </nav>
 {% endblock%} 
 {% block body %}
-  <section class="center">
-    <div class="circle valign-wrapper">
-      <div class="value_container">
-        <h2 class="value_grl">{{wallet.saldo+wallet.saldoCredito}}</h2>
-        <span>MXN</span>
-      </div>
-    </div>
-    <p class="center">Saldo disponible para canje por Gasolina</p>
-    <a href="{{asset('app/recargar')}}" class="waves-effect waves-darken btn sec_btn">Agregar Saldo</a>
 
-  </section>
 
   <section class="pricing-table">
     <div class="container">

@@ -1,4 +1,4 @@
-{% extends 'base_app.html.twig' %}
+{% extends 'base_app_vendedor.html.twig' %}
 {% block style %}
 	<link type="text/css" rel="stylesheet" href="{{asset('themeapp/css/picode.css')}}" media="screen,projection" />  
 {% endblock %}
@@ -28,6 +28,7 @@
           <a href="{{path('app_gasolinera_detalle',{id:gasolinera.id})}}" class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">location_on</i></a>
         </div>
         <div class="card-content">
+
           <span class="card-title"><b>{{gasolinera.nombre}}</b></span>
 
           <p>{{gasolinera.delegacion.municipio}}</p>

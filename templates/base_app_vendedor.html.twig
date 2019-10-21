@@ -59,21 +59,22 @@
   
   {% block footer %}
 
-    <div class="app-bar">
+     <div class="app-bar">
      <div class="bar">
-       <a class="action_bottom" href="{{asset('app/gasolineras')}}"> <i class="material-icons">map</i> </a>
-       <a class="action_bottom" href="{{asset('app/transacciones')}}"> <i class="material-icons">trending_up</i> </a>
+       <a class="action_bottom" href="{{asset('vendedor/gasolineras')}}"> <i class="material-icons">map</i> </a>
+       <a class="action_bottom" href="{{asset('vendedor/transacciones')}}"> <i class="material-icons">trending_up</i> </a>
        <a class="action_bottom"> </a>
-       <a class="action_bottom" href="{{asset('app/dashboard')}}"> > </a>
+       <a class="action_bottom" href="{{asset('vendedor/dashboard')}}"> > </a>
        
-       <a href="{{asset('app/qr')}}" class="circle_btn button" >
+       <a href="{{asset('vendedor/qr')}}" class="circle_btn button" >
         <i class="material-icons gas-img">local_gas_station </i>
        </a>
-       <a class="action_bottom" href="{{asset('app/promociones')}}"> <i class="material-icons">card_giftcard</i </a>
+       <a class="action_bottom" href="{{asset('vendedor/promociones')}}"> <i class="material-icons">card_giftcard</i </a>
        
-       <a class="action_bottom" href="{{asset('app/profile')}}"> <i class="material-icons">person</i> </a>
+       <a class="action_bottom" href="{{asset('vendedor/profile')}}"> <i class="material-icons">person</i> </a>
      </div>
     </div>
+
   <footer>
   </footer>
 {% endblock %}

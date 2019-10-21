@@ -1,0 +1,153 @@
+ {% extends 'base_app.html.twig' %}
+
+{% block style %}
+  <link type="text/css" rel="stylesheet" href="{{asset('themeapp/css/inputs.css')}}" media="screen,projection" />  
+{% endblock %}
+
+ {% block header %}
+   
+ {% endblock %}
+{% block body %}
+   <section class="body_splash valign-wrapper">
+    <div class="container">
+      <div class="row ">
+        <div class="col s12 text-center center">
+          <img class="logo" src="{{asset('themeapp/img/isotipo.svg')}}" height="120px" alt="">
+        </div>
+        <div class="clearfix">
+
+        </div>
+       <!-- <form class="login_form" action="index.html" method="post">
+          <div class="input-field col s12">
+            <input id="last_name" type="email" class="validate input_round">
+            <label for="last_name"> Correo electrónico</label>
+          </div>
+          <div class="input-field col s12">
+            <input id="last_name" type="password" class="validate input_round">
+            <label for="last_name"> Contraseña </label>
+          </div>
+          <div class="col s12">
+            <a class="btn-app  bg_principal waves-effect waves-darken btn">Iniciar Sesión</a>
+
+          </div>
+          <div class="  col s12">
+              <a class="btn-app-login btn-flat  btn"> Recuperar contraseña </a>
+          </div>
+          <div class="clearfix">
+
+          </div>
+          <div class="col s12">
+          <hr class="divisor_login">
+          </div>
+          <div class="input-field  col s12">
+            <a class="btn-app left-align-btn  bg_fb waves-effect waves-darken btn"> <i class="icon-btn fa fa-3x fa-facebook-square" aria-hidden="true"></i> Continuar con Facebook</a>
+          </div>
+          <div class="input-field  col s12">
+            <a class="btn-app left-align-btn bg_white bg_principal waves-effect waves-darken btn"> <img class="img-btn" src="img/google_svg.svg" height="20px" alt="">Continuar con Gmail</a>
+          </div>
+
+          <div class="input-field  col s12">
+          </div>
+            <a class="btn-app-login btn-flat  btn"> Crear cuenta con email </a>
+          </div>
+        </form>
+	!-->
+
+        <form id="frm-login" action="{{ path("recuperar_cuenta") }}" method="post" class="login-form validate-form">
+
+
+   
+    {% for message in app.flashes('success') %}
+        <div class="msg msg-info z-depth-3 scale-transition">    {{message}} 
+        </div>
+    
+       
+    {% endfor %} 
+    {% for message in app.flashes('bad') %}
+	<div class="alert bg-pink alert-dismissible" role="alert" style="width: 100%; text-align: center;margin-top: 10px">
+	   
+   <span style="color: white; margin-left: 20px"> {{message}} </span>
+	</div>
+{% endfor %} 
+    <br/>
+
+    <div class="input-field col s12">
+        <input type="hidden" name="_login_origin" value="app">
+        <input class="validate input_round" type="email" id="username" name="_username" value="" placeholder="Correo electrónico">
+         <label for="last_name"> Correo electrónico</label>
+    </div>
+
+    
+     <div class="col s12">
+       <button type="btn" id="recuperar_cuenta" class="btn-app  bg_principal waves-effect waves-darken btn">Recuperar mi cuenta</button>
+
+          </div>
+ 	 <div class="  col s12">
+              <a href="{{path('app_login')}}" class="btn-app-login btn-flat  btn"> Iniciar Sesión </a>
+          </div>
+   
+        
+          </div>
+</form>
+
+      </div>
+    </div>
+  </section>
+ {% endblock %}
+
+{% block footer %}
+
+ {% endblock %}
+
+
+{% block javascripts %}
+
+<script type="text/javascript">
+
+    $('#frm-login').validate({
+        rules: {
+            '_username':{
+                required:true,
+                email:true
+            },
+            
+        },
+        messages:{
+            '_username':{
+                required:'El campo email es obligatorio',
+                email:'Ingrese un email valido'
+            },
+            
+        },
+        highlight: function (input) {
+            
+            $(input).addClass('data-error');
+        },
+        unhighlight: function (input) {
+            $(input).removeClass('data-succes');
+        },
+        errorPlacement: function (error, element) {
+            var errorspan=$("<span class='error'>"+$(error[0]).html()+"</span>");
+            $(element).parents('.input-field').find('span').remove();
+            $(element).parents('.input-field').append(errorspan);
+        }
+    });
+
+    
+
+
+  $(document).ready(function(){
+    $('#frm-login').validate();
+    $("#recuperar-cuenta").click(function(e){
+      e.preventDefault();
+      var valid=$("#frm-login").valid();
+      if(valid){  
+        $("#frm-login").submit();
+      }else{
+
+      }
+    });
+
+  });
+</script>
+{% endblock %}

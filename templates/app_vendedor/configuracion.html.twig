@@ -1,0 +1,73 @@
+{% extends 'base_app.html.twig' %}
+
+{% block header %}
+      <nav>
+      <div class="nav-wrapper principal_bg">
+        <ul class="left">
+          <li><a href="javascript:window.history.back();"><i class="material-icons">keyboard_backspace</i></a></li>
+        </ul>
+        <a href="#!" class="brand-logo">Configuración</a>
+        <ul class="right">
+          <li><a class='dropdown-button' href='#' data-activates='menu2'><i class="material-icons">more_vert</i></a></li>
+        </ul>
+        <!-- Menu 2 -->
+        <ul id='menu2' class='dropdown-content'>
+          <li><a href="#!">Solicitar Credito</a></li>
+          <li class="divider"></li>
+          <li><a href="#!">Información</a></li>
+          <li><a href="{{asset('logout')}}">Cerrar Sesión</a></li>
+        </ul>
+
+      </div>
+    </nav>
+{% endblock %}
+{% block body %}
+   <section class="mt-2">
+    <div class="row">
+      <div class="col s12">
+        <ul class="collection with-header">
+          <li class="collection-header">
+            <h4>Seleccione un punto de venta</h4>
+          </li>
+          {% for punto in puntos %}
+          <li class="collection-item">
+          	{{punto.nombre}}
+           <a href="#!" data-email="{{app.user.email}}" data-id="{{punto.id}}" class="secondary-content punto-venta"><i class="material-icons">keyboard_arrow_right</i></a>
+          </li>
+          {% endfor %}
+
+          
+
+        </ul>
+      </div>
+    </div>
+
+
+  </section>
+ {% endblock %}
+{% block footer %}
+
+ {% endblock %}
+
+{% block javascripts %}
+	<script type="text/javascript">
+
+		var email = localStorage.getItem('punto_venta_id');
+		var punto_venta_id=localStorage.getItem('punto_venta_id');
+
+		if(email!="" && punto_venta_id!=""){
+			location.href='dashboard?punto_venta='+punto_venta_id;
+		}
+		$(document).ready(function(){
+			$('.punto-venta').click(function(){
+				var email=$(this).data('email');
+				var id=$(this).data('id');
+
+				localStorage.setItem('email_gasolinera', email);
+				localStorage.setItem('punto_venta_id', id);
+
+
+			})
+		});
+	</script>
+{% endblock %}

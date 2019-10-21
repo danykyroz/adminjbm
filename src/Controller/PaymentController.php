@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use \Conekta\Order as ConektaOrder;
 
-class PaymentController extends Controller
+class PaymentController extends ClientesController
 {
 
 
@@ -27,7 +27,7 @@ class PaymentController extends Controller
 
   			$valor=$request->get('valor',200);
   			$order=$this->getOrder($valor);
-  			  	try {
+  			try {
 				  $orden = ConektaOrder::create($order);
 				  $data=array("orden"=>$orden);
 				  return $this->render('pagos/respuesta.html.twig',$data);
@@ -43,40 +43,84 @@ class PaymentController extends Controller
   
 	}
 
-	private function getOrder($valor){
+
+  /**
+   * @Route("/payment/credito", name="payment_credito",methods={"POST"})
+   */
+  public function payment_credito(Request $request){
+
+    $token_id=$request->get("conektaTokenId");
+    $valor=$request->get('valor');
+    $type="card";
+    $em=$this->getDoctrine()->getManager();
+    $user=($this->getUser());
+     
+    $cliente=$em->getRepository('App:Clientes','c')->findOneBy(array('email'=>$user->getEmail()));
+      
+    $order=$this->getOrder($valor,$cliente,'tok_test_visa_4242',$type);
+
+    try {
+          $orden = ConektaOrder::create($order);
+          $data=array("orden"=>$orden);
+          
+          $wallet_cliente=$em->getRepository('App:Wallet','w')->findOneBy(array('clienteId'=>$cliente->getId()));
+
+        $saldo_anterior=$wallet_cliente->getSaldo();
+        $operacion="suma";
+        
+        $this->crearTransaccion($saldo_anterior,$valor,$operacion,$wallet_cliente,$request->getClientIp());
+
+         $wallet_cliente->setSaldoCredito($wallet_cliente->getSaldoCredito()+$valor);
+         
+         $em->persist($wallet_cliente);
+         $em->flush();
+         
+          return $this->render('app/respuesta.html.twig',$data);
+        } catch (\Conekta\ProcessingError $e){
+          echo $e->getMessage();
+        } catch (\Conekta\ParameterValidationError $e){
+          echo $e->getMessage();
+        } 
+
+        die();
+  
+  }
+
+	private function getOrder($valor,$cliente,$token_id,$type){
 
 		\Conekta\Conekta::setApiKey("key_fp96gh3qzdWuBrVTFAxErA");
   		 $user=($this->getUser());
          $valor=intval($valor.'00');
-        
-  		$order =
+      
+       
+
+
+  	 	$order =
     array(
            'line_items'=> array(
             array(
-                'name'        => 'Box of Cohiba S1s',
-                'description' => 'Imported From Mex.',
+                'name'        => 'Recarga',
+                'description' => 'Recarga wallet permergas',
                 'unit_price'  => $valor,
                 'quantity'    => 1,
-                'sku'         => 'cohb_s1',
-                'category'    => 'food',
-                'tags'        => array('food', 'mexican food')
+                'category'    => 'servicios',
+                'tags'        => array('recarga', 'waller '.$user->getUsername())
                 )
            ),
           'currency'    => 'mxn',
-          'metadata'    => array('test' => 'extra info'),
           'charges'     => array(
               array(
                   'payment_method' => array(
-                      'type'       => 'oxxo_cash',
-                      'expires_at' => strtotime(date("Y-m-d H:i:s")) + "36000"
+                      'type'       => $type,
+                      'token_id'=>$token_id
                    ),
                    'amount' => $valor
                 )
             ),
             'currency'      => 'mxn',
             'customer_info' => array(
-                'name'  => $user->getUsername(),
-                'phone' => '+5213353319758',
+                'name'  => $cliente->getNombres().' '.$cliente->getApellidos(),
+                'phone' => '+52'.$cliente->getCelular(),
                 'email' => $user->getEmail()
             )
         );

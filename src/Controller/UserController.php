@@ -200,7 +200,16 @@ class UserController extends Controller
                             if ($request->getSession()->get('_security.main.target_path') != "") {
                                 $redirect = $request->getSession()->get('_security.main.target_path');
                             } else {
-                                $redirect = '/admin/home';
+
+                                $login_origin=$request->get('_login_origin','admin');
+
+                                if($login_origin=='admin' || $login_origin=='app'){
+                                  $redirect = '/admin/home';  
+                                }
+                                 if($login_origin=='app_vendedor' ){
+                                  $redirect = '/vendedor/configuracion';  
+                                }
+                              
                             }
                         return $this->redirect($redirect);
 
@@ -253,7 +262,14 @@ class UserController extends Controller
               return $this->render('@FOSUser/Security/login.html.twig', $data);
                 
             }else{
-              return $this->render('app/login.html.twig', $data);  
+
+             if($origin=='app'){
+                return $this->render('app/login.html.twig', $data);  
+             }
+             if($origin=='app_vendedor'){
+                return $this->render('app_vendedor/login.html.twig', $data);
+             }
+                
             }
             //return $this->renderLogin();
         }  

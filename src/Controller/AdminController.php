@@ -84,6 +84,39 @@ class AdminController extends EasyAdminController
 
 
      /**
+     * @Route("/dashboard/vendedor", name="dashboard_vendedor")
+     */
+    public function dashboard_vendedor(Request $request)
+    {
+        
+        $user=($this->getUser());
+        $em=$this->getDoctrine()->getManager();
+        $session=$request->getSession();
+
+        $gasolinera_usuario=$em->getRepository('App:GasolineraUsuarios','g')->findOneBy(array('usuarioId'=>$user->getId()));
+        
+        
+        $gasolinera=$gasolinera_usuario->getGasolinera();
+
+        $gasolinera->getId();
+        
+        $qb=$em->createQueryBuilder();
+        $qb->select('t')->from('App:Transacciones','t')->where('t.gasolineraId=:gasolineraId');
+
+        $qb->setParameter('gasolineraId',$gasolinera->getId());
+
+        $transacciones=$qb->getQuery()->getResult();
+       
+        $data=array('gasolinera'=>$gasolinera,'gasolina_diesel'=>0,
+            'gasolina_premium'=>0,'transacciones'=>$transacciones,'fecha'=>date('Y-m-d'));
+
+        return $this->render('app_vendedor/dashboard.html.twig',$data);
+
+        
+    }
+
+
+     /**
      * @Route("/dashboard/gasolinera", name="dashboard_gasolinera")
      */
     public function dashboard_gasolinera(Request $request)

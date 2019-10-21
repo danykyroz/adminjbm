@@ -1,9 +1,7 @@
-{% extends 'base_app.html.twig' %}
-{% block style %}
+{% extends 'base_app_vendedor.html.twig' %}
 
-{% endblock %}
 {% block header %}
-    <nav>
+      <nav>
       <div class="nav-wrapper principal_bg">
         <ul class="left">
           <li><a href="javascript:window.history.back();"><i class="material-icons">keyboard_backspace</i></a></li>
@@ -25,31 +23,7 @@
     </nav>
 {% endblock%} 
 {% block body %}
-  <section class="center">
-    <div class="circle valign-wrapper">
-      <div class="value_container">
-        <h2 class="value_grl">{{wallet.saldo+wallet.saldoCredito}}</h2>
-        <span>MXN</span>
-      </div>
-    </div>
-    <p class="center">Saldo disponible para canje por Gasolina</p>
-    <a href="{{asset('app/recargar')}}" class="waves-effect waves-darken btn sec_btn">Agregar Saldo</a>
-
-  </section>
-
-  <section class="pricing-table">
-    <div class="container">
-      <div class="row ">
-        <div class="col s6">
-          <h4 class="date_title"> <span>Valor por litro</span> <br> {{fecha|date('d/m/y')}} </h4>
-        </div>
-        <div class="col s6">
-          <h3 class="gas_price">1090<span>MXN</span> </h3>
-        </div>
-      </div>
-    </div>
-  </section>
-
+ 
     <section class="pricing-table">
     <div class="container">
       <div class="row ">
@@ -84,6 +58,5 @@
       </div>
     </div>
   </section>
- 
- {% endblock %}
 
+{% endblock%} 
