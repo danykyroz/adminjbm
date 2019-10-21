@@ -41,12 +41,12 @@
           </li>
           <li class="collection-item">
            Recargar Efectivo a Billetera
-           <a href="#!" class="secondary-content punto-venta"><i class="material-icons">keyboard_arrow_right</i></a>
+           <a href="{{asset('vendedor/qr/recargar')}}" class="secondary-content punto-venta"><i class="material-icons">keyboard_arrow_right</i></a>
           </li>
         
           <li class="collection-item">
            Compra Gasolina (Leer Qr Cliente)
-           <a href="#!" class="secondary-content punto-venta"><i class="material-icons">keyboard_arrow_right</i></a>
+           <a href="{{asset('vendedor/qr/scan')}}" class="secondary-content punto-venta"><i class="material-icons">keyboard_arrow_right</i></a>
           </li>
 
         </ul>
@@ -55,5 +55,5 @@
   </section>
 {% endblock %} 
 {% block javascripts %}
-  <script src="{{asset('themeapp/js/codepin_redirect.js')}}"></script>
+
 {% endblock %} 
