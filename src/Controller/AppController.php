@@ -236,5 +236,17 @@ class AppController extends UserController
     return  $this->redirect($this->generateUrl('dashboard_cliente'));
   }
 
+  /**
+   * @Route("/logout", name="app_logout")
+  */
+
+  public function logout(Request $request)
+  {
+   
+   $session=$request->getSession();
+   $session->clear();
+   return $this->render('app/logout.html.twig'); 
+  }
+
 
 }

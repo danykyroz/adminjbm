@@ -81,6 +81,15 @@ class Movimientos
      */
     private $tipoMovimiento;
 
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="notas", type="text", length=200, nullable=true)
+     */
+    private $notas;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -166,6 +175,18 @@ class Movimientos
     public function setTipoMovimiento(?TipoMovimientos $tipoMovimiento): self
     {
         $this->tipoMovimiento = $tipoMovimiento;
+
+        return $this;
+    }
+
+    public function getNotas(): ?string
+    {
+        return $this->notas;
+    }
+
+    public function setNotas(?string $notas): self
+    {
+        $this->notas = $notas;
 
         return $this;
     }

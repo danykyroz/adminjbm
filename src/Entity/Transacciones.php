@@ -143,6 +143,13 @@ class Transacciones
      */
     private $longitud;
 
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="notas", type="text", length=200, nullable=true)
+     */
+    private $notas;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -348,6 +355,18 @@ class Transacciones
     public function setWallet(?Wallet $wallet): self
     {
         $this->wallet = $wallet;
+
+        return $this;
+    }
+
+     public function getNotas(): ?string
+    {
+        return $this->notas;
+    }
+
+    public function setNotas(?string $notas): self
+    {
+        $this->notas = $notas;
 
         return $this;
     }

@@ -293,4 +293,19 @@ class AppVendedorController extends UserController
   }
 
 
+  /**
+   * @Route("/logout", name="app_logout")
+  */
+
+  public function logout(Request $request)
+  {
+   
+   $session=$request->getSession();
+   $session->clear();
+   return $this->render('app_vendedor/logout.html.twig'); 
+  }
+
+
+
+
 }

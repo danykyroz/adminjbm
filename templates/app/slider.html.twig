@@ -10,9 +10,7 @@
   <section class="body_tuto valign-wrapper">
 
   <div class="carousel  carousel-slide carousel-slider center" data-indicators="true">
-    <div class="carousel-fixed-item center">
-      <a href="{{path('app_login')}}" id="omitir" class="btn-flat waves-effect darken-text-2">Omitir</a>
-    </div>
+   
     <div class="carousel-item" href="#one!">
       <h2>Administrar tu gasolina <br> ahora es fácil</h2>
       <div class="divisor">
@@ -42,6 +40,10 @@
       <p>Agrega <b>fondos</b> a tu app <br> con <b>cualquier metodo de pago</b></p>
     </div> -->
   </div>
+
+  <div class="omitir_fixed center">
+     <a href="{{path('app_login')}}" id="omitir" class="waves-effect darken-text-2">Omitir</a>
+  </div>
   </section>
 
   {% endblock %}
@@ -53,10 +55,15 @@
   {% block javascripts %}
 
    <script type="text/javascript">
+
+    $('.navbar-fixed').remove();
+
     $(document).ready(function(){
-      setTimeout(function(){
+      
+      /*setTimeout(function(){
       location.href='login';
       },5000)
+      */
     });
   </script>
 

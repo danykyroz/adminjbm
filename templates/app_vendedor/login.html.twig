@@ -1,6 +1,11 @@
  {% extends 'base_app.html.twig' %}
 {% block style %}
-  <link type="text/css" rel="stylesheet" href="{{asset('themeapp/css/inputs.css')}}" media="screen,projection" />  
+  <link type="text/css" rel="stylesheet" href="{{asset('themeapp/css/inputs.css')}}" media="screen,projection" /> 
+
+   <script type="text/javascript">
+       var message_error='';
+   </script>
+  
 {% endblock %}
 
 
@@ -68,11 +73,11 @@
         </div>
     {% endfor %} 
     {% for message in app.flashes('bad') %}
-	<div class="alert bg-pink alert-dismissible" role="alert" style="width: 100%; text-align: center;margin-top: 10px">
-	   
-   <span style="color: white; margin-left: 20px"> {{message}} </span>
-	</div>
-{% endfor %} 
+	    <script type="text/javascript">
+        message_error='{{message}}';
+      </script>
+     
+    {% endfor %} 
     <br/>
 
     <div class="input-field col s12">
@@ -120,6 +125,10 @@
 {% block javascripts %}
 
 <script type="text/javascript">
+    $('.navbar-fixed').remove();
+    if(message_error!=""){
+      Materialize.toast('Usuario o contraseña invalido!', 4000)
+    }
 
     $('#frm-login').validate({
         rules: {
@@ -168,14 +177,20 @@
       $('#frm-login').submit();
 
     }
-    $('#frm-login').validate();
     $("#iniciar-sesion").click(function(e){
-      e.preventDefault();
+       e.preventDefault();
       var valid=$("#frm-login").valid();
+       $("#iniciar-sesion").attr('disabled',true);
+       $("#username").attr('disabled',true);
+       $("#password").attr('disabled',true);
       if(valid){
+        $("#username").attr('disabled',false);
+        $("#password").attr('disabled',false);
         $("#frm-login").submit();
       }else{
-
+       $("#iniciar-sesion").attr('disabled',false);
+       $("#username").attr('disabled',false);
+       $("#password").attr('disabled',false);
       }
     });
 

@@ -2,7 +2,7 @@ body{
 margin-bottom: 60px;
 }
 .body_splash {
-  position: absolute;
+  position: fixed;
   height: 100%;
   width: 100%;
   background: rgb(247,146,30);
@@ -43,7 +43,7 @@ margin-bottom: 60px;
 }
 
 .img_slider{
-  height: 260px;
+  height: 200px;
   margin-top: 3rem;
   margin-bottom: 3rem;
 }
@@ -364,4 +364,10 @@ font-weight: 300;
   Label the data
   */
   #no-more-tables td:before { content: attr(data-title); }
+}
+
+.omitir_fixed {
+  position: fixed;
+  bottom: 20px;
+  width: 100%;
 }

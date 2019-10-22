@@ -65,7 +65,7 @@ class AdminController extends EasyAdminController
 
         
         $qb=$em->createQueryBuilder();
-        $qb->select('t')->from('App:Transacciones','t')->where('t.wallet=:wallet')->orderBy('t.createdAt','DESC');
+        $qb->select('m')->from('App:Movimientos','m')->where('m.wallet=:wallet')->orderBy('m.createdAt','DESC');
 
         $qb->setParameter('wallet',$wallet);
 

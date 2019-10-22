@@ -1,5 +1,11 @@
 {% extends 'base_app.html.twig' %}
-
+{% block style %}
+<style type="text/css">
+  th,td{
+    border-bottom:1px solid #ccc;
+  }
+</style>
+{% endblock %}
 {% block header %}
       <nav>
       <div class="nav-wrapper principal_bg">
@@ -35,22 +41,41 @@
                 <thead>
                     <tr>
                         <th>Fecha</th>
+                        <th></th>
                         <th>Valor</th>
                         <th>Estado</th>
                     </tr>
                 </thead>
                 <tbody>  
-                {% for transaccion in transacciones %}
+                
+                   {% for transaccion in transacciones %}
                     <tr>
-                       <td data-title="Fecha">{{transaccion.createdAt|date('d/m/d h:i A')}}</td>
+                       <td data-title="Fecha">
+                        {% if transaccion.tipoTransaccion==1 %}
+                        <b>Recarga Digital</b>
+                        {%else %}
+                        <b>Compra Gasolina</b>
+                        {% endif%}
+                        <br/>
+                       {{transaccion.createdAt|date('d/m/d h:i A')}}</td>
+                       <td>
+                        {% if transaccion.tipoTransaccion==1 %}
+                        <i class="material-icons" style="color: green" >arrow_upward</i>
+                        {% else %}
+                        <i class="material-icons" style="color: red">arrow_downward</i>
+                        {% endif %}
+                      </td>
                        <td data-title="Valor">
-                        <span {% if transaccion.tipoTransaccion==1 %} class="success-transaccion" {% else %} class="danger-transaccion" {% endif%} >                       {{transaccion.valor|number_format(2)}}
+                        <span {% if transaccion.tipoTransaccion==1 %} class="success-transaccion" {% else %} class="danger-transaccion" {% endif%} >
+                          {{transaccion.valor|number_format(2)}}
                         </span>
                         </td>
-                       <td data-title="Estado">{{transaccion.estado}}</td>
+                          <td data-title="Estado">{{transaccion.estado}}</td>
+                       
                     </tr>
                 {% endfor %} 
-                </tbody>
+                                </tbody>
+
             </table>
         </div>
         </div>
