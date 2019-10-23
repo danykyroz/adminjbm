@@ -5,6 +5,8 @@
  
   <link type="text/css" rel="stylesheet" href="{{asset('themeapp/css/qr.css')}}" media="screen,projection" />  
 
+<link type="text/css" rel="stylesheet" href="{{asset('themeapp/css/creditcard.css')}}" media="screen,projection" />  
+
   <style type="text/css">
      .qrPreviewVideo{
       width: 50%;
@@ -43,15 +45,21 @@
       <div class="col s12">
   <form action="#" >
 
-  <h4>Qr Scanner</h4>
-     <div class="input-value col s12">
-    <label>
-      <span>Digita el valor de la compra </span>
-      <input name="valor" id="valor" type="text" size="20" onkeydown="return soloNumeros(event)" >
-    </label>
-
+      <div class="row">
+      <div class="col s12">
+        <div class="card">
+          <div class="card-content ">
+            <div class="input-field ">
+              <p class="center title_2"> Valor a recargar (MXN) </p>
+              <input type="number" name="valor" placeholder="0" id="valor"  class="validate valor_principal" onkeydown="return soloNumeros(event)">
+            </div>
+             <button type="submit" id="btn-enviar" class="btn-app   bg_principal waves-effect waves-darken btn">Enviar</button>
+          </div>
+        </div>
+       </div>
   </div>
-   <button type="submit" id="btn-enviar" class="btn btn-success">Enviar</button>
+
+  
   </form>
 </div>
 </div>
@@ -85,7 +93,7 @@
           <div class="form-field-caption-panel">
             <div class="gwt-Label form-field-caption">
               
-              <label id="txtqr" >Esperando Escaneo Qr</label>
+              <label id="txtqr" ></label>
             </div>
           </div>
           

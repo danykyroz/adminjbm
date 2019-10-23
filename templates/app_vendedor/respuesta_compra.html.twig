@@ -10,7 +10,7 @@
         <ul class="left">
           <li><a href="javascript:window.history.back();"><i class="material-icons">keyboard_backspace</i></a></li>
         </ul>
-        <a href="#!" class="brand-logo">Transacción {{estado}} </a>
+        <a href="#!" class="brand-logo">Transacción Aceptada </a>
         <ul class="right">
           <li><a class='dropdown-button' href='#' data-activates='menu2'><i class="material-icons">more_vert</i></a></li>
         </ul>
@@ -40,37 +40,37 @@
                 <tr>
                   <td><b>CLIENTE</b></td>
                   <td class="right">
-                    <h4 class="text_pines"> Daniel Quiroz</h4>
+                    <h4 class="text_pines"> {{wallet.cliente.nombres}} {{wallet.cliente.apellidos}}</h4>
                   </td>
                 </tr>
                 <tr>
                   <td><b>VALOR (MXN)</b></td>
                   <td class="right">
-                    <h4 class="text_pines">$ 150 </h4>
+                    <h4 class="text_pines">$ {{transaccion.valor}} </h4>
                   </td>
                 </tr>
                 <tr>
                   <td><b>LITROS CARGADOS</b></td>
                   <td class="right">
-                    <h4 class="text_pines"> 4 </h4>
+                    <h4 class="text_pines"> {{(transaccion.valor/20)}} </h4>
                   </td>
                 </tr>
                 <tr>
                   <td><b>FECHA</b></td>
                   <td class="right">
-                    <h4 class="text_pines"> 12/07/19 </h4>
+                    <h4 class="text_pines"> {{transaccion.createdAt|date('d/m/y')}} </h4>
                   </td>
                 </tr>
                 <tr>
                   <td><b>HORA</b></td>
                   <td class="right">
-                    <h4 class="text_pines"> 08:30 </h4>
+                    <h4 class="text_pines"> {{ transaccion.createdAt|date('h:i A')}}  </h4>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
-        <a class="btn-app  bg_principal waves-effect waves-darken btn">Ir al Inicio</a>
+        <a href="{{asset('vendedor/dashboard')}}" class="btn-app  bg_principal waves-effect waves-darken btn">Ir al Inicio</a>
         </div>
       </div>
   </section>

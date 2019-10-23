@@ -84,40 +84,73 @@
   <div id="restartbtn">RESTART</div>
 
   </div>
-<section id="section-valor" >
-      <div class="row">
-      <div class="col s12">
+
+
+
+  <section class="body_vendedor  valign-wrapper">
+    <div class="row">
+     
+    
+     <form id="frm-descontar" action="{{asset('payment/descontar/qr')}}" method="POST">
  
-  <h4>Qr Confirmacion</h4>
-  <form id="frm-descontar" action="{{asset('payment/descontar/qr')}}" method="POST">
-    <input type="hidden" id="qr" name="qr" value="{{wallet.qr}}" >
-    <input type="hidden" id="punto_venta_id" name="punto_venta_id" value="" >
-     <div class="input-value col s12">
-    <label>
-      <span>Valor de la compra </span>
-      <input name="valor" type="text" size="20" value="{{valor}}" >
-    </label>
+    <div class="container_90 mt-4">
+      <h3 class="center">Confirma la información del cliente y el monto a cargar</h3> <br>
 
-    </div>
-    <div class="input-value col s12">
-    <label>
-      <span>Cliente </span>
-      <input name="cliente" type="text" size="20" value="{{wallet.cliente.nombres}} {{wallet.cliente.apellidos}}"  >
-    </label>
+      <div class="row mt-4">
 
-    </div>
-     <div class="input-value col s12">
-    <label>
-      <span>Placa Vehiculo </span>
-      <input name="placa" type="text" size="20" value="{{wallet.cliente.placa}}"  >
-    </label>
+        <div class="col s12 m6">
+          <input type="hidden" id="qr" name="qr" value="{{wallet.qr}}" >
+          <input type="hidden" id="punto_venta_id" name="punto_venta_id" value="" >
+          <input name="valor" type="hidden" size="20" value="{{valor}}" >
 
-    </div>
-   <button type="button" id="btn-enviar" class="btn btn-success">Enviar</button>
+          <div class="card white blue-grey darken-3 white-text">
+            <div class="card-content center">
+               <center>
+                {% if wallet.cliente.avatar %}
+
+                    <img style="float: left; margin: 0 20px 0 0" class="circle" src="{{asset(wallet.cliente.avatar)}}"  alt="User">
+                {% else %}
+                    <img style="float: left; margin: 0 20px 0 0" src="img/avatar.jpg" class="circle" alt="">
+                {% endif %}
+                </center>
+              <h3 style="margin-top: 45px" class="left">{{wallet.cliente.nombres}} {{wallet.cliente.apellidos}}</h3>
+              <div class="clearfix">
+              </div>
+            </div>
+          </div>
+          <div class="card white darken-1">
+            <div class="card-content center">
+              <h2>{{wallet.cliente.placa}}</h2>
+            </div>
+          </div>
+        </div>
+
+        <div class="col s12 m5 offset-m1 ">
+          <div class="card white darken-1 ">
+            <div class="card-content center">
+              <h1 >$ {{valor}} <small>MXN</small></h1>
+              <div class="clearfix">
+              </div>
+            </div>
+          </div>
+
+          <a href="#" id="btn-enviar" class="waves-effect waves-darken block card white teal darken-3 white-text">
+            <div class="card-content center">
+             <i class="material-icons large"> arrow_forward </i>
+            </div>
+          </a>
+
+        </div>
+
+
+      </div>
+    
   </form>
+
+
 </div>
-</div>
-</section>
+  </section>
+
 {% endblock %} 
 
 {% block javascripts %}

@@ -24,12 +24,43 @@
 {% endblock%} 
 {% block body %}
  
+  <section>
+    <div class="container_90 mt-4">
+
+      <div class="row mt-4">
+
+        <div class="col s12 m6">
+
+          <div class="card white blue-grey darken-3 white-text">
+            <div class="card-content center">
+              <h1 >{{fecha|date('d/m/y')}}</h1>
+              <div class="clearfix">
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+        <div class="col s12 m5 offset-m1 ">
+          <div class="card white darken-1 ">
+            <div class="card-content center">
+              <h1 >$ {{total_ventas|number_format}} <small>MXN</small></h1>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </section>
+
+
     <section class="pricing-table">
     <div class="container">
       <div class="row ">
         <div class="col s12">
-          <h4>Total Ventas para el día {{fecha|date('d/m/y')}}:<br/> $ {{total_ventas}} MXN </h4>
-          <br/><br/>
+         
           <h5 class="date_title">Lista de transaciones </h5>
 
           <div id="no-more-" class="card-body table-responsive">

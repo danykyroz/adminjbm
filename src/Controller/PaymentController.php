@@ -148,7 +148,7 @@ class PaymentController extends Controller
         $gasolinera=$gasolinera_user->getGasolinera();
 
 
-        $this->crearTransaccion($saldo_anterior,$valor,$operacion,$wallet_cliente,$request->getClientIp(),$punto_venta_id,$gasolinera);
+        $transaccion=$this->crearTransaccion($saldo_anterior,$valor,$operacion,$wallet_cliente,$request->getClientIp(),$punto_venta_id,$gasolinera);
 
 
         $wallet_cliente->setSaldo($wallet_cliente->getSaldo()-$valor);
@@ -156,7 +156,7 @@ class PaymentController extends Controller
          $em->persist($wallet_cliente);
          $em->flush();
 
-        return  $this->redirect($this->generateUrl('dashboard_vendedor'));
+         return $this->render('app_vendedor/respuesta_compra.html.twig',['wallet'=>$wallet_cliente,'valor'=>$valor,'transaccion'=>$transaccion]); 
 
   }
 
@@ -294,5 +294,6 @@ class PaymentController extends Controller
         $em->persist($movimiento_saldo);
         $em->flush();
 
+        return $tr;
     }
  }
