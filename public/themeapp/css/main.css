@@ -1,6 +1,12 @@
 body{
 margin-bottom: 60px;
 }
+h4 {
+    font-size: 1.4rem;
+}
+nav .brand-logo {
+    font-size: 1.2rem !important;
+}
 .body_splash {
   position: fixed;
   height: 100%;
