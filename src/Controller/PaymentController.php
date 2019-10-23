@@ -133,7 +133,7 @@ class PaymentController extends Controller
 
     $em=$this->getDoctrine()->getManager();
     $qr=$request->get('qr');
-    $qr='MTMzMzMzMTU2ODU2Njk5MQ==';
+    //$qr='MTMzMzMzMTU2ODU2Njk5MQ==';
 
     $wallet_cliente=$em->getRepository('App:Wallet','c')->findOneBy(array('qr'=>$qr));
    
