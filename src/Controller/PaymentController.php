@@ -202,7 +202,7 @@ class PaymentController extends Controller
 
 	}
 
-   public function crearTransaccion($saldo_anterior,$valor,$operacion,$wallet,$ip,$punto_venta_id,$gasolinera){
+   public function crearTransaccion($saldo_anterior,$valor,$operacion,$wallet,$ip,$punto_venta_id=null,$gasolinera=null){
         
 
         $em = $this->getDoctrine()->getManager();
