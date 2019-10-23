@@ -78,7 +78,7 @@ class PaymentController extends Controller
         $saldo_anterior=$wallet_cliente->getSaldo();
         $operacion="suma";
         
-        $this->crearTransaccion($saldo_anterior,$valor,$operacion,$wallet_cliente,$request->getClientIp());
+        $this->crearTransaccion($saldo_anterior,$valor,$operacion,$wallet_cliente,$request->getClientIp(),null,null,$orden);
 
          $wallet_cliente->setSaldo($wallet_cliente->getSaldo()+$valor);
          
@@ -202,13 +202,15 @@ class PaymentController extends Controller
 
 	}
 
-   public function crearTransaccion($saldo_anterior,$valor,$operacion,$wallet,$ip,$punto_venta_id=null,$gasolinera=null){
+   public function crearTransaccion($saldo_anterior,$valor,$operacion,$wallet,$ip,$punto_venta_id=null,$gasolinera=null,$orden=null){
         
 
         $em = $this->getDoctrine()->getManager();
         $tipo_movimiento=1;
-        $nombre_gasolinera=$gasolinera->getNombre();
-
+        if(is_object($gasolinera)){
+         $nombre_gasolinera=$gasolinera->getNombre();
+        }
+        
         $fos_user=$em->getRepository('App:FosUser','f')->find($this->getUser()->getId());
         if($operacion=='resta'){
             $tipo_movimiento=2;
@@ -224,7 +226,10 @@ class PaymentController extends Controller
             $tr->setUpdatedAt(new \DateTime('now'));
             $tr->setWallet($wallet);
             $tr->setValor($valor);
-            $tr->setGasolineraId($gasolinera->getId());
+            if(is_object($gasolinera)){
+               $tr->setGasolineraId($gasolinera->getId());
+            }
+            $tr->setNotas('Recarga');
             $tr->setTipoTransaccion(1);
             $tr->setUsuarioId($this->getUser()->getId());
             $tr->setEstado('Aceptada');
