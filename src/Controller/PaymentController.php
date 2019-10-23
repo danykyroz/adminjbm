@@ -69,6 +69,7 @@ class PaymentController extends Controller
           $orden = ConektaOrder::create($order);
           $data=array("orden"=>$orden);
           $data['type']=$type;
+          $data["fecha"]=date('Y-m-d H:i:s');
           if($type=='oxxo_cash'){
             $data["reference"]= $orden->charges[0]->payment_method->reference;
           
