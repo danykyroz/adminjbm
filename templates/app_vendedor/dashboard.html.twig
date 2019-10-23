@@ -32,7 +32,7 @@
        </div>
 
        <div class="col s12 m4">
-         <a href="{{asset('vendedor/transacciones')}}" class="waves-effect waves-darken block card indigo">
+         <a id="transacciones" href="{{asset('vendedor/transacciones')}}" class="waves-effect waves-darken block card indigo">
            <div class="card-content white-text center">
              <span class="card-title">TRANSACCIONES</span>
              <i class="material-icons large">trending_up</i>
@@ -47,3 +47,15 @@
  
  {% endblock %}
 
+{% block javascripts %}
+
+<script type="text/javascript">
+  $("#transacciones").click(function(e){
+    e.preventDefault();
+    id=localStorage.getItem('punto_venta_id');
+    url=$(this).attr('href')+'?punto_venta_id='+id;
+    location.href=url;
+  })
+</script>
+
+{% endblock%}

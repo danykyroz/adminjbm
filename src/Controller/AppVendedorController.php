@@ -171,6 +171,10 @@ class AppVendedorController extends UserController
 
         $punto_venta=$session->get('punto_venta');
         
+        if($request->get('punto_venta_id')!=""){
+          $punto_venta=$request->get('punto_venta_id');
+        }
+
         $gasolinera_usuario=$em->getRepository('App:GasolineraUsuarios','g')->findOneBy(array('usuarioId'=>$user->getId()));
         
         
