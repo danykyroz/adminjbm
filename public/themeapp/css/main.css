@@ -7,6 +7,19 @@ h4 {
 nav .brand-logo {
     font-size: 1.2rem !important;
 }
+.qrscanner {
+
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+.qrPreviewVideo {
+    min-width: 100%;
+    min-height: 100%;
+    position: fixed;
+}
 .body_splash {
   position: fixed;
   height: 100%;
