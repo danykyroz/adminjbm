@@ -1,0 +1,85 @@
+{% extends 'base_app.html.twig' %}
+
+ {% if orden._values.payment_status=='paid' %}
+ {% set estado='Aceptada' %}
+ {% else %}
+  {% set estado=orden._values.payment_status %}
+
+ {% endif %}
+{% block style %}
+   <link type="text/css" rel="stylesheet" href="{{asset('themeapp/css/responses.css')}}" media="screen,projection" />  
+
+{% endblock %}
+{% block header %}
+    <nav>
+      <div class="nav-wrapper principal_bg">
+        <ul class="left">
+          <li><a href="javascript:window.history.back();"><i class="material-icons">keyboard_backspace</i></a></li>
+        </ul>
+        <a href="#!" class="brand-logo">Transacción {{estado}} </a>
+        <ul class="right">
+          <li><a class='dropdown-button' href='#' data-activates='menu2'><i class="material-icons">more_vert</i></a></li>
+        </ul>
+        <!-- Menu 2 -->
+        <ul id='menu2' class='dropdown-content'>
+          <li><a href="#!">Ajustes de Seguridad</a></li>
+          <li><a href="#!">Solicitar Credito</a></li>
+          <li class="divider"></li>
+          <li><a href="#!">Información</a></li>
+          <li><a href="{{asset('logout')}}">Cerrar Sesión</a></li>
+        </ul>
+      </div>
+    </nav>
+{% endblock %}
+{% block body %}
+ 
+<section class="body_vendedor  valign-wrapper">
+      <div class="row">
+        <div class="col s12 center">
+          <i class="center check_icon material-icons large white-text green accent-3">check</i>
+        </div>
+        <div class="col s12">
+          <div class="card">
+            <table class="bordered">
+              <tbody>
+
+                <tr>
+                  <td><b>CLIENTE</b></td>
+                  <td class="right">
+                    <h4 class="text_pines"> Daniel Quiroz</h4>
+                  </td>
+                </tr>
+                <tr>
+                  <td><b>VALOR (MXN)</b></td>
+                  <td class="right">
+                    <h4 class="text_pines">$ 150 </h4>
+                  </td>
+                </tr>
+                <tr>
+                  <td><b>LITROS CARGADOS</b></td>
+                  <td class="right">
+                    <h4 class="text_pines"> 4 </h4>
+                  </td>
+                </tr>
+                <tr>
+                  <td><b>FECHA</b></td>
+                  <td class="right">
+                    <h4 class="text_pines"> 12/07/19 </h4>
+                  </td>
+                </tr>
+                <tr>
+                  <td><b>HORA</b></td>
+                  <td class="right">
+                    <h4 class="text_pines"> 08:30 </h4>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        <a class="btn-app  bg_principal waves-effect waves-darken btn">Ir al Inicio</a>
+        </div>
+      </div>
+  </section>
+
+
+{% endblock %}
