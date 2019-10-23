@@ -4,7 +4,13 @@
  {% set estado='Aceptada' %}
  {% else %}
   {% set estado=orden._values.payment_status %}
-
+  
+  {% if type=="oxxo_cash" %}
+    {% set estado="Oxxo" %}
+  {% endif %}
+   {% if type=="spei" %}
+    {% set estado="Spei" %}
+  {% endif %}
  {% endif %}
 {% block style %}
    <link type="text/css" rel="stylesheet" href="{{asset('themeapp/css/responses.css')}}" media="screen,projection" />  
@@ -41,7 +47,7 @@
       </div>
       <div class="col s6">
         <span class="subs">MONTO A PAGAR</span>
-        <h4 class="value">$ {{orden._values.amount|slice(0,-2)|number_format(2)}} <sup><small class="sup">MXN</small></sup> </h4>
+        <h4 class="value">$ {{orden._values.amount|slice(0,-2)|number_format(0)}} <sup><small class="sup">MXN</small></sup> </h4>
         <p class="message"> <small> <i>OXXO  cobrará una comisión adicional al momento de realizar el pago.</i> </small> </p>
       </div>
 
@@ -95,7 +101,7 @@
               <tr>
                 <td><b>VALOR (MXN)</b></td>
                 <td class="right">
-                  <h4 class="text_pines">$ {{orden._values.amount|slice(0,-2)|number_format(2)}} </h4>
+                  <h4 class="text_pines">$ {{orden._values.amount|slice(0,-2)|number_format(0)}}</h4>
                 </td>
               </tr>
               <tr>

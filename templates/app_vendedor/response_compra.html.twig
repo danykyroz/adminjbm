@@ -1,11 +1,5 @@
 {% extends 'base_app.html.twig' %}
 
- {% if orden._values.payment_status=='paid' %}
- {% set estado='Aceptada' %}
- {% else %}
-  {% set estado=orden._values.payment_status %}
-
- {% endif %}
 {% block style %}
    <link type="text/css" rel="stylesheet" href="{{asset('themeapp/css/responses.css')}}" media="screen,projection" />  
 
