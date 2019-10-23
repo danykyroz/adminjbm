@@ -1,6 +1,6 @@
 {% extends 'base_app.html.twig' %}
 {% block style %}
-	 <link type="text/css" rel="stylesheet" href="{{asset('themeapp/css/profile.css')}}" media="screen,projection" />  
+	 <link type="text/css" rel="stylesheet" href="{{asset('themeapp/css/creditcard.css')}}" media="screen,projection" />  
 
 {% endblock %}
 
@@ -27,55 +27,176 @@
 {% endblock %}
 {% block body %}
 
-<section class="container mt-10">
+<section id="section-recarga" class="container mt-10">
   <div class="row">
-<form action="{{asset('payment/credito')}}" method="POST" id="card-form">
-<h4>Recarga con Tarjeta de Crédito</h4>
+      <div class="col s12">
+        <div class="card">
+          <div class="card-content ">
+            <div class="input-field ">
+              <p class="center title_2"> Valor a recargar (MXN) </p>
+              <input type="number" name="valor" placeholder="0" id="valor"  class="validate valor_principal" onkeydown="return soloNumeros(event)">
+            </div>
+
+          </div>
+        </div>
+       </div>
+  </div>
+<div class="row">
+    <div class="col s12">
+        <ul class="collection with-header">
+          <li class="collection-header">
+            <h4>Métodos de pago</h4>
+          </li>
+
+          <a href="#" data-token="tok_test_visa_4242" data-medio="tc" class="collection-item waves-light waves-effect overinit">
+            <img src="{{asset('themeapp/img/icons_cc/mc.png')}}" class="cc_img" alt="">4242<div class="secondary-content"><i class="material-icons">keyboard_arrow_right</i></div>
+          </a>
+          <a href="#" data-medio="spei" class="collection-item waves-light waves-effect overinit">
+            <img src="{{asset('themeapp/img/icons_cc/spei.png')}}" class="cc_img" alt="">Transferencia bancaria <div class="secondary-content"><i class="material-icons">keyboard_arrow_right</i></div>
+          </a>
+          <a href="#" data-medio="oxxo" class="collection-item waves-light waves-effect overinit">
+            <img src="{{asset('themeapp/img/icons_cc/oxxo.png')}}" class="cc_img" alt="">Pago en eféctivo<div class="secondary-content"><i class="material-icons">keyboard_arrow_right</i></div>
+          </a>
+          <a href="#" id="add-tc" class=" collection-item waves-light waves-effect overinit">
+            <i class="material-icons left">add</i> Agregar tarjeta Credito /Debito <div class="secondary-content"><i class="material-icons">keyboard_arrow_right</i></div>
+          </a>
+
+        </ul>
+      </div>
+</div>
+</section>
+
+<section id="section-add-tc" style="display: none">
+  <div class="row">
+    <br/><br/>
+
+<form action="#" method="POST" id="card-form">
 
   <span class="card-errors"></span>
 
-  <div class="input-value col s12">
-    <label>
-      <span>Valor A Recargar</span>
-      <input name="valor" type="text" size="20" onkeydown="return soloNumeros(event)" >
-    </label>
-  </div>
-  <div class="input-value col s12">
-    <label>
-      <span>Nombre del tarjetahabiente</span>
-      <input name="nombres" type="text" size="20" data-conekta="card[name]">
-    </label>
-  </div>
-  <div class="input-value col s12">
-    <label>
-      <span>Número de tarjeta de crédito</span>
-      <input type="text" size="20" name="card_number" maxlength="16" data-conekta="card[number]">
-    </label>
-  </div>
-  <div class="input-value col s12">
-    <label>
-      <span>CVC</span>
-      <input type="text" size="4" style="width: 60px" name="card_cvv" data-conekta="card[cvc]">
-    </label>
-  </div>
-  <div>
-    <label>
-      <span>Fecha de expiración (MM/AAAA) </span>
-      <input type="text"  name="card_month" placeholder="mm" style="width:20px;margin-left:20px; " size="2" data-conekta="card[exp_month]">
-    </label>
-    <span style="margin: 10px">/</span>
-    <input type="text" name="card_year" placeholder="yyyy" style="width:60px;margin-left:0px " size="4" data-conekta="card[exp_year]">
-  </div>
-  <button type="submit" class="btn btn-success">Recargar</button>
-</form>
+    <div class="row">
+        <div class="input-field col s12">
+                 <input placeholder="Ingrese número de tarjeta" id="card_number" type="text" type="text" size="20" name="card_number" maxlength="16" data-conekta="card[number]" onkeydown="return soloNumeros(event)">
+                 <label for="first_name">Núm. de tarjeta</label>
+        </div>
+        <div class="input-field col s12">
+              <div>
+              
+                  <input type="text"  name="card_month" placeholder="MM" style="width:25px;" size="2" data-conekta="card[exp_month]"onkeydown="return soloNumeros(event)">
+                <span style="">/</span>
+                <input type="text" name="card_year" id="card_year" placeholder="YYYY" style="width:40px; " size="4" data-conekta="card[exp_year]" onkeydown="return soloNumeros(event)">
 
-  </div>
+                  <label>
+                  <span>Fecha de expiración (MM/AAAA) </span>
+                     </label>
+             
+              </div>
+        </div>
+        <div class="input-field col s12">
+                 <input placeholder="Ingrese código de seguridad" id="cvv" type="text" class="validate" data-conekta="card[cvv]" onkeydown="return soloNumeros(event)">
+                 <label for="first_name">CVV</label>
+                 <img src="{{asset('themeapp/img/card_cvv.jpg')}}" class="img_cvv" alt="">
+        </div>
+
+        <div class="input-field col s12">
+                 <input placeholder="Nombres Dueño Tarjeta" id="card_nombres" type="text" class="validate" name="card_names" data-conekta="card[name]" maxlength="4">
+                 <label for="first_name">Nombres</label>
+                 <img src="" class="img_cvv" alt="">
+        </div>
+          <div class="input-field col s12">
+              <button type="submit" id="agregar_tc" class="btn-app disabled  bg_principal waves-effect waves-darken btn"> Agregar </button>
+        </div>
+    </div>
+  
+
+</form>
+</div>
 </section>
+
+
+<section id="section-confirmacion"  >
+  <form action="#" method="POST" id="orden-confirmation">
+
+  <div class="row">
+  <br/><br/>
+    <div class="col s12">
+        <ul class="collection with-header">
+          <li class="collection-header">
+            <h4>Confirmación Recargas</h4>
+          </li>
+           <li>
+            <a id="" href="#" class="collection-item">Valor:<span id="valor_confirmacion">2000</span> MX</a>
+          </li>
+         <li>
+            <a id="html_medio" class="collection-item">
+            
+            </a>
+          </li>
+          <li>
+           <div class="input-field col s12">
+              <button type="submit" id="agregar_tc" class="btn-app disabled  bg_principal waves-effect waves-darken btn"> Enviar </button>
+               <br/>
+              <br/>
+          </div>
+
+        </li>
+
+        </ul>
+
+    </div>
+</div>
+</form>
+</section>
+
+
 {% endblock %}
 
 
 {% block javascripts %}
 <script type="text/javascript">
+  
+  $("#section-confirmacion").hide();
+
+  $(".collection-item").click(function(){
+    if($("#valor").val()<0 || $("#valor").val()==""){
+     
+     Materialize.toast('Ingrese un valor para recargar!', 4000)
+    }else{
+
+        var medio=$(this).data('medio');
+        $("#valor_confirmacion").html($("#valor").val());
+        $("#html_medio").html($(this).html());
+        $('#html_medio').find('.secondary-content').remove();
+        $("#section-recarga").hide();
+        $("#section-confirmacion").show();
+        
+
+      if(medio=='tc'){
+
+      }
+      if(medio=='spei'){
+        
+      }
+      if(medio=='oxxo'){
+        
+      }
+    }
+  })
+  $("#card_nombres").blur(function(){
+    
+    valid=$('#card-form').valid();
+    if(valid){
+      $("#agregar_tc").attr('disabled',false);
+      $("#agregar_tc").removeClass('disabled');
+    }
+
+  })
+
+  $("#add-tc").click(function(e){
+    e.preventDefault();
+    $("#section-recarga").hide();
+    $("#section-add-tc").show();
+  })
 
   function soloNumeros(e)
   {
@@ -85,26 +206,39 @@
 
   $('#card-form').validate({
         rules: {
-            'valor':{
-                required:true,
-            },
-            'nombres': {
-                required: true,
-            },
+            
             'card_number': {
                 required: true,
             },
-           
+            'card_year': {
+                required: true,
+            },
+            'card_month': {
+                required: true,
+            },
+            'card_cvv': {
+                required: true,
+            },   
+            'card_names': {
+                required: true,
+            },           
         },
         messages:{
-            'valor':{
-                required:'El campo valor es obligatorio',
-            },
-            'nombres':{
-                required:'El campo nombres es obligatorio',
-            },
+            
             'card_number':{
-                required:'El número de tarjeta es obligatorio',
+                required:'El número de la tarjeta es obligatorio',
+            },
+            'card_year':{
+                required:'El año de la tarjeta es obligatorio',
+            },
+            'card_month':{
+                required:'El mes de la tarjeta es obligatorio',
+            },
+            'card_cvv':{
+                required:'El cvv de la tarjeta es obligatorio',
+            },
+            'card_names':{
+                required:'El nombre de la tarjeta es obligatorio',
             },
            
         },
@@ -115,6 +249,12 @@
         unhighlight: function (input) {
             $(input).removeClass('data-succes');
         },
+        errorPlacement: function (error, element) {
+            var errorspan=$("<div class='error'>"+$(error[0]).html()+"</div>");
+            $(element).parents('.input-field').find('.error').remove();
+            $(element).parents('.input-field').append(errorspan);
+        }
+        
         
     });
 </script>
@@ -129,7 +269,7 @@
     var $form = $("#card-form");
     //Inserta el token_id en la forma para que se envíe al servidor
      $form.append($('<input type="hidden" name="conektaTokenId" id="conektaTokenId">').val(token.id));
-    $form.get(0).submit(); //Hace submit
+      $form.get(0).submit(); //Hace submit
   };
   var conektaErrorResponseHandler = function(response) {
     var $form = $("#card-form");
