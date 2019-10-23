@@ -166,7 +166,11 @@ class AppVendedorController extends UserController
         $user=($this->getUser());
         $em=$this->getDoctrine()->getManager();
         $session=$request->getSession();
+        $fecha_inicial=date('Y-m-d 00:00:00');
+        $fecha_final=date('Y-m-d 23:59:59');
 
+        $punto_venta=$session->get('punto_venta');
+        
         $gasolinera_usuario=$em->getRepository('App:GasolineraUsuarios','g')->findOneBy(array('usuarioId'=>$user->getId()));
         
         
@@ -175,14 +179,37 @@ class AppVendedorController extends UserController
         $gasolinera->getId();
         
         $qb=$em->createQueryBuilder();
-        $qb->select('t')->from('App:Transacciones','t')->where('t.gasolineraId=:gasolineraId');
+
+        $qb2=$em->createQueryBuilder();
+
+        $qb->select('t')->from('App:Transacciones','t')
+        ->where('t.gasolineraId=:gasolineraId')
+        ->andWhere('t.puntoVentaId=:puntoVentaId')
+        ->andWhere('t.createdAt>=:fecha_inicial')
+        ->andWhere('t.createdAt<=:fecha_final');
 
         $qb->setParameter('gasolineraId',$gasolinera->getId());
+        $qb->setParameter('puntoVentaId',$punto_venta);
+        $qb->setParameter('fecha_inicial',$fecha_inicial);
+        $qb->setParameter('fecha_final',$fecha_final);
 
         $transacciones=$qb->getQuery()->getResult();
-       
         
-     return $this->render('app_vendedor/transacciones.html.twig',['transacciones'=>$transacciones]); 
+
+        $qb2->select('sum(t.valor) as valor')->from('App:Transacciones','t')
+        ->where('t.gasolineraId=:gasolineraId')
+        ->andWhere('t.puntoVentaId=:puntoVentaId')
+        ->andWhere('t.createdAt>=:fecha_inicial')
+        ->andWhere('t.createdAt<=:fecha_final');
+
+        $qb2->setParameter('gasolineraId',$gasolinera->getId());
+        $qb2->setParameter('puntoVentaId',$punto_venta);
+        $qb2->setParameter('fecha_inicial',$fecha_inicial);
+        $qb2->setParameter('fecha_final',$fecha_final);
+        
+        $total_ventas=$qb2->getQuery()->getSingleScalarResult();
+        
+     return $this->render('app_vendedor/transacciones.html.twig',['transacciones'=>$transacciones,'total_ventas'=>$total_ventas,'fecha'=>$fecha_inicial]); 
   }
 
   /**

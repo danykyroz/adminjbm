@@ -51,11 +51,7 @@
                    {% for transaccion in transacciones %}
                     <tr>
                        <td data-title="Fecha">
-                        {% if transaccion.tipoTransaccion==1 %}
-                        <b>Recarga Digital</b>
-                        {%else %}
-                        <b>Compra Gasolina</b>
-                        {% endif%}
+                        {{transaccion.notas}}
                         <br/>
                        {{transaccion.createdAt|date('d/m/d h:i A')}}</td>
                        <td>

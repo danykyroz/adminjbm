@@ -47,14 +47,19 @@
           <li class="collection-header">
             <h4>Métodos de pago</h4>
           </li>
-
-          <a href="#" data-token="tok_test_visa_4242" data-medio="tc" class="collection-item waves-light waves-effect overinit">
+          <li style="display: none;" id="copie_card">
+           <a href="#" data-token="" data-medio="card" class="collection-item waves-light waves-effect overinit">
+            <img src="{{asset('themeapp/img/icons_cc/mc.png')}}" class="cc_img" alt=""><span class="ultimos4">4242</span><div class="secondary-content"><i class="material-icons">keyboard_arrow_right</i></div>
+          </a>
+          </li>
+          <a href="#" data-token="tok_test_visa_4242" data-medio="card" class="collection-item waves-light waves-effect overinit">
             <img src="{{asset('themeapp/img/icons_cc/mc.png')}}" class="cc_img" alt="">4242<div class="secondary-content"><i class="material-icons">keyboard_arrow_right</i></div>
           </a>
+
           <a href="#" data-medio="spei" class="collection-item waves-light waves-effect overinit">
             <img src="{{asset('themeapp/img/icons_cc/spei.png')}}" class="cc_img" alt="">Transferencia bancaria <div class="secondary-content"><i class="material-icons">keyboard_arrow_right</i></div>
           </a>
-          <a href="#" data-medio="oxxo" class="collection-item waves-light waves-effect overinit">
+          <a href="#" data-medio="oxxo_cash" class="collection-item waves-light waves-effect overinit">
             <img src="{{asset('themeapp/img/icons_cc/oxxo.png')}}" class="cc_img" alt="">Pago en eféctivo<div class="secondary-content"><i class="material-icons">keyboard_arrow_right</i></div>
           </a>
           <a href="#" id="add-tc" class=" collection-item waves-light waves-effect overinit">
@@ -99,7 +104,7 @@
         </div>
 
         <div class="input-field col s12">
-                 <input placeholder="Nombres Dueño Tarjeta" id="card_nombres" type="text" class="validate" name="card_names" data-conekta="card[name]" maxlength="4">
+                 <input placeholder="Nombres Dueño Tarjeta" id="card_nombres" type="text" class="validate" name="card_names" data-conekta="card[name]" maxlength="100">
                  <label for="first_name">Nombres</label>
                  <img src="" class="img_cvv" alt="">
         </div>
@@ -115,8 +120,11 @@
 
 
 <section id="section-confirmacion"  >
-  <form action="#" method="POST" id="orden-confirmation">
-
+  <form method="POST" action="{{asset('payment/conekta')}}" >
+  <input type="hidden" name="medio_pago" id="conekta_medio_pago" value=""> 
+  <input type="hidden" name="valor" id="conekta_valor" value="">
+  <input type="hidden" name="token_id" id="conekta_token_id" value=""> 
+             
   <div class="row">
   <br/><br/>
     <div class="col s12">
@@ -134,7 +142,9 @@
           </li>
           <li>
            <div class="input-field col s12">
-              <button type="submit" id="agregar_tc" class="btn-app disabled  bg_principal waves-effect waves-darken btn"> Enviar </button>
+            
+              <button type="submit" id="confirmar" class="btn-app  bg_principal waves-effect waves-darken btn"> Enviar </button>
+             </form>
                <br/>
               <br/>
           </div>
@@ -154,7 +164,9 @@
 
 {% block javascripts %}
 <script type="text/javascript">
-  
+  var medio="";
+  var token_id="";
+
   $("#section-confirmacion").hide();
 
   $(".collection-item").click(function(){
@@ -163,23 +175,20 @@
      Materialize.toast('Ingrese un valor para recargar!', 4000)
     }else{
 
-        var medio=$(this).data('medio');
+        medio=$(this).data('medio');
         $("#valor_confirmacion").html($("#valor").val());
         $("#html_medio").html($(this).html());
         $('#html_medio').find('.secondary-content').remove();
         $("#section-recarga").hide();
         $("#section-confirmacion").show();
         
-
-      if(medio=='tc'){
-
-      }
-      if(medio=='spei'){
-        
-      }
-      if(medio=='oxxo'){
-        
-      }
+        if(medio=='card'){
+          token_id=$(this).data('token');
+        }
+       $("#conekta_valor").val($("#valor").val());
+       $("#conekta_medio_pago").val(medio);
+       $("#conekta_token_id").val(token_id);
+         
     }
   })
   $("#card_nombres").blur(function(){
@@ -266,10 +275,25 @@
   Conekta.setPublicKey('key_KJysdbf6PotS2ut2');
 
   var conektaSuccessResponseHandler = function(token) {
+    
+
+    var brand=Conekta.card.getBrand($('#card_number').val());
+    card_number=$('#card_number').val();
+
+    var ultimos4=$('#card_number').val().substring(card_number.length-4,card_number.length);
+
+    var htmlcopia=$('#copie_card a').clone(true);
+    $(htmlcopia).find('.ultimos4').text(ultimos4);
+    $(htmlcopia).attr('data-token',token.id);
+    
+    $(htmlcopia).insertAfter($('#copie_card'));
+
     var $form = $("#card-form");
     //Inserta el token_id en la forma para que se envíe al servidor
      $form.append($('<input type="hidden" name="conektaTokenId" id="conektaTokenId">').val(token.id));
-      $form.get(0).submit(); //Hace submit
+     $('#section-add-tc').hide();
+     $('#section-recarga').show();
+     // $form.get(0).submit(); //Hace submit
   };
   var conektaErrorResponseHandler = function(response) {
     var $form = $("#card-form");

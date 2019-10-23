@@ -150,6 +150,13 @@ class Transacciones
      */
     private $notas;
 
+     /**
+     * @var int|null
+     *
+     * @ORM\Column(name="punto_venta_id", type="integer", nullable=true)
+     */
+    private $puntoVentaId;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -368,6 +375,17 @@ class Transacciones
     {
         $this->notas = $notas;
 
+        return $this;
+    }
+
+    public function getPuntoVentaId(): ?int
+    {
+        return $this->puntoVentaId;
+    }
+
+    public function setPuntoVentaId(?int $puntoVentaId): self
+    {
+        $this->puntoVentaId = $puntoVentaId;
         return $this;
     }
 

@@ -1,0 +1,23 @@
+.brand-logo img {
+  height: 45px;
+  margin-top: 10px;
+}
+
+.block {
+  display: block
+}
+
+.body_vendedor {
+  position: absolute;
+  background: #f5f5f5;
+  top: 65px;
+  width: 100%;
+  height: calc(100% - 65px);
+  z-index: -1;
+
+}
+
+.container_90 {
+  width: 90%;
+  margin: 0 auto;
+}

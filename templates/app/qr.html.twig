@@ -102,8 +102,9 @@
   <script src="{{asset('themeapp/js/codepin_redirect.js')}}"></script>
 
   <script type="text/javascript">
+    var str_qr="{{wallet.qr}}"
     $(document).ready(function(){
-      $('#qrcode').qrcode("danykyroz@gmail.com");
+      $('#qrcode').qrcode(str_qr);
       console.log('qr code ok');
 
     })

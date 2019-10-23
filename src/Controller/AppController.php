@@ -60,7 +60,16 @@ class AppController extends UserController
 
   public function qr(Request $request)
   {
-     return $this->render('app/qr.html.twig'); 
+     
+      $user=($this->getUser());
+      $em=$this->getDoctrine()->getManager();
+      $session=$request->getSession();
+
+      $cliente=$em->getRepository('App:Clientes','c')->findOneBy(array('email'=>$user->getEmail()));
+        
+      $wallet=$em->getRepository('App:Wallet','w')->findOneBy(array('clienteId'=>$cliente->getId()));
+
+     return $this->render('app/qr.html.twig',['wallet'=>$wallet]); 
   }
 
 
