@@ -2319,8 +2319,7 @@ section.content {
     top: 0;
     left: 0;
     width: 100%;
-    height: 0px; 
-  }
+    height: 200px; }
 
 .horizontal-layout section.content {
   margin: 170px 15px 0 15px;
@@ -8897,9 +8896,7 @@ readers do not read off random characters that represent icons */
   font-size: 14px;
   line-height: 1.42857;
   color: #414244;
-  font-weight: 400; 
-  width: 100%
-}
+  font-weight: 400; }
 
 .input-group {
   width: 100%;
@@ -8989,7 +8986,7 @@ readers do not read off random characters that represent icons */
   font-size: 18px; }
 
 .form-control-label {
-  text-align: left; }
+  text-align: right; }
   .form-control-label label {
     margin-top: 8px; }
 
@@ -9420,7 +9417,7 @@ fieldset[disabled] .form-control {
         display: inline-flex;
         vertical-align: middle;
         width: 100%;
-        padding: 4px 8px;
+        padding: 10px 13px;
         font-size: 14px; }
         .sidebar .menu .list a:hover, .sidebar .menu .list a:active, .sidebar .menu .list a:focus {
           text-decoration: none !important; }
@@ -14465,8 +14462,10 @@ span.badge {
     color: #555;
     font-size: 14px;
     margin: 0px 3px;
+    color: gray;
     margin: 5px;
     border-radius: 50%;
+    color: gray;
     min-width: 30px;
     text-transform: uppercase;
     padding: .5rem .75rem;
@@ -14474,7 +14473,7 @@ span.badge {
   .pagination > li > a:hover {
     font-weight: bold;
     background-color: transparent;
-    color: #fbf8f8;
+    color: #8c8b8b;
     border-radius: 50%;
     font-size: 14px; }
   .pagination > li:first-child > a,

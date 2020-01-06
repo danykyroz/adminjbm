@@ -22,37 +22,9 @@ class ClientesType extends AbstractType
     {
         $builder
             ->add('documento',null,array('required'=>true))
-            ->add('nombres',null,array('required'=>true))
-            ->add('apellidos',null,array('required'=>true))
-            ->add('email', EmailType::class, array('label' => 'Email'))
-            ->add('celular',null,array('required'=>true))
-            ->add('avatar',FileType::class,array(
-                            "label" => "Avatar",
-                            "attr" =>array("class" => ""),
-                             "data_class" => null,
-                             "required"=>false,
-            ))
-            ->add('placa',null,array('required'=>true))
-            ->add('delegacion', EntityType::class, [
-                'class'         => Delegacion::class,
-                'label'=>'Delegación',
-                'query_builder' => function(EntityRepository $repo) {
-
-                    return $repo->createQueryBuilder('d')->orderBy('d.municipio','Asc');
-                }
-            ])
-            ->add('tipo', ChoiceType::class, [
-                   
-                    'mapped' => true,
-                    'required' => true,
-                    'choices'  => [
-                        'Selecciona un Tipo' => '',
-                        'Cliente Normal' => '1',
-                        'Administrador Flotilla' => '2',
-                    ]
-                ]
-            )
-        ;
+            ->add('razonSocial',null,array('required'=>true))
+            ->add('celular',null,array('required'=>true));
+      
     }
 
     public function configureOptions(OptionsResolver $resolver)

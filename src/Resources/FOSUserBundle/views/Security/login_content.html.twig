@@ -5,8 +5,8 @@
         <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
     {% endif %}
 
-    <span class="login100-form-logo">
-        <img alt="" src="{{asset('adminlte/assets/images/loading.png')}}">
+    <span class="login100-form-logo" style="background-color: white">
+        <img alt="" src="{{asset('adminlte/assets/images/logo.png')}}">
     </span>
     <br/>
     {% for message in app.flashes('success') %}

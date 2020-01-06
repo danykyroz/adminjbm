@@ -1,0 +1,160 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+  <section class="content">
+    <div class="container-fluid">
+      <div class="block-header">
+        <div class="row">
+          <div class="col-xl-6 col-lg-5 col-md-4 col-sm-12">
+            <ul class="breadcrumb breadcrumb-style">
+              <li class="breadcrumb-item  bcrumb-1">
+                <a href="{{asset('/')}}">
+                  <i class="material-icons">home</i> Home</a>
+              </li>
+              <li class="breadcrumb-item bcrumb-2">
+                <a href="javascript:void(0);">Auxiliares</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-xl-6 col-lg-7 col-md-8 col-sm-12 text-right">
+            <div class="breadcrumb-chart m-l-50">
+              <div class="float-right m-r-10">
+                <button type="button" class="btn btn-primary  waves-effect nuevo" data-toggle="modal" data-target="#exampleModalCenter">Nuevo Auxiliar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Basic Table -->
+       <div class="row clearfix">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <div class="card">
+            <div class="body table-bordered table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Nombre</th>
+                    <th>Documento</th>
+                    <th>Email</th>
+                    <th>Teléfono</th>
+                    <th>Dirección</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for cliente in auxiliares %}  
+                  <tr class="rows">
+                    <th scope="row" id="td_id" >{{cliente.id}}</th>
+                    <td id="td_razonSocial">{{cliente.razonSocial}}</td>
+                    <td id="td_documento">{{cliente.documento}}</td>
+                    <td id="td_email">{{cliente.email}}</td>
+                    <td id="td_celular">{{cliente.celular}}</td>
+                    <td id="td_direccion">{{cliente.direccion}}</td>
+                   
+                    <td>
+                      <a href="#" class="col-dark-gray waves-effect m-r-20 edit" title="Editar">
+                      <i class="material-icons">edit</i>
+                    </a>
+                    <a href="{{path('auxiliar_delete',{id:cliente.id})}}" class="col-dark-gray waves-effect m-r-20" title="Eliminar">
+                      <i class="material-icons">delete</i>
+                    </a>
+                    <a href="#" class="col-dark-gray waves-effect m-r-20" title="Error">
+                      <i class="material-icons">pause</i>
+                    </a>
+                  </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <form action="{{asset('auxiliar/new')}}">
+
+    <input type="hidden" name="id" id="id" value="0">
+  
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Formulario Auxiliares</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <div class="form-line">
+              <input type="text" name="razonSocial" id="razonSocial" class="form-control" placeholder="Nombres">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-line">
+              <input type="text" name="documento" id="documento" class="form-control" placeholder="Documento">
+            </div>
+          </div>
+           <div class="form-group">
+            <div class="form-line">
+              <input type="text" name="email" id="email" class="form-control" placeholder="Email">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-line">
+              <input type="text" name="celular" id="celular" class="form-control" placeholder="Teléfono">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-line">
+              <input type="text" name="direccion" id="direccion" class="form-control" placeholder="Dirección">
+            </div>
+          </div>
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Guardar Auxiliar</button>
+        </div>
+      </div>
+    </div>
+  </form>
+  </div>
+{% endblock %} 
+
+
+
+{% block body_javascript %}
+<script type="text/javascript">
+   $(".nuevo").click(function(){
+      $("#id").val("");
+      $("#razonSocial").val("");
+      $("#documento").val("");
+      $("#email").val("");
+      $("#celular").val("");
+      $("#direccion").val("");
+    })
+
+  $('document').ready(function(){
+    $('.edit').click(function(e){
+      e.preventDefault();
+      var rows=$(this).closest('tr');
+
+      $("#id").val($(rows).find('#td_id').html());
+      $("#razonSocial").val($(rows).find('#td_razonSocial').html());
+      $("#documento").val($(rows).find('#td_documento').html());
+      $("#email").val($(rows).find('#td_email').html());
+      $("#celular").val($(rows).find('#td_celular').html());
+      $("#direccion").val($(rows).find('#td_direccion').html());
+      $("#exampleModalCenter").modal('show')
+
+    })
+  })       
+
+</script>
+{% endblock body_javascript %}

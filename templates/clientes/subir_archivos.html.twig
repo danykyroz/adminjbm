@@ -1,0 +1,108 @@
+
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+  <section class="content">
+    <div class="container-fluid">
+      <div class="block-header">
+        <div class="row">
+          <div class="col-xl-6 col-lg-5 col-md-4 col-sm-12">
+            <ul class="breadcrumb breadcrumb-style">
+              <li class="breadcrumb-item  bcrumb-1">
+                <a href="../../index.html">
+                  <i class="material-icons">home</i> Home / Pagos</a>
+              </li>
+              <li class="breadcrumb-item bcrumb-2">
+                <a href="javascript:void(0);">Subir Archivos</a>
+              </li>
+            </ul>
+          </div>
+      
+        </div>
+      </div>
+      <!-- Basic Table -->
+      <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>
+                                <strong>File</strong> Upload</h2>
+                            <ul class="header-dropdown m-r--5">
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">more_vert</i>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li>
+                                            <a href="javascript:void(0);">Action</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);">Another action</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);">Something else here</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="body">
+                            <form action="{{path('cuentas_por_cobrar_analizar_archivos',{'clienteid':clienteId})}}" id="frmFileDropzone" class="dropzone dz-clickable" method="post" enctype="multipart/form-data">
+                              <input type="hidden" name="pagoid" value="{{pagoid}}" >
+                                <div class="dz-message">
+                                    <div class="drag-icon-cph">
+                                        <i class="material-icons">touch_app</i>
+                                    </div>
+                                    <h3>Arrastre aqui los archivos para subir.</h3>
+                                    <em>(Archivos permitidos<strong>XML</strong>.)
+                                       
+                                    </em>
+                                </div>
+                                
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+  </section>
+  
+{% endblock %} 
+
+
+
+{% block body_javascript %}
+<script type="text/javascript">
+     Dropzone.autoDiscover = false;
+
+  $(document).ready(function(){
+
+
+$(function() {
+  // Now that the DOM is fully loaded, create the dropzone, and setup the
+  // event listeners
+  var myDropzone = new Dropzone("#frmFileDropzone");
+  myDropzone.on("addedfile", function(file) {
+    /* Maybe display some more file information on your page */
+    console.log("aaa",file);
+  });
+
+  myDropzone.on("success", function(file, response) {
+    /* Maybe display some more file information on your page */
+    console.log("success",file,response);
+    if(response=='Ok'){
+      alert('Archivo cargado exitosamente');
+    }else{
+       alert(response);
+         myDropzone.removeFile(file);
+
+    }
+  });
+
+})
+  })
+
+</script>
+{% endblock body_javascript %}
+

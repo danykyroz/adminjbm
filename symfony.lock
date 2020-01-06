@@ -2,6 +2,9 @@
     "behat/transliterator": {
         "version": "v1.2.0"
     },
+    "conekta/conekta-php": {
+        "version": "v4.0.4"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -105,6 +108,15 @@
             "config/packages/easy_admin.yaml",
             "config/routes/easy_admin.yaml"
         ]
+    },
+    "eclipxe/cfdiutils": {
+        "version": "v2.12.7"
+    },
+    "eclipxe/xmlresourceretriever": {
+        "version": "v1.3.0"
+    },
+    "eclipxe/xmlschemavalidator": {
+        "version": "v2.1.0"
     },
     "egulias/email-validator": {
         "version": "2.1.11"

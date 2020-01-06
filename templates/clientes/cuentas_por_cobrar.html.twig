@@ -1,0 +1,371 @@
+ {% extends 'base.html.twig' %}
+
+{% block content %}
+
+{% block body %}
+
+  <section class="content">
+    <div class="container-fluid">
+      <div class="block-header">
+        <div class="row">
+          <div class="col-xl-6 col-lg-5 col-md-4 col-sm-12">
+            <ul class="breadcrumb breadcrumb-style">
+              <li class="breadcrumb-item  bcrumb-1">
+                <a href="{{asset('/')}}">
+                  <i class="material-icons">home</i> Home</a>
+              </li>
+              <li class="breadcrumb-item bcrumb-2">
+                <a href="javascript:void(0);">Cuentas por cobrar</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-xl-6 col-lg-7 col-md-8 col-sm-12 text-right">
+
+            <div class="breadcrumb-chart">
+              <div class="float-right">
+                <div class="icon m-b-10">
+                   <a href="{{path('cuentas_por_cobrar_subir_archivos')}}" type="button" class="btn btn-primary  waves-effect" >Subir xml</a>
+                
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Basic Examples -->
+
+      <!-- #END# Basic Examples -->
+      <!-- Exportable Table -->
+      <div class="row clearfix">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <div class="card">
+              <div class="header">
+                <h2>
+                    <strong>Busqueda Avanzada</strong>
+                </h2>
+            </div>
+          <div class="body">
+            <form id="frm-clientes-avanzado">
+                <div class="row clearfix">
+
+                  {% if is_granted('ROLE_CLIENTE') %}
+                                 <input type="hidden" name="filtros['cliente']" value="{{cliente.id}}" >
+                    {% else %}
+                    {% if pago==FALSE %}
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                        <div class="form-group">
+                            <div class="form-line">
+                              <label>Clientes</label>
+
+                               <select name="filtros[cliente]" id="cliente">
+                                    <option value="">Clientes</option>
+                                    {% for cliente in clientes %}
+                                        <option value="{{cliente.id}}" {% if filtros.cliente==cliente.id %} selected="selected" {% endif %} >{{cliente.razonSocial}}</option>
+                                    {% endfor %}
+                              </select>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+
+              
+
+                    {% endif %}
+
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                        <div class="form-group">
+                            <div class="form-line">
+                              <label>Proveedores</label>
+
+                               <select name="filtros[proveedor]" id="cliente">
+                                    <option value="">Proveedor</option>
+                                    {% for objproveedor in proveedores %}
+                                        <option value="{{objproveedor.proveedor}}" {% if objproveedor.proveedor==filtros.proveedor %} selected="true" {% endif %}  >{{objproveedor.proveedor}}</option>
+                                    {% endfor %}
+                              </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                       <div class="form-group">
+                            <div class="form-line">
+                            <label>Estado</label>
+                            <br/>
+                              <select name="filtros[tipo]"  id="tipo">
+                                    <option value="">Estado</option>
+                                    <option value="1" {% if filtros.tipo==1 %} selected="tue" {% endif %}  >Cancelable </option>
+                                     <option value="2" {% if filtros.tipo==2 %} selected="tue" {% endif %}>No Cancelable</option>
+                              </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                            <div class="form-line" style="margin-top: -15px">
+                            <label>Fecha Inicial</label>
+
+                             <input type="date" name="filtros[fecha_inicial]" id="fecha_inicial" value="{{filtros.fecha_inicial|date('Y-m-d')}}" >
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                            <div class="form-line" style="margin-top: -15px">
+                            <label>Fecha Final</label>
+
+                             <input type="date" name="filtros[fecha_final]" id="fecha_final" value="{{filtros.fecha_final|date('Y-m-d')}}" >
+                        </div>
+                    </div>
+              
+                </div>
+                <div class="row clearfix">
+                        <div class="row">
+                          
+                            <div class="col-lg-6">
+                                <button type="submit" class="btn btn-primary btn-lg m-l-15 waves-effect">Buscar</button>
+                            </div>
+                             <div class="col-lg-6">
+                                <button type="button" id="btn-reset" class="btn btn-danger btn-lg m-l-15 waves-effect">Borrar</button>
+                            </div>
+                        
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+
+            <div class="header">
+              <h2>
+                <strong>Facturas por comprobar</strong></h2>
+              <ul class="header-dropdown m-r--5">
+                <li class="dropdown">
+                  <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    <i class="material-icons">more_vert</i>
+                  </a>
+                  <ul class="dropdown-menu pull-right">
+                    <li>
+                      <a href="javascript:void(0);">Action</a>
+                    </li>
+                    <li>
+                      <a href="javascript:void(0);">Another action</a>
+                    </li>
+                    <li>
+                      <a href="javascript:void(0);">Something else here</a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+            <div class="body">
+              <div class="table-responsive">
+                <table id="tableExport" class="display table table-hover table-checkable order-column m-t-20 width-per-100">
+                  <thead>
+                    <tr>
+                      <th>Folio</th>
+                      <th>Proveedor</th>
+                      <th>RFC</th>
+                      <th>Fecha</th>
+                      <th>Valor</th>
+                      <th>IVA</th>
+                      <th>Total</th>
+                      <th>Cancelable</th>
+                      <th>En Lista Negra</th>
+                      <th>Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for cuenta in cuentas %}  
+                    <tr>
+
+                      <td>{{cuenta.folio}}</td>
+                      <th>{{cuenta.proveedor}}</th>
+                      <td>{{cuenta.rfc}}</td>
+                      <td>{{cuenta.fecha|date('d/m/Y')}}</td>
+                      <td>{{cuenta.valor}}</td>
+                      <td>{{cuenta.iva}}</td>
+                      <td>{{cuenta.total}}</td>
+                      <td>{{cuenta.cancelable}}</td> 
+                      <td>No</td>
+                      <td> 
+
+                        <a href="{{path('detalle_factura',{id:cuenta.id})}}" data-toggle="modal" data-target="#exampleModalDetalle" class="col-dark-gray waves-effect m-r-20 detalle_factura" data-id="{{cuenta.id}}" title="Ver Detalle">
+                          <i class="material-icons">remove_red_eye</i>
+                        </a>
+                      
+                        {{ render(path('cuentas_por_cobrar_link_pdf',{id:cuenta.id})) }}
+
+                       {% if cuenta.pagoId==0 or cuenta.pagoId=="" %} 
+                        <a data-id="{{cuenta.id}}" href="#" data-toggle="modal" data-target="#exampleModalCenter" class="col-dark-gray waves-effect m-r-20 comprobante" title="Comprobar">
+                            <i class="material-icons">note</i>
+                          </a>
+                        {% endif%}
+
+                         <a data-id="{{cuenta.id}}" href="{{path('cuentas_por_cobrar_delete',{id:cuenta.id})}}" class="col-dark-gray waves-effect m-r-20 eliminar" title="Eliminar">
+                            <i class="material-icons">delete_sweep</i>
+                          </a>
+
+                       </td>
+                    </tr>
+                    {% endfor %}
+
+                  </tbody>
+
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- #END# Exportable Table -->
+      <!-- #START# Table With State Save -->
+
+      <!-- #END# Table With State Save -->
+      <!-- #START# Add Rows -->
+      <!-- #END# Add Rows -->
+    </div>
+  </section>
+
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <form action="{{asset('clientes/sincronizar/comprobante')}}" id="form-modal" method="POST" >
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Comprobante de pago</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-sm-12 col-lg-12">
+                  <!--
+                  <div class="form-line">
+                     <select name="cliente" id="cliente" class="col-12" id="sel2">
+                         <option value="">Seleccione un cliente</option>
+                          {% for cliente in clientes %}
+                          <option value="{{cliente.id}}" >{{cliente.razonSocial}}</option>
+
+                          {% endfor %}
+                      </select>
+                      
+                  </div>
+                  !-->
+                  <div class="form-group" id="div-folio" >
+                    <div class="form-line">
+                      <input type="hidden" name="id" id="cobroid" class="form-control" placeholder="Ingrese un número de pago" value="">
+                      <input type="text" name="pago" id="pago" class="form-control" placeholder="Ingrese un número de pago">
+                    </div>
+                  </div>
+                </div>
+               
+              </div>
+
+            </div>
+        <div class="modal-footer">
+          <button type="button" id="btn-enviar" class="btn btn-primary">Guardar</button>
+        </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="exampleModalDetalle" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Información XML</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" id="modal-body">
+       
+
+        </div>
+       
+      </div>
+    </div>
+  </div>
+
+{% endblock %} 
+
+{% endblock %} 
+
+{% block body_javascript %}
+<script type="text/javascript">
+  
+  $(document).ready(function(){
+    var id="";
+
+    $(".detalle_factura").click(function(e){
+      e.preventDefault();
+      var id=$(this).data('id');
+      var url=$(this).attr('href');
+      $.get(url,{},function(data){
+        $('#modal-body').html(data);
+        $("#exampleModalDetalle").modal('show');
+
+      })
+    })
+
+    $(".eliminar").click(function(e){
+      e.preventDefault();
+      var url=$(this).attr('href');
+
+        swal({
+          title: "Eliminar",
+          text: "Está seguro de eliminar este registro?",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#DD6B55",
+          cancelButtonText: "No",
+          confirmButtonText: "Si, Eliminar!",
+          closeOnConfirm: false
+      }, function () {
+          location.href=url;
+      });
+
+    })
+
+     $("#btn-reset").click(function(e){
+        e.preventDefault();
+        $('#tipo').val("");
+        $('#cliente').val("");
+        $('#fecha_inicial').val("");
+        $('#fecha_final').val("");
+
+        $('#frm-clientes-avanzado').submit();
+     })
+
+    $("#btn-enviar").click(function(e){
+      e.preventDefault();
+      var action=$("#form-modal").attr('action');
+      var data=$("#form-modal").serializeArray();
+
+      $.post(action,data,function(data){
+        if(data=="ok"){
+          alert("Cobro asociado exitsamente");
+          location.reload();
+        }else{
+          alert(data);
+        }
+        $("#exampleModalCenter").modal('hide');
+      })
+    })
+
+    $(".comprobante").click(function(e){
+      e.preventDefault();
+      $("#cobroid").val($(this).data('id'));
+      $("#pago").val("");
+
+    })
+        
+  })
+</script>
+
+{% endblock %}
+
+
+
+

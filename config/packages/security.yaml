@@ -26,4 +26,5 @@ security:
         - { path: ^/test, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/, role: [ROLE_ADMIN,ROLE_ADMIN_FLOTILLA,ROLE_VENTAS,ROLE_CLIENTE,ROLE_GASOLINERA] }
+        - { path: ^/clientes, role: [ROLE_ADMIN,ROLE_AUXILIAR,ROLE_CLIENTE] }
+        - { path: ^/archivos, role: [ROLE_ADMIN,ROLE_AUXILIAR,ROLE_CLIENTE] }

@@ -26,23 +26,31 @@ class Clientes
     /**
      * @var string
      *
-     * @ORM\Column(name="documento", type="string", length=11, nullable=false)
+     * @ORM\Column(name="documento", type="string", length=50, nullable=false)
      */
     private $documento = '';
 
     /**
      * @var string
      *
-     * @ORM\Column(name="nombres", type="string", length=50, nullable=false)
+     * @ORM\Column(name="razon_social", type="string", length=50, nullable=false)
      */
-    private $nombres = '';
+    private $razonSocial = '';
 
     /**
      * @var string
      *
-     * @ORM\Column(name="apellidos", type="string", length=50, nullable=false)
+     * @ORM\Column(name="pais", type="string", length=11, nullable=false, options={"default"="MX"})
      */
-    private $apellidos = '';
+    private $pais = 'MX';
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="indicativo", type="integer", nullable=false, options={"default"="52"})
+     */
+    private $indicativo = '52';
+
 
     /**
      * @var string
@@ -54,47 +62,17 @@ class Clientes
     /**
      * @var string
      *
-     * @ORM\Column(name="pais", type="string", length=11, nullable=false, options={"default"="MX"})
-     */
-    private $pais = 'MX';
-
-   
-    /**
-     * Many-to-one relationship between documents and course
-     *
-     * @var ArrayCollection
-     * @ORM\ManyToOne(targetEntity="App\Entity\Delegacion")
-     * @ORM\JoinColumn(name="delegacion_id", referencedColumnName="id")
-    */
-    private $delegacion;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="indicativo", type="integer", nullable=false, options={"default"="52"})
-     */
-    private $indicativo = '52';
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="celular", type="string", length=20, nullable=false)
      */
     private $celular = '';
 
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="avatar", type="string", length=255, nullable=true)
-     */
-    private $avatar;
 
     /**
-     * @var string|null
+     * @var string
      *
-     * @ORM\Column(name="placa", type="string", length=10, nullable=true)
+     * @ORM\Column(name="direccion", type="string", length=255, nullable=false)
      */
-    private $placa = '';
+    private $direccion = '';
 
     /**
      * @var \DateTime|null
@@ -111,26 +89,13 @@ class Clientes
     private $updatedAt;
 
     /**
-     * @var bool|null
+     * @var int
      *
-     * @ORM\Column(name="terminos", type="boolean", nullable=true, options={"default"="1"})
+     * @ORM\Column(name="auxiliar_id", type="integer", nullable=false)
      */
-    private $terminos = '1';
+    private $auxiliarId;
 
-    /**
-     * @var bool|null
-     *
-     * @ORM\Column(name="politicas", type="boolean", nullable=true, options={"default"="1"})
-     */
-    private $politicas = '1';
-
-    /**
-     * @var int|null
-     *
-     * @ORM\Column(name="tipo", type="integer", nullable=true, options={"default"="1","comment"="1=Normal,2=Flotilla"})
-     */
-    private $tipo = '1';
-
+    
     /**
      * @var int|null
      *
@@ -155,42 +120,19 @@ class Clientes
         return $this;
     }
 
-    public function getNombres(): ?string
+    public function getRazonSocial(): ?string
     {
-        return $this->nombres;
+        return $this->razonSocial;
     }
 
-    public function setNombres(string $nombres): self
+    public function setRazonSocial(string $razonSocial): self
     {
-        $this->nombres = $nombres;
+        $this->razonSocial = $razonSocial;
 
         return $this;
     }
 
-    public function getApellidos(): ?string
-    {
-        return $this->apellidos;
-    }
-
-    public function setApellidos(string $apellidos): self
-    {
-        $this->apellidos = $apellidos;
-
-        return $this;
-    }
-
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
+    
     public function getPais(): ?string
     {
         return $this->pais;
@@ -203,19 +145,7 @@ class Clientes
         return $this;
     }
 
-     public function getDelegacion(): ?Delegacion
-    {
-        return $this->delegacion;
-    }
-
-    public function setDelegacion(?Delegacion $delegacion): self
-    {
-        $this->delegacion = $delegacion;
-
-        return $this;
-    }
-
-
+   
     public function getIndicativo(): ?int
     {
         return $this->indicativo;
@@ -224,6 +154,18 @@ class Clientes
     public function setIndicativo(int $indicativo): self
     {
         $this->indicativo = $indicativo;
+
+        return $this;
+    }
+
+     public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
 
         return $this;
     }
@@ -240,29 +182,19 @@ class Clientes
         return $this;
     }
 
-    public function getAvatar(): ?string
+     public function getDireccion(): ?string
     {
-        return $this->avatar;
+        return $this->direccion;
     }
 
-    public function setAvatar(?string $avatar): self
+    public function setDireccion(string $direccion): self
     {
-        $this->avatar = $avatar;
+        $this->direccion = $direccion;
 
         return $this;
     }
 
-    public function getPlaca(): ?string
-    {
-        return $this->placa;
-    }
-
-    public function setPlaca(?string $placa): self
-    {
-        $this->placa = $placa;
-
-        return $this;
-    }
+   
 
     public function getCreatedAt(): ?\DateTimeInterface
     {
@@ -288,42 +220,20 @@ class Clientes
         return $this;
     }
 
-    public function getTerminos(): ?bool
+
+    public function getAuxiliarId(): ?int
     {
-        return $this->terminos;
+        return $this->auxiliarId;
     }
 
-    public function setTerminos(?bool $terminos): self
+    public function setAuxiliarId(int $auxiliarId): self
     {
-        $this->terminos = $terminos;
+        $this->auxiliarId = $auxiliarId;
 
         return $this;
     }
 
-    public function getPoliticas(): ?bool
-    {
-        return $this->politicas;
-    }
-
-    public function setPoliticas(?bool $politicas): self
-    {
-        $this->politicas = $politicas;
-
-        return $this;
-    }
-
-    public function getTipo(): ?int
-    {
-        return $this->tipo;
-    }
-
-    public function setTipo(?int $tipo): self
-    {
-        $this->tipo = $tipo;
-
-        return $this;
-    }
-
+   
     public function getEstado()
     {
         if($this->estado==0){
@@ -335,8 +245,6 @@ class Clientes
 
     public function setEstado(?int $estado): self
     {
-       
-
         $this->estado = $estado;
 
         return $this;

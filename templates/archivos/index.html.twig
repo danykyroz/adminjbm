@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+{% block body %}
+  <section class="content">
+    <div class="container-fluid">
+      <div class="block-header">
+        <div class="row">
+          <div class="col-xl-6 col-lg-5 col-md-4 col-sm-12">
+            <ul class="breadcrumb breadcrumb-style">
+              <li class="breadcrumb-item  bcrumb-1">
+                <a href="{{asset('/')}}">
+                  <i class="material-icons">home</i> Home</a>
+              </li>
+              <li class="breadcrumb-item bcrumb-2">
+                <a href="javascript:void(0);">Archivos</a>
+              </li>
+               <li class="breadcrumb-item bcrumb-2">
+                <a href="javascript:void(0);">{{cliente.razonSocial}}</a>
+              </li>
+            </ul>
+          </div>
+          <!--
+          <div class="col-xl-6 col-lg-7 col-md-8 col-sm-12 text-right">
+            <div class="breadcrumb-chart m-l-50">
+              <div class="float-right m-r-10">
+                <button type="button" class="btn btn-primary  waves-effect" data-toggle="modal" data-target="#exampleModalCenter">Nuevo Auxiliar</button>
+              </div>
+            </div>
+          </div>
+          !-->
+        </div>
+      </div>
+      <!-- Basic Table -->
+      {% if cliente %}
+      <div class="row clearfix">
+        <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
+          <a  href="{{path('archivos_carpetas',{'directorio':nombre_carpeta})}}" class="card">
+            <div class="card-body center">
+              <i class="large material-icons" style="color: #00ffff">folder</i>
+                <p>{{cliente.razonSocial}}</p>
+              </div>
+          </a>
+        </div>
+      </div>
+    {% endif %}
+    </div>
+  </section>
+
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <!--<h5 class="modal-title" id="exampleModalLongTitle">Nuevo Auxiliar</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          !-->
+        </div>
+        <div class="modal-body">
+
+          <div class="form-group">
+            <div class="form-line">
+              <input type="text" class="form-control" placeholder="Nombre">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-line">
+              <input type="password" class="form-control" placeholder="Documento">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-line">
+              <input type="password" class="form-control" placeholder="Teléfono">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-line">
+              <input type="password" class="form-control" placeholder="Di rección">
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary">Crear Auxiliar  </button>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %} 
+
+{% endblock %} 

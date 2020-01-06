@@ -12,7 +12,7 @@ function initCharts() {
         barWidth: '4px',
         height: '45px'
     });
-    
+
 
     //Chart Pie
     $('.chart.chart-pie').sparkline([30, 35, 25, 8], {
@@ -36,7 +36,7 @@ function initCharts() {
         spotRadius: 3,
         highlightSpotColor: '#fff'
     });
-    
+
 
     try {
     	// polar chart
@@ -58,10 +58,10 @@ function initCharts() {
 
     				}],
     				labels: [
-    					"Green",
-    					"Green",
-    					"Green",
-    					"Green"
+    					"Aceptado",
+    					"Cancelado",
+    					"Por pagar",
+    					"Otro"
     				]
     			},
     			options: {
@@ -80,7 +80,7 @@ function initCharts() {
     } catch (error) {
     	console.log(error);
     }
-    
+
     try {
 
     	// single bar chart
@@ -90,10 +90,10 @@ function initCharts() {
     		var myChart = new Chart(ctx, {
     			type: 'bar',
     			data: {
-    				labels: ["Sun", "Mon", "Tu", "Wed", "Th", "Fri", "Sat"],
+    				labels: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul"],
     				datasets: [
     					{
-    						label: "My First dataset",
+    						label: "Cantidad de archivos mensuales  ",
     						data: [40, 55, 75, 81, 56, 55, 40],
     						borderColor: "rgba(0, 123, 255, 0.9)",
     						borderWidth: "0",
@@ -131,4 +131,3 @@ function initCharts() {
     	console.log(error);
     }
 }
-

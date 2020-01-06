@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+{% block body %}
+
+<style type="text/css">
+  select.form-control{
+    display: none;
+  }
+</style>
+
+  <section class="content">
+  <form action="">
+    <div class="container-fluid">
+      <div class="block-header">
+        <div class="row">
+          <div class="card offset-lg-3 col-xl-6 col-lg-5 col-md-4 col-sm-12 paddin-top">
+            <p>
+                <b>Selecciona un cliente </b>
+            </p>
+            <div class="form-group">
+                <select name="clienteid" id="clienteid" class="col-12" id="sel2">
+                {% for cliente in clientes %}
+                <option value="{{cliente.id}}" >{{cliente.razonSocial}}</option>
+
+                {% endfor %}
+                </select>
+            </div>
+            <button type="submit"  class="btn btn-primary  waves-effect"  >Continuar</button>
+          </div>
+        </div>
+      </div>
+      <!-- Basic Table -->
+    </div>
+  </section>
+
+{% endblock %} 
+
+{% endblock %} 
+
+
+
+

@@ -171,7 +171,7 @@ class UserController extends Controller
 
 
     /**
-     * @Route("/user/chek_login", name="user_check_login")
+     * @Route("/user/check_login", name="user_check_login")
     */
     public function check_login(Request $request)
     {
@@ -203,7 +203,7 @@ class UserController extends Controller
                                 $login_origin=$request->get('_login_origin','admin');
 
                                 if($login_origin=='admin' || $login_origin=='app'){
-                                  $redirect = '/admin/home';  
+                                  $redirect = '/';  
                                 }
                                  if($login_origin=='app_vendedor' ){
                                   $redirect = '/vendedor/configuracion';  

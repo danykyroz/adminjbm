@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+{% block body %}
+  <section class="content">
+    <div class="container-fluid">
+      <div class="block-header">
+        <div class="row">
+          <div class="col-xl-6 col-lg-5 col-md-4 col-sm-12">
+            <ul class="breadcrumb breadcrumb-style">
+              <li class="breadcrumb-item  bcrumb-1">
+                <a href="{{asset('/')}}">
+                  <i class="material-icons">home</i> Home</a>
+              </li>
+              <li class="breadcrumb-item bcrumb-2">
+                <a href="{{'archivos'}}">Archivos</a>
+              </li>
+              <li class="breadcrumb-item bcrumb-2">
+                <a href="javascript:void(0);">{{cliente.razonSocial}}</a>
+              </li>
+            </ul>
+          </div>
+        
+        </div>
+      </div>
+      <!-- Basic Table -->
+      <div class="row clearfix">
+        {% for carpeta in directorios %}
+
+        <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
+          <a href="{{asset('archivos/carpetas/?ruta='~directorio~'/'~carpeta)}}" class="card">
+            <div class="card-body center">
+              <i class="large material-icons" style="color: #00ffff">folder</i>
+                <p>{{carpeta}}</p>
+              </div>
+          </a>
+        </div>
+       
+        {% endfor %}
+        
+      </div>
+
+    </div>
+  </section>
+
+
+{% endblock %} 
+
+{% endblock %} 

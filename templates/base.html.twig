@@ -3,7 +3,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta content="width=device-width, initial-scale=1" name="viewport" />
-    <title>Admin Permergas</title>
+    <title>JMB Contadores</title>
     <!-- Favicon-->
     <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
     <!-- Plugins Core Css -->
@@ -55,8 +55,16 @@
         }
        
         
+        
     </style>
 
+      <style media="screen">
+    .select-wrapper {width: 100%}
+    .paddin-top {padding: 30px; margin-top: 40px; }
+    select.form-control { width: 60px;
+    margin-top: -4px;
+    margin-left: -10px;}
+  </style>
 </head>
 
     {% block body_layout %}
@@ -68,14 +76,16 @@
 
     <!-- Top Bar -->
     <nav class="navbar">
+
+
         <div class="container-fluid">
             <div class="navbar-header">
                 <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"
                     aria-expanded="false"></a>
                 <a href="javascript:void(0);" class="bars"></a>
                 <a class="navbar-brand" href="{{asset('/admin/home')}}">
-                    <img src="{{asset('adminlte/assets/images/logo.png')}}" alt="" />
-                    <span class="logo-name"><img src="{{asset('adminlte/assets/images/titulo.png')}}"></span>
+                    <img src="{{asset('adminlte/assets/images/logo.png')}}"  height="30px" alt="" />
+                    <span style="font-size: 1rem" class="logo-name">CONTADORES</span>
                 </a>
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse">
@@ -87,12 +97,14 @@
                     </li>
                     <li>
                         {% block busqueda_general %}
+                        <form action="" method="get" id="frm-busqueda-general" >
                         <div class="search-box">
-                            <input type="search" id="search" placeholder="Search..." />
-                            <button class="icon">
+                            <input type="search" id="search" name="query" placeholder="Buscar..." value="{{app.request.get('query')}}" />
+                            <button class="icon" id="btn-busqueda-general">
                                 <i class="fa fa-search"></i>
                             </button>
                         </div>
+                        </form>
                         {% endblock %}
                     </li>
                 </ul>
@@ -151,10 +163,12 @@
         <aside id="leftsidebar" class="sidebar">
             <!-- Menu -->
             <div class="menu">
-                <ul class="list">
-                    <li class="sidebar-user-panel active">
+
+
+                <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 355px;"><ul class="list" style="overflow: hidden; width: auto; height: 355px;">
+                    <li class="sidebar-user-panel active" style="display: block;">
                         <div class="user-panel">
-                            <div class=" image">
+                              <div class=" image">
                                 
                                 {% if app.session.get('avatar')!="" %}
                                 <img src="{{asset(app.session.get('avatar'))}}" class="img-circle user-img-circle" alt="User">
@@ -168,63 +182,49 @@
                         </div>
                         <div class="profile-usertitle">
                             <div class="sidebar-userpic-name"> {{ app.user.username }} </div>
-                            
+                            <div class="profile-usertitle-job ">
+                                {% if is_granted('ROLE_ADMIN') %}
+                                Administrador
+                                {% endif %}
+                                 {% if is_granted('ROLE_AUXILIAR') %}
+                                Auxiliar
+                                {% endif %}
+                                 {% if is_granted('ROLE_CLIENTE') %}
+                                 Cliente
+                                {% endif %} 
                         </div>
-                       <!-- <div class="sidebar-userpic-btn">
-                            <a class="tooltips" href="{{asset('profile')}}" data-toggle="tooltip" title="Profile">
-                                <i class="far fa-user sidebarQuickIcon"></i>
-                            </a>
-                            
-                         
-                            <a class="tooltips" href="{{asset('logout')}}" data-toggle="tooltip" title="Logout">
-                                <i class="fas fa-sign-out-alt sidebarQuickIcon"></i>
-                            </a>
                         </div>
-                        !-->
+                        <div class="sidebar-userpic-btn">
+
+                        </div>
                     </li>
-                    
-                    <li>
-                        <a href="{{asset('/admin/home')}}">
+                    <li class="active">
+                        <a href="{{asset('/')}}" class="waves-effect waves-block toggled">
                             <i class="fas fa-tachometer-alt"></i>
-                            <span>Inicio</span>
+                            <span>Home</span>
                         </a>
                     </li>
+                    
                     {{ render(path('default_menu')) }}
-                   
-                  
-                </ul>
+
+
+                </ul><div class="slimScrollBar" style="background: rgba(0, 0, 0, 0.5); width: 4px; position: absolute; top: -300px; opacity: 0.4; display: none; border-radius: 0px; z-index: 99; right: 1px; height: 346.223px;"></div><div class="slimScrollRail" style="width: 4px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 0px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
             </div>
-            <!-- #Menu -->
+            </div>
+
         </aside>
-        <!-- #END# Left Sidebar -->
-        <!-- Right Sidebar -->
-       
-        <!-- #END# Right Sidebar -->
-    </div>
+
+
+
+
+     </div>
+           
 
         {% block wrapper %}
-        
+        		
                 {% block content %}
-                  <section class="content">
-                     <div class="container-fluid">
-                    <div class="content">
-
-                           {% for message in app.flashes('success') %}
-                             <div class="alert alert-success" role="alert">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">×</span>
-                                </button>
-                                {{message}}
-                            </div>
-                            {% endfor %}
-                            {% for message in app.flashes('bad') %}
-                            <div class="alert bg-pink alert-dismissible" role="alert">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">×</span>
-                                </button>
-                                {{message}}
-                            </div>
-                            {% endfor %}
+                
+                         
                         
                         {% block content_header_wrapper %}
                         {% set _has_content_help = _entity_config is defined and _entity_config[app.request.query.get('action')]['help']|default(false) %}
@@ -258,12 +258,9 @@
                         {% endblock content_header_wrapper %}
 
                         <section id="main" class="content-body">
-                         
-                            <br/>
-                            
                             {% block main %}
-                            {% block body %}
-                            {% endblock  %}
+	                            {% block body %}
+	                            {% endblock  %}
                             {% endblock %}
                         </section>
 
@@ -272,9 +269,7 @@
                                 {% block content_footer %}{% endblock %}
                             </section>
                         {% endblock %}
-                    </div>
-                </div>
-            </section>
+                 
                 {% endblock content %}
         {% endblock wrapper %}
         
@@ -319,7 +314,7 @@
         <script src="{{asset('adminlte/assets/js/demo.js')}}"></script>
         <script src="{{asset('adminlte/assets/js/form.min.js')}}"></script>
         <script src="{{asset('adminlte/assets/js/pages/forms/advanced-form-elements.js')}}"></script>
-
+        
         <script type="text/javascript">
             
             $('document').ready(function(){

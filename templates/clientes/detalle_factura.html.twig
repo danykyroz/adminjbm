@@ -1,0 +1,94 @@
+   <ul class="nav nav-tabs tab-nav-right" role="tablist">
+            <li role="presentation">
+              <a href="#home" data-toggle="tab" class="active show">Importe impuesto</a>
+            </li>
+            <li role="presentation">
+              <a href="#profile" data-toggle="tab">Información Emisor</a>
+            </li>
+          </ul>
+
+          <!-- Tab panes -->
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade in active show" id="home">
+              <table class="table table-striped">
+                <tbody>
+                  <tr>
+                    <th scope="row">Fecha</th>
+                    <td id="">{{factura.Comprobante.Fecha|date('Y-m-d')}}</td>
+
+                  </tr>
+                  <tr>
+                    <th scope="row">Subtotal</th>
+                    <td>{{factura.Comprobante.SubTotal}}</td>
+
+                  </tr>
+
+                  <tr>
+                    <th scope="row">IVA</th>
+                    <td>{{factura.Traslado.Importe}}</td>
+
+                  </tr>
+
+
+                  <tr>
+                    <th scope="row">Total</th>
+                    <td>{{factura.Comprobante.Total}}</td>
+
+                  </tr>
+
+                  <tr>
+                    <th scope="row">Forma de pago </th>
+                    <td>{{factura.Comprobante.FormaDePago}}</td>
+
+                  </tr>
+
+                  <tr>
+                    <th scope="row">Tipo de comprobante</th>
+                    <td>{{factura.Comprobante.TipoDeComprobante}} </td>
+
+                  </tr>
+
+                  <tr>
+                    <th scope="row">Folio</th>
+                    <td>{{factura.Comprobante.Folio}} </td>
+
+                  </tr>
+
+                  <tr>
+                    <th scope="row">UUI foliofiscaldigital</th>
+                    <td>{{factura.TimbreFiscalDigital.UUID}} </td>
+
+                  </tr>
+
+
+                </tbody>
+              </table>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="profile">
+              <table class="table table-striped">
+                <tbody>
+                  <tr>
+                    <th scope="row">Razón Social</th>
+                    <td>{{factura.Emisor.Nombre}}</td>
+
+                  </tr>
+                  <tr>
+                    <th scope="row">RFC</th>
+                    <td>{{factura.Emisor.Rfc}}</td>
+
+                  </tr>
+
+                  <tr>
+                    <th scope="row">Dirección</th>
+                    <td>  </td>
+
+                  </tr>
+
+
+
+                </tbody>
+              </table>
+
+            </div>
+
+          </div>

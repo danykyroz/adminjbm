@@ -1,15 +1,46 @@
 index:
     path: /
     controller: App\Controller\DefaultController::index
-login:
-    path: /login
-    controller: App\Controller\UserController::login
-easy_admin_bundle:
-    resource: '@EasyAdminBundle/Controller/EasyAdminController.php'
-    prefix: /admin
-    type: annotation
-homepage:
-    path: /admin/home
-    controller: App\Controller\AdminController::index
+
+landing:
+    path: /landing
+    controller: App\Controller\DefaultController::landing
+
+perfil:
+    path: /perfil
+    controller: App\Controller\ClienteController::perfil
+
+clientes:
+    path: /clientes
+    controller: App\Controller\ClientesController::index
+
+auxiliares:
+    path: /auxiliares
+    controller: App\Controller\AuxiliaresController::index
+
+nomina:
+    path: /nomina
+    controller: App\Controller\ClientesController::nomina
+
+gastos:
+    path: /gastos
+    controller: App\Controller\ClientesController::gastos
+
+cuentas_por_cobrar:
+    path: /cuentas_por_cobrar
+    controller: App\Controller\ClientesController::cuentas_por_cobrar
+
+archivos:
+    path: /archivos
+    controller: App\Controller\ArchivosController::index
+
+archivos_clientes:
+    path: /archivos/{cliente}
+    controller: App\Controller\ArchivosController::cliente
+
+archivos_clientes_mes:
+    path: /archivos/{cliente}/{mes}
+    controller: App\Controller\ArchivosController::cliente_mes_xml
+
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"

@@ -1,0 +1,377 @@
+  {% extends 'base.html.twig' %}
+
+{% block content %}
+
+{% block body %}
+
+<style type="text/css">
+  select.form-control{
+    display: none;
+  }
+</style>
+  <section class="content">
+      <div class="container-fluid">
+          <div class="block-header">
+              <div class="row">
+                  <div class="col-xl-6 col-lg-5 col-md-4 col-sm-12">
+                      <ul class="breadcrumb breadcrumb-style">
+                          <li class="breadcrumb-item 	bcrumb-1">
+                              <a href="{{asset('/')}}">
+                                  <i class="material-icons">home</i> Home</a>
+                          </li>
+                          <li class="breadcrumb-item bcrumb-2">
+                              <a href="{{asset('clientes/nomina/index')}}">Nomina</a>
+                          </li>
+                          <li class="breadcrumb-item active">{{cliente.razonSocial}}</li>
+                      </ul>
+                  </div>
+                  
+                  {% if is_granted('ROLE_ADMIN') %}
+
+                    <div class="col-xl-6 col-lg-7 col-md-8 col-sm-12 text-right">
+                        <div class="breadcrumb-chart m-l-50">
+                            <div class="float-right m-r-10">
+                                <div class="chart-info ">
+                          <button type="button" class="btn btn-primary  waves-effect" data-toggle="modal" data-target="#exampleModalCenter">Nuevo Empleado</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                  {% endif %}
+              </div>
+          </div>
+          <!-- Basic Examples -->
+          <div class="row clearfix">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <form name="change_semanas" id="change_semanas" action="" method="get">
+                  <input type="hidden" name="week" id="semana_actual" value="{{week}}" >
+                  <input type="hidden" name="year" id="year" value="{{fechas[1]|date('Y')}}" >
+                  <input type="hidden" name="clienteid" id="clienteid" value="{{cliente.id}}" >
+
+                </form>
+
+
+                  <div class="card">
+                      <div class="header">
+                          <h2>
+                          <strong> 
+                           <a href="#" onclick="anterior();return false;" > <i class="fa fa-chevron-left"  aria-hidden="true"></i>
+                           </a>Semana {{week}} del ({{fechas[0]|date('d/m/y')}}) al ({{fechas[1]|date('d/m/y')}})
+                           <a href="#" onclick="siguiente();return false;" > <i class="fa fa-chevron-right"  aria-hidden="true"></i>
+                           </a>  </strong> 
+                          </h2>
+                         
+
+                          <ul class="header-dropdown m-r--5">
+                              <li class="dropdown">
+                                  <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                      aria-haspopup="true" aria-expanded="false">
+                                      <i class="material-icons">more_vert</i>
+                                  </a>
+                                  <ul class="dropdown-menu pull-right">
+                                      <li>
+                                          <a href="javascript:void(0);">Descargar excel</a>
+                                      </li>
+                                  </ul>
+                              </li>
+                          </ul>
+                      </div>
+                      <div class="body">
+                          <div class="table-responsive">
+                              <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                                  <thead>
+                                      <tr>
+                                          <th>Nombre</th>
+                                          <th>Cargo</th>
+                                          <th>Fecha</th>
+                                          <th>D</th>
+                                          <th>L</th>
+                                          <th>M</th>
+                                          <th>MI</th>
+                                          <th>J</th>
+                                          <th>V</th>
+                                          <th>S</th>
+                                          <th>Acciones</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                    {% for objempleado in empleados %}
+                                    {% set empleado=objempleado.empleado %}
+
+                                      <tr id="horario_empleado_{{empleado.id}}" data-empleado="{{empleado.id}}" >
+                                          <td>{{empleado.nombres}}</td>
+                                          <td>{{empleado.cargo}}</td>
+                                          <td>{{empleado.createdAt|date('d/m/y')}}</td>
+
+                                          <td >
+
+                                            <select class="form-control" class="select_domingo" id="select_domingo_empleado_{{empleado.id}}">
+                                              <option {% if objempleado.horario.D=="A"  %} selected="selected" {% endif %} >A</option>
+                                              <option {% if objempleado.horario.D=="AA"  %} selected="selected" {% endif %}>AA</option>
+                                              <option {% if objempleado.horario.D=="VA"  %} selected="selected" {% endif %}>VA</option>
+                                              <option {% if objempleado.horario.D=="D"  %} selected="selected" {% endif %}>D</option>
+                                              <option {% if objempleado.horario.D=="CA"  %} selected="selected" {% endif %}>CA</option>
+                                              <option {% if objempleado.horario.D=="CI"  %} selected="selected" {% endif %}>CI</option>
+                                              <option {% if objempleado.horario.D=="X"  %} selected="selected" {% endif %}>X</option>
+                                            </select>
+                                          </td>
+                                           <td>
+                                            <select class="form-control" class="select_lunes" id="select_lunes_empleado_{{empleado.id}}">
+                                              <option {% if objempleado.horario.L=="A"  %} selected="selected" {% endif %} >A</option>
+                                              <option {% if objempleado.horario.L=="AA"  %} selected="selected" {% endif %}>AA</option>
+                                              <option {% if objempleado.horario.L=="VA"  %} selected="selected" {% endif %}>VA</option>
+                                              <option {% if objempleado.horario.L=="D"  %} selected="selected" {% endif %}>D</option>
+                                              <option {% if objempleado.horario.L=="CA"  %} selected="selected" {% endif %}>CA</option>
+                                              <option {% if objempleado.horario.L=="CI"  %} selected="selected" {% endif %}>CI</option>
+                                              <option {% if objempleado.horario.L=="X"  %} selected="selected" {% endif %}>X</option>
+                                            </select>
+                                          </td>
+                                           <td>
+                                             <select class="form-control"  class="select_martes" id="select_martes_empleado_{{empleado.id}}">
+                                              <option {% if objempleado.horario.M=="A"  %} selected="selected" {% endif %} >A</option>
+                                              <option {% if objempleado.horario.M=="AA"  %} selected="selected" {% endif %}>AA</option>
+                                              <option {% if objempleado.horario.M=="VA"  %} selected="selected" {% endif %}>VA</option>
+                                              <option {% if objempleado.horario.M=="D"  %} selected="selected" {% endif %}>D</option>
+                                              <option {% if objempleado.horario.M=="CA"  %} selected="selected" {% endif %}>CA</option>
+                                              <option {% if objempleado.horario.M=="CI"  %} selected="selected" {% endif %}>CI</option>
+                                              <option {% if objempleado.horario.M=="X"  %} selected="selected" {% endif %}>X</option>
+                                            </select>
+                                          </td>
+                                           <td>
+                                            <select class="form-control" class="select_miercoles" id="select_miercoles_empleado_{{empleado.id}}">
+                                              <option {% if objempleado.horario.MI=="A"  %} selected="selected" {% endif %} >A</option>
+                                              <option {% if objempleado.horario.MI=="AA"  %} selected="selected" {% endif %}>AA</option>
+                                              <option {% if objempleado.horario.MI=="VA"  %} selected="selected" {% endif %}>VA</option>
+                                              <option {% if objempleado.horario.MI=="D"  %} selected="selected" {% endif %}>D</option>
+                                              <option {% if objempleado.horario.MI=="CA"  %} selected="selected" {% endif %}>CA</option>
+                                              <option {% if objempleado.horario.MI=="CI"  %} selected="selected" {% endif %}>CI</option>
+                                              <option {% if objempleado.horario.MI=="X"  %} selected="selected" {% endif %}>X</option>
+                                            </select>
+                                          </td>
+                                           <td>
+                                            <select class="form-control" class="select_jueves" id="select_jueves_empleado_{{empleado.id}}">
+                                              <option {% if objempleado.horario.J=="A"  %} selected="selected" {% endif %} >A</option>
+                                              <option {% if objempleado.horario.J=="AA"  %} selected="selected" {% endif %}>AA</option>
+                                              <option {% if objempleado.horario.J=="VA"  %} selected="selected" {% endif %}>VA</option>
+                                              <option {% if objempleado.horario.J=="D"  %} selected="selected" {% endif %}>D</option>
+                                              <option {% if objempleado.horario.J=="CA"  %} selected="selected" {% endif %}>CA</option>
+                                              <option {% if objempleado.horario.J=="CI"  %} selected="selected" {% endif %}>CI</option>
+                                              <option {% if objempleado.horario.J=="X"  %} selected="selected" {% endif %}>X</option>
+
+                                            </select>
+                                          </td>
+                                           <td>
+
+                                            <select class="form-control" class="select_viernes" id="select_viernes_empleado_{{empleado.id}}">
+                                              <option {% if objempleado.horario.V=="A"  %} selected="selected" {% endif %} >A</option>
+                                              <option {% if objempleado.horario.V=="AA"  %} selected="selected" {% endif %}>AA</option>
+                                              <option {% if objempleado.horario.V=="VA"  %} selected="selected" {% endif %}>VA</option>
+                                              <option {% if objempleado.horario.V=="D"  %} selected="selected" {% endif %}>D</option>
+                                              <option {% if objempleado.horario.V=="CA"  %} selected="selected" {% endif %}>CA</option>
+                                              <option {% if objempleado.horario.V=="CI"  %} selected="selected" {% endif %}>CI</option>
+                                              <option {% if objempleado.horario.V=="X"  %} selected="selected" {% endif %}>X</option>
+                                            </select>
+                                          </td>
+                                           <td>
+                                            
+                                            <select class="form-control" class="select_sabado" id="select_sabado_empleado_{{empleado.id}}">
+                                              <option {% if objempleado.horario.S=="A"  %} selected="selected" {% endif %} >A</option>
+                                              <option {% if objempleado.horario.S=="AA"  %} selected="selected" {% endif %}>AA</option>
+                                              <option {% if objempleado.horario.S=="VA"  %} selected="selected" {% endif %}>VA</option>
+                                              <option {% if objempleado.horario.S=="D"  %} selected="selected" {% endif %}>D</option>
+                                              <option {% if objempleado.horario.S=="CA"  %} selected="selected" {% endif %}>CA</option>
+                                              <option {% if objempleado.horario.S=="CI"  %} selected="selected" {% endif %}>CI</option>
+                                              <option {% if objempleado.horario.S=="X"  %} selected="selected" {% endif %}>X</option>
+                                            </select>
+
+                                          </td>
+                                          <td><button data-padre="horario_empleado_{{empleado.id}}" class="btn btn-primary guardar_horario" >Guardar</button></td>
+                                         </tr>
+                                        {% endfor %}
+                                   
+
+                                  </tbody>
+                              </table>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <!-- #END# Basic Examples -->
+          <!-- #END# Add Rows -->
+      </div>
+  </section>
+
+
+
+ <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Crear Empleado</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form   method="post" id="form-empleado" name="form-empleado" action="{{path('clientes_nomina_guardar_empleado')}}" enctype="multipart/form-data" >
+        <input type="hidden" name="clienteid" value="{{cliente.id}}">
+        <div class="modal-body">
+          
+          <div class="form-group">
+            <div class="form-line">
+              <input type="text" name="documento" id="documento" class="form-control" placeholder="Documento">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="form-line">
+              <input type="text" name="nombres" id="nombres" class="form-control" placeholder="Nombres">
+            </div>
+          </div>
+         <div class="form-group">
+            <div class="form-line">
+              <input type="text" name="cargo" id="cargo" class="form-control" placeholder="Cargo">
+            </div>
+          </div>
+          <div class="row">
+          <div class="col-sm-2 col-lg-2">
+              <div class="form-check form-check-radio">
+                <label>
+                  <input name="diasdescanso[]" id="lunes" class="tipo" type="checkbox" value="L"  />
+                  <span>L</span>
+                </label>
+              </div>
+            </div>
+            <div class="col-sm-2 col-lg-2">
+              <div class="form-check form-check-radio">
+                <label>
+                  <input name="diasdescanso[]" id="martes" class="checked" value="M" type="checkbox" />
+                  <span>M</span>
+                </label>
+              </div>
+            </div>
+             <div class="col-sm-2 col-lg-2">
+              <div class="form-check form-check-radio">
+                <label>
+                  <input name="diasdescanso[]" id="martes" class="checked" value="MI" type="checkbox" />
+                  <span>MI</span>
+                </label>
+              </div>
+            </div>
+             <div class="col-sm-2 col-lg-2">
+              <div class="form-check form-check-radio">
+                <label>
+                  <input name="diasdescanso[]" id="martes" class="checked" value="J" type="checkbox" />
+                  <span>J</span>
+                </label>
+              </div>
+            </div>
+            <div class="col-sm-2 col-lg-2">
+              <div class="form-check form-check-radio">
+                <label>
+                  <input name="diasdescanso[]" id="martes" class="checked" value="V" type="checkbox" />
+                  <span>v</span>
+                </label>
+              </div>
+            </div>
+             <div class="col-sm-2 col-lg-2">
+              <div class="form-check form-check-radio">
+                <label>
+                  <input name="diasdescanso[]" id="martes" class="checked" value="S" type="checkbox" />
+                  <span>S</span>
+                </label>
+              </div>
+            </div>
+             <div class="col-sm-2 col-lg-2">
+              <div class="form-check form-check-radio">
+                <label>
+                  <input name="diasdescanso[]" id="martes" class="checked" value="D" type="checkbox" />
+                  <span>D</span>
+                </label>
+              </div>
+            </div>
+
+          </div>
+          </div>
+          <div class="modal-footer">
+          <button type="submit" id="btn-pagos" class="btn btn-primary">Guardar</button>
+        </div>
+        </form>
+
+        </div>
+      </div>
+        
+      </div>
+    </div>
+  </div>
+
+{% endblock %} 
+
+{% endblock %} 
+
+{% block body_javascript %}
+
+<script type="text/javascript">
+
+  $("document").ready(function(){
+    $('.guardar_horario').click(function(e){
+        e.preventDefault();
+        var padre=$(this).data('padre');
+        var id=$("#"+padre).data('empleado');
+        var select_domingo=$("#select_domingo_empleado_"+id).val();
+        var select_lunes=$("#select_lunes_empleado_"+id).val();
+        var select_martes=$("#select_martes_empleado_"+id).val();
+        var select_miercoles=$("#select_miercoles_empleado_"+id).val();
+        var select_jueves=$("#select_jueves_empleado_"+id).val();
+        var select_viernes=$("#select_viernes_empleado_"+id).val();
+        var select_sabado=$("#select_sabado_empleado_"+id).val();
+        var year=$("#year").val();
+        var semana=$("#semana_actual").val();
+        var clienteid=$("#clienteid").val();
+
+        dias={'D':select_domingo,'L':select_lunes,'M':select_martes,'MI':select_miercoles,'J':select_jueves,'V':select_viernes,'S':select_sabado};
+
+        data={dias:dias,semana:semana,year:year,empleado:id,clienteid:clienteid};
+        $.post('guardar_horario',data,function(data){
+          alert(data);
+        })
+
+    })
+  })
+
+
+   function siguiente(){
+
+      var semana=parseInt($('#semana_actual').val());
+      var year=parseInt($('#year').val());
+      semana=semana+1;
+      if(semana>52){
+        semana=1;
+        year=year+1;
+        $('#year').val(year);
+
+      }
+      $('#semana_actual').val(semana);
+      $("#change_semanas").submit();
+    }
+
+    function anterior(){
+      
+      var semana=parseInt($('#semana_actual').val());
+      var year=parseInt($('#year').val());
+      
+      semana=semana-1;
+      if(semana<1){
+        semana=52;
+        year=year-1;
+        $('#year').val(year);
+
+      }
+      $('#semana_actual').val(semana);
+      $("#change_semanas").submit();
+    }
+ 
+</script>
+
+{% endblock %}

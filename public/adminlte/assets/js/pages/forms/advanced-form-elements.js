@@ -1,17 +1,14 @@
 'use strict';
 $(function () {
     $('.colorpicker').colorpicker();
-    
+
     initBasicSelect();
 	initGroupSelect();
 	initMultiSelect();
 	initImageSelect();
 
     //Dropzone
-    Dropzone.options.frmFileUpload = {
-        paramName: "file",
-        maxFilesize: 2
-    };
+   
 
     //Masked Input ============================================================================================================================
     var $demoMaskedInput = $('.demo-masked-input');
@@ -69,10 +66,10 @@ function initBasicSelect(){
 	/* basic select start*/
 	$('select').formSelect();
 	$('#sel').formSelect();
-	var data=[{id:1,name:"Option 1"},{id:2,name:"Option 2"},{id:3,name:"Option 3"}];
+	var data=[{id:1,name:"Javier Mayorga"},{id:2,name:"Arnulfo Díaz"},{id:3,name:"Juan Zolaque"}];
 
 	var Options="";
-	$.each(data, function(i, val){ 
+	$.each(data, function(i, val){
 		$('#sel').append("<option value='"+val.id+"'>"+val.name+"</option>");
 		$('#sel').formSelect();
 	});
@@ -86,7 +83,7 @@ function initGroupSelect(){
 
 	var Options="";
 	$('#sel-grp').append("<optgroup label='Picnic'>");
-	$.each(data_sel_grp, function(i, val){ 
+	$.each(data_sel_grp, function(i, val){
 
 		$('#sel-grp').append("<option value='"+val.id+"'>"+val.name+"</option>");
 
@@ -95,7 +92,7 @@ function initGroupSelect(){
 	$('#sel-grp').append("</optgroup >");
 
 	$('#sel-grp').append("<optgroup label='Picnic1'>");
-	$.each(data_sel_grp1, function(i, val){ 
+	$.each(data_sel_grp1, function(i, val){
 
 		$('#sel-grp').append("<option value='"+val.id+"'>"+val.name+"</option>");
 
@@ -110,7 +107,7 @@ function initMultiSelect(){
 	var data=[{id:1,name:"Option 1"},{id:2,name:"Option 2"},{id:3,name:"Option 3"}];
 
 	var Options="";
-	$.each(data, function(i, val){ 
+	$.each(data, function(i, val){
 		$('#multisel').append("<option value='"+val.id+"'>"+val.name+"</option>");
 		$('#multisel').formSelect();
 	});
@@ -122,7 +119,7 @@ function initImageSelect(){
 	var data=[{id:1,name:"Option 1", url:"../../assets/images/user/user1.jpg"},{id:2,name:"Option 2",url:"../../assets/images/user/user2.jpg"},{id:3,name:"Option 3",url:"../../assets/images/user/user3.jpg"}];
 
 	var Options="";
-	$.each(data, function(i, val){ 
+	$.each(data, function(i, val){
 		$('#imgsel').append("<option value='"+val.id+"' data-icon='"+val.url+"'>"+val.name+"</option>");
 		$('#imgsel').formSelect();
 	});

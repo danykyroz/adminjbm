@@ -1,242 +1,195 @@
-{% extends '@EasyAdmin/default/layout.html.twig' %}
+{% extends 'base.html.twig' %}
 
-{% block content_title %}Clientes{% endblock %}
 
-{% block busqueda_general %}
+{% block body %}
+  <section class="content">
+    <div class="container-fluid">
+      <div class="block-header">
+        <div class="row">
+          <div class="col-xl-6 col-lg-5 col-md-4 col-sm-12">
+            <ul class="breadcrumb breadcrumb-style">
+              <li class="breadcrumb-item 	bcrumb-1">
+                <a href="{{asset('/')}}">
+                  <i class="material-icons">home</i> Home</a>
+              </li>
+              <li class="breadcrumb-item bcrumb-2">
+                <a href="javascript:void(0);">Clientes</a>
+              </li>
+            </ul>
+          </div>
+          {% if is_granted('ROLE_ADMIN') %}
 
-    <div class="search-box">
-        <form method="get" action="/admin/clientes">
-            <input type="hidden" name="action" value="search">
-            <input id="search" type="search" name="query" value="" placeholder="Buscar">
-            <button class="icon">
-                <i class="fa fa-search"></i>
-            </button>
-        </form>
-    </div>
-{% endblock %}
-
-{% block global_actions %}
-
-<div class="row">
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="button-action">
-        <a class="btn btn-default" href="{{ path('clientes_new') }}">Nuevo Cliente</a> 
+          <div class="col-xl-6 col-lg-7 col-md-8 col-sm-12 text-right">
+            <div class="breadcrumb-chart m-l-50">
+              <div class="float-right m-r-10">
+                <button type="button" class="btn btn-primary  waves-effect nuevo" data-toggle="modal" data-target="#exampleModalCenter">Nuevo Cliente</button>
+              </div>
             </div>
-    </div>
-</div>
-  
-{% endblock %}
-
-{% block main %}
-
-<div class="row clearfix">
-<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-    <div class="card">
-        <div class="header">
-            <h2>
-                <strong>Busqueda Avanzada</strong>
-            </h2>
-           
+          </div>
+          {% endif %}
         </div>
-        <div class="body">
-            <form id="frm-clientes-avanzado">
-                <div class="row clearfix">
-                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
-                        <div class="form-group">
-                            <div class="form-line">
-                              <select name="tipo_cliente" id="tipo_cliente">
-                                    <option value="">Tipo Cliente</option>
-                                    <option value="1" {% if tipo_cliente==1 %} selected='true' {% endif %}>Cliente Wallet</option>
-                                    <option value="2" {% if tipo_cliente==2 %} selected='true' {% endif %}>Admin Flotilla</option>
-                              </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
-                       <div class="form-group">
-                            <div class="form-line">
-                              <select name="estado" id="estado">
-                                    <option value="">Estado</option>
-                                    <option value="1" {% if estado==1 %} selected='true' {% endif %}>Activo   </option>
-                                     <option value="0" {% if estado==0 %} selected='true' {% endif %}>Suspendido</option>
-                                    
-                              </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
-                       <div class="form-group">
-                            <div class="form-line">
-                              <select name="estados" id="estados" data-url="{{asset('admin/delegaciones')}}" >
-                                    <option value="">Estados</option>
-                                   {% for depto in estados %}
-                                   <option {% if estados_form==depto.id %} selected='true' {% endif %}< value="{{depto.id}}">{{depto.estado}}</option>
-                                   {% endfor %}
-                              </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
-                       <div class="form-group">
-                            <div class="form-line">
-                              <select name="delegacion" id="delegacion">
-                                    <option value="">Delegación</option>
-                                   {% for delegacion in delegaciones %}
-                                   <option {% if delegacion_form==delegacion.id %} selected='true' {% endif %}< value="{{delegacion.id}}">{{delegacion.municipio}}</option>
-                                   {% endfor %}
-                              </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
-                       <div class="form-group">
-                            <div class="form-line">
-                              <select name="flotilla" id="flotilla">
-                                    <option value="">Flotillas</option>
-                                   {% for flotilla in flotillas %}
-                                   <option {% if flotilla_form==flotilla.id %} selected='true' {% endif %} value="{{flotilla.id}}"> {{flotilla.nombre}}</option>
-                                   {% endfor %}
-                              </select>
-                            </div>
-                        </div>
-                    </div>
+      </div>
+      <!-- Basic Table -->
+       <div class="row clearfix">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <div class="card">
+            <div class="body table-bordered table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Nombre</th>
+                    <th>Documento</th>
+                    <th>Email</th>
+                    <th>Teléfono</th>
+                    <th>Dirección</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for cliente in clientes %}  
+                  <tr class="rows">
+                    <th scope="row" id="td_id" >{{cliente.id}}</th>
+                    <td id="td_razonSocial">{{cliente.razonSocial}}</td>
+                    <td id="td_documento">{{cliente.documento}}</td>
+                    <td id="td_email">{{cliente.email}}</td>
+                    <td id="td_celular">{{cliente.celular}}</td>
+                    <td id="td_direccion">{{cliente.direccion}}</td>
+                    
                   
-                </div>
-                <div class="row clearfix">
-                        <div class="row">
-                          
-                            <div class="col-lg-6">
-                                <button type="submit" class="btn btn-primary btn-lg m-l-15 waves-effect">Buscar</button>
-                            </div>
-                             <div class="col-lg-6">
-                                <button type="button" id="btn-reset" class="btn btn-danger btn-lg m-l-15 waves-effect">Borrar</button>
-                            </div>
-                        
-                    </div>
-                </div>
-            </form>
+                    <td>
+                    {% if is_granted('ROLE_ADMIN') %}
+
+                      <a href="#" class="col-dark-gray waves-effect m-r-20 edit" title="Editar">
+                      <i class="material-icons">edit</i>
+                    </a>
+                    <a href="{{path('clientes_delete',{id:cliente.id})}}" class="col-dark-gray waves-effect m-r-20" title="Eliminar">
+                      <i class="material-icons">delete</i>
+                    </a>
+                    {% if cliente.estado=='Activo' %}
+                    <a href="{{path('clientes_suspender',{id:cliente.id})}}" class="col-dark-gray waves-effect m-r-20" title="Suspender">
+                      <i class="material-icons">pause</i>
+                    </a>
+                    {% else %}
+                    <a href="{{path('clientes_activar',{id:cliente.id})}}" class="col-dark-gray waves-effect m-r-20" title="Activar">
+                      <i class="material-icons">play_arrow</i>
+                      
+                    </a>
+                    {% endif %}
+
+                    {% endif %}
+                    <a href="{{path('pagos_cliente_id',{id:cliente.id})}}" class="col-dark-gray waves-effect m-r-20" title="Pagos">
+                      <i class="material-icons">attach_money</i>
+                    </a>
+                  </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
-</div>
-</div>
+  </section>
+  
 
-<div class="row">
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <form action="{{asset('clientes/new')}}">
 
-       
-
-        <div class="card">
-
-        <div class="header">
-            <h2>
-                <strong>Lista Clientes</strong>
-            </h2>
-            
+    <input type="hidden" name="id" id="id" value="0">
+  
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Formulario Cliente</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-    <div class="card-body table-responsive">
-    <table class="table table-condensed">
-        <thead>
-            <tr>
-                <th>{{ knp_pagination_sortable(pagination, 'Id', 'c.id') }}</th>
-                 <th>{{ knp_pagination_sortable(pagination, 'Fecha', 'c.createdAt') }}</th>
-               
-                <th>{{ knp_pagination_sortable(pagination, 'Documento', 'c.documento') }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'Nombres', 'c.nombres') }}</th>
-               
-                <th>{{ knp_pagination_sortable(pagination, 'Celular', 'c.celular') }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'Placa', 'c.placa') }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'Tipo', 'c.tipo') }}</th>
-                <th>Flotillas</th>
-                <th>{{ knp_pagination_sortable(pagination, 'Estado', 'c.estado') }}</th>
-                
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for row in clientes %}
-        {% set cliente=row.row %}
-            <tr>
-                <td>{{ cliente.id }}</td>
-                <td>{{ cliente.createdAt ? cliente.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ cliente.documento }}</td>
-                <td>{{ cliente.nombres }} {{ cliente.apellidos }}</td>
-                <td>{{ cliente.celular }}</td>
-                <td>{{ cliente.placa }}</td>
-                <td>{{ tipo[cliente.tipo] }}</td>
-                <td>{{row.flotilla}}
-                
-                <td>{{ cliente.estado }}</td>
-                <td>
-                    <a href="{{ path('clientes_edit', {'id': cliente.id}) }}">
-                        <i class="fa fa-fw fa-pencil"></i>
-                    </a>
-                    <a href="{{ path('clientes_show', {'id': cliente.id}) }}">
-                        <i class="fa fa-fw fa-eye"></i>
-                    </a>
+        <div class="modal-body">
 
-                    <a title="recuperar password" href="{{ path('email_reset_password', {'email': cliente.email}) }}" class="email_reset_password">
-                        <i class="fa fa-fw fa-envelope-o"></i>
-                    </a>
-                </td>
-                
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="16">Sin Resultados</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-</div>
-<div class="navigation">
-            {{ knp_pagination_render(pagination) }}
-</div>
-</div>
-</div>
+          <div class="form-group">
+            <div class="form-line">
+              <input type="text" name="razonSocial" id="razonSocial" class="form-control" placeholder="Razón Social">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-line">
+              <input type="text" name="documento" id="documento" class="form-control" placeholder="RFC">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-line">
+              <input type="text" name="email" id="email" class="form-control" placeholder="email">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-line">
+              <input type="text" name="celular" id="celular" class="form-control" placeholder="Teléfono">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-line">
+              <input type="text" name="direccion" id="direccion" class="form-control" placeholder="DIrección">
+            </div>
+          </div>
 
-{% endblock %}
+          <div class="form-group">
+            <p>
+                <b>Auxiliar</b>
+            </p>
+              <select class="col-12" name="auxiliar" id="auxiliar" style="width: 100%">
+                {% for auxiliar in auxiliares %}
+                <option value="{{auxiliar.id}}">{{auxiliar.razonSocial}}</option>
+                {% endfor %}
+              </select>
+          </div>
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Guardar Cliente</button>
+        </div>
+      </div>
+    </div>
+  </form>
+  </div>
+{% endblock %} 
+
+
 
 {% block body_javascript %}
-
 <script type="text/javascript">
 
-  $(document).ready(function(){
+  $('document').ready(function(){
 
-    var id=$("#estados").val();
-    if(id!=""){
-         var id=$("#estados").val();
-        var url=$("#estados").data('url');
-        $.get(url,{'id':id},function(html){
-            $('#delegacion').html(html);
-            $('#delegacion').trigger("onchange");
-            $('#delegacion').formSelect();
-        })
-    }
-
-    $("#estados").change(function(e){
-        var id=$(this).val();
-        var url=$(this).data('url');
-        $.get(url,{'id':id},function(html){
-            $('#delegacion').html(html);
-            $('#delegacion').trigger("onchange");
-            $('#delegacion').formSelect();
-        })
-        
+    $(".nuevo").click(function(){
+      $("#id").val("");
+      $("#razonSocial").val("");
+      $("#documento").val("");
+      $("#email").val("");
+      $("#celular").val("");
+      $("#direccion").val("");
     })
 
-     $("#btn-reset").click(function(e){
-        e.preventDefault();
-        $('#tipo_cliente').val("");
-        $('#delegacion').val("");
-        $('#frm-clientes-avanzado').submit();
-     })
-  })
- 
-</script>
- 
+    $('.edit').click(function(e){
 
-{% endblock %}
+      e.preventDefault();
+      var rows=$(this).closest('tr');
+
+      $("#id").val($(rows).find('#td_id').html());
+      $("#razonSocial").val($(rows).find('#td_razonSocial').html());
+      $("#documento").val($(rows).find('#td_documento').html());
+      $("#email").val($(rows).find('#td_email').html());
+      $("#celular").val($(rows).find('#td_celular').html());
+      $("#direccion").val($(rows).find('#td_direccion').html());
+
+      $("#exampleModalCenter").modal('show')
+
+    })
+  })       
+
+</script>
+{% endblock body_javascript %}
 

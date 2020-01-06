@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <title>Roxa - Bootstrap 4 Admin Dashboard Template</title>
+  <!-- Favicon-->
+  <link rel="icon" href="../../assets/images/favicon.ico" type="image/x-icon">
+
+  <!-- Plugins Core Css -->
+  <link href="../../assets/css/app.min.css" rel="stylesheet">
+
+  <!-- Custom Css -->
+  <link href="../../assets/css/style.css" rel="stylesheet">
+
+  <!-- You can choose a theme from css/styles instead of get all themes -->
+  <link href="../../assets/css/styles/all-themes.css" rel="stylesheet" />
+</head>
+
+<body>
+  <!-- Page Loader -->
+  <div class="page-loader-wrapper">
+    <div class="loader">
+      <div class="m-t-30">
+        <img class="loading-img-spin" src="../../assets/images/loading.png" width="20" height="20" alt="admin">
+      </div>
+      <p>Please wait...</p>
+    </div>
+  </div>
+  <!-- #END# Page Loader -->
+  <!-- Overlay For Sidebars -->
+  <div class="overlay"></div>
+  <!-- #END# Overlay For Sidebars -->
+
+  <!-- Top Bar -->
+  <nav class="navbar">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
+        <a href="javascript:void(0);" class="bars"></a>
+        <a class="navbar-brand" href="index.html">
+          <img src="../../assets/images/logo.png" height="30px" alt="" />
+          <span style="font-size: 1rem" class="logo-name">CONTADORES</span>
+        </a>
+      </div>
+      <div class="collapse navbar-collapse" id="navbar-collapse">
+        <ul class="pull-left">
+          <li>
+            <a href="javascript:void(0);" class="sidemenu-collapse">
+              <i class="fas fa-bars"></i>
+            </a>
+          </li>
+          <li>
+            <div class="search-box">
+              <input type="search" id="search" placeholder="Buscar..." />
+              <button class="icon">
+                <i class="fa fa-search"></i>
+              </button>
+            </div>
+          </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <!-- Full Screen Button -->
+          <li class="fullscreen">
+            <a href="javascript:;" class="fullscreen-btn">
+              <i class="fas fa-expand-arrows-alt"></i>
+            </a>
+          </li>
+          <!-- #END# Full Screen Button -->
+
+          <li class="dropdown user_profile">
+            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
+              <img src="https://automatedinsights.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png" width="32" height="32" alt="User">
+            </a>
+            <ul class="dropdown-menu pullDown">
+              <li class="body">
+                <ul class="user_dw_menu">
+                  <li>
+                    <a href="javascript:void(0);">
+                      <i class="material-icons">person</i>Profile
+                    </a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0);">
+                      <i class="material-icons">feedback</i>Feedback
+                    </a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0);">
+                      <i class="material-icons">help</i>Help
+                    </a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0);">
+                      <i class="material-icons">power_settings_new</i>Logout
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <!-- #END# Tasks -->
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- #Top Bar -->
+  <div>
+    <!-- Left Sidebar -->
+    <aside id="leftsidebar" class="sidebar">
+      <!-- Menu -->
+      <div class="menu">
+        <ul class="list">
+          <li class="sidebar-user-panel active">
+            <div class="user-panel">
+              <div class=" image">
+                <img src="https://automatedinsights.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png" class="img-circle user-img-circle" alt="User Image" />
+              </div>
+            </div>
+            <div class="profile-usertitle">
+              <div class="sidebar-userpic-name"> Julio Moreno </div>
+              <div class="profile-usertitle-job ">Super Admin </div>
+            </div>
+            <div class="sidebar-userpic-btn">
+
+            </div>
+          </li>
+          <li class="active">
+            <a href="../../index.html">
+              <i class="fas fa-tachometer-alt"></i>
+              <span>Home</span>
+            </a>
+          </li>
+          <li>
+            <a href="../../pages/clientes">
+              <i class="far fa-star"></i>
+              <span>Clientes</span>
+            </a>
+          </li>
+          <li>
+            <a href="../../pages/auxiliares">
+              <i class="fas  fa-users"></i>
+              <span>Auxiliares</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="../../pages/archivos">
+              <i class="fas fa-folder"></i>
+              <span>Archivos</span>
+            </a>
+          </li>
+
+        </ul>
+      </div>
+      <!-- #Menu -->
+    </aside>
+    <!-- #END# Left Sidebar -->
+
+  </div>
+
+  <section class="content">
+    <div class="container-fluid">
+      <div class="block-header">
+        <div class="row">
+          <div class="col-xl-6 col-lg-5 col-md-4 col-sm-12">
+            <ul class="breadcrumb breadcrumb-style">
+              <li class="breadcrumb-item 	bcrumb-1">
+                <a href="../../index.html">
+                  <i class="material-icons">home</i> Home</a>
+              </li>
+              <li class="breadcrumb-item bcrumb-2">
+                <a href="javascript:void(0);">Archivos</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-xl-6 col-lg-7 col-md-8 col-sm-12 text-right">
+            <div class="breadcrumb-chart m-l-50">
+              <div class="float-right m-r-10">
+                <button type="button" class="btn btn-primary  waves-effect" data-toggle="modal" data-target="#exampleModalCenter">Nuevo Auxiliar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Basic Table -->
+      <div class="row clearfix">
+        <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
+          <a  href="../../pages/archivos-greendella" class="card">
+            <div class="card-body center">
+              <i class="large material-icons" style="color: #00ffff">folder</i>
+                <p>Greendella</p>
+              </div>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Nuevo Auxiliar</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <div class="form-group">
+            <div class="form-line">
+              <input type="text" class="form-control" placeholder="Nombre">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-line">
+              <input type="password" class="form-control" placeholder="Documento">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-line">
+              <input type="password" class="form-control" placeholder="Teléfono">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-line">
+              <input type="password" class="form-control" placeholder="Dirección">
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary">Crear Auxiliar  </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Plugins Js -->
+
+  <script src="../../assets/js/app.min.js"></script>
+  <script src="../../assets/js/form.min.js"></script>
+
+  <script src="../../assets/js/bundles/multiselect/js/jquery.multi-select.js"></script>
+  <script src="../../assets/js/bundles/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js"></script>
+
+  <!-- Custom Js -->
+  <script src="../../assets/js/admin.js"></script>
+  <script src="../../assets/js/pages/forms/advanced-form-elements.js"></script>
+
+  <!-- Demo Js -->
+  <script src="../../assets/js/demo.js"></script>
+</body>
+
+</html>
