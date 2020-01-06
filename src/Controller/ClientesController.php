@@ -535,6 +535,20 @@ class ClientesController extends AbstractController
       )); 
   }
 
+    /**
+  * @Route("/pagos/{id}/cliente/revisado", name="pagos_cliente_revisado", methods={"GET","POST"})
+  */
+  public function pagos_cliente_revisado(Request $request, Pagos $pago){
+      
+      $em=$this->getDoctrine()->getManager();
+      
+      $pago->setRevisado(1);
+      $em->persist($pago);
+      $em->flush();
+
+      return  $this->redirect($this->generateUrl('pagos_clientes'));
+
+  }
 
   
   /**

@@ -206,18 +206,26 @@
                        <a href="{{asset(pago.file)}}" target="_blank" class="col-dark-gray waves-effect m-r-20" title="Archivo Adjunto">
                           <i class="material-icons">remove_red_eye</i>
                         </a>
-                       
-                        <a href="{{path('cuentas_por_cobrar_subir_archivos',{id:pago.id})}}" class="col-dark-gray waves-effect m-r-20" title="agregar">
+                        
+                        
+                         {% if is_granted('ROLE_CLIENTE') %}
+
+                         {% else %}
+                         
+                         {% if pago.revisado==1 %}
+                         
+                          {% else %}
+                         <a href="{{path('cuentas_por_cobrar_subir_archivos',{id:pago.id})}}" class="col-dark-gray waves-effect m-r-20" title="agregar">
                           <i class="material-icons">add</i>
                         </a> 
 
+                           <a href="{{path('pagos_cliente_revisado',{id:pago.id})}}" class="col-dark-gray waves-effect m-r-20 revisado" title="Revisado" >  <i class="material-icons">done</i></a>
+                         {% endif %}
 
-                         <a data-id="{{pago.id}}" href="{{path('pagos_delete',{id:pago.id})}}" class="col-dark-gray waves-effect m-r-20 eliminar" title="Eliminar">
+                         {% endif %}
+                          <a data-id="{{pago.id}}" href="{{path('pagos_delete',{id:pago.id})}}" class="col-dark-gray waves-effect m-r-20 eliminar" title="Eliminar">
                             <i class="material-icons">delete_sweep</i>
-                          </a>
-
-
-
+                         </a>
                       </td>
                     </tr>
                   {% endfor %}

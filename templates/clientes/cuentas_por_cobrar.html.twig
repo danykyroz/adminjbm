@@ -20,16 +20,27 @@
             </ul>
           </div>
           <div class="col-xl-6 col-lg-7 col-md-8 col-sm-12 text-right">
+          {% if pago %}
+            {% if pago.revisado==0 or pago.revisado=="" %}
+              <div class="breadcrumb-chart">
+                <div class="float-right">
+                  <div class="icon m-b-10">
+                     <a href="{{path('cuentas_por_cobrar_subir_archivos')}}" type="button" class="btn btn-primary  waves-effect" >Subir xml</a>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
 
-            <div class="breadcrumb-chart">
+            {% else %}
+              <div class="breadcrumb-chart">
               <div class="float-right">
                 <div class="icon m-b-10">
                    <a href="{{path('cuentas_por_cobrar_subir_archivos')}}" type="button" class="btn btn-primary  waves-effect" >Subir xml</a>
-                
-
                 </div>
               </div>
             </div>
+
+            {% endif %}
           </div>
         </div>
       </div>
@@ -49,7 +60,7 @@
             <form id="frm-clientes-avanzado">
                 <div class="row clearfix">
 
-                  {% if is_granted('ROLE_CLIENTE') %}
+                   {% if is_granted('ROLE_CLIENTE') %}
                                  <input type="hidden" name="filtros['cliente']" value="{{cliente.id}}" >
                     {% else %}
                     {% if pago==FALSE %}

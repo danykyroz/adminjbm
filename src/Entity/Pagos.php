@@ -93,6 +93,13 @@ class Pagos
      * @ORM\Column(name="cliente_id", type="string", length=11, nullable=false)
      */
     private $clienteId = '';
+
+     /**
+     * @var integer
+     *
+     * @ORM\Column(name="revisado", type="integer", length=11, nullable=true)
+     */
+    private $revisado = 0;
     
     
 
@@ -218,6 +225,18 @@ class Pagos
     public function setClienteId(string $clienteId): self
     {
         $this->clienteId = $clienteId;
+
+        return $this;
+    }
+
+    public function getRevisado()
+    {
+        return $this->revisado;
+    }
+
+    public function setRevisado($revisado): self
+    {
+        $this->revisado = $revisado;
 
         return $this;
     }
