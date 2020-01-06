@@ -118,6 +118,7 @@ class ClientesController extends AbstractController
     
   }
 
+
     /**
      * @Route("/{id}/activar", name="clientes_activar", methods={"GET","POST"})
     */
@@ -264,26 +265,68 @@ class ClientesController extends AbstractController
                
             }  
 
-           return $this->redirect($this->generateUrl('perfil'));
+           return $this->redirect($this->generateUrl('clientes_perfil'));
     }
 
 
     /**
-     * @Route("/perfil", name="perfil", methods={"GET"})
+     * @Route("/perfil/show", name="clientes_perfil", methods={"GET"})
      */
     public function perfil(Request $request): Response
     {
-        $user_admin=($this->getUser());
+        $user=($this->getUser());
         $em=$this->getDoctrine()->getManager();
         
-        $cliente=$em->getRepository('App:Clientes','c')->findOneBy(array('email'=>$user_admin->getEmail()));
+        $cliente=$em->getRepository('App:Clientes','c')->findOneBy(array('email'=>$user->getEmail()));
+        
+        if(is_object($cliente)){
 
-
-       
+        }else{
+          $cliente=false;
+        }
         return $this->render('clientes/perfil.html.twig', [
             'cliente' => $cliente,
+            'user'=>$user
            
         ]);
+    }
+
+     /**
+     * @Route("/perfil/{id}/edit", name="perfil_edit", methods={"GET","POST"})
+     */
+    public function perfil_edit(Request $request): Response
+    {
+        
+        $user=($this->getUser());
+
+        $session=$this->session;
+
+        $em=$this->getDoctrine()->getManager();
+        
+        $avatar=$_FILES['avatar'];
+        
+        if(is_array($avatar)){
+
+            if($_FILES["avatar"]["error"]==0){
+               $tmp_name = $_FILES["avatar"]["tmp_name"];
+               $name = $_FILES["avatar"]["name"];
+               $move= move_uploaded_file($tmp_name, "uploads/$name");
+               if($move){
+                $user->setAvatar("uploads/$name");
+                $em->persist($user);
+                $em->flush();
+
+                $session->set('avatar',$user->getAvatar());
+
+               }
+            }
+        }
+
+          return $this->render('clientes/perfil.html.twig', [
+            'cliente' => false,
+            'user'=>$user
+        ]);
+
     }
 
 
@@ -308,26 +351,38 @@ class ClientesController extends AbstractController
      */
     public function edit(Request $request, Clientes $cliente): Response
     {
-        $form = $this->createForm(ClientesType::class, $cliente);
-        $form->handleRequest($request);
-        $em=$this->getDoctrine()->getManager();
+        $user=($this->getUser());
+
         $session=$this->session;
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            
-            $em->persist($cliente);
-            $em->flush();
+        $em=$this->getDoctrine()->getManager();
+        
+        $avatar=$_FILES['avatar'];
+        
+        if(is_array($avatar)){
 
+            if($_FILES["avatar"]["error"]==0){
+               $tmp_name = $_FILES["avatar"]["tmp_name"];
+               $name = $_FILES["avatar"]["name"];
+               $move= move_uploaded_file($tmp_name, "uploads/$name");
+               if($move){
+                $cliente->setAvatar("uploads/$name");
+                $em->persist($cliente);
+                $em->flush();
 
-            $this->addFlash('success', 'Perfil actualizado exitosamente.');
+                $session->set('avatar',$cliente->getAvatar());
 
-            return $this->redirectToRoute('clientes_edit',array('id'=>$cliente->getId()));
+               }
+            }
         }
 
-        return $this->render('clientes/edit.html.twig', [
+          return $this->render('clientes/perfil.html.twig', [
             'cliente' => $cliente,
-            'form' => $form->createView(),
+            'user'=>$user
         ]);
+
+       
+    
     }
 
     /**
