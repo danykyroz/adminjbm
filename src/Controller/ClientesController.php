@@ -542,7 +542,12 @@ class ClientesController extends AbstractController
       
       $em=$this->getDoctrine()->getManager();
       
-      $pago->setRevisado(1);
+      if($pago->getRevisado()==1){
+        $pago->setRevisado(0);
+      }else{
+        $pago->setRevisado(1);
+      }  
+
       $em->persist($pago);
       $em->flush();
 

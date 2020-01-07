@@ -213,19 +213,24 @@
                          {% else %}
                          
                          {% if pago.revisado==1 %}
-                         
+                          <a href="{{path('pagos_cliente_revisado',{id:pago.id})}}" class="col-dark-gray waves-effect m-r-20" title="Activar Revisado">
+                          <i class="material-icons">done</i>
+                        </a> 
+
                           {% else %}
-                         <a href="{{path('cuentas_por_cobrar_subir_archivos',{id:pago.id})}}" class="col-dark-gray waves-effect m-r-20" title="agregar">
+                         <a href="{{path('cuentas_por_cobrar_subir_archivos',{id:pago.id})}}" class="waves-effect m-r-20" title="agregar">
                           <i class="material-icons">add</i>
                         </a> 
 
-                           <a href="{{path('pagos_cliente_revisado',{id:pago.id})}}" class="col-dark-gray waves-effect m-r-20 revisado" title="Revisado" >  <i class="material-icons">done</i></a>
+                           <a href="{{path('pagos_cliente_revisado',{id:pago.id})}}" class="col-dark-green  waves-effect m-r-20 revisado" title="Revisado" >  <i class="material-icons">done</i></a>
+
+                          <a data-id="{{pago.id}}" href="{{path('pagos_delete',{id:pago.id})}}" class="col-dark-gray waves-effect m-r-20 eliminar" title="Eliminar">
+                            <i class="material-icons">delete_sweep</i>
+                          </a>
                          {% endif %}
 
                          {% endif %}
-                          <a data-id="{{pago.id}}" href="{{path('pagos_delete',{id:pago.id})}}" class="col-dark-gray waves-effect m-r-20 eliminar" title="Eliminar">
-                            <i class="material-icons">delete_sweep</i>
-                         </a>
+                        
                       </td>
                     </tr>
                   {% endfor %}
