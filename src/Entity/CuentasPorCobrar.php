@@ -10,7 +10,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * CuentasPorCobrar
  *
  * @ORM\Table(name="cuentas_por_cobrar")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\CuentasPorCobrarRepository")
  */
 class CuentasPorCobrar
 {
