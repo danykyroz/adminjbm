@@ -535,7 +535,7 @@ class ClientesController extends AbstractController
       )); 
   }
 
-    /**
+  /**
   * @Route("/pagos/{id}/cliente/revisado", name="pagos_cliente_revisado", methods={"GET","POST"})
   */
   public function pagos_cliente_revisado(Request $request, Pagos $pago){
@@ -551,6 +551,31 @@ class ClientesController extends AbstractController
       $em->persist($pago);
       $em->flush();
 
+      return  $this->redirect($this->generateUrl('pagos_clientes'));
+
+  }
+
+
+    /**
+  * @Route("/pagos/edit/{id}", name="pagos_cliente_edit", methods={"GET","POST"})
+  */
+  public function pagos_cliente_edit(Request $request){
+      
+      $em=$this->getDoctrine()->getManager();
+      $pagoid=$request->get('pagoid');
+      $pago=$em->getRepository('App:Pagos','p')->find($pagoid);
+      $valor=$request->get('valor');
+      $valor=str_replace(",","", $valor);
+      $folio=$request->get('folio');
+
+      if($pago){
+        $pago->setValor($valor);
+        $pago->setFolio($folio);
+        $pago->setPorFacturar($valor-$pago->getFacturado());
+
+        $em->persist($pago);
+        $em->flush();
+      }
       return  $this->redirect($this->generateUrl('pagos_clientes'));
 
   }
@@ -1119,9 +1144,14 @@ class ClientesController extends AbstractController
           )); 
       }
 
-     if($request->get('clienteid')==""){
+     if($request->get('clienteid')=="" && $pagoid==0){
          
          return $this->render('clientes/select_cliente_cuentas.html.twig',array('clientes'=>$clientes)); 
+      }else{
+        if($pagoid>0){
+            $pago=$em->getRepository("App:Pagos","p")->find($pagoid);
+            $clienteId=$pago->getClienteId();
+        }
       }
 
 

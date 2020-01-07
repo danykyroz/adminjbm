@@ -173,11 +173,11 @@
                   <tbody>
                   {% for pago in pagos %}
 
-                    <tr>
+                    <tr id="tr_pago_{{pago.id}}" >
                       <td>{{pago.consecutivo}}</td>
                       <td>{{pago.fecha|date('d/m/y')}}</td>
 
-                      <td>$ {{pago.valor|number_format(2,'.',',')}}</td>
+                      <td id="td_pago_valor_{{pago.id}}">$ {{pago.valor|number_format(2,'.',',')}}</td>
                       <td>
                         {% if pago.tipo==1 %}
                         Cheque
@@ -185,7 +185,7 @@
                         Transferencia
                         {% endif %}
                       </td>
-                      <td>
+                      <td id="td_pago_folio_{{pago.id}}">
                         {% if pago.folio=="" %}
                         NA
                         {% else %}
@@ -221,6 +221,10 @@
                          <a href="{{path('cuentas_por_cobrar_subir_archivos',{id:pago.id})}}" class="waves-effect m-r-20" title="agregar">
                           <i class="material-icons">add</i>
                         </a> 
+
+                         <a href="#" data-id="{{pago.id}}" class="waves-effect m-r-20 editar" title="Editar">
+                          <i class="material-icons">edit</i>
+                         </a> 
 
                            <a href="{{path('pagos_cliente_revisado',{id:pago.id})}}" class="col-dark-green  waves-effect m-r-20 revisado" title="Revisado" >  <i class="material-icons">done</i></a>
 
@@ -335,6 +339,43 @@
     </div>
   </div>
 
+
+
+    <div class="modal fade" id="exampleModalEditar" tabindex="-1" role="dialog" aria-labelledby="exampleModalEditarTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Comprobante de pago</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form  name="form-pago" method="post" id="form-pago" action="{{asset('clientes/pagos/edit/1')}}" enctype="multipart/form-data" >
+        <input type="hidden" id="pagoid" name="pagoid" class="pagoid" >
+        <div class="modal-body">
+         
+
+          <div class="form-group">
+            <div class="form-line">
+              <input type="text" name="valor" id="valor" class="form-control CurrencyInput valor" placeholder="Valor">
+            </div>
+          </div>
+          <div class="form-group" id="div-folio" >
+            <div class="form-line">
+              <input type="text" name="folio" id="folio" class="form-control folio" placeholder="Folio">
+            </div>
+          </div>
+         
+        </div>
+        <div class="modal-footer">
+          <button type="submit" id="btn-pagos-submit" class="btn btn-primary">Guardar</button>
+        </div>
+      </form>
+        
+      </div>
+    </div>
+  </div>
+
   {% endblock %} 
 
 {% endblock %} 
@@ -346,6 +387,21 @@
 
  $('document').ready(function(){
 
+      $(".editar").click(function(e){
+        e.preventDefault();
+        var id=$(this).data('id');
+        var tr=$("#tr_pago_"+id);
+        var valor=$("#td_pago_valor_"+id).html();
+        var folio=$("#td_pago_folio_"+id).html();
+        $("#exampleModalEditar").modal('show');
+        var valor2=valor.replace('$','');
+        valor2 =valor2.replace(/,/g, '');
+
+        $('.valor').val(valor2.trim());
+        $('.folio').val(folio.trim());
+        $('.pagoid').val(id);
+
+      })
 
       $(".eliminar").click(function(e){
       e.preventDefault();
