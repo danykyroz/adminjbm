@@ -101,6 +101,12 @@ class Pagos
      */
     private $revisado = 0;
     
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="tipo_pago_id", type="integer", length=11, nullable=true)
+     */
+    private $tipoPagoId = 4;
     
 
     public function getId(): ?int
@@ -258,6 +264,19 @@ class Pagos
         return $prefijo.$folio.$pad;
 
     }
+
+     public function getTipoPagoId()
+    {
+        return $this->tipoPagoId;
+    }
+
+    public function setTipoPagoId($tipoPagoId): self
+    {
+        $this->tipoPagoId = $tipoPagoId;
+
+        return $this;
+    }
+
 
    
 

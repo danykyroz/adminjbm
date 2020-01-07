@@ -50,14 +50,14 @@
             <form id="frm-clientes-avanzado">
                 <div class="row clearfix">
                   {% if is_granted('ROLE_CLIENTE') %}
-                      <input type="hidden" name="filtros['cliente']" value="{{cliente.id}}" >
+                      <input type="hidden" name="filtros['cliente']" value="{{cliente.id}}" id="filtros_cliente" >
                   {% else%}
                     <div class="col-md-3 col-sm-3 col-xs-6">
                         <div class="form-group">
                             <div class="form-line">
                                                 <label>Clientes</label>
 
-                              <select name="filtros[cliente]" id="cliente">
+                              <select name="filtros[cliente]" id="filtros_cliente">
                                     <option value="">Clientes</option>
                                     {% for cliente in clientes %}
                                         <option value="{{cliente.id}}" {% if filtros.cliente==cliente.id %} selected="selected" {% endif %} >{{cliente.razonSocial}}</option>
@@ -218,9 +218,15 @@
                         </a> 
 
                           {% else %}
+                         {% if pago.tipopagoid==4 %}
                          <a href="{{path('cuentas_por_cobrar_subir_archivos',{id:pago.id})}}" class="waves-effect m-r-20" title="agregar">
                           <i class="material-icons">add</i>
                         </a> 
+                        {% else%}
+                         <a href="#" data-id="{{pago.id}}" class="waves-effect m-r-20 reportar_cuenta" title="Editar">
+                          <i class="material-icons">attach_money</i>
+                         </a> 
+                        {% endif %}
 
                          <a href="#" data-id="{{pago.id}}" class="waves-effect m-r-20 editar" title="Editar">
                           <i class="material-icons">edit</i>
@@ -307,6 +313,7 @@
               </div>
             </div>
           </div>
+        
 
           <div class="form-group">
             <div class="form-line">
@@ -324,6 +331,16 @@
             </div>
           </div>
 
+            <div class="form-group">
+                  <select name="tipopago" id="tipopago" class="col-12" >
+                     <option value="">Seleccione un tipo de Pago</option>
+                      {% for tipopago in tipopagos %}
+                      <option value="{{tipopago.id}}" >{{tipopago.nombre}}</option>
+
+                      {% endfor %}
+                  </select>
+          </div>
+          
            <div class="form-group">
             <div class="form-line">
               <input type="file" class="form-control" name="file" id="file" accept="image/*,application/pdf" placeholder="Archivo Adjunto">
@@ -376,6 +393,49 @@
     </div>
   </div>
 
+
+    <div class="modal fade" id="reportarCuenta" tabindex="-1" role="dialog" aria-labelledby="reportarCuentaTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Cuenta por cobrar</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form  name="form-cuenta" method="post" id="form-cuenta" action="{{asset('clientes/nueva/cuenta_por_cobrar')}}" enctype="multipart/form-data" >
+        <input type="hidden" id="pagoid_cuenta" name="pagoid" class="pagoid" value="" >
+        <div class="modal-body">
+         
+
+          <div class="form-group">
+            <div class="form-line">
+              <input type="text" name="valor" id="valor_cuenta" class="form-control CurrencyInput valor" placeholder="Valor">
+            </div>
+          </div>
+          <div class="form-group" id="div-folio" >
+            <div class="form-line">
+              <input type="text" name="folio" id="folio_cuenta" class="form-control folio" placeholder="Folio">
+            </div>
+          </div>
+
+           <div class="form-group">
+            <div class="form-line">
+              <input type="file" class="form-control" name="file" id="file_cuenta" accept="image/*,application/pdf" placeholder="Archivo Adjunto">
+            </div>
+          </div>
+         
+        </div>
+        <div class="modal-footer">
+          <button type="submit" id="btn-cuenta-submit" class="btn btn-primary">Guardar</button>
+        </div>
+      </form>
+        
+      </div>
+    </div>
+  </div>
+
+
   {% endblock %} 
 
 {% endblock %} 
@@ -386,6 +446,14 @@
    var cheque=true;
 
  $('document').ready(function(){
+
+      $(".reportar_cuenta").click(function(e){
+        e.preventDefault();
+        var id=$(this).data('id');
+        $("#pagoid_cuenta").val(id);
+        $("#reportarCuenta").modal('show');
+
+      })
 
       $(".editar").click(function(e){
         e.preventDefault();
@@ -457,6 +525,24 @@
         $('#frm-clientes-avanzado').submit();
      })
 
+     $("#btn-cuenta-submit").click(function(e){
+      e.preventDefault();
+      if($("#valor_cuenta").val()==""){
+         swal("Por favor ingrese una valor.");
+        return false;
+      }
+      if($("#folio_cuenta").val()==""){
+         swal("Por favor ingrese una # de folio.");
+        return false;
+      }
+      if($("#file_cuenta").val()==""){
+         swal("Por favor sube un archivo.");
+        return false;
+      }
+      $("#form-cuenta").submit();
+
+     });
+
 
     $('#btn-pagos').click(function(e){
       e.preventDefault();
@@ -467,25 +553,35 @@
         }
 
       })
+
+      if($("#cliente").val()==""){
+        swal("Por favor seleccione un cliente.");
+        return false;
+      }
       
       if($("#valor").val()=="" ) {
-        alert("Por favor ingresa una valor.");
+        swal("Por favor ingrese una valor.");
         return false;
       }
       
       if($("#folio").val()=="" && cheque===true){
-          alert("Por favor ingresa un folio.");
+          swal("Por favor ingresa un # de folio.");
         return false;
       }
     
       
       if($("#fecha").val()==""){
-        alert("Por favor ingresa una fecha valida");
+        swal("Por favor ingresa una fecha valida");
+        return false;
+      }
+
+      if($('#tipopago').val()==""){
+       swal("Por favor seleccione un tipo de pago");
         return false;
       }
 
       if($("#file").val()==""){
-        alert("Por favor ingresa una archivo valido.");
+        swal("Por favor ingresa una archivo valido.");
         return false;
       }
 

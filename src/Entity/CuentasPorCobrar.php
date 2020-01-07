@@ -164,6 +164,15 @@ class CuentasPorCobrar
      */
     private $clienteId = '';
 
+
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="uuid", type="string", length=50, nullable=true)
+     */
+    private $uuid = '';
+
+
     
     
 
@@ -432,7 +441,7 @@ class CuentasPorCobrar
         return $this;
     }
 
-     public function getExtension(): ?string
+    public function getExtension(): ?string
     {
         return $this->extension;
     }
@@ -441,7 +450,18 @@ class CuentasPorCobrar
     public function setExtension(?string $extension): self
     {
         $this->extension = $extension;
+        return $this;
+    }
 
+     public function getUuid(): ?string
+    {
+        return $this->uuid;
+    }
+
+
+    public function setUuid(?string $uuid): self
+    {
+        $this->uuid = $uuid;
         return $this;
     }
    

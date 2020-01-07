@@ -523,14 +523,15 @@ class ClientesController extends AbstractController
         );
      
 
+      $tipopagos=$em->getRepository('App:TipoPago','t')->findAll();
 
       return $this->render('clientes/pagos.html.twig',array(
       'pagos'=>$pagination,
       'cliente'=>$cliente,
       'clientes'=>$clientes,
       'pagination'=>$pagination,
-      'filtros'=>$filtros
-
+      'filtros'=>$filtros,
+      'tipopagos'=>$tipopagos
 
       )); 
   }
@@ -688,13 +689,15 @@ class ClientesController extends AbstractController
             50 /*limit per page*/
         );
      
+      $tipopagos=$em->getRepository('App:TipoPago','t')->findAll();
 
       return $this->render('clientes/pagos.html.twig',array(
       'pagos'=>$pagination,
       'cliente'=>$cliente,
       'pagination'=>$pagination,
       'clientes'=>$this->getClientes_Select(),
-      'filtros'=>$filtros
+      'filtros'=>$filtros,
+      'tipopagos'=>$tipopagos
 
       )); 
   }
@@ -714,7 +717,7 @@ class ClientesController extends AbstractController
      $pagos->setFacturado(0);
      $pagos->setPorFacturar($request->get('valor'));
      $pagos->setClienteId($request->get('cliente'));
-     
+     $pagos->setTipoPagoId($request->get('tipopago'));
      $em->persist($pagos);
      $em->flush();
 
@@ -747,12 +750,19 @@ class ClientesController extends AbstractController
 
       $em=$this->getDoctrine()->getManager();
       $qb=$em->createQueryBuilder();
-
-      $qb->select('c')->from('App:CuentasPorCobrar','c')->where('c.pagoId=:pagoId')->setParameter('pagoId',$pago->getId());
-      $qb->andWhere("c.rfc!=''");
+      if($pago->getTipoPagoId()==4){
+        $qb->select('c')->from('App:CuentasPorCobrar','c')->where('c.pagoId=:pagoId')->setParameter('pagoId',$pago->getId());
+        $qb->andWhere("c.rfc!=''");
+        
+      }else{
+        $qb->select('c')->from('App:CuentasPorCobrar','c')->where('c.pagoId=:pagoId')->setParameter('pagoId',$pago->getId());
+        $qb->andWhere("c.extension!='xml'");
+        
+      }
       return new Response(count($qb->getQuery()->getResult()));
+    }
 
-  }
+
 
    /**
   * @Route("/pago/delete/{id}", name="pagos_delete", methods={"GET"})
@@ -1073,8 +1083,12 @@ class ClientesController extends AbstractController
 
         }
         //Se agrega extension xml para todas las consultas
-        $qb->andWhere("c.extension='xml'");
-
+        if($pago->getTipoPagoId()==4){
+          $qb->andWhere("c.extension='xml'");
+        }else{
+            $qb->andWhere("c.extension!='xml'");
+        }
+       
 
         if($filtros['proveedor']){
 
@@ -1298,6 +1312,98 @@ class ClientesController extends AbstractController
   }
 
 
+     /**
+  * @Route("/nueva/cuenta_por_cobrar", name="nueva_cuenta_por_cobrar", methods={"GET","POST"})
+  */
+  public function nueva_cuenta_por_cobrar(Request $request){
+
+      //$id=$request->get('id');
+      $em=$this->getDoctrine()->getManager();
+      $pagoid=$request->get('pagoid',0);
+      $pago=false;
+      $valor=$request->get('valor');
+      $folio=$request->get('folio');
+      $valor=str_replace(",","",$valor);
+
+      if(isset($_FILES['file'])){
+        
+       $tmp_name = $_FILES["file"]["tmp_name"];
+       $name = $_FILES["file"]["name"];
+       $move= move_uploaded_file($tmp_name, "uploads/xmls/$name");
+
+       if($move){
+        
+        $ruta="uploads/xmls/$name";
+        $explode=explode(".",$name);
+        $ext=$explode[count($explode)-1];
+      
+        if($ext!="xml"){
+
+            if($pagoid>0){
+              $pago=$em->getRepository('App:Pagos','p')->find($pagoid);
+            }
+            if(is_object($pago)){
+
+              $CuentasPorCobrar=new CuentasPorCobrar();
+              $CuentasPorCobrar->setFolio($folio);
+              $CuentasPorCobrar->setFecha(new \DateTime('now'));
+              $CuentasPorCobrar->setCreatedAt(new \DateTime('now'));
+              $CuentasPorCobrar->setUpdatedAt(new \DateTime('now'));
+              $CuentasPorCobrar->setClienteId($pago->getClienteId());
+              $CuentasPorCobrar->setValor($valor);
+              $CuentasPorCobrar->setIva(0);
+              $CuentasPorCobrar->setTotal($valor);
+              $CuentasPorCobrar->setNombre($name);
+              $CuentasPorCobrar->setExtension($ext);
+
+              if($pagoid>0){
+                $CuentasPorCobrar->setPagoId($pagoid);
+              }
+
+              $CuentasPorCobrar->setXml($ruta);
+             
+              $em->persist($CuentasPorCobrar);
+              $em->flush();
+
+
+
+              $qb=$em->createQueryBuilder();
+              $qb->select("sum(c.total) as suma")->from('App:CuentasPorCobrar','c')->where("c.pagoId=:pagoId");
+              $qb->setParameter("pagoId",$pagoid);
+
+              $total=$qb->getQuery()->getSingleScalarResult();
+              $resta=$pago->getValor()-$total;
+              if($resta<0){
+                      return  new Response('La factura supera el saldo por facturar');
+              }
+
+              $pago->setFacturado($total);
+              $pago->setPorFacturar($resta);
+              $em->persist($pago);
+              $em->flush();
+
+
+             return  $this->redirect($this->generateUrl('pagos_clientes'));
+
+            }
+           
+
+        
+        }else{
+            
+           
+            
+        }
+    
+
+
+       }
+      
+      }
+
+  }
+
+
    /**
   * @Route("/cuentas_por_cobrar/analizar_archivos/{clienteid}", name="cuentas_por_cobrar_analizar_archivos", methods={"GET","POST"})
   */
@@ -1350,19 +1456,19 @@ class ClientesController extends AbstractController
             $rfc_cliente=(String)$cliente->getDocumento();
             $rfc_receptor=(String)$data_json->Receptor->Rfc;
             if($rfc_cliente!=$rfc_receptor){
-                 return new Response("Rfc archivo no coincide con el del cliente".$data_json->Receptor->Rfc);
+                 return new Response("Rfc archivo no coincide con el del cliente ".$data_json->Receptor->Rfc);
             }
 
             $qb=$em->createQueryBuilder();
-            $qb->select("c.rfc")->from('App:CuentasPorCobrar','c')->where("c.rfc=:rfc");
+            $qb->select("c.rfc")->from('App:CuentasPorCobrar','c')->where("c.uuid=:uuid");
             $qb->andWhere('c.clienteId=:clienteId');
-            $qb->setParameter("rfc",$data_json->Emisor->Rfc);
+            $qb->setParameter("uuid",$data_json->TimbreFiscalDigital->UUID);
             $qb->setParameter("clienteId",$clienteId);
 
             $result_existe=$qb->getQuery()->getResult();
             if(count($result_existe)>0){
 
-               return new Response("Rfc #{$data_json->Receptor->Rfc} ya existe");
+               return new Response("UUID #{$data_json->TimbreFiscalDigital->UUID} ya existe");
 
             }
 
@@ -1398,6 +1504,8 @@ class ClientesController extends AbstractController
             $CuentasPorCobrar->setClienteId($clienteId);
             $CuentasPorCobrar->setXml($ruta_nueva);
             $CuentasPorCobrar->setFolio($data_json->Comprobante->Folio);
+            $CuentasPorCobrar->setUuid($data_json->TimbreFiscalDigital->UUID);
+
             if($pagoid>0){
               $CuentasPorCobrar->setPagoId($pagoid);
               $pago=$em->getRepository('App:Pagos','p')->find($pagoid);

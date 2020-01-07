@@ -191,16 +191,17 @@
                       <th>{{cuenta.proveedor}}</th>
                       <td>{{cuenta.rfc}}</td>
                       <td>{{cuenta.fecha|date('d/m/Y')}}</td>
-                      <td>{{cuenta.valor}}</td>
-                      <td>{{cuenta.iva}}</td>
-                      <td>{{cuenta.total}}</td>
+                      <td>$ {{cuenta.valor|number_format(2,'.',',')}}</td>
+                      <td>$ {{cuenta.iva|number_format(2,'.',',')}}</td>
+                      <td>$ {{cuenta.total|number_format(2,'.',',')}}</td>
                       <td>{{cuenta.cancelable}}</td> 
                       <td>No</td>
                       <td> 
-
+                      {% if cuenta.extension=="xml" %} 
                         <a href="{{path('detalle_factura',{id:cuenta.id})}}" data-toggle="modal" data-target="#exampleModalDetalle" class="col-dark-gray waves-effect m-r-20 detalle_factura" data-id="{{cuenta.id}}" title="Ver Detalle">
                           <i class="material-icons">remove_red_eye</i>
                         </a>
+                        {% endif %}
                       
                         {{ render(path('cuentas_por_cobrar_link_pdf',{id:cuenta.id})) }}
 
@@ -285,7 +286,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Información XML</h5>
+          <h5 class="modal-title" id="exampleModalLongTitle">Detalle Comprobante de pago</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
