@@ -47,7 +47,8 @@
                 </h2>
             </div>
         <div class="body">
-            <form id="frm-clientes-avanzado">
+            <form id="frm-filtros-avanzado" name="frm-filtros-avanzado" >
+              <input type="hidden" name="exportar" id="exportar" value="" >
                 <div class="row clearfix">
                   {% if is_granted('ROLE_CLIENTE') %}
                       <input type="hidden" name="filtros['cliente']" value="{{cliente.id}}" id="filtros_cliente" >
@@ -143,14 +144,12 @@
                   </a>
                   <ul class="dropdown-menu pull-right">
                     <li>
-                      <a href="javascript:void(0);">Action</a>
+                      <a href="javascript:void(0);">Acciones</a>
                     </li>
-                    <li>
-                      <a href="javascript:void(0);">Another action</a>
+                   <li>
+                      <a href="#" onclick="exportar();return false" >Exportar Excel</a>
                     </li>
-                    <li>
-                      <a href="javascript:void(0);">Something else here</a>
-                    </li>
+                   
                   </ul>
                 </li>
               </ul>
@@ -440,6 +439,12 @@
 {% block body_javascript %}
 <script type="text/javascript">
    var cheque=true;
+
+   function exportar(){
+    $("#exportar").val("true");
+    $("#frm-filtros-avanzado").submit();
+
+   }
 
  $('document').ready(function(){
 

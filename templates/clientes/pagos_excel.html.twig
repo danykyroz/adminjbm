@@ -1,0 +1,58 @@
+
+              <div class="table-responsive">
+                <table id="tableExport" class="display table table-hover table-checkable order-column m-t-20 width-per-100">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Fecha</th>
+                      <th>Valor</th>
+                      <th>Tipo de pago</th>
+                      <th>Folio</th>
+                      <th>Facturado</th>
+                      <th>Por Facturar</th>
+                      <th>Facturas</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for pago in pagos %}
+
+                    <tr id="tr_pago_{{pago.id}}" >
+                      <td>{{pago.consecutivo}}</td>
+                      <td>{{pago.fecha|date('d/m/y')}}</td>
+
+                      <td id="td_pago_valor_{{pago.id}}">$ {{pago.valor|number_format(2,'.',',')}}</td>
+                      <td>
+                        {% if pago.tipo==1 %}
+                        Cheque
+                        {% else %}
+                        Transferencia
+                        {% endif %}
+                      </td>
+                      <td id="td_pago_folio_{{pago.id}}">
+                        {% if pago.folio=="" %}
+                        NA
+                        {% else %}
+                        {{pago.folio}}
+                        {% endif%}
+                      </td>
+                      <td>$ {{pago.facturado|number_format(2,'.',',')}}</td>
+                      <td>$ {{pago.porFacturar|number_format(2,'.',',')}}</td>
+                      <td> 
+                     
+
+                      <a href="{{path('cuentas_por_cobrar_pago_id',{id:pago.id})}}" class="col-dark-gray waves-effect m-r-20" title="agregar">
+                         <div style="background: blue; color: #fff; height:20px; width: 20px; text-align: center; border-radius: 50%; float: left; margin-right: 15px;" class="">
+                      {{ render(path('facturas_pago_id',{id:pago.id})) }}
+                                            </div>
+
+                      </a>
+                      
+                        
+                      </td>
+                    </tr>
+                  {% endfor %}
+                  </tbody>
+
+                </table>
+              </div>
+            

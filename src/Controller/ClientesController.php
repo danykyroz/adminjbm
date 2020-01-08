@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 use App\Entity\Clientes;
 use App\Entity\Pagos;
@@ -525,6 +525,31 @@ class ClientesController extends AbstractController
 
       $tipopagos=$em->getRepository('App:TipoPago','t')->findAll();
 
+      $exportar=$request->get('exportar','');
+
+      if($exportar==true){
+        
+        $pagos=$qb->getQuery()->getResult();
+         $body= $this->renderView('clientes/pagos_excel.html.twig',array(
+          'pagos'=>$pagos));
+
+          $response=new Response();
+          $fecha=date('Ymd_His');
+
+          $dispositionHeader = $response->headers->makeDisposition(
+            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+            "gastos_y_compras_$fecha.xls"
+        );
+
+        $response->headers->set('Content-Type', 'application/vnd.ms-excel; charset=utf-8');
+        $response->headers->set('Pragma', 'public');
+        $response->headers->set('Content-type: application/x-msexcel');
+        $response->headers->set('Cache-Control', 'maxage=1');
+        $response->headers->set('Content-Disposition', $dispositionHeader);
+        $response->setContent($body);
+        return $response;
+      }
+
       return $this->render('clientes/pagos.html.twig',array(
       'pagos'=>$pagination,
       'cliente'=>$cliente,
@@ -948,6 +973,32 @@ class ClientesController extends AbstractController
             $request->query->getInt('page', 1), /*page number*/
             50 /*limit per page*/
         );
+
+        $exportar=$request->get('exportar','');
+
+      if($exportar==true){
+        
+        $cuentas=$qb->getQuery()->getResult();
+         $body= $this->renderView('clientes/cuentas_por_cobrar_excel.html.twig',array(
+          'cuentas'=>$cuentas));
+
+          $response=new Response();
+          $fecha=date('Ymd_His');
+
+          $dispositionHeader = $response->headers->makeDisposition(
+            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+            "cuentas_por_cobrar_$fecha.xls"
+        );
+
+        $response->headers->set('Content-Type', 'application/vnd.ms-excel; charset=utf-8');
+        $response->headers->set('Content-type: application/x-msexcel');
+        $response->headers->set('Pragma', 'public');
+        $response->headers->set('Cache-Control', 'maxage=1');
+        $response->headers->set('Content-Disposition', $dispositionHeader);
+        $response->setContent($body);
+        return $response;
+      }
+
      
       return $this->render('clientes/cuentas_por_cobrar.html.twig',array(
       'cuentas'=>$pagination,

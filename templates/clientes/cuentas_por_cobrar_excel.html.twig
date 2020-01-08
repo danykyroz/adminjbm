@@ -1,0 +1,37 @@
+
+<div class="table-responsive">
+  <table id="tableExport" class="display table table-hover table-checkable order-column m-t-20 width-per-100">
+    <thead>
+      <tr>
+        <th>Folio</th>
+        <th>Proveedor</th>
+        <th>RFC</th>
+        <th>Fecha</th>
+        <th>Valor</th>
+        <th>IVA</th>
+        <th>Total</th>
+        <th>Cancelable</th>
+        <th>En Lista Negra</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for cuenta in cuentas %}  
+      <tr>
+
+        <td>{{cuenta.folio}}</td>
+        <th>{{cuenta.proveedor}}</th>
+        <td>{{cuenta.rfc}}</td>
+        <td>{{cuenta.fecha|date('d/m/Y')}}</td>
+        <td>$ {{cuenta.valor|number_format(2,'.',',')}}</td>
+        <td>$ {{cuenta.iva|number_format(2,'.',',')}}</td>
+        <td>$ {{cuenta.total|number_format(2,'.',',')}}</td>
+        <td>{{cuenta.cancelable}}</td> 
+        <td>No</td>
+    
+      </tr>
+      {% endfor %}
+
+    </tbody>
+
+  </table>
+</div>
