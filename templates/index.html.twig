@@ -59,7 +59,7 @@
                     <div class="card">
                         <div class="header">
                             <h2>
-                                <strong>XML</strong> Analizados</h2>
+                                <strong>Facturado</strong> Mensual</h2>
                             <ul class="header-dropdown m-r--5">
                                 <li class="dropdown">
                                     <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -91,7 +91,7 @@
                     <div class="card">
                         <div class="header">
                             <h2>
-                                <strong>Estados</strong> XML</h2>
+                                <strong>Estados</strong> Facturas</h2>
                             <ul class="header-dropdown m-r--5">
                                 <li class="dropdown">
                                     <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -124,7 +124,6 @@
 
         </div>
     </section>
-
 {% endblock %} 
 {% endblock %} 
 
@@ -133,7 +132,118 @@
 
     <script src="{{asset('adminlte/assets/js/pages/charts/jquery-knob.js')}}"></script>
     <script src="{{asset('adminlte/assets/js/pages/sparkline/sparkline-data.js')}}"></script>
-    <script src="{{asset('adminlte/assets/js/pages/dashboard/dashboard3.js')}}"></script>
+<script>
+
+    'use strict';
+    $(function () {
+        initCharts();
+    });
+    //Charts
+    function initCharts() {
+
+        try {
+            // polar chart
+            var ctx = document.getElementById("polar-chart");
+            if (ctx) {
+                ctx.height = 200;
+                var myChart = new Chart(ctx, {
+                    type: 'polarArea',
+                    data: {
+                        datasets: [{
+                            data: [{{ estadosFacturas|join(',') }}],
+                            backgroundColor: [
+                                "rgba(0, 123, 255,0.9)",
+                                "rgba(0, 123, 255,0.8)",
+                                "rgba(0, 123, 255,0.7)",
+                                "rgba(0,0,0,0.2)",
+                                "rgba(0, 123, 255,0.5)"
+                            ]
+
+                        }],
+                        labels: [
+                            "Facturado",
+                            "Por facturar",
+                        ]
+                    },
+                    options: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                fontFamily: 'Poppins'
+                            }
+
+                        },
+                        responsive: true
+                    }
+                });
+            }
+
+        } catch (error) {
+            console.log(error);
+        }
+
+        try {
+
+            var etiqueta = [];
+            {% for label in facturadoMensual.labels %}
+                etiqueta.push("{{ label }}");
+            {% endfor %}
+
+            var valor = [];
+            {% for value in facturadoMensual.values %}
+                valor.push("{{ value }}");
+            {% endfor %}
+
+            // single bar chart
+            var ctx = document.getElementById("singel-bar-chart");
+            if (ctx) {
+                ctx.height = 200;
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: etiqueta,
+                        datasets: [
+                            {
+                                label: "Facturado",
+                                data: valor,
+                                borderColor: "rgba(0, 123, 255, 0.9)",
+                                borderWidth: "0",
+                                backgroundColor: "rgba(0, 123, 255, 0.5)"
+                            }
+                        ]
+                    },
+                    options: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                fontFamily: 'Poppins'
+                            }
+
+                        },
+                        scales: {
+                            xAxes: [{
+                                ticks: {
+                                    fontFamily: "Poppins"
+
+                                }
+                            }],
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true,
+                                    fontFamily: "Poppins"
+                                }
+                            }]
+                        }
+                    }
+                });
+            }
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+</script>
 
 {% endblock %} 
 
