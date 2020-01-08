@@ -1695,11 +1695,14 @@ class ClientesController extends AbstractController
                   "nomina_$fecha.xls"
               );
 
+               $response->setContent($body);
+
+
               $response->headers->set('Content-Type', 'application/vnd.ms-excel; charset=utf-8');
               $response->headers->set('Pragma', 'public');
               $response->headers->set('Cache-Control', 'maxage=1');
               $response->headers->set('Content-Disposition', $dispositionHeader);
-              $response->setContent($body);
+              
               return $response;
 
             }  

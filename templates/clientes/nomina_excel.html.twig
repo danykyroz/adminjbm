@@ -1,17 +1,29 @@
+<style type="text/css">
+    table {
+        border-collapse: collapse;
+    }
+     table  th {
+        border: 1px solid #333; 
+    }
+    table  td {
+        border: 1px solid #333; 
+    }
+</style>
+
 <div class="table-responsive">
-  <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+  <table >
     <thead>
       <tr>
-        <th>Nombre</th>
-        <th>Cargo</th>
-        <th>Fecha</th>
-        <th>D</th>
-        <th>L</th>
-        <th>M</th>
-        <th>MI</th>
-        <th>J</th>
-        <th>V</th>
-        <th>S</th>
+        <th >Nombre</th>
+        <th >Cargo</th>
+        <th >Fecha</th>
+        <th >D</th>
+        <th >L</th>
+        <th >M</th>
+        <th >MI</th>
+        <th >J</th>
+        <th >V</th>
+        <th >S</th>
       </tr>
     </thead>
     <tbody>
@@ -19,11 +31,11 @@
       {% set empleado=objempleado.empleado %}
 
       <tr id="horario_empleado_{{empleado.id}}" data-empleado="{{empleado.id}}" >
-        <td>{{empleado.nombres}}</td>
-        <td>{{empleado.cargo}}</td>
-        <td>{{empleado.createdAt|date('d/m/y')}}</td>
+        <td >{{empleado.nombres}}</td>
+        <td >{{empleado.cargo}}</td>
+        <td >{{empleado.createdAt|date('d/m/y')}}</td>
 
-        <td >
+        <td  >
           {% if objempleado.horario.D=="A"  %}
            A
          {% endif %}
@@ -47,7 +59,7 @@
          {% endif %}
           
         </td>
-        <td>
+        <td >
          {% if objempleado.horario.L=="A"  %}
            A
          {% endif %}
@@ -70,7 +82,7 @@
            X
          {% endif %}
         </td>
-        <td>
+        <td >
           {% if objempleado.horario.M=="A"  %}
            A
          {% endif %}
@@ -93,7 +105,7 @@
            X
          {% endif %}
       </td>
-      <td>
+      <td >
           {% if objempleado.horario.MI=="A"  %}
            A
          {% endif %}
@@ -116,7 +128,7 @@
            X
          {% endif %}
       </td>
-      <td>
+      <td >
           {% if objempleado.horario.J=="A"  %}
            A
          {% endif %}
@@ -139,7 +151,7 @@
            X
          {% endif %}
       </td>
-      <td>
+      <td >
           {% if objempleado.horario.V=="A"  %}
            A
          {% endif %}
@@ -162,7 +174,7 @@
            X
          {% endif %}
       </td>
-      <td>
+      <td >
           {% if objempleado.horario.S=="A"  %}
            A
          {% endif %}
@@ -187,7 +199,7 @@
        
 
       </td>
-     
+
     </tr>
     {% endfor %}
 
