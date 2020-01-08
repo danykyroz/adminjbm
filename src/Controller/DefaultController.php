@@ -33,13 +33,14 @@ class DefaultController extends AbstractController
             $ccRepo = $em->getRepository(CuentasPorCobrar::class);
             $templeados = $em->getRepository(Empleados::class)->findAll();
             $facturadoMensual = $this->getFacturadoMensual($tcomprobantes);
-
+            $estadosFacturas = $this->getEstadosFacturas($tcomprobantes);
 
             $params = [
                 'comprobantesReportados' => count($tcomprobantes),
                 'cuentasPorCobrar' => count($ccRepo->findCuentasPorCobrar()),
                 'empleados' => count($templeados),
                 'facturadoMensual' => $facturadoMensual,
+                'estadosFacturas' => $estadosFacturas,
             ];
 
             if ($user->getRoles()[0] == "ROLE_ADMIN") {
@@ -71,9 +72,6 @@ class DefaultController extends AbstractController
 
         }
 
-
-
-
         if(count($facturado) > 0) {
             return [
                 'labels' => array_keys($facturado),
@@ -85,6 +83,23 @@ class DefaultController extends AbstractController
         return null;
 
     }
+
+    public function getEstadosFacturas($pagos) {
+
+        $estados = [
+            'facturado' => 0,
+            'porfacturar' => 0
+        ];
+        foreach ($pagos as $pago){
+            $estados['facturado'] += $pago->getFacturado();
+            $estados['porfacturar'] += $pago->getPorFacturar();
+        }
+
+        return $estados;
+
+    }
+
+
 
     /**
      * @Route("/menu", name="default_menu")
