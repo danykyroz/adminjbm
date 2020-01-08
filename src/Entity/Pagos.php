@@ -259,6 +259,24 @@ class Pagos
 
     }
 
+    public static function getMes($mes) {
+        $meses = [
+            '01' => 'Ene',
+            '02' => 'Feb',
+            '03' => 'Mar',
+            '04' => 'Abr',
+            '05' => 'May',
+            '06' => 'Jun',
+            '07' => 'Jul',
+            '08' => 'Ago',
+            '09' => 'Sept',
+            '10' => 'Oct',
+            '11' => 'Nov',
+            '12' => 'Dic',
+        ];
+        return $meses[$mes];
+    }
+
    
 
 }

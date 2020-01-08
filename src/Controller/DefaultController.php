@@ -32,11 +32,14 @@ class DefaultController extends AbstractController
             $tcomprobantes = $em->getRepository(Pagos::class)->findBy([]);
             $ccRepo = $em->getRepository(CuentasPorCobrar::class);
             $templeados = $em->getRepository(Empleados::class)->findAll();
+            $facturadoMensual = $this->getFacturadoMensual($tcomprobantes);
+
 
             $params = [
                 'comprobantesReportados' => count($tcomprobantes),
                 'cuentasPorCobrar' => count($ccRepo->findCuentasPorCobrar()),
-                'empleados' => count($templeados)
+                'empleados' => count($templeados),
+                'facturadoMensual' => $facturadoMensual,
             ];
 
             if ($user->getRoles()[0] == "ROLE_ADMIN") {
@@ -54,6 +57,34 @@ class DefaultController extends AbstractController
 
     }
 
+    public function getFacturadoMensual($pagos) {
+
+        $facturado = [];
+        foreach ($pagos as $pago){
+            $mes = $pago->getFecha()->format('m');
+
+            if(!isset($facturado[Pagos::getMes($mes)] )) {
+                $facturado[Pagos::getMes($mes)]  = $pago->getFacturado();
+            } else {
+                $facturado[Pagos::getMes($mes)] += $pago->getFacturado();
+            }
+
+        }
+
+
+
+
+        if(count($facturado) > 0) {
+            return [
+                'labels' => array_keys($facturado),
+                'values' => array_values($facturado)
+            ];
+
+        }
+
+        return null;
+
+    }
 
     /**
      * @Route("/menu", name="default_menu")
