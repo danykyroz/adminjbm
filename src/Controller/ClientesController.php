@@ -1673,13 +1673,37 @@ class ClientesController extends AbstractController
 
             }
 
-                $data=array(
+              $data=array(
                 'cliente'=>$cliente,
                 'year'=>$year,
                 'week'=>$week,
                 'fechas'=>$fechas,
-                'empleados'=>$arr_empleados);
-      
+                'empleados'=>$arr_empleados
+              );
+
+              $exportar=$request->get('exportar','');
+
+              if($exportar==true){
+
+                $body= $this->renderView('clientes/nomina_excel.html.twig',$data);
+
+                $response=new Response();
+                $fecha=date('Ymd_His');
+
+                $dispositionHeader = $response->headers->makeDisposition(
+                  ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+                  "nomina_$fecha.xls"
+              );
+
+              $response->headers->set('Content-Type', 'application/vnd.ms-excel; charset=utf-8');
+              $response->headers->set('Pragma', 'public');
+              $response->headers->set('Cache-Control', 'maxage=1');
+              $response->headers->set('Content-Disposition', $dispositionHeader);
+              $response->setContent($body);
+              return $response;
+
+            }  
+            
             return $this->render('clientes/nomina.html.twig',$data);
 
        }

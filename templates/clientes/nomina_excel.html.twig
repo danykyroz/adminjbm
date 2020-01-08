@@ -1,0 +1,197 @@
+<div class="table-responsive">
+  <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Cargo</th>
+        <th>Fecha</th>
+        <th>D</th>
+        <th>L</th>
+        <th>M</th>
+        <th>MI</th>
+        <th>J</th>
+        <th>V</th>
+        <th>S</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for objempleado in empleados %}
+      {% set empleado=objempleado.empleado %}
+
+      <tr id="horario_empleado_{{empleado.id}}" data-empleado="{{empleado.id}}" >
+        <td>{{empleado.nombres}}</td>
+        <td>{{empleado.cargo}}</td>
+        <td>{{empleado.createdAt|date('d/m/y')}}</td>
+
+        <td >
+          {% if objempleado.horario.D=="A"  %}
+           A
+         {% endif %}
+         {% if objempleado.horario.D=="AA"  %}
+           AA
+         {% endif %}
+         {% if objempleado.horario.D=="VA"  %}
+           VA
+         {% endif %}
+         {% if objempleado.horario.D=="D"  %}
+           D
+         {% endif %}
+         {% if objempleado.horario.D=="CA"  %}
+           CA
+         {% endif %}
+         {% if objempleado.horario.D=="CI"  %}
+           CI
+         {% endif %}
+         {% if objempleado.horario.D=="X"  %}
+           X
+         {% endif %}
+          
+        </td>
+        <td>
+         {% if objempleado.horario.L=="A"  %}
+           A
+         {% endif %}
+         {% if objempleado.horario.L=="AA"  %}
+           AA
+         {% endif %}
+         {% if objempleado.horario.L=="VA"  %}
+           VA
+         {% endif %}
+         {% if objempleado.horario.L=="D"  %}
+           D
+         {% endif %}
+         {% if objempleado.horario.L=="CA"  %}
+           CA
+         {% endif %}
+         {% if objempleado.horario.L=="CI"  %}
+           CI
+         {% endif %}
+         {% if objempleado.horario.L=="X"  %}
+           X
+         {% endif %}
+        </td>
+        <td>
+          {% if objempleado.horario.M=="A"  %}
+           A
+         {% endif %}
+         {% if objempleado.horario.M=="AA"  %}
+           AA
+         {% endif %}
+         {% if objempleado.horario.M=="VA"  %}
+           VA
+         {% endif %}
+         {% if objempleado.horario.M=="D"  %}
+           D
+         {% endif %}
+         {% if objempleado.horario.M=="CA"  %}
+           CA
+         {% endif %}
+         {% if objempleado.horario.M=="CI"  %}
+           CI
+         {% endif %}
+         {% if objempleado.horario.M=="X"  %}
+           X
+         {% endif %}
+      </td>
+      <td>
+          {% if objempleado.horario.MI=="A"  %}
+           A
+         {% endif %}
+         {% if objempleado.horario.MI=="AA"  %}
+           AA
+         {% endif %}
+         {% if objempleado.horario.MI=="VA"  %}
+           VA
+         {% endif %}
+         {% if objempleado.horario.MI=="D"  %}
+           D
+         {% endif %}
+         {% if objempleado.horario.MI=="CA"  %}
+           CA
+         {% endif %}
+         {% if objempleado.horario.MI=="CI"  %}
+           CI
+         {% endif %}
+         {% if objempleado.horario.MI=="X"  %}
+           X
+         {% endif %}
+      </td>
+      <td>
+          {% if objempleado.horario.J=="A"  %}
+           A
+         {% endif %}
+         {% if objempleado.horario.J=="AA"  %}
+           AA
+         {% endif %}
+         {% if objempleado.horario.J=="VA"  %}
+           VA
+         {% endif %}
+         {% if objempleado.horario.J=="D"  %}
+           D
+         {% endif %}
+         {% if objempleado.horario.J=="CA"  %}
+           CA
+         {% endif %}
+         {% if objempleado.horario.J=="CI"  %}
+           CI
+         {% endif %}
+         {% if objempleado.horario.J=="X"  %}
+           X
+         {% endif %}
+      </td>
+      <td>
+          {% if objempleado.horario.V=="A"  %}
+           A
+         {% endif %}
+         {% if objempleado.horario.V=="AA"  %}
+           AA
+         {% endif %}
+         {% if objempleado.horario.V=="VA"  %}
+           VA
+         {% endif %}
+         {% if objempleado.horario.V=="D"  %}
+           D
+         {% endif %}
+         {% if objempleado.horario.V=="CA"  %}
+           CA
+         {% endif %}
+         {% if objempleado.horario.V=="CI"  %}
+           CI
+         {% endif %}
+         {% if objempleado.horario.V=="X"  %}
+           X
+         {% endif %}
+      </td>
+      <td>
+          {% if objempleado.horario.S=="A"  %}
+           A
+         {% endif %}
+         {% if objempleado.horario.S=="AA"  %}
+           AA
+         {% endif %}
+         {% if objempleado.horario.S=="VA"  %}
+           VA
+         {% endif %}
+         {% if objempleado.horario.S=="D"  %}
+           D
+         {% endif %}
+         {% if objempleado.horario.S=="CA"  %}
+           CA
+         {% endif %}
+         {% if objempleado.horario.S=="CI"  %}
+           CI
+         {% endif %}
+         {% if objempleado.horario.S=="X"  %}
+           X
+         {% endif %}
+       
+
+      </td>
+     
+    </tr>
+    {% endfor %}
+
+
+    </tbody>
+  </table>
+</div>

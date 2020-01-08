@@ -48,7 +48,7 @@
                   <input type="hidden" name="week" id="semana_actual" value="{{week}}" >
                   <input type="hidden" name="year" id="year" value="{{fechas[1]|date('Y')}}" >
                   <input type="hidden" name="clienteid" id="clienteid" value="{{cliente.id}}" >
-
+                  <input type="hidden" name="exportar" id="exportar" value="" >
                 </form>
 
 
@@ -71,7 +71,7 @@
                                   </a>
                                   <ul class="dropdown-menu pull-right">
                                       <li>
-                                          <a href="javascript:void(0);">Descargar excel</a>
+                                          <a href="#" onclick="exportar();return false;" >Exportar Excel</a>
                                       </li>
                                   </ul>
                               </li>
@@ -216,6 +216,7 @@
         </div>
         <form   method="post" id="form-empleado" name="form-empleado" action="{{path('clientes_nomina_guardar_empleado')}}" enctype="multipart/form-data" >
         <input type="hidden" name="clienteid" value="{{cliente.id}}">
+        
         <div class="modal-body">
           
           <div class="form-group">
@@ -313,6 +314,12 @@
 {% block body_javascript %}
 
 <script type="text/javascript">
+  function exportar(){
+
+    $("#exportar").val("true");
+    $("#change_semanas").submit();
+
+  }
 
   $("document").ready(function(){
     $('.guardar_horario').click(function(e){
