@@ -543,7 +543,6 @@ class ClientesController extends AbstractController
 
         $response->headers->set('Content-Type', 'application/vnd.ms-excel; charset=utf-8');
         $response->headers->set('Pragma', 'public');
-        $response->headers->set('Content-type: application/x-msexcel');
         $response->headers->set('Cache-Control', 'maxage=1');
         $response->headers->set('Content-Disposition', $dispositionHeader);
         $response->setContent($body);
@@ -991,7 +990,6 @@ class ClientesController extends AbstractController
         );
 
         $response->headers->set('Content-Type', 'application/vnd.ms-excel; charset=utf-8');
-        $response->headers->set('Content-type: application/x-msexcel');
         $response->headers->set('Pragma', 'public');
         $response->headers->set('Cache-Control', 'maxage=1');
         $response->headers->set('Content-Disposition', $dispositionHeader);
@@ -1718,7 +1716,7 @@ class ClientesController extends AbstractController
   }
 
   /**
-  * @Route("/nomina/list", name="clientes_nomina_guardar_empleado", methods={"POST"})
+  * @Route("/nomina/guardar/empleado", name="clientes_nomina_guardar_empleado", methods={"POST"})
   */
   
   public function nomina_guardar_empleado(Request $request){
@@ -1801,6 +1799,33 @@ class ClientesController extends AbstractController
                 'year'=>$year,
                 'week'=>$week,
                 'fechas'=>$fechas);
+
+
+    $exportar=$request->get('exportar','');
+
+      if($exportar==true){
+
+        $body= $this->renderView('clientes/nomina_excel.html.twig',$data);
+
+        $response=new Response();
+        $fecha=date('Ymd_His');
+
+        $dispositionHeader = $response->headers->makeDisposition(
+          ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+          "nomina_$fecha.xls"
+      );
+
+       $response->setContent($body);
+
+
+      $response->headers->set('Content-Type', 'application/vnd.ms-excel; charset=utf-8');
+      $response->headers->set('Pragma', 'public');
+      $response->headers->set('Cache-Control', 'maxage=1');
+      $response->headers->set('Content-Disposition', $dispositionHeader);
+      
+      return $response;
+
+    }  
 
     return $this->render('clientes/nomina.html.twig',$data); 
   
