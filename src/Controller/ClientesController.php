@@ -986,7 +986,7 @@ class ClientesController extends AbstractController
 
           $dispositionHeader = $response->headers->makeDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            "cuentas_por_cobrar_$fecha.xls"
+            "cuentas_por_pagar_$fecha.xls"
         );
 
         $response->headers->set('Content-Type', 'application/vnd.ms-excel; charset=utf-8');

@@ -290,6 +290,16 @@
             <br/><br/>
 
             {% endif %}
+
+            <div class="form-group">
+                  <select name="tipopago" id="tipopago" class="col-12" >
+                     <option value="">Seleccione un tipo de Pago</option>
+                      {% for tipopago in tipopagos %}
+                      <option value="{{tipopago.id}}" >{{tipopago.nombre}}</option>
+
+                      {% endfor %}
+                  </select>
+           </div>
        
             <div class="col-sm-6 col-lg-6">
               <div class="form-check form-check-radio">
@@ -326,15 +336,7 @@
             </div>
           </div>
 
-            <div class="form-group">
-                  <select name="tipopago" id="tipopago" class="col-12" >
-                     <option value="">Seleccione un tipo de Pago</option>
-                      {% for tipopago in tipopagos %}
-                      <option value="{{tipopago.id}}" >{{tipopago.nombre}}</option>
-
-                      {% endfor %}
-                  </select>
-          </div>
+      
           
            <div class="form-group">
             <div class="form-line">
