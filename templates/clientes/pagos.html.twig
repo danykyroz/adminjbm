@@ -163,9 +163,11 @@
                       <th>Fecha</th>
                       <th>Valor</th>
                       <th>Tipo de pago</th>
+                      <th>Tipo Transacción</th>
                       <th>Folio</th>
                       <th>Facturado</th>
                       <th>Por Facturar</th>
+
                       <th>Facturas</th>
                     </tr>
                   </thead>
@@ -184,6 +186,11 @@
                         Transferencia
                         {% endif %}
                       </td>
+
+                       <td>
+                        {{tipopagos[pago.tipoPagoId].nombre}}
+                      </td>
+
                       <td id="td_pago_folio_{{pago.id}}">
                         {% if pago.folio=="" %}
                         NA
@@ -293,7 +300,7 @@
 
             <div class="form-group">
                   <select name="tipopago" id="tipopago" class="col-12" >
-                     <option value="">Seleccione un tipo de Pago</option>
+                     <option value="">Seleccione un tipo de transacción</option>
                       {% for tipopago in tipopagos %}
                       <option value="{{tipopago.id}}" >{{tipopago.nombre}}</option>
 
