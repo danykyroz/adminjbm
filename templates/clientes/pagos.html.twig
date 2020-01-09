@@ -18,6 +18,11 @@
               <li class="breadcrumb-item bcrumb-2">
                 <a href="javascript:void(0);">Gastos y Compras</a>
               </li>
+              {% if cliente %}
+              <li class="breadcrumb-item bcrumb-2">
+                <a href="javascript:void(0);">{{cliente.razonSocial}}</a>
+              </li>
+              {% endif %}
             </ul>
           </div>
           <div class="col-xl-6 col-lg-7 col-md-8 col-sm-12 text-right">
@@ -50,13 +55,13 @@
             <form id="frm-filtros-avanzado" name="frm-filtros-avanzado" >
               <input type="hidden" name="exportar" id="exportar" value="" >
                 <div class="row clearfix">
-                  {% if is_granted('ROLE_CLIENTE') %}
+                  {% if is_granted('ROLE_CLIENTE') or cliente!=false %}
                       <input type="hidden" name="filtros['cliente']" value="{{cliente.id}}" id="filtros_cliente" >
                   {% else%}
                     <div class="col-md-3 col-sm-3 col-xs-6">
                         <div class="form-group">
                             <div class="form-line">
-                                                <label>Clientes</label>
+                            <label>Clientes</label>
 
                               <select name="filtros[cliente]" id="filtros_cliente">
                                     <option value="">Clientes</option>

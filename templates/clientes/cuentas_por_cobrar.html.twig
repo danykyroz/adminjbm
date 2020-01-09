@@ -43,14 +43,15 @@
             {% endif %}
 
             {% else %}
+            {% if cliente %}
               <div class="breadcrumb-chart">
               <div class="float-right">
                 <div class="icon m-b-10">
-                   <a href="{{path('cuentas_por_cobrar_subir_archivos')}}" type="button" class="btn btn-primary  waves-effect" >Subir xml</a>
+                  <a href="{{path('cuentas_por_cobrar_subir_archivos',{clienteid:cliente.id})}}" type="button" class="btn btn-primary  waves-effect" >Subir xml</a>
                 </div>
               </div>
             </div>
-
+            {% endif %}
             {% endif %}
           </div>
         </div>
@@ -71,10 +72,12 @@
           <div class="body">
             <form id="frm-filtros-avanzado" name="frm-filtros-avanzado">
               <input type="hidden" name="exportar" id="exportar">
+              <input type="hidden" name="filtros[cliente]" id="clienteid" value="{{filtros.cliente}}">
+              
                 <div class="row clearfix">
 
-                   {% if is_granted('ROLE_CLIENTE') %}
-                                 <input type="hidden" name="filtros['cliente']" value="{{cliente.id}}" >
+                   {% if is_granted('ROLE_CLIENTE') or cliente %}
+                      <input type="hidden" name="filtros['cliente']" value="{{cliente.id}}" >
                     {% else %}
                     {% if pago==FALSE %}
                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
@@ -120,6 +123,20 @@
                                     <option value="">Estado</option>
                                     <option value="1" {% if filtros.tipo==1 %} selected="tue" {% endif %}  >Cancelable </option>
                                      <option value="2" {% if filtros.tipo==2 %} selected="tue" {% endif %}>No Cancelable</option>
+                              </select>
+                            </div>
+                        </div>
+                    </div>
+
+                      <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                       <div class="form-group">
+                            <div class="form-line">
+                            <label>Extensiones Archivo</label>
+                            <br/>
+                              <select name="filtros[extensiones]"  id="extensiones">
+                                    <option value="">Todas</option>
+                                    <option value="xml" {% if filtros.extensiones=='xml' %} selected="tue" {% endif %}  >XML </option>
+                                     <option value="otras" {% if (filtros.extensiones!='xml' and filtros.extensiones!="" ) %} selected="tue" {% endif %}>Otras extensiones</option>
                               </select>
                             </div>
                         </div>
@@ -373,7 +390,7 @@
         $('#cliente').val("");
         $('#fecha_inicial').val("");
         $('#fecha_final').val("");
-
+        $("#extensiones").val("");
         $('#frm-clientes-avanzado').submit();
      })
 

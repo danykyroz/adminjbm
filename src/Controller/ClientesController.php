@@ -413,9 +413,14 @@ class ClientesController extends AbstractController
       $filtros=$request->get('filtros');
       $cliente=false;
       $clientes=$this->getClientes_Select();
+      $clienteid=$request->get('clienteid',0);
+      //Preguntar si no hay id de cliente para mostrar la plantilla de clientes
+      if($clienteid==0 && $filtros['cliente']==""){
+        return $this->render('clientes/select_cliente.html.twig',array('clientes'=>$clientes)); 
+      }
 
       if($filtros==""){
-        $filtros['cliente']="";
+        $filtros['cliente']=$clienteid;
         $filtros['tipo']="";
         $filtros['fecha_inicial']="";
         $filtros['fecha_final']="";
@@ -857,18 +862,27 @@ class ClientesController extends AbstractController
       $user=($this->getUser());
       $clientes=$this->getClientes_Select();  
       $cliente=false;
-
       $filtros=$request->get('filtros');
 
 
+       $clienteid=$request->get('clienteid',0);
+      //Preguntar si no hay id de cliente para mostrar la plantilla de clientes
+      if($clienteid==0 && $filtros['cliente']==""){
+        return $this->render('clientes/select_cliente.html.twig',array('clientes'=>$clientes)); 
+      }
+
+
+
       if($filtros==""){
-        $filtros['cliente']="";
+        $filtros['cliente']=$clienteid;
         $filtros['tipo']="";
         $filtros['fecha_inicial']=date('Y-m-01');
         $filtros['fecha_final']=date('Y-m-d');
         $filtros['year']="";
         $filtros['mes']="";
         $filtros["proveedor"]="";
+        $filtros["extensiones"]="";
+
       }
 
      
@@ -966,9 +980,10 @@ class ClientesController extends AbstractController
             $qb->setParameter('fuzzy_query','%'.$lowerSearchQuery.'%');;
 
         }
-
+        if($filtros['extensiones']=="xml"){
+            $qb->andWhere("c.extension='xml'");
+        }
         //Se agrega extension xml para todas las consultas
-        $qb->andWhere("c.extension='xml'");
 
 
         if($filtros['proveedor']){
@@ -1058,6 +1073,7 @@ class ClientesController extends AbstractController
       $cliente=false;
 
       if($filtros==""){
+        
         $filtros['cliente']="";
         $filtros['tipo']="";
         $filtros['fecha_inicial']="";
@@ -1065,6 +1081,7 @@ class ClientesController extends AbstractController
         $filtros['year']="";
         $filtros['mes']="";
         $filtros["proveedor"]="";
+        $filtros["extensiones"]="";
 
       }
 
