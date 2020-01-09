@@ -29,29 +29,49 @@ class DefaultController extends AbstractController
             return $this->redirect('login');
         } else {
 
-            $tcomprobantes = $em->getRepository(Pagos::class)->findBy([]);
-            $ccRepo = $em->getRepository(CuentasPorCobrar::class);
-            $templeados = $em->getRepository(Empleados::class)->findAll();
-            $facturadoMensual = $this->getFacturadoMensual($tcomprobantes);
-            $estadosFacturas = $this->getEstadosFacturas($tcomprobantes);
 
-            $params = [
-                'comprobantesReportados' => count($tcomprobantes),
-                'cuentasPorCobrar' => count($ccRepo->findCuentasPorCobrar()),
-                'empleados' => count($templeados),
-                'facturadoMensual' => $facturadoMensual,
-                'estadosFacturas' => $estadosFacturas,
-            ];
+                $tcomprobantes = $em->getRepository(Pagos::class)->findBy([]);
+                $ccRepo = $em->getRepository(CuentasPorCobrar::class);
+                $templeados = $em->getRepository(Empleados::class)->findAll();
+                $facturadoMensual = $this->getFacturadoMensual($tcomprobantes);
+                $estadosFacturas = $this->getEstadosFacturas($tcomprobantes);
+
+                $params = [
+                    'comprobantesReportados' => count($tcomprobantes),
+                    'cuentasPorCobrar' => count($ccRepo->findCuentasPorCobrar()),
+                    'empleados' => count($templeados),
+                    'facturadoMensual' => $facturadoMensual,
+                    'estadosFacturas' => $estadosFacturas,
+                ];
+
+
+             if ($user->getRoles()[0] == "ROLE_CLIENTE") {
+               
+
+                return $this->render('index.html.twig', $params);
+            }
+
+            $tclientes=$em->getRepository('App:Clientes')->findAll();
+            $tauxiliares=$em->getRepository('App:Auxiliares')->findAll();
+            $tarchivos=$em->getRepository('App:CuentasPorCobrar')->findAll();
+            
+            $clientes=count($tclientes);
+            $auxiliares=count($tauxiliares);
+            $archivos=count($tarchivos);
+            
+            $params['clientes']=$clientes;
+            $params['auxiliares']=$auxiliares;
+            $params['archivos']=$archivos;
+
 
             if ($user->getRoles()[0] == "ROLE_ADMIN") {
-                return $this->render('index.html.twig', $params);
+                return $this->render('index_admin.html.twig', $params);
             }
             if ($user->getRoles()[0] == "ROLE_AUXILIAR") {
-                return $this->render('index.html.twig', $params);
+
+                return $this->render('index_admin.html.twig', $params);
             }
-            if ($user->getRoles()[0] == "ROLE_CLIENTE") {
-                return $this->render('index.html.twig', $params);
-            }
+        
 
         }
 

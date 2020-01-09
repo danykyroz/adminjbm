@@ -1,0 +1,249 @@
+{% extends 'base.html.twig' %}
+
+{% block busqueda_general %}
+{% endblock %} 
+
+
+{% block content %}
+
+{% block body %}
+
+<section class="content">
+        <div class="container-fluid">
+            <div class="block-header">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-5 col-md-4 col-sm-12">
+                        <ul class="breadcrumb breadcrumb-style">
+                            <li class="breadcrumb-item 	bcrumb-1">
+                                <a href="{{asset('/')}}">
+                                    <i class="material-icons">home</i>
+                                    Home</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-sm-6">
+                    <div class="support-box text-center cyan">
+                        <div class="icon m-b-10">
+                          <i class="fa  fa-4x fa-star" aria-hidden="true"></i>
+                        </div>
+                        <div class="text m-b-10">Clientes</div>
+                        <h3 class="m-b-0">{{ clientes }}</h3>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <div class="support-box text-center purple">
+                        <div class="icon m-b-10">
+                            <i class="fa  fa-4x fa-file" aria-hidden="true"></i>
+                        </div>
+                        <div class="text m-b-10">Auxiliares</div>
+                        <h3 class="m-b-0">{{ auxiliares }}</h3>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <div class="support-box text-center blue">
+                        <div class="icon m-b-10">
+                            <i class="fa  fa-4x fa-users" aria-hidden="true"></i>
+                        </div>
+                        <div class="text m-b-10">XML procesados</div>
+                        <h3 class="m-b-0">{{ archivos }}</h3>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="header">
+                            <h2>
+                                <strong>Facturado</strong> Mensual</h2>
+                            <ul class="header-dropdown m-r--5">
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">more_vert</i>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li>
+                                            <a href="javascript:void(0);">Action</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);">Another action</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);">Something else here</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="body">
+                            <div class="recent-report__chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                                <canvas id="singel-bar-chart" class="chartjs-render-monitor" ></canvas>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="header">
+                            <h2>
+                                <strong>Estados</strong> Facturas</h2>
+                            <ul class="header-dropdown m-r--5">
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">more_vert</i>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li>
+                                            <a href="javascript:void(0);">Action</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);">Another action</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);">Something else here</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="body">
+                            <div class="recent-report__chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                                <canvas id="polar-chart"  class="chartjs-render-monitor"></canvas>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </section>
+{% endblock %} 
+{% endblock %} 
+
+
+ {% block body_javascript %}
+
+    <script src="{{asset('adminlte/assets/js/pages/charts/jquery-knob.js')}}"></script>
+    <script src="{{asset('adminlte/assets/js/pages/sparkline/sparkline-data.js')}}"></script>
+<script>
+
+    'use strict';
+    $(function () {
+        initCharts();
+    });
+    //Charts
+    function initCharts() {
+
+        try {
+            // polar chart
+            var ctx = document.getElementById("polar-chart");
+            if (ctx) {
+                ctx.height = 200;
+                var myChart = new Chart(ctx, {
+                    type: 'polarArea',
+                    data: {
+                        datasets: [{
+                            data: [{{ estadosFacturas|join(',') }}],
+                            backgroundColor: [
+                                "rgba(0, 123, 255,0.9)",
+                                "rgba(0, 123, 255,0.8)",
+                                "rgba(0, 123, 255,0.7)",
+                                "rgba(0,0,0,0.2)",
+                                "rgba(0, 123, 255,0.5)"
+                            ]
+
+                        }],
+                        labels: [
+                            "Facturado",
+                            "Por facturar",
+                        ]
+                    },
+                    options: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                fontFamily: 'Poppins'
+                            }
+
+                        },
+                        responsive: true
+                    }
+                });
+            }
+
+        } catch (error) {
+            console.log(error);
+        }
+
+        try {
+
+            var etiqueta = [];
+            {% for label in facturadoMensual.labels %}
+                etiqueta.push("{{ label }}");
+            {% endfor %}
+
+            var valor = [];
+            {% for value in facturadoMensual.values %}
+                valor.push("{{ value }}");
+            {% endfor %}
+
+            // single bar chart
+            var ctx = document.getElementById("singel-bar-chart");
+            if (ctx) {
+                ctx.height = 200;
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: etiqueta,
+                        datasets: [
+                            {
+                                label: "Facturado",
+                                data: valor,
+                                borderColor: "rgba(0, 123, 255, 0.9)",
+                                borderWidth: "0",
+                                backgroundColor: "rgba(0, 123, 255, 0.5)"
+                            }
+                        ]
+                    },
+                    options: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                fontFamily: 'Poppins'
+                            }
+
+                        },
+                        scales: {
+                            xAxes: [{
+                                ticks: {
+                                    fontFamily: "Poppins"
+
+                                }
+                            }],
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true,
+                                    fontFamily: "Poppins"
+                                }
+                            }]
+                        }
+                    }
+                });
+            }
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+</script>
+
+{% endblock %} 
+
