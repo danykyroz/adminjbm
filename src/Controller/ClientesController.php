@@ -2071,7 +2071,25 @@ function get_dates_week($year = 0, $week = 0)
     return [$fecha, $fecha2];   
 }
 
+    /**
+     * @Route("/nomina/guardar/incapacidad", name="clientes_nomina_guardar_incapacidad", methods={"POST"})
+     */
+    public function nomina_guardar_incapacidad(Request $request){
 
+
+        $empleado = $request->request->get('incapacidad-empleado');
+        $semana = $request->request->get('incapacidad-semana');
+        $anio = $request->request->get('incapacidad-anio');
+        dd($request->files->get('incapacidad-file'));
+
+        die;
+
+
+        $this->addFlash('success', 'Cliente creado exitosamente!');
+
+        return $this->redirectToRoute('clientes_nomina_list',array('clienteid'=>$cliente->getId()));
+
+    }
   
 }
 
