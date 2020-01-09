@@ -17,6 +17,17 @@
               <li class="breadcrumb-item bcrumb-2">
                 <a href="javascript:void(0);">Cuentas por pagar</a>
               </li>
+
+               {% if cliente %}
+              <li class="breadcrumb-item bcrumb-2">
+                  <a href="javascript:void(0);">{{cliente.razonSocial}}</a>
+               </li>
+                {% endif %}
+              {% if pago %}
+              <li class="breadcrumb-item bcrumb-2">
+                <a href="javascript:void(0);">Pago # {{pago.consecutivo}}</a>
+              </li>
+              {% endif %}
             </ul>
           </div>
           <div class="col-xl-6 col-lg-7 col-md-8 col-sm-12 text-right">
@@ -25,7 +36,7 @@
               <div class="breadcrumb-chart">
                 <div class="float-right">
                   <div class="icon m-b-10">
-                     <a href="{{path('cuentas_por_cobrar_subir_archivos')}}" type="button" class="btn btn-primary  waves-effect" >Subir xml</a>
+                     <a href="{{path('cuentas_por_cobrar_subir_archivos',{clienteid:pago.clienteId})}}" type="button" class="btn btn-primary  waves-effect" >Subir xml</a>
                   </div>
                 </div>
               </div>
@@ -48,6 +59,7 @@
 
       <!-- #END# Basic Examples -->
       <!-- Exportable Table -->
+    {% if pago==false %}
       <div class="row clearfix">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <div class="card">
@@ -142,12 +154,23 @@
                 </div>
             </form>
         </div>
+    
+</div>
+</div>
+</div>
+{% endif %}
+<div class="row clearfix">
 
-
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <div class="card">
+        
 
             <div class="header">
               <h2>
-                <strong>Facturas por comprobar</strong></h2>
+                <strong>Facturas por comprobar</strong>
+               
+                
+              </h2>
               <ul class="header-dropdown m-r--5">
                 <li class="dropdown">
                   <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">

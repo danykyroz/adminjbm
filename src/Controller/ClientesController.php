@@ -746,14 +746,45 @@ class ClientesController extends AbstractController
      $em->flush();
 
      if($_FILES["file"]["error"]==0){
-       $tmp_name = $_FILES["file"]["tmp_name"];
-       $name = $_FILES["file"]["name"];
-       $move= move_uploaded_file($tmp_name, "uploads/$name");
-       if($move){
-        $pagos->setFile("uploads/$name");
-        $em->persist($pagos);
-        $em->flush();
-       }
+
+          $tmp_name = $_FILES["file"]["tmp_name"];
+          $name = $_FILES["file"]["name"];
+
+          //Nombre carpeta
+
+           $cliente=$em->getRepository('App:Clientes','c')->find($pagos->getClienteId());
+
+            $nombre_cliente=str_replace(" ","-",$cliente->getRazonSocial());
+            
+            $year_carpeta=date_format($pagos->getFecha(),'Y');
+            $mes_carpeta=date_format($pagos->getFecha(),'m');
+            $dia_carpeta=date_format($pagos->getFecha(),'d');
+            if($pagos->getTipo()==1){
+              $tipo='cheque';
+            }else{
+              $tipo='transferencia';
+            }
+
+
+            $carpeta_nueva='uploads/'.$nombre_cliente.'/comprobantes/gastos_y_compras/'.$tipo.'/'.$year_carpeta.'/'.$mes_carpeta.'/'.$dia_carpeta.'/'.$pagos->consecutivo();
+            
+            $ruta_nueva=$carpeta_nueva.'/'.$name;
+            $this->new_directories($carpeta_nueva);
+            
+            $ruta="uploads/$name";
+
+            $move= move_uploaded_file($tmp_name, $ruta);
+
+            $move_new= copy($ruta, $ruta_nueva);
+            if($move_new){
+              unlink($ruta);
+            }
+
+           if($move_new){
+            $pagos->setFile($ruta_nueva);
+            $em->persist($pagos);
+            $em->flush();
+           }
      }
    
 
@@ -833,8 +864,8 @@ class ClientesController extends AbstractController
       if($filtros==""){
         $filtros['cliente']="";
         $filtros['tipo']="";
-        $filtros['fecha_inicial']="";
-        $filtros['fecha_final']="";
+        $filtros['fecha_inicial']=date('Y-m-01');
+        $filtros['fecha_final']=date('Y-m-d');
         $filtros['year']="";
         $filtros['mes']="";
         $filtros["proveedor"]="";
@@ -1409,11 +1440,29 @@ class ClientesController extends AbstractController
                 $CuentasPorCobrar->setPagoId($pagoid);
               }
 
-              $CuentasPorCobrar->setXml($ruta);
+              $cliente=$em->getRepository('App:Clientes','c')->find($pago->getClienteId());
+
+              $nombre_cliente=str_replace(" ","-",$cliente->getRazonSocial());
+              
+              $year_carpeta=date_format($CuentasPorCobrar->getFecha(),'Y');
+              $mes_carpeta=date_format($CuentasPorCobrar->getFecha(),'m');
+              $dia_carpeta=date_format($CuentasPorCobrar->getFecha(),'d');
              
+              $carpeta_nueva='uploads/'.$nombre_cliente.'/comprobantes/cuentas_por_pagar/'.$year_carpeta.'/'.$mes_carpeta.'/'.$dia_carpeta.'/'.$folio;
+              
+              $ruta_nueva=$carpeta_nueva.'/'.$name;
+              $this->new_directories($carpeta_nueva);
+            
+              $move_new= copy($ruta, $ruta_nueva);
+              if($move_new){
+                unlink($ruta);
+              }
+
+             if($move_new){
+              $CuentasPorCobrar->setXml($ruta_nueva);
               $em->persist($CuentasPorCobrar);
               $em->flush();
-
+             }
 
 
               $qb=$em->createQueryBuilder();
@@ -1464,6 +1513,8 @@ class ClientesController extends AbstractController
       $pagoid=$request->get('pagoid',0);
       $pago=false;
 
+      $cliente=$em->getRepository('App:Clientes','c')->find($clienteId);
+
       if(isset($_FILES['file'])){
         
        $tmp_name = $_FILES["file"]["tmp_name"];
@@ -1480,24 +1531,12 @@ class ClientesController extends AbstractController
 
             $json_xml=$this->parse_xml_cfid($ruta);
             $data_json=json_decode($json_xml);
-            $cliente=$em->getRepository('App:Clientes','c')->find($clienteId);
 
-            $nombre_carpeta=str_replace(" ","-",$cliente->getRazonSocial());
-            $expfecha=explode("T",$data_json->Comprobante->Fecha);
-            $fecha=$expfecha[0].' '.$expfecha[1];
             
-            $year_carpeta=date('Y',strtotime($fecha));
-            $mes_carpeta=date('m',strtotime($fecha));
-
-            $carpeta_nueva='uploads/'.$nombre_carpeta.'/'.$year_carpeta.'/'.$mes_carpeta;
-            
-            $ruta_nueva=$carpeta_nueva.'/'.$name;
-            $this->new_directories($carpeta_nueva);
-
-            $move_new= copy($ruta, $ruta_nueva);
-            if($move_new){
-              unlink($ruta);
-            }
+              $nombre_cliente=str_replace(" ","-",$cliente->getRazonSocial());
+              
+              $expfecha=explode("T",$data_json->Comprobante->Fecha);
+               $fecha=$expfecha[0].' '.$expfecha[1];
          
             // los datos del cfdi que se van a consultar
 
@@ -1505,6 +1544,8 @@ class ClientesController extends AbstractController
             $rfc_cliente=(String)$cliente->getDocumento();
             $rfc_receptor=(String)$data_json->Receptor->Rfc;
             if($rfc_cliente!=$rfc_receptor){
+
+                unlink($ruta);
                  return new Response("Rfc archivo no coincide con el del cliente ".$data_json->Receptor->Rfc);
             }
 
@@ -1517,11 +1558,13 @@ class ClientesController extends AbstractController
             $result_existe=$qb->getQuery()->getResult();
             if(count($result_existe)>0){
 
+              unlink($ruta);
+
                return new Response("UUID #{$data_json->TimbreFiscalDigital->UUID} ya existe");
 
             }
 
-            $cfdi = Cfdi::newFromString(file_get_contents($ruta_nueva));
+            $cfdi = Cfdi::newFromString(file_get_contents($ruta));
             $request = RequestParameters::createFromCfdi($cfdi);
 
             $service = new WebService();
@@ -1551,7 +1594,7 @@ class ClientesController extends AbstractController
             $CuentasPorCobrar->setEstadoCancelacion($response->getCancellationStatus());
             $CuentasPorCobrar->setResponseJson($json_xml);
             $CuentasPorCobrar->setClienteId($clienteId);
-            $CuentasPorCobrar->setXml($ruta_nueva);
+            $CuentasPorCobrar->setXml($ruta);
             $CuentasPorCobrar->setFolio($data_json->Comprobante->Folio);
             $CuentasPorCobrar->setUuid($data_json->TimbreFiscalDigital->UUID);
 
@@ -1561,6 +1604,23 @@ class ClientesController extends AbstractController
             }
             $em->persist($CuentasPorCobrar);
             $em->flush();
+
+              $year_carpeta=date_format($CuentasPorCobrar->getFecha(),'Y');
+              $mes_carpeta=date_format($CuentasPorCobrar->getFecha(),'m');
+              $dia_carpeta=date_format($CuentasPorCobrar->getFecha(),'d');
+             
+              $carpeta_nueva='uploads/'.$nombre_cliente.'/comprobantes/cuentas_por_pagar/'.$year_carpeta.'/'.$mes_carpeta.'/'.$dia_carpeta.'/'.$data_json->TimbreFiscalDigital->UUID;
+              
+              $ruta_nueva=$carpeta_nueva.'/'.$name;
+
+
+             $this->new_directories($carpeta_nueva);
+            
+              $move_new= copy($ruta, $ruta_nueva);
+              if($move_new){
+                unlink($ruta);
+              }
+              
 
             if($pago){
 
@@ -1603,6 +1663,7 @@ class ClientesController extends AbstractController
             $CuentasPorCobrar->setNombre($name);
             $CuentasPorCobrar->setExtension($ext);
 
+
             if($pagoid>0){
               $CuentasPorCobrar->setPagoId($pagoid);
             }
@@ -1611,6 +1672,29 @@ class ClientesController extends AbstractController
            
             $em->persist($CuentasPorCobrar);
             $em->flush();
+
+             $nombre_cliente=str_replace(" ","-",$cliente->getRazonSocial());
+              
+              $year_carpeta=date_format($CuentasPorCobrar->getFecha(),'Y');
+              $mes_carpeta=date_format($CuentasPorCobrar->getFecha(),'m');
+              $dia_carpeta=date_format($CuentasPorCobrar->getFecha(),'d');
+             
+              $carpeta_nueva='uploads/'.$nombre_cliente.'/comprobantes/cuentas_por_pagar/'.$year_carpeta.'/'.$mes_carpeta.'/'.$dia_carpeta.'/'.$CuentasPorCobrar->getFolio();
+              
+              $ruta_nueva=$carpeta_nueva.'/'.$name;
+
+               $this->new_directories($carpeta_nueva);
+            
+              $move_new= copy($ruta, $ruta_nueva);
+
+              if($move_new){
+
+                 $CuentasPorCobrar->setXml($ruta_nueva);
+                 $em->persist($CuentasPorCobrar);
+                 $em->flush();
+                 unlink($ruta);
+              }
+
             
         }
     

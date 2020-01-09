@@ -7,6 +7,7 @@
                       <th>Fecha</th>
                       <th>Valor</th>
                       <th>Tipo de pago</th>
+                      <th>Tipo Transacción</th>
                       <th>Folio</th>
                       <th>Facturado</th>
                       <th>Por Facturar</th>
@@ -35,6 +36,11 @@
                         {{pago.folio}}
                         {% endif%}
                       </td>
+
+                       <td>
+                        {{tipopagos[pago.tipoPagoId-1].nombre}}
+                      </td>
+
                       <td>$ {{pago.facturado|number_format(2,'.',',')}}</td>
                       <td>$ {{pago.porFacturar|number_format(2,'.',',')}}</td>
                       <td> 

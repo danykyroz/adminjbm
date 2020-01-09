@@ -188,7 +188,7 @@
                       </td>
 
                        <td>
-                        {{tipopagos[pago.tipoPagoId].nombre}}
+                        {{tipopagos[pago.tipoPagoId-1].nombre}}
                       </td>
 
                       <td id="td_pago_folio_{{pago.id}}">
@@ -225,21 +225,28 @@
                              
 
                             {% endif %}
-                         <a href="#" data-id="{{pago.id}}" class="waves-effect m-r-20 editar" title="Editar">
-                          <i class="material-icons">edit</i>
-                         </a> 
-                        
-                            <a data-id="{{pago.id}}" href="{{path('pagos_delete',{id:pago.id})}}" class="col-dark-gray waves-effect m-r-20 eliminar" title="Eliminar">
-                            <i class="material-icons">delete_sweep</i>
-                          </a>
+                            {% if pago.revisado==0 %}
+                             <a href="#" data-id="{{pago.id}}" class="waves-effect m-r-20 editar" title="Editar">
+                              <i class="material-icons">edit</i>
+                             </a> 
+                            
+                                <a data-id="{{pago.id}}" href="{{path('pagos_delete',{id:pago.id})}}" class="col-dark-gray waves-effect m-r-20 eliminar" title="Eliminar">
+                                <i class="material-icons">delete_sweep</i>
+                              </a>
+                              
+                              <a href="{{path('pagos_cliente_revisado',{id:pago.id})}}" class="col-dark-gray  waves-effect m-r-20 revisado" title="Revisado" >  <i class="material-icons">done</i></a>
+                          
+                            {% else %}
+                               <a href="{{path('pagos_cliente_revisado',{id:pago.id})}}" class="col-dark-green text-green  waves-effect m-r-20 revisado" title="Quitar Revisado" >  <i class="material-icons">done</i></a>
+                             {% endif %} 
+                            
                       
                          {% if is_granted('ROLE_CLIENTE') %}
 
 
                          {% else %}
                         
-                           <a href="{{path('pagos_cliente_revisado',{id:pago.id})}}" class="col-dark-green  waves-effect m-r-20 revisado" title="Revisado" >  <i class="material-icons">done</i></a>
-
+                          
                          {% endif %}
 
                         
