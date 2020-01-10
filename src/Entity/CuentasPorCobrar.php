@@ -26,7 +26,7 @@ class CuentasPorCobrar
     /**
      * @var integer
      *
-     * @ORM\Column(name="proveedor", type="string", length=11, nullable=false)
+     * @ORM\Column(name="proveedor", type="string", length=255, nullable=false)
      */
     private $proveedor = '';
 
@@ -139,7 +139,7 @@ class CuentasPorCobrar
     /**
      * @var string
      *
-     * @ORM\Column(name="response_json", type="string", nullable=false)
+     * @ORM\Column(name="response_json", type="text", nullable=false)
      */
     private $responseJson = '';
 
