@@ -415,8 +415,15 @@ class ClientesController extends AbstractController
       $clientes=$this->getClientes_Select();
       $clienteid=$request->get('clienteid',0);
       //Preguntar si no hay id de cliente para mostrar la plantilla de clientes
-      if($clienteid==0 && $filtros['cliente']==""){
-        return $this->render('clientes/select_cliente.html.twig',array('clientes'=>$clientes)); 
+
+      $user=($this->getUser());
+
+      if($user->getRoles()[0]!="ROLE_CLIENTE"){
+
+        if($clienteid==0 && $filtros['cliente']==""){
+          return $this->render('clientes/select_cliente.html.twig',array('clientes'=>$clientes)); 
+        }
+
       }
 
       if($filtros==""){
@@ -771,7 +778,7 @@ class ClientesController extends AbstractController
             }
 
 
-            $carpeta_nueva='uploads/'.$nombre_cliente.'/comprobantes/gastos_y_compras/'.$tipo.'/'.$year_carpeta.'/'.$mes_carpeta.'/'.$dia_carpeta.'/'.$pagos->consecutivo();
+            $carpeta_nueva='uploads/'.$nombre_cliente.'/'.$year_carpeta.'/'.$mes_carpeta.'/'.$tipo.'/'.$dia_carpeta.'/'.$pagos->consecutivo();
             
             $ruta_nueva=$carpeta_nueva.'/'.$name;
             $this->new_directories($carpeta_nueva);
@@ -832,7 +839,7 @@ class ClientesController extends AbstractController
 
       $em=$this->getDoctrine()->getManager();
       $qb=$em->createQueryBuilder();
-
+      $clienteid=$pago->getClienteId();
       $qb->select('c')->from('App:CuentasPorCobrar','c')->where('c.pagoId=:pagoId')->setParameter('pagoId',$pago->getId());
       $cuentas=$qb->getQuery()->getResult();
 
@@ -844,7 +851,7 @@ class ClientesController extends AbstractController
       $em->flush();
 
 
-    return  $this->redirect($this->generateUrl('pagos_clientes'));
+    return  $this->redirect($this->generateUrl('pagos_clientes',array('clienteid'=>$clienteid)));
 
   }
 
@@ -867,10 +874,12 @@ class ClientesController extends AbstractController
 
        $clienteid=$request->get('clienteid',0);
       //Preguntar si no hay id de cliente para mostrar la plantilla de clientes
-      if($clienteid==0 && $filtros['cliente']==""){
-        return $this->render('clientes/select_cliente.html.twig',array('clientes'=>$clientes)); 
-      }
+      if($user->getRoles()[0]!="ROLE_CLIENTE"){
 
+          if($clienteid==0 && $filtros['cliente']==""){
+            return $this->render('clientes/select_cliente.html.twig',array('clientes'=>$clientes)); 
+          }
+      }
 
 
       if($filtros==""){
@@ -1073,7 +1082,7 @@ class ClientesController extends AbstractController
       $cliente=false;
 
       if($filtros==""){
-        
+
         $filtros['cliente']="";
         $filtros['tipo']="";
         $filtros['fecha_inicial']="";
@@ -1306,7 +1315,7 @@ class ClientesController extends AbstractController
 
     $em=$this->getDoctrine()->getManager();
     $name=str_replace('.xml', '.pdf',$cuenta->getNombre());
-
+    $clienteid=$cuenta->getClienteId();
     $qb=$em->createQueryBuilder()->select('c')->from('App:CuentasPorCobrar','c')->where('c.nombre=:nombre')->andWhere('c.pagoId=:pagoId');
     $qb->setParameters(array('nombre'=>$name,'pagoId'=>$cuenta->getPagoId()));
 
@@ -1321,7 +1330,7 @@ class ClientesController extends AbstractController
     $em->remove($cuenta);
     $em->flush();
 
-    return  $this->redirect($this->generateUrl('cuentas_por_cobrar'));
+    return  $this->redirect($this->generateUrl('cuentas_por_cobrar',array('clienteid'=>$clienteid)));
 
 
   }
@@ -1465,7 +1474,7 @@ class ClientesController extends AbstractController
               $mes_carpeta=date_format($CuentasPorCobrar->getFecha(),'m');
               $dia_carpeta=date_format($CuentasPorCobrar->getFecha(),'d');
              
-              $carpeta_nueva='uploads/'.$nombre_cliente.'/comprobantes/cuentas_por_pagar/'.$year_carpeta.'/'.$mes_carpeta.'/'.$dia_carpeta.'/'.$folio;
+              $carpeta_nueva='uploads/'.$nombre_cliente.'/'.$year_carpeta.'/'.$mes_carpeta.'/facturas_por_pagar/'.$dia_carpeta.'/'.$folio;
               
               $ruta_nueva=$carpeta_nueva.'/'.$name;
               $this->new_directories($carpeta_nueva);
@@ -1626,7 +1635,7 @@ class ClientesController extends AbstractController
               $mes_carpeta=date_format($CuentasPorCobrar->getFecha(),'m');
               $dia_carpeta=date_format($CuentasPorCobrar->getFecha(),'d');
              
-              $carpeta_nueva='uploads/'.$nombre_cliente.'/comprobantes/cuentas_por_pagar/'.$year_carpeta.'/'.$mes_carpeta.'/'.$dia_carpeta.'/'.$data_json->TimbreFiscalDigital->UUID;
+              $carpeta_nueva='uploads/'.$nombre_cliente.'/'.$year_carpeta.'/'.$mes_carpeta.'/facturas_por_pagar/'.$dia_carpeta.'/'.$data_json->TimbreFiscalDigital->UUID;
               
               $ruta_nueva=$carpeta_nueva.'/'.$name;
 
@@ -1696,7 +1705,7 @@ class ClientesController extends AbstractController
               $mes_carpeta=date_format($CuentasPorCobrar->getFecha(),'m');
               $dia_carpeta=date_format($CuentasPorCobrar->getFecha(),'d');
              
-              $carpeta_nueva='uploads/'.$nombre_cliente.'/comprobantes/cuentas_por_pagar/'.$year_carpeta.'/'.$mes_carpeta.'/'.$dia_carpeta.'/'.$CuentasPorCobrar->getFolio();
+              $carpeta_nueva='uploads/'.$nombre_cliente.'/'.$year_carpeta.'/'.$mes_carpeta.'/'.'facturas_por_pagar/'.$dia_carpeta.'/'.$CuentasPorCobrar->getFolio();
               
               $ruta_nueva=$carpeta_nueva.'/'.$name;
 

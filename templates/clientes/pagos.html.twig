@@ -239,20 +239,30 @@
                                 <i class="material-icons">delete_sweep</i>
                               </a>
                               
+                              {% if is_granted('ROLE_CLIENTE') %}
+
+
+                              {% else %}
+
                               <a href="{{path('pagos_cliente_revisado',{id:pago.id})}}" class="col-dark-gray  waves-effect m-r-20 revisado" title="Revisado" >  <i class="material-icons">done</i></a>
-                          
+                            {% endif %}
+                            
                             {% else %}
-                               <a href="{{path('pagos_cliente_revisado',{id:pago.id})}}" class="col-dark-green text-green  waves-effect m-r-20 revisado" title="Quitar Revisado" >  <i class="material-icons">done</i></a>
+
+                              {% if is_granted('ROLE_CLIENTE') %}
+
+
+                              {% else %}
+                                 <a href="{{path('pagos_cliente_revisado',{id:pago.id})}}" class="col-dark-green text-green  waves-effect m-r-20 revisado" title="Quitar Revisado" >  <i class="material-icons">done</i></a>
+                          
+                              {% endif %}
+
+
+                           
                              {% endif %} 
                             
                       
-                         {% if is_granted('ROLE_CLIENTE') %}
-
-
-                         {% else %}
-                        
-                          
-                         {% endif %}
+                     
 
                         
                       </td>

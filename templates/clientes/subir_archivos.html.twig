@@ -92,9 +92,9 @@ $(function() {
     /* Maybe display some more file information on your page */
     console.log("success",file,response);
     if(response=='Ok'){
-      alert('Archivo cargado exitosamente');
+      swal('Archivo cargado exitosamente');
     }else{
-       alert(response);
+       swal(response);
          myDropzone.removeFile(file);
 
     }

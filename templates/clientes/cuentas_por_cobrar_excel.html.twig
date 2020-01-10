@@ -10,6 +10,7 @@
         <th>Valor</th>
         <th>IVA</th>
         <th>Total</th>
+        <th>Estado Factura</th>
         <th>Cancelable</th>
         <th>En Lista Negra</th>
       </tr>
@@ -25,6 +26,7 @@
         <td>$ {{cuenta.valor|number_format(2,'.',',')}}</td>
         <td>$ {{cuenta.iva|number_format(2,'.',',')}}</td>
         <td>$ {{cuenta.total|number_format(2,'.',',')}}</td>
+        <td>{{cuenta.cfdi}}</td>
         <td>{{cuenta.cancelable}}</td> 
         <td>No</td>
     
