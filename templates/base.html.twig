@@ -97,14 +97,14 @@
                     </li>
                     <li>
                         {% block busqueda_general %}
-                        <form action="" method="get" id="frm-busqueda-general" >
+                        {#[<form action="" method="get" id="frm-busqueda-general" >
                         <div class="search-box">
                             <input type="search" id="search" name="query" placeholder="Buscar..." value="{{app.request.get('query')}}" />
                             <button class="icon" id="btn-busqueda-general">
                                 <i class="fa fa-search"></i>
                             </button>
                         </div>
-                        </form>
+                        </form>#}
                         {% endblock %}
                     </li>
                 </ul>
@@ -314,9 +314,10 @@
         <script src="{{asset('adminlte/assets/js/demo.js')}}"></script>
         <script src="{{asset('adminlte/assets/js/form.min.js')}}"></script>
         <script src="{{asset('adminlte/assets/js/pages/forms/advanced-form-elements.js')}}"></script>
+
+       <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         
         <script type="text/javascript">
-            
             $('document').ready(function(){
                 $('.email_reset_password').click(function(e){
                     e.preventDefault();
