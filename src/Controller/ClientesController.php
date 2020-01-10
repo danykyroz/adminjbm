@@ -1749,6 +1749,7 @@ class ClientesController extends AbstractController
 
       $week=$request->get('week')?$request->get('week'):date("W");
       $year=$request->get('year')?$request->get('year'):date("Y");
+      $days = $this->getDaysInWeek($year, $week);
 
       $fechas=$this->get_dates_week($year, $week);
 
@@ -1776,7 +1777,8 @@ class ClientesController extends AbstractController
                 'year'=>$year,
                 'week'=>$week,
                 'fechas'=>$fechas,
-                'empleados'=>$arr_empleados
+                'empleados'=>$arr_empleados,
+                'days'=>$days
               );
 
               $exportar=$request->get('exportar','');
@@ -2188,7 +2190,7 @@ function get_dates_week($year = 0, $week = 0)
         $anio = $request->request->get('incapacidad-anio');
         $dia = $request->request->get('incapacidad-dia');
         $diaPos = $request->request->get('incapacidad-dia-posicion');
-        $mes = (new \DateTime())->setISODate($anio, $semana)->format('M');
+        $mes = (new \DateTime())->setISODate($anio, $semana)->format('m');
         $cliente = $request->request->get('incapacidad-cliente');
         $empleado = $request->request->get('incapacidad-empleado');
 
