@@ -2221,8 +2221,8 @@ function get_dates_week($year = 0, $week = 0)
                             'MI' => 'A',
                             'J' => 'A',
                             'V' => 'A',
-                            'S' => 'D',
-                            'D' => 'D',
+                            'S' => 'A',
+                            'D' => 'A',
                         ];
 
                         $horarioDias[$diaPos] = 'I';
