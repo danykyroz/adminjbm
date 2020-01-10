@@ -79,7 +79,7 @@
                       </div>
                       <div class="body">
                           <form name="guardar-nomina" id="guardar-nomina" method="post" action="{{path('clientes_nomina_guardar_general')}}">
-                          <div class="table-responsive">
+                          <div class="table">
                               <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
                                   <thead>
                                       <tr>
@@ -229,8 +229,7 @@
                                               </select>
                                           </td>
                                           <td>
-                                            <!--<button
-                                            data-padre="horario_empleado_{{empleado.id}}" data-empleado="{{empleado.id}}" class="btn btn-primary guardar_horario" >Guardar
+                                            <!--<button data-padre="horario_empleado_{{empleado.id}}" data-empleado="{{empleado.id}}" class="btn btn-primary guardar_horario" >Guardar
                                             </button>
                                             !-->
                                             {% if is_granted('ROLE_CLIENTE') %}
