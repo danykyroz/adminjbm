@@ -78,6 +78,7 @@
                           </ul>
                       </div>
                       <div class="body">
+                          <form name="guardar-nomina" id="guardar-nomina" method="post" action="{{path('clientes_nomina_guardar_general')}}">
                           <div class="table-responsive">
                               <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
                                   <thead>
@@ -99,15 +100,24 @@
                                       </tr>
                                   </thead>
                                   <tbody>
+                                  {% set confirmado = false %}
                                     {% for objempleado in empleados %}
                                     {% set empleado=objempleado.empleado %}
-
+                                    {% set confirmado=objempleado.confirmado %}
                                       <tr id="horario_empleado_{{empleado.id}}" data-empleado="{{empleado.id}}" >
                                           <td>{{empleado.nombres}}</td>
                                           <td>{{empleado.cargo}}</td>
                                           <td>{{empleado.createdAt|date('d/m/y')}}</td>
                                            <td>
-                                            <select class="form-control upload-file" data-padre="horario_empleado_{{empleado.id}}" data-day="{{ days[0]|date('d') }}" data-posicion="L" class="select_lunes" id="select_lunes_empleado_{{empleado.id}}">
+                                            <select class="form-control upload-file"
+                                                    name="nomina[{{ empleado.id }}]['L']"
+                                                    data-padre="horario_empleado_{{empleado.id}}"
+                                                    data-day="{{ days[0]|date('d') }}"
+                                                    data-posicion="L"
+                                                    class="select_lunes"
+                                                    id="select_lunes_empleado_{{empleado.id}}"
+                                                    {{ objempleado.confirmado?'disabled':'' }}
+                                            >
                                                 <option {% if objempleado.horario.L=="A"  %} selected="selected" {% endif %} >A</option>
                                                 <option {% if objempleado.horario.L=="D"  %} selected="selected" {% endif %}>D</option>
                                                 <option {% if objempleado.horario.L=="F"  %} selected="selected" {% endif %}>F</option>
@@ -116,7 +126,15 @@
                                             </select>
                                           </td>
                                            <td>
-                                             <select class="form-control upload-file" data-padre="horario_empleado_{{empleado.id}}" data-day="{{ days[1]|date('d') }}" data-posicion="M" class="select_martes" id="select_martes_empleado_{{empleado.id}}">
+                                             <select class="form-control upload-file"
+                                                     name="nomina[{{ empleado.id }}]['M']"
+                                                     data-padre="horario_empleado_{{empleado.id}}"
+                                                     data-day="{{ days[1]|date('d') }}"
+                                                     data-posicion="M"
+                                                     class="select_martes"
+                                                     id="select_martes_empleado_{{empleado.id}}"
+                                                     {{ objempleado.confirmado?'disabled':'' }}
+                                             >
                                                  <option {% if objempleado.horario.M=="A"  %} selected="selected" {% endif %} >A</option>
                                                  <option {% if objempleado.horario.M=="D"  %} selected="selected" {% endif %}>D</option>
                                                  <option {% if objempleado.horario.M=="F"  %} selected="selected" {% endif %}>F</option>
@@ -125,7 +143,15 @@
                                             </select>
                                           </td>
                                            <td>
-                                            <select class="form-control upload-file" data-padre="horario_empleado_{{empleado.id}}" data-day="{{ days[2]|date('d') }}" data-posicion="MI" class="select_miercoles" id="select_miercoles_empleado_{{empleado.id}}">
+                                            <select class="form-control upload-file"
+                                                    name="nomina[{{ empleado.id }}]['MI']"
+                                                    data-padre="horario_empleado_{{empleado.id}}"
+                                                    data-day="{{ days[2]|date('d') }}"
+                                                    data-posicion="MI"
+                                                    class="select_miercoles"
+                                                    id="select_miercoles_empleado_{{empleado.id}}"
+                                                    {{ objempleado.confirmado?'disabled':'' }}
+                                            >
                                                 <option {% if objempleado.horario.MI=="A"  %} selected="selected" {% endif %} >A</option>
                                                 <option {% if objempleado.horario.MI=="D"  %} selected="selected" {% endif %}>D</option>
                                                 <option {% if objempleado.horario.MI=="F"  %} selected="selected" {% endif %}>F</option>
@@ -134,7 +160,15 @@
                                             </select>
                                           </td>
                                            <td>
-                                            <select class="form-control upload-file" data-padre="horario_empleado_{{empleado.id}}" data-day="{{ days[3]|date('d') }}" data-posicion="J" class="select_jueves" id="select_jueves_empleado_{{empleado.id}}">
+                                            <select class="form-control upload-file"
+                                                    name="nomina[{{ empleado.id }}]['J']"
+                                                    data-padre="horario_empleado_{{empleado.id}}"
+                                                    data-day="{{ days[3]|date('d') }}"
+                                                    data-posicion="J"
+                                                    class="select_jueves"
+                                                    id="select_jueves_empleado_{{empleado.id}}"
+                                                    {{ objempleado.confirmado?'disabled':'' }}
+                                            >
                                                 <option {% if objempleado.horario.J=="A"  %} selected="selected" {% endif %} >A</option>
                                                 <option {% if objempleado.horario.J=="D"  %} selected="selected" {% endif %}>D</option>
                                                 <option {% if objempleado.horario.J=="F"  %} selected="selected" {% endif %}>F</option>
@@ -143,7 +177,14 @@
                                             </select>
                                           </td>
                                            <td>
-                                            <select class="form-control upload-file" data-padre="horario_empleado_{{empleado.id}}" data-day="{{ days[4]|date('d') }}" data-posicion="V" class="select_viernes" id="select_viernes_empleado_{{empleado.id}}">
+                                            <select class="form-control upload-file"
+                                                    name="nomina[{{ empleado.id }}]['V']"
+                                                    data-padre="horario_empleado_{{empleado.id}}"
+                                                    data-day="{{ days[4]|date('d') }}"
+                                                    data-posicion="V" class="select_viernes" i
+                                                    d="select_viernes_empleado_{{empleado.id}}"
+                                                    {{ objempleado.confirmado?'disabled':'' }}
+                                            >
                                                 <option {% if objempleado.horario.V=="A"  %} selected="selected" {% endif %} >A</option>
                                                 <option {% if objempleado.horario.V=="D"  %} selected="selected" {% endif %}>D</option>
                                                 <option {% if objempleado.horario.V=="F"  %} selected="selected" {% endif %}>F</option>
@@ -153,7 +194,15 @@
                                           </td>
                                            <td>
 
-                                            <select class="form-control upload-file" data-padre="horario_empleado_{{empleado.id}}" data-day="{{ days[5]|date('d') }}" data-posicion="S" class="select_sabado" id="select_sabado_empleado_{{empleado.id}}">
+                                            <select class="form-control upload-file"
+                                                    name="nomina[{{ empleado.id }}]['S']"
+                                                    data-padre="horario_empleado_{{empleado.id}}"
+                                                    data-day="{{ days[5]|date('d') }}"
+                                                    data-posicion="S"
+                                                    class="select_sabado"
+                                                    id="select_sabado_empleado_{{empleado.id}}"
+                                                    {{ objempleado.confirmado?'disabled':'' }}
+                                            >
                                                 <option {% if objempleado.horario.S=="A"  %} selected="selected" {% endif %} >A</option>
                                                 <option {% if objempleado.horario.S=="D"  %} selected="selected" {% endif %}>D</option>
                                                 <option {% if objempleado.horario.S=="F"  %} selected="selected" {% endif %}>F</option>
@@ -163,7 +212,15 @@
 
                                           </td>
                                           <td >
-                                              <select class="form-control upload-file" data-padre="horario_empleado_{{empleado.id}}" data-day="{{ days[6]|date('d') }}" data-posicion="D" class="select_domingo"  id="select_domingo_empleado_{{empleado.id}}">
+                                              <select class="form-control upload-file"
+                                                      name="nomina[{{ empleado.id }}]['D']"
+                                                      data-padre="horario_empleado_{{empleado.id}}"
+                                                      data-day="{{ days[6]|date('d') }}"
+                                                      data-posicion="D"
+                                                      class="select_domingo"
+                                                      id="select_domingo_empleado_{{empleado.id}}"
+                                                      {{ objempleado.confirmado?'disabled':'' }}
+                                              >
                                                   <option {% if objempleado.horario.D=="A"  %} selected="selected" {% endif %} >A</option>
                                                   <option {% if objempleado.horario.D=="D"  %} selected="selected" {% endif %}>D</option>
                                                   <option {% if objempleado.horario.D=="F"  %} selected="selected" {% endif %}>F</option>
@@ -172,7 +229,8 @@
                                               </select>
                                           </td>
                                           <td>
-                                            <!--<button data-padre="horario_empleado_{{empleado.id}}" data-empleado="{{empleado.id}}" class="btn btn-primary guardar_horario" >Guardar
+                                            <!--<button
+                                            data-padre="horario_empleado_{{empleado.id}}" data-empleado="{{empleado.id}}" class="btn btn-primary guardar_horario" >Guardar
                                             </button>
                                             !-->
                                             {% if is_granted('ROLE_CLIENTE') %}
@@ -192,6 +250,19 @@
                                   </tbody>
                               </table>
                           </div>
+                          <hr>
+                              <div class="row">
+                                  <div class="col-md-12 col-sm-12 text-right">
+                                      <input type="hidden"
+                                             name="nomina-year" value="{{ year }}">
+                                      <input type="hidden" name="nomina-week" value="{{ week }}">
+                                      <input type="hidden" name="nomina-cliente" value="{{cliente.id}}">
+                                      {% if confirmado == false %}
+                                      <button type="button" id="procesar-horario" class="btn btn-primary  waves-effect">Guardar</button>
+                                      {% endif %}
+                                  </div>
+                              </div>
+                          </form>
                       </div>
                   </div>
               </div>
@@ -201,42 +272,7 @@
       </div>
   </section>
 
-    <div class="modal fade" id="myModal" role="dialog">
-        <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header" style="padding:35px 50px;">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4><span class="glyphicon glyphicon-lock"></span> Login</h4>
-                </div>
-                <div class="modal-body" style="padding:40px 50px;">
-                    <form role="form">
-                        <div class="form-group">
-                            <label for="usrname"><span class="glyphicon glyphicon-user"></span> Username</label>
-                            <input type="text" class="form-control" id="usrname" placeholder="Enter email">
-                        </div>
-                        <div class="form-group">
-                            <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
-                            <input type="text" class="form-control" id="psw" placeholder="Enter password">
-                        </div>
-                        <div class="checkbox">
-                            <label><input type="checkbox" value="" checked>Remember me</label>
-                        </div>
-                        <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
-                    <p>Not a member? <a href="#">Sign Up</a></p>
-                    <p>Forgot <a href="#">Password?</a></p>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -420,6 +456,43 @@
   }
 
   $("document").ready(function(){
+
+      $("#procesar-horario").on('click', (function (e) {
+          e.preventDefault();
+          swal({
+
+              title: "Guardar horarios",
+              text: "Una vez que se hayan guardado, no podrán ser editados",
+              icon: "warning",
+              buttons: {
+                  cancel: {
+                      text: "Cancelar",
+                      value: null,
+                      visible: true,
+                      className: "btn btn-danger",
+                      closeModal: true,
+                  },
+                  confirm: {
+                      text: "Aceptar",
+                      value: true,
+                      visible: true,
+                      className: "btn btn-primary",
+                      closeModal: true
+                  },
+              },
+              dangerMode: true,
+          })
+              .then((willDelete) => {
+                  if (willDelete) {
+                      swal("Horarios guardados", {
+                          icon: "success",
+                      });
+                      $("#guardar-nomina").submit();
+                  }
+              });
+
+      }));
+
 
       $(".dar_baja").click(function(e){
         e.preventDefault();

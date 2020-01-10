@@ -1765,9 +1765,9 @@ class ClientesController extends AbstractController
 
               $horario=$this->getHorarioEmpleadoSemana($year,$week,$empleado->getId());
               if($horario){
-                $arr_empleados[]=array('empleado'=>$empleado,'horario'=>json_decode($horario->getDias()));
+                $arr_empleados[]=array('empleado'=>$empleado,'horario'=>json_decode($horario->getDias()), 'confirmado' => $horario->getConfirmado());
               }else{
-                $arr_empleados[]=array('empleado'=>$empleado,'horario'=>$empleado->getDiasDescanso());
+                $arr_empleados[]=array('empleado'=>$empleado,'horario'=>$empleado->getDiasDescanso(), 'confirmado' => false);
               }
 
             }
@@ -1890,9 +1890,9 @@ class ClientesController extends AbstractController
 
       $horario=$this->getHorarioEmpleadoSemana($year,$week,$empleado->getId());
       if($horario){
-        $arr_empleados[]=array('empleado'=>$empleado,'horario'=>json_decode($horario->getDias()));
+        $arr_empleados[]=array('empleado'=>$empleado,'horario'=>json_decode($horario->getDias()), 'confirmado' => $horario->getConfirmado());
       }else{
-        $arr_empleados[]=array('empleado'=>$empleado,'horario'=>$empleado->getDiasDescanso());
+        $arr_empleados[]=array('empleado'=>$empleado,'horario'=>$empleado->getDiasDescanso(), 'confirmado' => false);
       }
 
     }
@@ -2336,6 +2336,45 @@ function get_dates_week($year = 0, $week = 0)
             $result[] = $day;
         }
         return $result;
+    }
+
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Exception
+     * @Route("/nomina/guardar/general", name="clientes_nomina_guardar_general", methods={"POST"})
+     */
+    public function nomina_guardar_general(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $year =  $request->request->get('nomina-year');
+        $week =  $request->request->get('nomina-week');
+        $cliente =  $request->request->get('nomina-cliente');
+
+        $horarioEmpleados = $request->request->get('nomina');
+
+        foreach ($horarioEmpleados as $empleadoId => $dias) {
+            $horarioNomina = new HorarioEmpleado();
+            $horarioNomina->setEmpleadoId($empleadoId);
+            $horarioNomina->setYear($year);
+            $horarioNomina->setSemana($week);
+            $horarioNomina->setConfirmado(true);
+            $horarioNomina->setDias(str_replace("'", "", json_encode($dias)));
+
+            $em->persist($horarioNomina);
+            $em->flush();
+
+        }
+
+        return $this->redirectToRoute('clientes_nomina_list', [
+            'week' => $week,
+            'year' => $year,
+            'clienteid'=>$cliente,
+            'exportar' => null
+            ]
+        );
+
     }
 
 

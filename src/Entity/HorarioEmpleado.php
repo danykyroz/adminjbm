@@ -55,6 +55,11 @@ class HorarioEmpleado
      */
     private $empleadoId;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $confirmado;
+
 
 
 
@@ -121,6 +126,18 @@ class HorarioEmpleado
     public function setEmpleadoId($empleadoId): self
     {
         $this->empleadoId = $empleadoId;
+
+        return $this;
+    }
+
+    public function getConfirmado(): ?bool
+    {
+        return $this->confirmado;
+    }
+
+    public function setConfirmado(?bool $confirmado): self
+    {
+        $this->confirmado = $confirmado;
 
         return $this;
     }
