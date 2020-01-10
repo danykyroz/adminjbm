@@ -18,6 +18,11 @@
               <li class="breadcrumb-item bcrumb-2">
                 <a href="javascript:void(0);">Gastos y Compras</a>
               </li>
+              {% if cliente %}
+              <li class="breadcrumb-item bcrumb-2">
+                <a href="javascript:void(0);">{{cliente.razonSocial}}</a>
+              </li>
+              {% endif %}
             </ul>
           </div>
           <div class="col-xl-6 col-lg-7 col-md-8 col-sm-12 text-right">
@@ -50,13 +55,13 @@
             <form id="frm-filtros-avanzado" name="frm-filtros-avanzado" >
               <input type="hidden" name="exportar" id="exportar" value="" >
                 <div class="row clearfix">
-                  {% if is_granted('ROLE_CLIENTE') %}
+                  {% if is_granted('ROLE_CLIENTE') or cliente!=false %}
                       <input type="hidden" name="filtros['cliente']" value="{{cliente.id}}" id="filtros_cliente" >
                   {% else%}
                     <div class="col-md-3 col-sm-3 col-xs-6">
                         <div class="form-group">
                             <div class="form-line">
-                                                <label>Clientes</label>
+                            <label>Clientes</label>
 
                               <select name="filtros[cliente]" id="filtros_cliente">
                                     <option value="">Clientes</option>
@@ -165,8 +170,8 @@
                       <th>Tipo de pago</th>
                       <th>Tipo Transacción</th>
                       <th>Folio</th>
-                      <th>Facturado</th>
-                      <th>Por Facturar</th>
+                      <th>Comprobado</th>
+                      <th>Por Comprobar</th>
 
                       <th>Facturas</th>
                     </tr>
@@ -188,7 +193,7 @@
                       </td>
 
                        <td>
-                        {{tipopagos[pago.tipoPagoId].nombre}}
+                        {{tipopagos[pago.tipoPagoId-1].nombre}}
                       </td>
 
                       <td id="td_pago_folio_{{pago.id}}">
@@ -225,22 +230,39 @@
                              
 
                             {% endif %}
-                         <a href="#" data-id="{{pago.id}}" class="waves-effect m-r-20 editar" title="Editar">
-                          <i class="material-icons">edit</i>
-                         </a> 
-                        
-                            <a data-id="{{pago.id}}" href="{{path('pagos_delete',{id:pago.id})}}" class="col-dark-gray waves-effect m-r-20 eliminar" title="Eliminar">
-                            <i class="material-icons">delete_sweep</i>
-                          </a>
+                            {% if pago.revisado==0 %}
+                             <a href="#" data-id="{{pago.id}}" class="waves-effect m-r-20 editar" title="Editar">
+                              <i class="material-icons">edit</i>
+                             </a> 
+                            
+                                <a data-id="{{pago.id}}" href="{{path('pagos_delete',{id:pago.id})}}" class="col-dark-gray waves-effect m-r-20 eliminar" title="Eliminar">
+                                <i class="material-icons">delete_sweep</i>
+                              </a>
+                              
+                              {% if is_granted('ROLE_CLIENTE') %}
+
+
+                              {% else %}
+
+                              <a href="{{path('pagos_cliente_revisado',{id:pago.id})}}" class="col-dark-gray  waves-effect m-r-20 revisado" title="Revisado" >  <i class="material-icons">done</i></a>
+                            {% endif %}
+                            
+                            {% else %}
+
+                              {% if is_granted('ROLE_CLIENTE') %}
+
+
+                              {% else %}
+                                 <a href="{{path('pagos_cliente_revisado',{id:pago.id})}}" class="col-dark-green text-green  waves-effect m-r-20 revisado" title="Quitar Revisado" >  <i class="material-icons">done</i></a>
+                          
+                              {% endif %}
+
+
+                           
+                             {% endif %} 
+                            
                       
-                         {% if is_granted('ROLE_CLIENTE') %}
-
-
-                         {% else %}
-                        
-                           <a href="{{path('pagos_cliente_revisado',{id:pago.id})}}" class="col-dark-green  waves-effect m-r-20 revisado" title="Revisado" >  <i class="material-icons">done</i></a>
-
-                         {% endif %}
+                     
 
                         
                       </td>

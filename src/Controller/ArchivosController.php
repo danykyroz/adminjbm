@@ -82,7 +82,9 @@ class ArchivosController extends AbstractController
       //Explotamos los puntos si es pdf o xml guardamos en files sino en directorios
         $explode=explode(".",$file);
         $ext=$explode[count($explode)-1];
-        if($ext=='xml' or $ext=='pdf'){
+        $ext=strtolower($ext);
+
+        if($ext=='xml' or $ext=='pdf' or $ext=='png' || $ext=='jpg' || $ext=='jpeg'){
           $arr_files[]=$file;
         }else{
           $arr_directories[]=$file;
@@ -116,7 +118,9 @@ class ArchivosController extends AbstractController
       //Explotamos los puntos si es pdf o xml guardamos en files sino en directorios
         $explode=explode(".",$file);
         $ext=$explode[count($explode)-1];
-        if($ext=='xml' or $ext=='pdf'){
+        $ext=strtolower($ext);
+
+        if($ext=='xml' or $ext=='pdf' or $ext=='png' || $ext=='jpg' || $ext=='jpeg'){
           $arr_files[]=$file;
         }else{
           $arr_directories[]=$file;

@@ -17,6 +17,17 @@
               <li class="breadcrumb-item bcrumb-2">
                 <a href="javascript:void(0);">Cuentas por pagar</a>
               </li>
+
+               {% if cliente %}
+              <li class="breadcrumb-item bcrumb-2">
+                  <a href="javascript:void(0);">{{cliente.razonSocial}}</a>
+               </li>
+                {% endif %}
+              {% if pago %}
+              <li class="breadcrumb-item bcrumb-2">
+                <a href="javascript:void(0);">Pago # {{pago.consecutivo}}</a>
+              </li>
+              {% endif %}
             </ul>
           </div>
           <div class="col-xl-6 col-lg-7 col-md-8 col-sm-12 text-right">
@@ -25,21 +36,22 @@
               <div class="breadcrumb-chart">
                 <div class="float-right">
                   <div class="icon m-b-10">
-                     <a href="{{path('cuentas_por_cobrar_subir_archivos')}}" type="button" class="btn btn-primary  waves-effect" >Subir xml</a>
+                     <a href="{{path('cuentas_por_cobrar_subir_archivos',{clienteid:pago.clienteId})}}" type="button" class="btn btn-primary  waves-effect" >Subir xml</a>
                   </div>
                 </div>
               </div>
             {% endif %}
 
             {% else %}
+            {% if cliente %}
               <div class="breadcrumb-chart">
               <div class="float-right">
                 <div class="icon m-b-10">
-                   <a href="{{path('cuentas_por_cobrar_subir_archivos')}}" type="button" class="btn btn-primary  waves-effect" >Subir xml</a>
+                  <a href="{{path('cuentas_por_cobrar_subir_archivos',{clienteid:cliente.id})}}" type="button" class="btn btn-primary  waves-effect" >Subir xml</a>
                 </div>
               </div>
             </div>
-
+            {% endif %}
             {% endif %}
           </div>
         </div>
@@ -48,6 +60,7 @@
 
       <!-- #END# Basic Examples -->
       <!-- Exportable Table -->
+    {% if pago==false %}
       <div class="row clearfix">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <div class="card">
@@ -59,10 +72,12 @@
           <div class="body">
             <form id="frm-filtros-avanzado" name="frm-filtros-avanzado">
               <input type="hidden" name="exportar" id="exportar">
+              <input type="hidden" name="filtros[cliente]" id="clienteid" value="{{filtros.cliente}}">
+              
                 <div class="row clearfix">
 
-                   {% if is_granted('ROLE_CLIENTE') %}
-                                 <input type="hidden" name="filtros['cliente']" value="{{cliente.id}}" >
+                   {% if is_granted('ROLE_CLIENTE') or cliente %}
+                      <input type="hidden" name="filtros['cliente']" value="{{cliente.id}}" >
                     {% else %}
                     {% if pago==FALSE %}
                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
@@ -112,6 +127,20 @@
                             </div>
                         </div>
                     </div>
+
+                      <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                       <div class="form-group">
+                            <div class="form-line">
+                            <label>Extensiones Archivo</label>
+                            <br/>
+                              <select name="filtros[extensiones]"  id="extensiones">
+                                    <option value="">Todas</option>
+                                    <option value="xml" {% if filtros.extensiones=='xml' %} selected="tue" {% endif %}  >XML </option>
+                                     <option value="otras" {% if (filtros.extensiones!='xml' and filtros.extensiones!="" ) %} selected="tue" {% endif %}>Otras extensiones</option>
+                              </select>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
                             <div class="form-line" style="margin-top: -15px">
                             <label>Fecha Inicial</label>
@@ -142,12 +171,23 @@
                 </div>
             </form>
         </div>
+    
+</div>
+</div>
+</div>
+{% endif %}
+<div class="row clearfix">
 
-
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <div class="card">
+        
 
             <div class="header">
               <h2>
-                <strong>Facturas por comprobar</strong></h2>
+                <strong>Facturas por comprobar</strong>
+               
+                
+              </h2>
               <ul class="header-dropdown m-r--5">
                 <li class="dropdown">
                   <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -177,6 +217,7 @@
                       <th>Valor</th>
                       <th>IVA</th>
                       <th>Total</th>
+                      <th>Estado Factura</th>
                       <th>Cancelable</th>
                       <th>En Lista Negra</th>
                       <th>Acciones</th>
@@ -193,6 +234,7 @@
                       <td>$ {{cuenta.valor|number_format(2,'.',',')}}</td>
                       <td>$ {{cuenta.iva|number_format(2,'.',',')}}</td>
                       <td>$ {{cuenta.total|number_format(2,'.',',')}}</td>
+                      <td>{{cuenta.cfdi}}</td>
                       <td>{{cuenta.cancelable}}</td> 
                       <td>No</td>
                       <td> 
@@ -350,7 +392,7 @@
         $('#cliente').val("");
         $('#fecha_inicial').val("");
         $('#fecha_final').val("");
-
+        $("#extensiones").val("");
         $('#frm-clientes-avanzado').submit();
      })
 
@@ -361,10 +403,10 @@
 
       $.post(action,data,function(data){
         if(data=="ok"){
-          alert("Cobro asociado exitsamente");
+          swal("Cobro asociado exitsamente");
           location.reload();
         }else{
-          alert(data);
+          swal(data);
         }
         $("#exampleModalCenter").modal('hide');
       })
