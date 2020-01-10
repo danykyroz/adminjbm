@@ -1758,7 +1758,7 @@ class ClientesController extends AbstractController
 
 
             $cliente=$em->getRepository('App:Clientes','c')->findOneBy(array('email'=>$user->getEmail()));
-            $empleados=$em->getRepository('App:Empleados','e')->findBy(array('clienteId'=>$cliente->getId()));
+            $empleados=$em->getRepository('App:Empleados','e')->findBy(array('clienteId'=>$cliente->getId(),'estado'=>1));
 
             $arr_empleados=array();
             foreach($empleados as $empleado){
@@ -2265,6 +2265,58 @@ function get_dates_week($year = 0, $week = 0)
 
     }
 
+
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Exception
+     * @Route("/nomina/dar/baja", name="clientes_nomina_dar_baja", methods={"POST"})
+     */
+    public function nomina_dar_baja(Request $request)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $cliente = $request->request->get('clienteid');
+        $empleado = $request->request->get('empleadoid');
+
+        $clienteObj = $em->getRepository(Clientes::class)->findOneById($cliente);
+        $empleadoObj = $em->getRepository(Empleados::class)->findOneById($empleado);
+
+        $bajafile = $request->files->get('baja-file');
+
+        if($bajafile instanceof UploadedFile) {
+
+            $cliente_path = str_replace(" ","-", $clienteObj->getRazonSocial());
+            $empleado_path = str_replace(" ","-", $empleadoObj->getNombres());
+
+                try {
+
+                    $empleadoObj->setFechaBaja(new \DateTime('now'));
+                    $empleadoObj->setEstado(0);
+                    $ruta='uploads/'.$cliente_path.'/nomina/'.$empleado_path.'/baja/'.$bajafile->getClientOriginalName();
+                    
+                    $bajafile->move(
+                        'uploads' . DIRECTORY_SEPARATOR .
+                        $cliente_path . DIRECTORY_SEPARATOR .
+                        'nomina' . DIRECTORY_SEPARATOR .
+                        $empleado_path . DIRECTORY_SEPARATOR .
+                        'baja' . DIRECTORY_SEPARATOR .
+                        $bajafile->getClientOriginalName()
+                    );
+
+                    $empleadoObj->setFileBaja($ruta);
+                    $em->persist($empleadoObj);
+                    $em->flush();
+
+                } catch (FileException $e) {
+                   // dd($e->getMessage());
+                }
+        }
+
+        return $this->redirectToRoute('clientes_nomina_list',array('clienteid'=>$clienteObj->getId()));
+
+    }
     /**
      * Get days in a week
      * @param $year

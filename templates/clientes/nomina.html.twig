@@ -92,7 +92,10 @@
                                           <th>V</th>
                                           <th>S</th>
                                           <th>D</th>
+                                          {% if is_granted('ROLE_CLIENTE') %}
+                                          {% else %}
                                           <th>Acciones</th>
+                                          {% endif %}
                                       </tr>
                                   </thead>
                                   <tbody>
@@ -168,7 +171,21 @@
                                                   <option {% if objempleado.horario.D=="V"  %} selected="selected" {% endif %}>V</option>
                                               </select>
                                           </td>
-                                          <td><button data-padre="horario_empleado_{{empleado.id}}" class="btn btn-primary guardar_horario" >Guardar</button></td>
+                                          <td>
+                                            <!--<button data-padre="horario_empleado_{{empleado.id}}" data-empleado="{{empleado.id}}" class="btn btn-primary guardar_horario" >Guardar
+                                            </button>
+                                            !-->
+                                            {% if is_granted('ROLE_CLIENTE') %}
+                                            {% else %}
+                                            {% if empleado.estado!='0' %}
+                                             <button data-padre="horario_empleado_{{empleado.id}}" data-empleado="{{empleado.id}}" class="btn btn-primary dar_baja" > Baja
+                                            
+                                            </button>
+                                            {% endif %}
+                                            {% endif %}
+
+                                          </td>
+
                                          </tr>
                                         {% endfor %}
 
@@ -319,7 +336,7 @@
 
       </div>
 
-{# UPLOAD FILE#}
+{# UPLOAD FILE INCAPACIDAD #}
 <div class="modal fade" id="uploadFile" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -355,6 +372,39 @@
 
 </div>
 
+{# UPLOAD FILE DAR DE BAJA #}
+
+<div class="modal fade" id="uploadFileBaja" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Cargar archivo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" id="form-dar-baja" name="form-dar-baja" action="{{path('clientes_nomina_dar_baja')}}" enctype="multipart/form-data" >
+                <input type="hidden" name="token" value="{{ csrf_token('upload') }}" />
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="form-line">
+                            <input type="file" required name="baja-file" id="dar_baja-file" class="custom-file" placeholder="Archivo Baja Empleado" accept="application/pdf">
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" name="clienteid" id="baja-cliente" value="{{cliente.id}}" >
+                    <input type="hidden" name="empleadoid" id="baja-empleadoid" value="">
+                    <button type="submit" id="btn-incapacidad" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
 {% endblock %}
 
 {% endblock %} 
@@ -371,6 +421,13 @@
 
   $("document").ready(function(){
 
+      $(".dar_baja").click(function(e){
+        e.preventDefault();
+        var id=$(this).data('empleado');
+        $("#baja-empleadoid").val(id);
+        $("#uploadFileBaja").modal('show');
+
+      });
 
       $(".upload-file").change(function(e){
           e.preventDefault()
@@ -411,7 +468,7 @@
 
         data={dias:dias,semana:semana,year:year,empleado:id,clienteid:clienteid};
         $.post('guardar_horario',data,function(data){
-          alert(data);
+          swal(data);
         })
 
     })

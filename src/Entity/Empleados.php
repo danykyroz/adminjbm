@@ -29,6 +29,13 @@ class Empleados
     private $createdAt;
 
     /**
+     * @var \DateTime|null
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(name="fecha_baja", type="datetime", nullable=true)
+     */
+    private $fechaBaja;
+
+    /**
      * @var string|null
      *
      * @ORM\Column(name="nombres", type="string", length=255, nullable=false)
@@ -57,11 +64,33 @@ class Empleados
 
 
     /**
-     * @var string|null
+     * @var int|null
      *
      * @ORM\Column(name="cliente_id", type="string", length=255, nullable=true)
      */
     private $clienteId;
+
+
+     /**
+     * @var int|null
+     *
+     * @ORM\Column(name="estado", type="integer", length=11, nullable=true)
+     */
+    private $estado;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="file_alta", type="string", length=255, nullable=true)
+     */
+    private $fileAlta;
+
+     /**
+     * @var string|null
+     *
+     * @ORM\Column(name="file_baja", type="string", length=255, nullable=true)
+     */
+    private $fileBaja;
 
 
 
@@ -83,6 +112,19 @@ class Empleados
 
         return $this;
     }
+
+     public function getFechaBaja(): ?\DateTimeInterface
+    {
+        return $this->fechaBaja;
+    }
+
+    public function setFechaBaja($fechaBaja): self
+    {
+        $this->fechaBaja = $fechaBaja;
+
+        return $this;
+    }
+
      public function getDocumento(): ?string
     {
         return $this->documento;
@@ -145,6 +187,42 @@ class Empleados
         return $this;
     }
 
+
+    public function setFileAlta(string $fileAlta): self
+    {
+        $this->fileAlta = $fileAlta;
+
+        return $this;
+    }
+
+    public function getFileAlta(): ?string
+    {
+        return $this->fileAlta;
+    }
+
+    public function setFileBaja(string $fileBaja): self
+    {
+        $this->fileBaja = $fileBaja;
+
+        return $this;
+    }
+
+    public function getFileBaja(): ?string
+    {
+        return $this->fileBaja;
+    }
+
+      public function getEstado()
+    {
+        return $this->estado;
+    }
+
+    public function setEstado($estado): self
+    {
+        $this->estado = $estado;
+
+        return $this;
+    }
   
 
 }
