@@ -403,13 +403,15 @@ class ClientesController extends AbstractController
       $cliente=false;
       $clientes=$this->getClientes_Select();
       $clienteid=$request->get('clienteid',0);
+      $exportar=$request->get('exportar','');
+
       //Preguntar si no hay id de cliente para mostrar la plantilla de clientes
 
       $user=($this->getUser());
 
       if($user->getRoles()[0]!="ROLE_CLIENTE"){
 
-        if($clienteid==0 && $filtros['cliente']==""){
+        if($clienteid==0 && @$filtros['cliente']=="" && $exportar==""){
           return $this->render('clientes/select_cliente.html.twig',array('clientes'=>$clientes)); 
         }
 
@@ -526,20 +528,19 @@ class ClientesController extends AbstractController
 
       $tipopagos=$em->getRepository('App:TipoPago','t')->findAll();
 
-      $exportar=$request->get('exportar','');
 
       if($exportar==true){
         
         $pagos=$qb->getQuery()->getResult();
          $body= $this->renderView('clientes/pagos_excel.html.twig',array(
-          'pagos'=>$pagos));
+          'pagos'=>$pagos,'tipopagos'=>$tipopagos));
 
           $response=new Response();
           $fecha=date('Ymd_His');
 
           $dispositionHeader = $response->headers->makeDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            "gastos_y_compras_$fecha.xls"
+            "cheques_y_transferencias_$fecha.xls"
         );
 
         $response->headers->set('Content-Type', 'application/vnd.ms-excel; charset=utf-8');
@@ -577,7 +578,7 @@ class ClientesController extends AbstractController
       $em->persist($pago);
       $em->flush();
 
-      return  $this->redirect($this->generateUrl('pagos_clientes'));
+      return  $this->redirect($this->generateUrl('pagos_clientes',array('clienteid'=>$pago->getClienteId())));
 
   }
 
@@ -859,13 +860,14 @@ class ClientesController extends AbstractController
       $clientes=$this->getClientes_Select();  
       $cliente=false;
       $filtros=$request->get('filtros');
+      $exportar=$request->get('exportar','');
 
 
        $clienteid=$request->get('clienteid',0);
       //Preguntar si no hay id de cliente para mostrar la plantilla de clientes
       if($user->getRoles()[0]!="ROLE_CLIENTE"){
 
-          if($clienteid==0 && $filtros['cliente']==""){
+          if($clienteid==0 && @$filtros['cliente']=="" && $exportar=="" ){
             return $this->render('clientes/select_cliente.html.twig',array('clientes'=>$clientes)); 
           }
       }
@@ -1017,7 +1019,6 @@ class ClientesController extends AbstractController
             50 /*limit per page*/
         );
 
-        $exportar=$request->get('exportar','');
 
       if($exportar==true){
         
@@ -1030,7 +1031,7 @@ class ClientesController extends AbstractController
 
           $dispositionHeader = $response->headers->makeDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            "cuentas_por_pagar_$fecha.xls"
+            "facturas_por_pagar_$fecha.xls"
         );
 
         $response->headers->set('Content-Type', 'application/vnd.ms-excel; charset=utf-8');
