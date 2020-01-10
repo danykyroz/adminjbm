@@ -2,35 +2,24 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-
 use App\Entity\Clientes;
-use App\Entity\Pagos;
 use App\Entity\CuentasPorCobrar;
 use App\Entity\Empleados;
 use App\Entity\HorarioEmpleado;
-
-
-use Pagerfanta\Pagerfanta;
-use Pagerfanta\Adapter\DoctrineORMAdapter;
-
-use App\Form\ClientesType;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use App\Entity\Pagos;
+use CfdiUtils\Cfdi;
+use CfdiUtils\ConsultaCfdiSat\RequestParameters;
+use CfdiUtils\ConsultaCfdiSat\WebService;
 use FOS\UserBundle\Model\UserManagerInterface;
-use Symfony\Component\Security\Core\UserProviderInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-
-
-use \CfdiUtils\Cfdi;
-use \CfdiUtils\ConsultaCfdiSat\WebService;
-use \CfdiUtils\ConsultaCfdiSat\RequestParameters;
-use \CfdiUtils\Nodes\Node;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\UserProviderInterface;
 
 
 /**
@@ -1779,6 +1768,7 @@ class ClientesController extends AbstractController
     $year=$request->get('year')?$request->get('year'):date("Y");
 
     $fechas=$this->get_dates_week($year, $week);
+    $days = $this->getDaysInWeek($year, $week);
 
     $empleados=$em->getRepository('App:Empleados','e')->findBy(array('clienteId'=>$cliente->getId()));
 
@@ -1798,6 +1788,7 @@ class ClientesController extends AbstractController
                 'cliente'=>$cliente,
                 'year'=>$year,
                 'week'=>$week,
+                'days' => $days,
                 'fechas'=>$fechas);
 
 
@@ -2072,25 +2063,117 @@ function get_dates_week($year = 0, $week = 0)
 }
 
     /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Exception
      * @Route("/nomina/guardar/incapacidad", name="clientes_nomina_guardar_incapacidad", methods={"POST"})
      */
-    public function nomina_guardar_incapacidad(Request $request){
+    public function nomina_guardar_incapacidad(Request $request)
+    {
 
+        $em = $this->getDoctrine()->getManager();
 
-        $empleado = $request->request->get('incapacidad-empleado');
         $semana = $request->request->get('incapacidad-semana');
         $anio = $request->request->get('incapacidad-anio');
-        dd($request->files->get('incapacidad-file'));
+        $dia = $request->request->get('incapacidad-dia');
+        $diaPos = $request->request->get('incapacidad-dia-posicion');
+        $mes = (new \DateTime())->setISODate($anio, $semana)->format('M');
+        $cliente = $request->request->get('incapacidad-cliente');
+        $empleado = $request->request->get('incapacidad-empleado');
 
-        die;
+        $clienteObj = $em->getRepository(Clientes::class)->findOneById($cliente);
+        $empleadoObj = $em->getRepository(Empleados::class)->findOneById($empleado);
+
+        $incapacidad = $request->files->get('incapacidad-file');
+
+        if($incapacidad instanceof UploadedFile) {
+
+            $cliente_path = str_replace(" ","-", $clienteObj->getRazonSocial());
+            $empleado_path = str_replace(" ","-", $empleadoObj->getNombres());
+
+                try {
+
+                    $horario = $em->getRepository(HorarioEmpleado::class)->findOneBy([
+                        'empleadoId' => $empleadoObj->getId(),
+                        'year' => $anio,
+                        'semana' => $semana
+                    ], ['id' => 'DESC']);
+
+                    //Si no existe horario se crea
+                    if(null == $horario){
+
+                        $horarioDias = [
+                            'L' => 'A',
+                            'M' => 'A',
+                            'MI' => 'A',
+                            'J' => 'A',
+                            'V' => 'A',
+                            'S' => 'D',
+                            'D' => 'D',
+                        ];
+
+                        $horarioDias[$diaPos] = 'I';
+
+                        $horario = new HorarioEmpleado();
+                        $horario->setEmpleadoId($empleadoObj->getId());
+                        $horario->setYear($anio);
+                        $horario->setSemana($semana);
+                        $horario->setDias(json_encode($horarioDias));
+                    } else {
+                        $dias = json_decode($horario->getDias());
+                        $dias->{$diaPos} = 'I';
+
+                        $horario->setDias(json_encode($dias));
+
+                    }
+
+                    $em->persist($horario);
+                    $em->flush();
 
 
-        $this->addFlash('success', 'Cliente creado exitosamente!');
+                    $incapacidad->move(
+                        'uploads' . DIRECTORY_SEPARATOR .
+                        $cliente_path . DIRECTORY_SEPARATOR .
+                        'nomina' . DIRECTORY_SEPARATOR .
+                        $empleado_path . DIRECTORY_SEPARATOR .
+                        'incapacidad' . DIRECTORY_SEPARATOR .
+                        $anio . DIRECTORY_SEPARATOR .
+                        $mes . DIRECTORY_SEPARATOR.
+                        $dia,
+                        $incapacidad->getClientOriginalName()
+                    );
 
-        return $this->redirectToRoute('clientes_nomina_list',array('clienteid'=>$cliente->getId()));
+                } catch (FileException $e) {
+                   // dd($e->getMessage());
+                }
+        }
+
+        return $this->redirectToRoute('clientes_nomina_list',array('clienteid'=>$clienteObj->getId()));
 
     }
-  
+
+    /**
+     * Get days in a week
+     * @param $year
+     * @param $week
+     * @return array
+     * @throws \Exception
+     */
+    private function getDaysInWeek($year, $week)
+    {
+        $result = array();
+        $datetime = new \DateTime('00:00:00');
+        $datetime->setISODate($year, $week);
+        $interval = new \DateInterval('P1D');
+        $week = new \DatePeriod($datetime, $interval, 6);
+
+        foreach($week as $day){
+            $result[] = $day;
+        }
+        return $result;
+    }
+
+
 }
 
 

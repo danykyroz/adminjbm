@@ -33,7 +33,6 @@
                             <div class="float-right m-r-10">
                                 <div class="chart-info ">
                                     <button type="button" class="btn btn-primary  waves-effect" data-toggle="modal" data-target="#exampleModalCenter">Nuevo Empleado</button>
-                                    <button type="button" class="btn btn-default btn-lg" id="myBtn">Login</button>
                                 </div>
                             </div>
                         </div>
@@ -86,13 +85,13 @@
                                           <th>Nombre</th>
                                           <th>Cargo</th>
                                           <th>Fecha</th>
-                                          <th>D</th>
                                           <th>L</th>
                                           <th>M</th>
                                           <th>MI</th>
                                           <th>J</th>
                                           <th>V</th>
                                           <th>S</th>
+                                          <th>D</th>
                                           <th>Acciones</th>
                                       </tr>
                                   </thead>
@@ -104,17 +103,8 @@
                                           <td>{{empleado.nombres}}</td>
                                           <td>{{empleado.cargo}}</td>
                                           <td>{{empleado.createdAt|date('d/m/y')}}</td>
-                                          <td >
-                                            <select class="form-control upload-file" data-padre="horario_empleado_{{empleado.id}}" class="select_domingo"  id="select_domingo_empleado_{{empleado.id}}">
-                                              <option {% if objempleado.horario.D=="A"  %} selected="selected" {% endif %} >A</option>
-                                              <option {% if objempleado.horario.D=="D"  %} selected="selected" {% endif %}>D</option>
-                                              <option {% if objempleado.horario.D=="F"  %} selected="selected" {% endif %}>F</option>
-                                              <option {% if objempleado.horario.D=="I"  %} selected="selected" {% endif %}>I</option>
-                                              <option {% if objempleado.horario.D=="V"  %} selected="selected" {% endif %}>V</option>
-                                            </select>
-                                          </td>
                                            <td>
-                                            <select class="form-control upload-file" data-padre="horario_empleado_{{empleado.id}}" class="select_lunes" id="select_lunes_empleado_{{empleado.id}}">
+                                            <select class="form-control upload-file" data-padre="horario_empleado_{{empleado.id}}" data-day="{{ days[0]|date('d') }}" data-posicion="L" class="select_lunes" id="select_lunes_empleado_{{empleado.id}}">
                                                 <option {% if objempleado.horario.L=="A"  %} selected="selected" {% endif %} >A</option>
                                                 <option {% if objempleado.horario.L=="D"  %} selected="selected" {% endif %}>D</option>
                                                 <option {% if objempleado.horario.L=="F"  %} selected="selected" {% endif %}>F</option>
@@ -123,7 +113,7 @@
                                             </select>
                                           </td>
                                            <td>
-                                             <select class="form-control upload-file" data-padre="horario_empleado_{{empleado.id}}"  class="select_martes" id="select_martes_empleado_{{empleado.id}}">
+                                             <select class="form-control upload-file" data-padre="horario_empleado_{{empleado.id}}" data-day="{{ days[1]|date('d') }}" data-posicion="M" class="select_martes" id="select_martes_empleado_{{empleado.id}}">
                                                  <option {% if objempleado.horario.M=="A"  %} selected="selected" {% endif %} >A</option>
                                                  <option {% if objempleado.horario.M=="D"  %} selected="selected" {% endif %}>D</option>
                                                  <option {% if objempleado.horario.M=="F"  %} selected="selected" {% endif %}>F</option>
@@ -132,7 +122,7 @@
                                             </select>
                                           </td>
                                            <td>
-                                            <select class="form-control upload-file" data-padre="horario_empleado_{{empleado.id}}" class="select_miercoles" id="select_miercoles_empleado_{{empleado.id}}">
+                                            <select class="form-control upload-file" data-padre="horario_empleado_{{empleado.id}}" data-day="{{ days[2]|date('d') }}" data-posicion="MI" class="select_miercoles" id="select_miercoles_empleado_{{empleado.id}}">
                                                 <option {% if objempleado.horario.MI=="A"  %} selected="selected" {% endif %} >A</option>
                                                 <option {% if objempleado.horario.MI=="D"  %} selected="selected" {% endif %}>D</option>
                                                 <option {% if objempleado.horario.MI=="F"  %} selected="selected" {% endif %}>F</option>
@@ -141,7 +131,7 @@
                                             </select>
                                           </td>
                                            <td>
-                                            <select class="form-control upload-file" data-padre="horario_empleado_{{empleado.id}}" class="select_jueves" id="select_jueves_empleado_{{empleado.id}}">
+                                            <select class="form-control upload-file" data-padre="horario_empleado_{{empleado.id}}" data-day="{{ days[3]|date('d') }}" data-posicion="J" class="select_jueves" id="select_jueves_empleado_{{empleado.id}}">
                                                 <option {% if objempleado.horario.J=="A"  %} selected="selected" {% endif %} >A</option>
                                                 <option {% if objempleado.horario.J=="D"  %} selected="selected" {% endif %}>D</option>
                                                 <option {% if objempleado.horario.J=="F"  %} selected="selected" {% endif %}>F</option>
@@ -150,7 +140,7 @@
                                             </select>
                                           </td>
                                            <td>
-                                            <select class="form-control upload-file" data-padre="horario_empleado_{{empleado.id}}" class="select_viernes" id="select_viernes_empleado_{{empleado.id}}">
+                                            <select class="form-control upload-file" data-padre="horario_empleado_{{empleado.id}}" data-day="{{ days[4]|date('d') }}" data-posicion="V" class="select_viernes" id="select_viernes_empleado_{{empleado.id}}">
                                                 <option {% if objempleado.horario.V=="A"  %} selected="selected" {% endif %} >A</option>
                                                 <option {% if objempleado.horario.V=="D"  %} selected="selected" {% endif %}>D</option>
                                                 <option {% if objempleado.horario.V=="F"  %} selected="selected" {% endif %}>F</option>
@@ -160,7 +150,7 @@
                                           </td>
                                            <td>
 
-                                            <select class="form-control upload-file" data-padre="horario_empleado_{{empleado.id}}" class="select_sabado" id="select_sabado_empleado_{{empleado.id}}">
+                                            <select class="form-control upload-file" data-padre="horario_empleado_{{empleado.id}}" data-day="{{ days[5]|date('d') }}" data-posicion="S" class="select_sabado" id="select_sabado_empleado_{{empleado.id}}">
                                                 <option {% if objempleado.horario.S=="A"  %} selected="selected" {% endif %} >A</option>
                                                 <option {% if objempleado.horario.S=="D"  %} selected="selected" {% endif %}>D</option>
                                                 <option {% if objempleado.horario.S=="F"  %} selected="selected" {% endif %}>F</option>
@@ -168,6 +158,15 @@
                                                 <option {% if objempleado.horario.S=="V"  %} selected="selected" {% endif %}>V</option>
                                             </select>
 
+                                          </td>
+                                          <td >
+                                              <select class="form-control upload-file" data-padre="horario_empleado_{{empleado.id}}" data-day="{{ days[6]|date('d') }}" data-posicion="D" class="select_domingo"  id="select_domingo_empleado_{{empleado.id}}">
+                                                  <option {% if objempleado.horario.D=="A"  %} selected="selected" {% endif %} >A</option>
+                                                  <option {% if objempleado.horario.D=="D"  %} selected="selected" {% endif %}>D</option>
+                                                  <option {% if objempleado.horario.D=="F"  %} selected="selected" {% endif %}>F</option>
+                                                  <option {% if objempleado.horario.D=="I"  %} selected="selected" {% endif %}>I</option>
+                                                  <option {% if objempleado.horario.D=="V"  %} selected="selected" {% endif %}>V</option>
+                                              </select>
                                           </td>
                                           <td><button data-padre="horario_empleado_{{empleado.id}}" class="btn btn-primary guardar_horario" >Guardar</button></td>
                                          </tr>
@@ -344,6 +343,9 @@
                     <input type="hidden" name="incapacidad-empleado" id="incapacidad-empleado" value="">
                     <input type="hidden" name="incapacidad-semana" id="incapacidad-semana" value="{{week}}">
                     <input type="hidden" name="incapacidad-anio" id="incapacidad-anio" value="{{fechas[1]|date('Y')}}">
+                    <input type="hidden" name="incapacidad-cliente" id="incapacidad-cliente" value="{{cliente.id}}" >
+                    <input type="hidden" name="incapacidad-dia" id="incapacidad-dia" value="" >
+                    <input type="hidden" name="incapacidad-dia-posicion" id="incapacidad-dia-posicion" value="">
                     <button type="submit" id="btn-incapacidad" class="btn btn-primary">Guardar</button>
                 </div>
             </form>
@@ -374,12 +376,14 @@
           e.preventDefault()
           var tipo = $(this).val();
           var padre=$(this).data('padre');
+          var day=$(this).data('day');
           var id=$("#"+padre).data('empleado');
-
+          var posicion=$(this).data('posicion');
           if(tipo == 'I') {
               $("#uploadFile").modal();
                 $('#incapacidad-empleado').val(id);
-                $('#incapacidad-dia').val('dia');
+                $('#incapacidad-dia').val(day);
+                $('#incapacidad-dia-posicion').val(posicion);
           }
       });
 
@@ -403,7 +407,7 @@
         var semana=$("#semana_actual").val();
         var clienteid=$("#clienteid").val();
 
-        dias={'D':select_domingo,'L':select_lunes,'M':select_martes,'MI':select_miercoles,'J':select_jueves,'V':select_viernes,'S':select_sabado};
+        dias={'L':select_lunes,'M':select_martes,'MI':select_miercoles,'J':select_jueves,'V':select_viernes,'S':select_sabado,'D':select_domingo,};
 
         data={dias:dias,semana:semana,year:year,empleado:id,clienteid:clienteid};
         $.post('guardar_horario',data,function(data){
