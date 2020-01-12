@@ -1837,6 +1837,38 @@ class ClientesController extends AbstractController
     $em->persist($empleado);
     $em->flush();
 
+    $documentoAlta = $request->files->get('documento-alta');
+
+      if($documentoAlta instanceof UploadedFile) {
+
+          $clienteObj = $em->getRepository(Clientes::class)->findOneById($empleado->getClienteId());
+
+          $cliente_path = str_replace(" ","-", $clienteObj->getRazonSocial());
+          $empleado_path = str_replace(" ","-", $empleado->getNombres());
+
+          try {
+
+              $pathAlta ='uploads' . DIRECTORY_SEPARATOR .
+                  $cliente_path . DIRECTORY_SEPARATOR .
+                  'nomina' . DIRECTORY_SEPARATOR .
+                  $empleado_path . DIRECTORY_SEPARATOR .
+                  'alta' . DIRECTORY_SEPARATOR .
+                    $documentoAlta->getClientOriginalName()
+              ;
+
+              $documentoAlta->move(
+                  $pathAlta
+              );
+
+              $empleado->setFileAlta($pathAlta);
+              $em->persist($empleado);
+              $em->flush();
+
+          } catch (FileException $e) {
+              // dd($e->getMessage());
+          }
+      }
+
     $cliente=$em->getRepository('App:Clientes','c')->find($request->get('clienteid'));
 
     $empleados=$em->getRepository('App:Empleados','e')->findBy(array('clienteId'=>$cliente->getId()));
