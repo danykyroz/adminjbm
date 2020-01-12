@@ -26,7 +26,18 @@
             </ul>
           </div>
           <div class="col-xl-6 col-lg-7 col-md-8 col-sm-12 text-right">
+           {% if app.request.get('factura_interna') %}
 
+           <div class="breadcrumb-chart">
+              <div class="float-right">
+                <div class="icon m-b-10">
+                  <button type="button" class="btn btn-primary  waves-effect" data-toggle="modal" data-target="#ModalLoteFacturas">Subir Facturas en Lote</button>
+
+                </div>
+              </div>
+            </div>
+            
+           {% else %} 
             <div class="breadcrumb-chart">
               <div class="float-right">
                 <div class="icon m-b-10">
@@ -35,6 +46,7 @@
                 </div>
               </div>
             </div>
+            {% endif %}
           </div>
         </div>
       </div>
@@ -245,6 +257,7 @@
                               {% else %}
 
                               <a href="{{path('pagos_cliente_revisado',{id:pago.id})}}" class="col-dark-gray  waves-effect m-r-20 revisado" title="Revisado" >  <i class="material-icons">done</i></a>
+                           
                             {% endif %}
                             
                             {% else %}
@@ -462,6 +475,38 @@
   </div>
 
 
+      <div class="modal fade" id="ModalLoteFacturas" tabindex="-1" role="dialog" aria-labelledby="reportarCuentaTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Subir Facturas (csv)</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form  name="form-cuenta" method="post" id="form-cuenta" action="{{path('pagos_facturas_lote')}}" enctype="multipart/form-data" >
+        <input type="hidden" id="lote-clienteid" name="clienteid"  value="{{cliente.id}}" >
+        <div class="modal-body">
+         
+
+        
+           <div class="form-group">
+            <div class="form-line">
+              <input type="file" class="form-control" name="file" required="" id="file_csv" accept=".csv" placeholder="Archivo Adjunto">
+            </div>
+          </div>
+         
+        </div>
+        <div class="modal-footer">
+          <button type="submit" id="btn-cuenta-submit" class="btn btn-primary">Guardar</button>
+        </div>
+      </form>
+        
+      </div>
+    </div>
+  </div>
+
+
   {% endblock %} 
 
 {% endblock %} 
@@ -509,7 +554,7 @@
 
         swal({
           title: "Eliminar",
-          text: "Al eliminar este comprobante las facturas se trasladarán a cuentas por pagar!",
+          text: "Al eliminar las facturas asociadas pasaran a cuentas por cobrar!",
           type: "warning",
           showCancelButton: true,
           confirmButtonColor: "#DD6B55",
@@ -521,6 +566,7 @@
       });
 
     })
+    
 
    $('input.CurrencyInput').on('blur', function() {
     const value = this.value.replace(/,/g, '');

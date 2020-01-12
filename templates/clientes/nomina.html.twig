@@ -190,6 +190,15 @@
                                         {% endfor %}
 
                                   </tbody>
+                                  <tfoot>
+                                    <tr><td>
+
+                                          <button class="btn btn-primary" id="guardar-nomina"> Guardar
+                                            
+                                            </button>
+                                    </td>
+                                  </tr>
+                                  </tfoot>
                               </table>
                           </div>
                       </div>
@@ -412,6 +421,28 @@
 {% block body_javascript %}
 
 <script type="text/javascript">
+
+
+  $("#guardar-nomina").click(function(e){
+    e.preventDefault();
+
+   
+        swal({
+          title: "Guardar",
+          text: "Al guardar ya no se puede editar la nomina de esta semana!",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#DD6B55",
+          cancelButtonText: "No",
+          confirmButtonText: "Si!",
+          closeOnConfirm: false
+      }, function () {
+          location.reload();
+      });
+    
+
+  })
+
   function exportar(){
 
     $("#exportar").val("true");

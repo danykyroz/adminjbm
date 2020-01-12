@@ -76,7 +76,7 @@ class Empleados
      *
      * @ORM\Column(name="estado", type="integer", length=11, nullable=true)
      */
-    private $estado;
+    private $estado=1;
 
     /**
      * @var string|null

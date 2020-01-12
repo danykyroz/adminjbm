@@ -404,6 +404,7 @@ class ClientesController extends AbstractController
       $clientes=$this->getClientes_Select();
       $clienteid=$request->get('clienteid',0);
       $exportar=$request->get('exportar','');
+      $factura_interna=$request->get('factura_interna',0);
 
       //Preguntar si no hay id de cliente para mostrar la plantilla de clientes
 
@@ -412,7 +413,7 @@ class ClientesController extends AbstractController
       if($user->getRoles()[0]!="ROLE_CLIENTE"){
 
         if($clienteid==0 && @$filtros['cliente']=="" && $exportar==""){
-          return $this->render('clientes/select_cliente.html.twig',array('clientes'=>$clientes)); 
+          return $this->render('clientes/select_cliente.html.twig',array('clientes'=>$clientes,'factura_interna'=>$factura_interna)); 
         }
 
       }
@@ -580,6 +581,86 @@ class ClientesController extends AbstractController
 
       return  $this->redirect($this->generateUrl('pagos_clientes',array('clienteid'=>$pago->getClienteId())));
 
+  }
+
+
+  /**
+  * @Route("/pagos/factura/lote", name="pagos_facturas_lote", methods={"GET","POST"})
+  */
+  public function pagos_facturas_lote(Request $request){
+      
+      $em=$this->getDoctrine()->getManager();
+      $clienteid=$request->get('clienteid');
+      $cliente=$em->getRepository('App:Clientes','c')->find($clienteid);
+      $cont_facturas=0;
+
+      $file = $request->files->get('file');
+      if($file->getError()==0){
+       
+         $file->move(
+                        'uploads' . DIRECTORY_SEPARATOR .
+                        'xmls' . DIRECTORY_SEPARATOR .
+                        'csv'.DIRECTORY_SEPARATOR,
+                         $file->getClientOriginalName()
+                    );
+
+        $ruta_csv='uploads/xmls/csv/'.$file->getClientOriginalName();
+       
+        $cont_linea = 0;
+        //Abrimos nuestro archivo
+        $archivo = fopen($ruta_csv, "r");
+        //Lo recorremos
+        while (($datos = fgetcsv($archivo, "")) == true) 
+        {
+          $num = count($datos);
+          //Recorremos las columnas de esa linea
+
+          for ($columna = 0; $columna < $num; $columna++) 
+              {
+                if($cont_linea==0){
+                  continue;
+                }
+                $linea=explode(";",$datos[$columna]);
+                $proveedor=$linea[0];
+                $rfc=$linea[1];
+                $fecha=$linea[2];
+                $valor=$linea[3];
+                $iva=$linea[4];
+                $total=$linea[5];
+                $ext="csv";
+
+                //Creamos la factura
+
+                $CuentasPorCobrar=new CuentasPorCobrar();
+                //$CuentasPorCobrar->setFolio($folio);
+                $CuentasPorCobrar->setFecha(new \DateTime($fecha));
+                $CuentasPorCobrar->setCreatedAt(new \DateTime('now'));
+                $CuentasPorCobrar->setUpdatedAt(new \DateTime('now'));
+                $CuentasPorCobrar->setClienteId($clienteid);
+                $CuentasPorCobrar->setProveedor($proveedor);
+                $CuentasPorCobrar->setRfc($rfc);
+                $CuentasPorCobrar->setValor($valor);
+                $CuentasPorCobrar->setIva($iva);
+                $CuentasPorCobrar->setTotal($total);
+                //$CuentasPorCobrar->setNombre($name);
+                $CuentasPorCobrar->setExtension($ext);
+                $em->persist($CuentasPorCobrar);
+                $em->flush();
+
+                $cont_facturas++;
+
+             }
+             $cont_linea++;
+
+        }
+        //Cerramos el archivo
+        fclose($archivo);
+
+
+      }
+
+      return new Response('Total facturas creadas= '.$cont_facturas);
+      
   }
 
 
@@ -988,12 +1069,12 @@ class ClientesController extends AbstractController
 
         if($filtros['proveedor']){
 
-         $qb->andWhere('c.proveedor<=:proveedor');
+         $qb->andWhere('c.proveedor=:proveedor');
          $qb->setParameter('proveedor',$filtros['proveedor']);
 
         }
           $qbp=$em->createQueryBuilder();
-          $qbp->select('c.proveedor')->from('App:CuentasPorCobrar','c')->andWhere("c.extension='xml'");
+          $qbp->select('c.proveedor')->from('App:CuentasPorCobrar','c')->andWhere("(c.extension='xml' OR c.extension='csv')");
           $qbp->groupBy('c.proveedor');
           $proveedores=$qbp->getQuery()->getResult();
 
@@ -1002,7 +1083,7 @@ class ClientesController extends AbstractController
         if(is_object($cliente)){
 
           $qbp=$em->createQueryBuilder();
-          $qbp->select('c.proveedor')->from('App:CuentasPorCobrar','c')->where('c.clienteId=:clienteId')->andWhere("c.extension='xml'");
+          $qbp->select('c.proveedor')->from('App:CuentasPorCobrar','c')->where('c.clienteId=:clienteId')->andWhere("(c.extension='xml' OR c.extension='csv')");
           $qbp->setParameter('clienteId',$cliente->getId());
           $qbp->groupBy('c.proveedor');
           $proveedores=$qbp->getQuery()->getResult();
@@ -1188,12 +1269,12 @@ class ClientesController extends AbstractController
 
         if($filtros['proveedor']){
 
-         $qb->andWhere('c.proveedor<=:proveedor');
+         $qb->andWhere('c.proveedor=:proveedor');
          $qb->setParameter('proveedor',$filtros['proveedor']);
 
         }
           $qbp=$em->createQueryBuilder();
-          $qbp->select('c.proveedor')->from('App:CuentasPorCobrar','c')->andWhere("c.extension='xml'");
+          $qbp->select('c.proveedor')->from('App:CuentasPorCobrar','c')->andWhere("(c.extension='xml' OR c.extension='csv')");
           $qbp->groupBy('c.proveedor');
           $proveedores=$qbp->getQuery()->getResult();
 
@@ -1202,7 +1283,7 @@ class ClientesController extends AbstractController
         if(is_object($cliente)){
 
           $qbp=$em->createQueryBuilder();
-          $qbp->select('c.proveedor')->from('App:CuentasPorCobrar','c')->where('c.clienteId=:clienteId')->andWhere("c.extension='xml'");
+          $qbp->select('c.proveedor')->from('App:CuentasPorCobrar','c')->where('c.clienteId=:clienteId')->andWhere("(c.extension='xml' OR c.extension='csv')");
           $qbp->setParameter('clienteId',$cliente->getId());
           $qbp->groupBy('c.proveedor');
           $proveedores=$qbp->getQuery()->getResult();
@@ -1624,7 +1705,8 @@ class ClientesController extends AbstractController
               $year_carpeta=date_format($CuentasPorCobrar->getFecha(),'Y');
               $mes_carpeta=date_format($CuentasPorCobrar->getFecha(),'m');
               $dia_carpeta=date_format($CuentasPorCobrar->getFecha(),'d');
-             
+              $nombre_cliente=str_replace(" ","-",$cliente->getRazonSocial());
+
               $carpeta_nueva='uploads/'.$nombre_cliente.'/'.$year_carpeta.'/'.$mes_carpeta.'/facturas_por_pagar/'.$dia_carpeta.'/'.$data_json->TimbreFiscalDigital->UUID;
               
               $ruta_nueva=$carpeta_nueva.'/'.$name;
@@ -1635,6 +1717,10 @@ class ClientesController extends AbstractController
               $move_new= copy($ruta, $ruta_nueva);
               if($move_new){
                 unlink($ruta);
+                $CuentasPorCobrar->setXml($ruta_nueva);
+                $em->persist($CuentasPorCobrar);
+                $em->flush();
+
               }
               
 

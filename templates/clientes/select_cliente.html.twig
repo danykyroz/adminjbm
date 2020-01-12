@@ -12,6 +12,9 @@
 
   <section class="content">
   <form action="">
+    {% if app.request.get('factura_interna') %}
+    <input type="hidden"  name="factura_interna" value="{{app.request.get('factura_interna') }}">
+    {% endif %}
     <div class="container-fluid">
       <div class="block-header">
         <div class="row">
