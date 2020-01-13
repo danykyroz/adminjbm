@@ -226,9 +226,11 @@
                                             </div>
 
                       </a>
+                       {% if pago.file !="" %}
                        <a href="{{asset(pago.file)}}" target="_blank" class="col-dark-gray waves-effect m-r-20" title="Archivo Adjunto">
                           <i class="material-icons">remove_red_eye</i>
                         </a>
+                        {% endif %}
                         
 
                             {% if pago.tipopagoid==4 %}
@@ -236,13 +238,16 @@
                               <i class="material-icons">add</i>
                             </a> 
                             {% else%}
+
+                            {% if pago.tipoPagoId!=5 %}
+
                              <a href="#" data-id="{{pago.id}}" class="waves-effect m-r-20 reportar_cuenta" title="Agregar Comprobante">
                               <i class="material-icons">add</i>
                              </a> 
-                             
+                             {% endif %}
 
                             {% endif %}
-                            {% if pago.revisado==0 %}
+                            {% if pago.revisado==0 and pago.tipoPagoId!=5 %}
                              <a href="#" data-id="{{pago.id}}" class="waves-effect m-r-20 editar" title="Editar">
                               <i class="material-icons">edit</i>
                              </a> 

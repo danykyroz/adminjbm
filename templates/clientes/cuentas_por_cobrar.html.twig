@@ -243,15 +243,21 @@
                           <i class="material-icons">remove_red_eye</i>
                         </a>
                         {% endif %}
-                      
-                        {{ render(path('cuentas_por_cobrar_link_pdf',{id:cuenta.id})) }}
-
-                       {% if cuenta.pagoId==0 or cuenta.pagoId=="" %} 
+                       {% if (cuenta.pagoId==0 or cuenta.pagoId=="")   %} 
                         <a data-id="{{cuenta.id}}" href="#" data-toggle="modal" data-target="#exampleModalCenter" class="col-dark-gray waves-effect m-r-20 comprobante" title="Comprobar">
                             <i class="material-icons">note</i>
                           </a>
                         {% endif%}
 
+                        {% if cuenta.extension!="csv" %}
+                         {{ render(path('cuentas_por_cobrar_link_pdf',{id:cuenta.id})) }}
+                        {% else %}
+                         <a href="{{path('cuentas_por_cobrar_subir_archivos',{clienteid:pago.clienteId,cuentaid:cuenta.id})}}" data-id="{{cuenta.id}}" class="waves-effect m-r-20 reportar_cuenta" title="Agregar Comprobante">
+                              <i class="material-icons">add</i>
+                             </a> 
+
+                        {% endif %}
+                       
                          <a data-id="{{cuenta.id}}" href="{{path('cuentas_por_cobrar_delete',{id:cuenta.id})}}" class="col-dark-gray waves-effect m-r-20 eliminar" title="Eliminar">
                             <i class="material-icons">delete_sweep</i>
                           </a>

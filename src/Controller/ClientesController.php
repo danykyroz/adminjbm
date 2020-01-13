@@ -471,6 +471,10 @@ class ClientesController extends AbstractController
         }
 
       }
+      if($factura_interna==1){
+         $qb->andWhere("p.tipoPagoId=:tipoPagoId");
+         $qb->setParameter('tipoPagoId',5);
+      }
 
       if(isset($filtros['year'])){
 
@@ -628,12 +632,67 @@ class ClientesController extends AbstractController
                 $iva=$linea[4];
                 $total=$linea[5];
                 $ext="csv";
+                $pago=false;
 
                 //Creamos la factura
 
+                //Buscamos un pago tipo 5 con el mismo id de cliente y fecha
+                $fecha_time=(new \DateTime($fecha));
+                $fecha_inicial=$fecha_time->format('Y-m-01');  
+                $fecha_final=$fecha_time->format('Y-m-31');  
+
+
+                $qb=$em->createQueryBuilder();
+
+                $qb->select('p')
+                    ->from('App:Pagos','p')
+                    ->where('p.fecha>=:fecha_inicial')
+                    ->andWhere('p.fecha<=:fecha_final')
+                    ->andWhere('p.clienteId=:clienteId')
+                    ->andWhere('p.tipoPagoId=:tipopagoId')
+                    ->andWhere('p.rfcProveedor=:rfcProveedor')
+                    ->orderBy('p.fecha','Asc');
+
+                  $qb->setParameters(array('fecha_inicial'=>$fecha_inicial,
+                                            'fecha_final'=>$fecha_final,
+                                            'clienteId'=>$clienteid,
+                                            'tipopagoId'=>5,
+                                            'rfcProveedor'=>$rfc));
+
+                  
+                $pagos=$qb->getQuery()->getResult();
+                if(count($pagos)>0){
+                  $pago=$pagos[0];
+                }
+                
+
+                if(is_object($pago)){
+
+                //Sumar todos los pagos   
+
+
+                }
+                else{
+
+                  $pago=new Pagos();
+                  $pago->setFecha(new \DateTime($fecha_inicial));
+                  $pago->setRfcProveedor($rfc);
+                  $pago->setTipo(2);
+                  $pago->setClienteId($clienteid);
+                  $pago->setValor($valor);
+                  $pago->setFacturado(0);
+                  $pago->setPorFacturar($valor);
+                  $pago->setCreatedAt(new \DateTime('now'));
+                  $pago->setCreatedAt(new \DateTime('now'));
+                  $pago->setTipoPagoId(5);
+                  $em->persist($pago);
+                  $em->flush();
+                  $pagoid=$pago->getId();
+                }
+
+
                 $CuentasPorCobrar=new CuentasPorCobrar();
-                //$CuentasPorCobrar->setFolio($folio);
-                $CuentasPorCobrar->setFecha(new \DateTime($fecha));
+                $CuentasPorCobrar->setFecha($fecha_time);
                 $CuentasPorCobrar->setCreatedAt(new \DateTime('now'));
                 $CuentasPorCobrar->setUpdatedAt(new \DateTime('now'));
                 $CuentasPorCobrar->setClienteId($clienteid);
@@ -642,6 +701,7 @@ class ClientesController extends AbstractController
                 $CuentasPorCobrar->setValor($valor);
                 $CuentasPorCobrar->setIva($iva);
                 $CuentasPorCobrar->setTotal($total);
+                $CuentasPorCobrar->setPagoId($pago->getId());
                 //$CuentasPorCobrar->setNombre($name);
                 $CuentasPorCobrar->setExtension($ext);
                 $em->persist($CuentasPorCobrar);
@@ -649,6 +709,51 @@ class ClientesController extends AbstractController
 
                 $cont_facturas++;
 
+
+                $qb=$em->createQueryBuilder();
+
+                $qb->select('SUM(c.valor) as valor, SUM(c.iva) as iva, SUM(c.total) as total')
+                  ->from('App:CuentasPorCobrar','c')
+                  ->where('c.fecha>=:fecha_inicial')
+                  ->andWhere('c.fecha<=:fecha_final')
+                  ->andWhere('c.clienteId=:clienteId')
+                  ->andWhere('c.rfc=:rfcProveedor')
+                  ->andWhere('c.pagoId=:pagoId');
+
+                  $qb->setParameters(array('fecha_inicial'=>$fecha_inicial,'fecha_final'=>$fecha_final,'clienteId'=>$clienteid,'rfcProveedor'=>$rfc,'pagoId'=>$pago->getId()));
+                  
+
+                $totales=$qb->getQuery()->getSingleResult();
+
+                if(is_array($totales)){
+                  $pago->setValor($totales['valor']);
+                  $em->persist($pago);
+                  $em->flush();
+                  //$pago->setFacturado(0);
+                  //$pago->setPorFacturar
+                }
+
+                //Completamos para sumar lo que esta revisado
+                $qb->andWhere('c.comprobado=1');
+                $totales_revisado=$qb->getQuery()->getSingleResult();
+                if(is_array($totales_revisado)){
+                  if(is_object($pago)){
+                    if($totales_revisado['total']==null){
+                      $total_revisado=0;
+                    }
+                    else{
+                       $total_revisado=$totales_revisado['total'];
+                    }
+                    $resta=$pago->getValor()-$total_revisado;
+                    $pago->setFacturado($total_revisado);
+                    $pago->setPorFacturar($resta);
+                    $em->persist($pago);
+                    $em->flush();
+
+                  }
+                 
+                }
+               
              }
              $cont_linea++;
 
@@ -659,8 +764,9 @@ class ClientesController extends AbstractController
 
       }
 
-      return new Response('Total facturas creadas= '.$cont_facturas);
-      
+      return  $this->redirect($this->generateUrl('pagos_clientes',array('clienteid'=>$pago->getClienteId(),'factura_interna'=>1)));
+ 
+
   }
 
 
@@ -684,7 +790,8 @@ class ClientesController extends AbstractController
         $em->persist($pago);
         $em->flush();
       }
-      return  $this->redirect($this->generateUrl('pagos_clientes'));
+     
+      return  $this->redirect($this->generateUrl('pagos_clientes',array('clienteid'=>$pago->getClienteId())));
 
   }
 
@@ -893,8 +1000,13 @@ class ClientesController extends AbstractController
         $qb->andWhere("c.rfc!=''");
         
       }else{
+       if($pago->getTipoPagoId()==5){
+            $qb->select('c')->from('App:CuentasPorCobrar','c')->where('c.pagoId=:pagoId')->setParameter('pagoId',$pago->getId())->andWhere('c.valor>0');
+       }else{
         $qb->select('c')->from('App:CuentasPorCobrar','c')->where('c.pagoId=:pagoId')->setParameter('pagoId',$pago->getId());
         $qb->andWhere("c.extension!='xml'");
+        
+       }
         
       }
       return new Response(count($qb->getQuery()->getResult()));
@@ -1092,6 +1204,7 @@ class ClientesController extends AbstractController
 
        
         $qb->andWhere("c.pagoId IS NULL OR c.pagoId=0");
+        $qb->andWhere("c.valor>0");
 
         $paginator  = $this->paginator;
         $pagination = $paginator->paginate(
@@ -1263,7 +1376,14 @@ class ClientesController extends AbstractController
         if($pago->getTipoPagoId()==4){
           $qb->andWhere("c.extension='xml'");
         }else{
-            $qb->andWhere("c.extension!='xml'");
+            if($pago->getTipoPagoId()==5){
+
+                $qb->andWhere("c.valor>0");
+
+            }else{
+               $qb->andWhere("c.extension!='xml'");
+            }
+           
         }
        
 
@@ -1322,8 +1442,10 @@ class ClientesController extends AbstractController
 
       $clienteId=$request->get('clienteid');
       $pagoid=$request->get('id',0);
-      $clientes=$this->getClientes_Select();  
+      $cuentaid=$request->get('cuentaid',0);
 
+      $clientes=$this->getClientes_Select();  
+      
       $user=($this->getUser());
       if($user->getRoles()[0]=="ROLE_CLIENTE"){
           
@@ -1331,7 +1453,8 @@ class ClientesController extends AbstractController
          
           return $this->render('clientes/subir_archivos.html.twig',array(
           'clienteId'=>$cliente->getId(),
-          'pagoid'=>$pagoid
+          'pagoid'=>$pagoid,
+          'cuentaid'=>$cuentaid
           )); 
       }
 
@@ -1348,7 +1471,8 @@ class ClientesController extends AbstractController
 
       return $this->render('clientes/subir_archivos.html.twig',array(
       'clienteId'=>$clienteId,
-      'pagoid'=>$pagoid
+      'pagoid'=>$pagoid,
+      'cuentaid'=>$cuentaid
       )); 
   
   }
@@ -1605,9 +1729,11 @@ class ClientesController extends AbstractController
   public function analizar_archivos(Request $request){
 
       //$id=$request->get('id');
-      $em=$this->getDoctrine()->getManager();
+      $em=$this->getDoctrine()->getManager();  
+      
       $clienteId=$request->get('clienteid');
       $pagoid=$request->get('pagoid',0);
+      $cuentaid=$request->get('cuentaid',0);
       $pago=false;
 
       $cliente=$em->getRepository('App:Clientes','c')->find($clienteId);
@@ -1653,27 +1779,51 @@ class ClientesController extends AbstractController
             $qb->setParameter("clienteId",$clienteId);
 
             $result_existe=$qb->getQuery()->getResult();
-            if(count($result_existe)>0){
 
-              unlink($ruta);
-
-               return new Response("UUID #{$data_json->TimbreFiscalDigital->UUID} ya existe");
-
-            }
 
             $cfdi = Cfdi::newFromString(file_get_contents($ruta));
             $request = RequestParameters::createFromCfdi($cfdi);
 
             $service = new WebService();
             $response = $service->request($request);
-            
-            $CuentasPorCobrar=new CuentasPorCobrar();
-            $dtfecha= new \DateTime($fecha);
+            if($cuentaid==0){
 
-            $CuentasPorCobrar->setFecha($dtfecha);
-            $CuentasPorCobrar->setCreatedAt(new \DateTime('now'));
-            $CuentasPorCobrar->setUpdatedAt(new \DateTime('now'));
-            $CuentasPorCobrar->setProveedor($data_json->Emisor->Nombre);
+              $CuentasPorCobrar=new CuentasPorCobrar();
+              $dtfecha= new \DateTime($fecha);
+
+              $CuentasPorCobrar->setFecha($dtfecha);
+              $CuentasPorCobrar->setCreatedAt(new \DateTime('now'));
+              $CuentasPorCobrar->setUpdatedAt(new \DateTime('now'));
+              $CuentasPorCobrar->setProveedor($data_json->Emisor->Nombre);
+              $new=true;
+            }else{
+              
+              $CuentasPorCobrar=$em->getRepository('App:CuentasPorCobrar','c')->find($cuentaid);
+              $pagoid=$CuentasPorCobrar->getPagoId();
+              $new=false;
+
+            }
+
+            if(count($result_existe)>0){
+
+              unlink($ruta);
+              $CuentasPorCobrar->setNombre($name);
+              $this->deletePdfXml($CuentasPorCobrar);
+              return new Response("UUID #{$data_json->TimbreFiscalDigital->UUID} ya existe");
+
+            }
+
+            if(!$new){
+              $total_bd=(int) $CuentasPorCobrar->getTotal();
+              $total_xml=(int) $data_json->Comprobante->Total;
+              if($total_bd!=$total_xml){
+
+                  $CuentasPorCobrar->setNombre($name);
+                  $this->deletePdfXml($CuentasPorCobrar);
+                  return  new Response('El valor total del xml no coincide con el original'.$total_bd);
+              }
+            }
+
             $CuentasPorCobrar->setRfc($data_json->Emisor->Rfc);
             $CuentasPorCobrar->setValor($data_json->Comprobante->SubTotal);
             $CuentasPorCobrar->setIva($data_json->Traslado->Importe);
@@ -1727,7 +1877,8 @@ class ClientesController extends AbstractController
             if($pago){
 
               $qb=$em->createQueryBuilder();
-              $qb->select("sum(c.total) as suma")->from('App:CuentasPorCobrar','c')->where("c.pagoId=:pagoId");
+              $qb->select("sum(c.total) as suma")->from('App:CuentasPorCobrar','c')->where("c.pagoId=:pagoId and c.extension!='csv'");
+
               $qb->setParameter("pagoId",$pagoid);
 
               $total=$qb->getQuery()->getSingleScalarResult();
@@ -1735,12 +1886,13 @@ class ClientesController extends AbstractController
               
               if($resta<0){
 
-                $CuentasPorCobrar->setPagoId(0);
-                $em->persist($CuentasPorCobrar);
+               $this-> deletePdfXml($CuentasPorCobrar);
+
+                $em->remove($CuentasPorCobrar);
                 $em->flush();
 
-                return  new Response('La factura supera el saldo por facturar');
 
+                return  new Response('La factura supera el saldo por facturar');
               }
 
               $pago->setFacturado($total);
@@ -1752,6 +1904,11 @@ class ClientesController extends AbstractController
 
 
         }else{
+            
+            if($cuentaid>0){
+              $CuentasPorCobrarCsv=$em->getRepository('App:CuentasPorCobrar','c')->find($cuentaid);
+              $pagoid=$CuentasPorCobrarCsv->getPagoId();
+            }
             
             $CuentasPorCobrar=new CuentasPorCobrar();
             $CuentasPorCobrar->setFolio(time());
@@ -1806,6 +1963,31 @@ class ClientesController extends AbstractController
        }
       
       }
+
+  }
+
+  private function deletePdfXml($cuenta){
+    
+    $em=$this->getDoctrine()->getManager();  
+    
+    $name=str_replace('.xml', '.pdf',$cuenta->getNombre());
+
+    $qb=$em->createQueryBuilder()->select('c')->from('App:CuentasPorCobrar','c')->where('c.nombre=:nombre')->andWhere('c.pagoId=:pagoId');
+    $qb->setParameters(array('nombre'=>$name,'pagoId'=>$cuenta->getPagoId()));
+
+    $result=$qb->getQuery()->getResult();
+    $pdf=false;
+    if(count($result)>0){
+      $pdf=$result[0];
+    }
+    if($pdf){
+      $em->remove($pdf);
+      $em->flush();
+      return true;
+    }else{
+      return false;
+    }
+
 
   }
 

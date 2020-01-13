@@ -107,6 +107,14 @@ class Pagos
      * @ORM\Column(name="tipo_pago_id", type="integer", length=11, nullable=true)
      */
     private $tipoPagoId = 4;
+
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="rfc_proveedor", type="string", length=255, nullable=true)
+     */
+    private $rfcProveedor = '';
     
 
     public function getId(): ?int
@@ -265,7 +273,7 @@ class Pagos
 
     }
 
-     public function getTipoPagoId()
+    public function getTipoPagoId()
     {
         return $this->tipoPagoId;
     }
@@ -277,6 +285,16 @@ class Pagos
         return $this;
     }
 
+    public function getRfcProveedor()
+    {
+        return $this->rfcProveedor;
+    }
+
+    public function setRfcProveedor($rfcProveedor): self
+    {
+        $this->rfcProveedor = $rfcProveedor;
+        return $this;
+    }
 
 
     public static function getMes($mes) {
