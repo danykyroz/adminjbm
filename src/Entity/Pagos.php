@@ -108,6 +108,13 @@ class Pagos
      */
     private $tipoPagoId = 4;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nombre_proveedor", type="string", length=255, nullable=true)
+     */
+    private $nombreProveedor = '';
+    
 
     /**
      * @var string
@@ -293,6 +300,17 @@ class Pagos
     public function setRfcProveedor($rfcProveedor): self
     {
         $this->rfcProveedor = $rfcProveedor;
+        return $this;
+    }
+
+     public function getNombreProveedor()
+    {
+        return $this->nombreProveedor;
+    }
+
+    public function setNombreProveedor($nombreProveedor): self
+    {
+        $this->nombreProveedor = $nombreProveedor;
         return $this;
     }
 

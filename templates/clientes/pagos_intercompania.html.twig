@@ -16,7 +16,7 @@
                   <i class="material-icons">home</i> Home</a>
               </li>
               <li class="breadcrumb-item bcrumb-2">
-                <a href="javascript:void(0);">Cheques y Transferencias</a>
+                <a href="javascript:void(0);">Facturas Intercompañia</a>
               </li>
               {% if cliente %}
               <li class="breadcrumb-item bcrumb-2">
@@ -32,6 +32,15 @@
               <div class="float-right">
                 <div class="icon m-b-10">
                   <button type="button" class="btn btn-primary  waves-effect" data-toggle="modal" data-target="#ModalLoteFacturas">Subir Facturas en Lote</button>
+
+                </div>
+              </div>
+            </div>
+
+             <div class="breadcrumb-chart">
+              <div class="float-right">
+                <div class="icon m-b-10">
+                  <button type="button" class="btn btn-primary  waves-effect" data-toggle="modal" data-target="#ModalLoteFacturasManual">Agregar Proveedor</button>
 
                 </div>
               </div>
@@ -66,6 +75,7 @@
         <div class="body">
             <form id="frm-filtros-avanzado" name="frm-filtros-avanzado" >
               <input type="hidden" name="exportar" id="exportar" value="" >
+              <input type="hidden" name="factura_interna" id="factura_interna" value="1" >
 
                 <div class="row clearfix">
                   {% if is_granted('ROLE_CLIENTE') or cliente!=false %}
@@ -89,15 +99,16 @@
                     </div>
                     {% endif %}
  
-                    <div class="col-md-3 col-sm-3 col-xs-6">
-                       <div class="form-group">
-                          <label>Tipo Pago</label>
-
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                        <div class="form-group">
                             <div class="form-line">
-                              <select name="filtros[tipo]"  id="tipo">
-                                    <option value="">Tipo Pago</option>
-                                    <option value="1" {% if filtros.tipo==1 %} selected="tue" {% endif %}  >Cheque </option>
-                                     <option value="2" {% if filtros.tipo==2 %} selected="tue" {% endif %}>Transferencia</option>
+                              <label>Proveedores</label><br/>
+
+                               <select name="filtros[proveedor]" id="filtros_proveedor">
+                                    <option value="">Proveedor</option>
+                                    {% for objproveedor in proveedores %}
+                                        <option value="{{objproveedor.proveedor}}" {% if objproveedor.proveedor==filtros.proveedor %} selected="true" {% endif %}  >{{objproveedor.proveedor}}</option>
+                                    {% endfor %}
                               </select>
                             </div>
                         </div>
@@ -121,20 +132,6 @@
                     </div>
 
 
-                    <div class="col-md-3 col-sm-3 col-xs-6">
-                            <div class="form-line" style="margin-top: -15px">
-                            <label>Fecha Inicial</label>
-
-                             <input type="date" name="filtros[fecha_inicial]" id="fecha_inicial" value="{{filtros.fecha_inicial|date('Y-m-d')}}" >
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-3 col-xs-6">
-                            <div class="form-line" style="margin-top: -15px">
-                            <label>Fecha Final</label>
-
-                             <input type="date" name="filtros[fecha_final]" id="fecha_final" value="{{filtros.fecha_final|date('Y-m-d')}}" >
-                        </div>
-                    </div>
               
                 </div>
                 <div class="row clearfix">
@@ -181,10 +178,10 @@
                     <tr>
                       <th>ID</th>
                       <th>Fecha</th>
+                      <th>Proveedor</th>
+                      <th>Rfc</th>
+
                       <th>Valor</th>
-                      <th>Tipo de pago</th>
-                      <th>Tipo Transacción</th>
-                      <th>Folio</th>
                       <th>Comprobado</th>
                       <th>Por Comprobar</th>
 
@@ -197,27 +194,12 @@
                     <tr id="tr_pago_{{pago.id}}" >
                       <td>{{pago.consecutivo}}</td>
                       <td>{{pago.fecha|date('d/m/y')}}</td>
+                      <td>{{pago.nombreProveedor}}</td>
+                      <td>{{pago.rfcProveedor}}</td>
 
                       <td id="td_pago_valor_{{pago.id}}">$ {{pago.valor|number_format(2,'.',',')}}</td>
-                      <td>
-                        {% if pago.tipo==1 %}
-                        Cheque
-                        {% else %}
-                        Transferencia
-                        {% endif %}
-                      </td>
+                     
 
-                       <td>
-                        {{tipopagos[pago.tipoPagoId-1].nombre}}
-                      </td>
-
-                      <td id="td_pago_folio_{{pago.id}}">
-                        {% if pago.folio=="" %}
-                        NA
-                        {% else %}
-                        {{pago.folio}}
-                        {% endif%}
-                      </td>
                       <td>$ {{pago.facturado|number_format(2,'.',',')}}</td>
                       <td>$ {{pago.porFacturar|number_format(2,'.',',')}}</td>
                       <td> 
@@ -235,29 +217,16 @@
                         </a>
                         {% endif %}
                         
-
-                            {% if pago.tipopagoid==4 %}
-                             <a href="{{path('cuentas_por_cobrar_subir_archivos',{id:pago.id})}}" class="waves-effect m-r-20" title="Agregar XML">
+                        {% if pago.file== "" %}
+                           <a href="#" data-id="{{pago.id}}" class="waves-effect m-r-20 reportar_cuenta" title="Agregar Comprobante">
                               <i class="material-icons">add</i>
-                            </a> 
-                            {% else%}
-
+                             </a> 
+                        {% endif %}
                             {% if pago.tipoPagoId!=5 %}
 
-                             <a href="#" data-id="{{pago.id}}" class="waves-effect m-r-20 reportar_cuenta" title="Agregar Comprobante">
-                              <i class="material-icons">add</i>
-                             </a> 
                              {% endif %}
 
-                            {% endif %}
-                            {% if pago.revisado==0 and pago.tipoPagoId!=5 %}
-                             <a href="#" data-id="{{pago.id}}" class="waves-effect m-r-20 editar" title="Editar">
-                              <i class="material-icons">edit</i>
-                             </a> 
-                            
-                                <a data-id="{{pago.id}}" href="{{path('pagos_delete',{id:pago.id})}}" class="col-dark-gray waves-effect m-r-20 eliminar" title="Eliminar">
-                                <i class="material-icons">delete_sweep</i>
-                              </a>
+                            {% if pago.revisado==0  %}
                               
                               {% if is_granted('ROLE_CLIENTE') %}
 
@@ -274,12 +243,12 @@
 
 
                               {% else %}
+
                                  <a href="{{path('pagos_cliente_revisado',{id:pago.id})}}" class="col-dark-green text-green  waves-effect m-r-20 revisado" title="Quitar Revisado" >  <i class="material-icons">done</i></a>
                           
+                              
                               {% endif %}
 
-
-                           
                              {% endif %} 
                             
                       
@@ -445,27 +414,15 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Cuenta por cobrar</h5>
+          <h5 class="modal-title" id="exampleModalLongTitle">Archivo Adjunto</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form  name="form-cuenta" method="post" id="form-cuenta" action="{{asset('clientes/nueva/cuenta_por_cobrar')}}" enctype="multipart/form-data" >
+        <form  name="form-cuenta" method="post" id="form-cuenta" action="{{path('pagos_new_file')}}" enctype="multipart/form-data" >
         <input type="hidden" id="pagoid_cuenta" name="pagoid" class="pagoid" value="" >
         <div class="modal-body">
-         
-
-          <div class="form-group">
-            <div class="form-line">
-              <input type="text" name="valor" id="valor_cuenta" class="form-control CurrencyInput valor" placeholder="Valor">
-            </div>
-          </div>
-          <div class="form-group" id="div-folio" >
-            <div class="form-line">
-              <input type="text" name="folio" id="folio_cuenta" class="form-control folio" placeholder="Folio">
-            </div>
-          </div>
-
+        
            <div class="form-group">
             <div class="form-line">
               <input type="file" class="form-control" name="file" id="file_cuenta" accept="image/*,application/pdf" placeholder="Archivo Adjunto">
@@ -513,6 +470,43 @@
       </div>
     </div>
   </div>
+
+
+      <div class="modal fade" id="ModalLoteFacturasManual" tabindex="-1" role="dialog" aria-labelledby="exampleModalEditarTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Nuevo Pago Proveedor</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form  name="form-nuevo-proveedor" method="post" id="form-nuevo-proveedor" action="{{path('pagos_facturas_proveedor_manual')}}" enctype="multipart/form-data" >
+        <input type="hidden" id="proveedor_clienteid" name="clienteid"  value="{{cliente.id}}" >
+
+
+        <div class="modal-body">
+          <div class="form-group">
+            <div class="form-line">
+              <input type="text" name="proveedor" id="proveedor" class="form-control" placeholder="Nombre Proveedor">
+            </div>
+          </div>
+          <div class="form-group"  >
+            <div class="form-line">
+              <input type="text" name="rfc" id="rfc" class="form-control folio" placeholder="Rfc Proveedor">
+            </div>
+          </div>
+         
+        </div>
+        <div class="modal-footer">
+          <button type="submit" id="btn-pagos-manual" class="btn btn-primary">Guardar</button>
+        </div>
+      </form>
+        
+      </div>
+    </div>
+  </div>
+
 
 
   {% endblock %} 
@@ -612,6 +606,7 @@
      })
 
      $("#btn-cuenta-submit").click(function(e){
+
       e.preventDefault();
       if($("#valor_cuenta").val()==""){
          swal("Por favor ingrese una valor.");
@@ -626,6 +621,21 @@
         return false;
       }
       $("#form-cuenta").submit();
+
+     });
+
+      $("#btn-pagos-manual").click(function(e){
+      
+      e.preventDefault();
+      if($("#proveedor").val()==""){
+         swal("Por favor ingrese un nombre de proveedor");
+        return false;
+      }
+      if($("#rfc").val()==""){
+         swal("Por favor ingrese una # rfc valido.");
+        return false;
+      }
+      $("#form-nuevo-proveedor").submit();
 
      });
 

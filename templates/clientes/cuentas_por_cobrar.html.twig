@@ -15,7 +15,7 @@
                   <i class="material-icons">home</i> Home</a>
               </li>
               <li class="breadcrumb-item bcrumb-2">
-                <a href="javascript:void(0);">Cuentas por pagar</a>
+                <a href="javascript:void(0);">Facturas Por pagar</a>
               </li>
 
                {% if cliente %}
@@ -32,11 +32,20 @@
           </div>
           <div class="col-xl-6 col-lg-7 col-md-8 col-sm-12 text-right">
           {% if pago %}
-            {% if pago.revisado==0 or pago.revisado=="" %}
+            {% if (pago.revisado==0 or pago.revisado=="") and pago.tipoPagoId<5 %}
               <div class="breadcrumb-chart">
                 <div class="float-right">
                   <div class="icon m-b-10">
                      <a href="{{path('cuentas_por_cobrar_subir_archivos',{clienteid:pago.clienteId})}}" type="button" class="btn btn-primary  waves-effect" >Subir xml</a>
+                  </div>
+                </div>
+              </div>
+
+            {% else %}
+            <div class="breadcrumb-chart">
+                <div class="float-right">
+                  <div class="icon m-b-10">
+                     <a href="#" data-toggle="modal" data-target="#modalNuevaFactura" type="button" class="btn btn-primary  waves-effect" >Agregar Factura manual</a>
                   </div>
                 </div>
               </div>
@@ -347,6 +356,48 @@
     </div>
   </div>
 
+{% if pago %}
+    <div class="modal fade" id="modalNuevaFactura" tabindex="-1" role="dialog" aria-labelledby="exampleModalEditarTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Comprobante de pago</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form  name="form-pago" method="post" id="form-pago" action="{{path('cuentas_por_cobrar_pago_manual',{pagoid:pago.id})}}" enctype="multipart/form-data" >
+        <input type="hidden" id="pagoid" name="pagoid" class="pagoid" >
+        <div class="modal-body">
+         
+
+          <div class="form-group">
+            <div class="form-line">
+              <input type="text" name="valor" id="valor" class="form-control CurrencyInput valor" placeholder="Valor" value="">
+            </div>
+          </div>
+
+           <div class="form-group">
+            <div class="form-line">
+              <input type="text" name="iva" id="iva" class="form-control CurrencyInput iva" placeholder="Iva" value="" >
+            </div>
+          </div>
+          <div class="form-group" id="div-folio" >
+            <div class="form-line">
+              <input type="text" name="total" id="total" class="form-control CurrencyInput total" placeholder="Total" readonly="true">
+            </div>
+          </div>
+         
+        </div>
+        <div class="modal-footer">
+          <button type="submit" id="btn-pagos-submit" class="btn btn-primary">Guardar</button>
+        </div>
+      </form>
+        
+      </div>
+    </div>
+  </div>
+{% endif %}
 {% endblock %} 
 
 {% endblock %} 
@@ -359,8 +410,52 @@
     $("#frm-filtros-avanzado").submit();
 
    }
+
+   function sumatotal(){
+
+    var valor = parseFloat($('#valor').val().replace(/,/g, ''));
+    var  iva=parseFloat($('#iva').val().replace(/,/g, ''));
+    var total=0;
+    
+    if(valor>=0){
+      total=valor;
+    }
+    if(iva>=0){
+      total=valor+iva;
+    }
+
+    valortotal = parseFloat(total).toLocaleString('en-US', {
+        style: 'decimal',
+        maximumFractionDigits: 2,
+        minimumFractionDigits: 2
+      });
+
+    $("#total").val(valortotal);
+   }
+
   $(document).ready(function(){
     var id="";
+
+     $('input.CurrencyInput').on('blur', function() {
+      const value = this.value.replace(/,/g, '');
+      this.value = parseFloat(value).toLocaleString('en-US', {
+        style: 'decimal',
+        maximumFractionDigits: 2,
+        minimumFractionDigits: 2
+      });
+    });
+
+     $('#valor').on('blur', function() {
+      sumatotal();
+    });
+
+
+    $('#iva').on('blur', function() {
+      if($(this).val()=="NaN"){
+        $(this).val('0.00');
+      }
+      sumatotal();
+    });
 
     $(".detalle_factura").click(function(e){
       e.preventDefault();

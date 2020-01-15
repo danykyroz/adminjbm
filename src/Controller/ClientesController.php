@@ -425,6 +425,8 @@ class ClientesController extends AbstractController
         $filtros['fecha_final']="";
         $filtros['year']=date('Y');
         $filtros['mes']=date('m');
+        $filtros['proveedor']="";
+
       }
 
       $user=($this->getUser());
@@ -457,6 +459,9 @@ class ClientesController extends AbstractController
         if($filtros["cliente"]!=""){
            $cliente=$em->getRepository('App:Clientes','c')->find($filtros['cliente']);
          }
+      }
+      if($clienteid>0){
+        $cliente=$em->getRepository('App:Clientes','c')->find($clienteid);
       }
 
 
@@ -512,6 +517,13 @@ class ClientesController extends AbstractController
          }
       }
 
+      if(isset($filtros['proveedor'])){
+        if($filtros["proveedor"]!=""){
+          $qb->andWhere('p.nombreProveedor=:proveedor');
+          $qb->setParameter('proveedor',$filtros["proveedor"]);
+         }
+      }
+
       if($request->get('query')!=""){
 
             $qb->andWhere(sprintf('LOWER(%s.%s) LIKE :fuzzy_query', 'p', 'id'));
@@ -523,6 +535,18 @@ class ClientesController extends AbstractController
 
         }
 
+        $proveedores=array();
+        if(is_object($cliente)){
+          
+          $qbp=$em->createQueryBuilder();
+          $qbp->select('p.nombreProveedor as proveedor')->from('App:Pagos','p')->where('p.clienteId=:clienteId')->andWhere("p.tipoPagoId=5");
+          $qbp->setParameter('clienteId',$cliente->getId());
+          $qbp->groupBy('p.nombreProveedor');
+          $qbp->orderBy('p.nombreProveedor','ASC');
+          $proveedores=$qbp->getQuery()->getResult();
+
+        }
+       
         $paginator  = $this->paginator;
         $pagination = $paginator->paginate(
             $qb, /* query NOT result */
@@ -556,13 +580,22 @@ class ClientesController extends AbstractController
         return $response;
       }
 
-      return $this->render('clientes/pagos.html.twig',array(
+      if($factura_interna==1){
+        $plantilla="clientes/pagos_intercompania.html.twig";
+      }
+      else{
+        $plantilla='clientes/pagos.html.twig';
+      }      
+     
+      return $this->render($plantilla,array(
       'pagos'=>$pagination,
       'cliente'=>$cliente,
       'clientes'=>$clientes,
       'pagination'=>$pagination,
       'filtros'=>$filtros,
-      'tipopagos'=>$tipopagos
+      'tipopagos'=>$tipopagos,
+      'proveedores'=>$proveedores,
+
 
       )); 
   }
@@ -676,6 +709,7 @@ class ClientesController extends AbstractController
 
                   $pago=new Pagos();
                   $pago->setFecha(new \DateTime($fecha_inicial));
+                  $pago->setNombreProveedor($proveedor);
                   $pago->setRfcProveedor($rfc);
                   $pago->setTipo(2);
                   $pago->setClienteId($clienteid);
@@ -983,6 +1017,138 @@ class ClientesController extends AbstractController
 
 
     return  $this->redirect($this->generateUrl('pagos_cliente_id',array('id'=>$request->get('cliente'))));
+
+  }
+
+  /**
+  * @Route("/pagos/nuevo/proveedor", name="pagos_facturas_proveedor_manual", methods={"GET","POST"})
+  */
+  public function pagos_nuevo_proveedor(Request $request){
+    
+     $em=$this->getDoctrine()->getManager();
+
+     $pagos=new Pagos(); 
+     $pagos->setFecha(new \DateTime($request->get('fecha')));
+     $pagos->setTipo(2);
+     $pagos->setValor(0);
+     $pagos->setFacturado(0);
+     $pagos->setPorFacturar(0);
+     $pagos->setClienteId($request->get('clienteid'));
+     $pagos->setNombreProveedor($request->get('proveedor'));
+     $pagos->setRfcProveedor($request->get('rfc'));
+     $pagos->setTipoPagoId(5);
+     $em->persist($pagos);
+     $em->flush();
+
+     /*if($_FILES["file"]["error"]==0){
+
+          $tmp_name = $_FILES["file"]["tmp_name"];
+          $name = $_FILES["file"]["name"];
+
+          //Nombre carpeta
+
+           $cliente=$em->getRepository('App:Clientes','c')->find($pagos->getClienteId());
+
+            $nombre_cliente=str_replace(" ","-",$cliente->getRazonSocial());
+            
+            $year_carpeta=date_format($pagos->getFecha(),'Y');
+            $mes_carpeta=date_format($pagos->getFecha(),'m');
+            $dia_carpeta=date_format($pagos->getFecha(),'d');
+            if($pagos->getTipo()==1){
+              $tipo='cheque';
+            }else{
+              $tipo='transferencia';
+            }
+
+
+            $carpeta_nueva='uploads/'.$nombre_cliente.'/'.$year_carpeta.'/'.$mes_carpeta.'/'.$tipo.'/'.$dia_carpeta.'/'.$pagos->consecutivo();
+            
+            $ruta_nueva=$carpeta_nueva.'/'.$name;
+            $this->new_directories($carpeta_nueva);
+            
+            $ruta="uploads/$name";
+
+            $move= move_uploaded_file($tmp_name, $ruta);
+
+            $move_new= copy($ruta, $ruta_nueva);
+            if($move_new){
+              unlink($ruta);
+            }
+
+           if($move_new){
+            $pagos->setFile($ruta_nueva);
+            $em->persist($pagos);
+            $em->flush();
+           }
+     }*/
+   
+
+
+     $this->addFlash('success', 'Pago guardado exitosamente.');
+
+
+    return  $this->redirect($this->generateUrl('pagos_clientes',array('clienteid'=>$request->get('clienteid'),'factura_interna'=>1)));
+
+  }
+
+
+  /**
+  * @Route("/pagos/new/file", name="pagos_new_file", methods={"GET","POST"})
+  */
+  public function pago_new_file(Request $request){
+    
+     $em=$this->getDoctrine()->getManager();
+
+     $pagos=$em->getRepository('App:Pagos','p')->find($request->get('pagoid'));
+    
+     if($_FILES["file"]["error"]==0){
+
+          $tmp_name = $_FILES["file"]["tmp_name"];
+          $name = $_FILES["file"]["name"];
+
+          //Nombre carpeta
+
+           $cliente=$em->getRepository('App:Clientes','c')->find($pagos->getClienteId());
+
+            $nombre_cliente=str_replace(" ","-",$cliente->getRazonSocial());
+            
+            $year_carpeta=date_format($pagos->getFecha(),'Y');
+            $mes_carpeta=date_format($pagos->getFecha(),'m');
+            $dia_carpeta=date_format($pagos->getFecha(),'d');
+            if($pagos->getTipo()==1){
+              $tipo='cheque';
+            }else{
+              $tipo='transferencia';
+            }
+
+
+            $carpeta_nueva='uploads/'.$nombre_cliente.'/'.$year_carpeta.'/'.$mes_carpeta.'/'.$tipo.'/'.$dia_carpeta.'/'.$pagos->consecutivo();
+            
+            $ruta_nueva=$carpeta_nueva.'/'.$name;
+            $this->new_directories($carpeta_nueva);
+            
+            $ruta="uploads/$name";
+
+            $move= move_uploaded_file($tmp_name, $ruta);
+
+            $move_new= copy($ruta, $ruta_nueva);
+            if($move_new){
+              unlink($ruta);
+            }
+
+           if($move_new){
+            $pagos->setFile($ruta_nueva);
+            $em->persist($pagos);
+            $em->flush();
+           }
+     }
+   
+
+
+     $this->addFlash('success', 'Pago guardado exitosamente.');
+
+
+      return  $this->redirect($this->generateUrl('pagos_clientes',array('clienteid'=>$pagos->getClienteId(),'factura_interna'=>1)));
 
   }
 
@@ -1404,6 +1570,7 @@ class ClientesController extends AbstractController
 
           $qbp=$em->createQueryBuilder();
           $qbp->select('c.proveedor')->from('App:CuentasPorCobrar','c')->where('c.clienteId=:clienteId')->andWhere("(c.extension='xml' OR c.extension='csv')");
+        
           $qbp->setParameter('clienteId',$cliente->getId());
           $qbp->groupBy('c.proveedor');
           $proveedores=$qbp->getQuery()->getResult();
@@ -1503,6 +1670,68 @@ class ClientesController extends AbstractController
   }
 
 
+
+  /**
+  * @Route("/cuentas_por_cobrar/pago/manual/{pagoid}", name="cuentas_por_cobrar_pago_manual", methods={"POST"})
+  */
+  public function cuentas_por_cobrar_pago_manual(Request $request){
+
+      $em=$this->getDoctrine()->getManager();
+
+      $valor=$request->get('valor');
+      $iva=$request->get('iva');
+      $valor=str_replace(",","",$valor);
+      $iva=str_replace(",","",$iva);
+      $total=$valor+$iva;
+      $pagoid=$request->get('pagoid');
+      $pago=$em->getRepository('App:Pagos','p')->find($pagoid);
+
+      $CuentasPorCobrar=new CuentasPorCobrar();
+      $CuentasPorCobrar->setFecha(new \DateTime('now'));
+      $CuentasPorCobrar->setCreatedAt(new \DateTime('now'));
+      $CuentasPorCobrar->setUpdatedAt(new \DateTime('now'));
+      $CuentasPorCobrar->setClienteId($pago->getClienteId());
+      $CuentasPorCobrar->setValor($valor);
+      $CuentasPorCobrar->setIva($iva);
+      $CuentasPorCobrar->setTotal($valor);
+      $CuentasPorCobrar->setExtension('csv');
+      $CuentasPorCobrar->setRfc($pago->getRfcProveedor());
+      $CuentasPorCobrar->setProveedor($pago->getNombreProveedor());
+      $CuentasPorCobrar->setPagoId($pagoid);
+
+      $em->persist($CuentasPorCobrar);
+      $em->flush();
+
+      $qb=$em->createQueryBuilder();
+
+      $qb->select('SUM(c.valor) as valor, SUM(c.iva) as iva, SUM(c.total) as total')
+                  ->from('App:CuentasPorCobrar','c')
+                  ->andWhere('c.pagoId=:pagoId');
+
+      $qb->setParameters(array('pagoId'=>$pago->getId()));
+        
+
+      $totales=$qb->getQuery()->getSingleResult();
+
+      if(is_array($totales)){
+        $pago->setValor($totales['valor']);
+        $em->persist($pago);
+        $em->flush();
+        //$pago->setFacturado(0);
+        //$pago->setPorFacturar
+      }
+
+
+
+
+
+
+    return  $this->redirect($this->generateUrl('cuentas_por_cobrar_pago_id',array('id'=>$pagoid)));
+
+
+  }
+
+
    /**
   * @Route("/cuentas_por_cobrar/delete/{id}", name="cuentas_por_cobrar_delete", methods={"GET"})
   */
@@ -1511,6 +1740,8 @@ class ClientesController extends AbstractController
     $em=$this->getDoctrine()->getManager();
     $name=str_replace('.xml', '.pdf',$cuenta->getNombre());
     $clienteid=$cuenta->getClienteId();
+    $pagoid=(int)$cuenta->getPagoId();
+
     $qb=$em->createQueryBuilder()->select('c')->from('App:CuentasPorCobrar','c')->where('c.nombre=:nombre')->andWhere('c.pagoId=:pagoId');
     $qb->setParameters(array('nombre'=>$name,'pagoId'=>$cuenta->getPagoId()));
 
@@ -1525,7 +1756,14 @@ class ClientesController extends AbstractController
     $em->remove($cuenta);
     $em->flush();
 
-    return  $this->redirect($this->generateUrl('cuentas_por_cobrar',array('clienteid'=>$clienteid)));
+    if($pagoid>0){
+          return  $this->redirect($this->generateUrl('cuentas_por_cobrar_pago_id',array('id'=>$pagoid)));
+
+    }else{
+          return  $this->redirect($this->generateUrl('cuentas_por_cobrar',array('clienteid'=>$clienteid)));
+
+    }
+
 
 
   }
