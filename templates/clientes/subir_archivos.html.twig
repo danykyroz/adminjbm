@@ -50,6 +50,8 @@
                         <div class="body">
                             <form action="{{path('cuentas_por_cobrar_analizar_archivos',{'clienteid':clienteId})}}" id="frmFileDropzone" class="dropzone dz-clickable" method="post" enctype="multipart/form-data">
                               <input type="hidden" name="pagoid" value="{{pagoid}}" >
+                              <input type="hidden" name="cuentaid" value="{{cuentaid}}" >
+                              
                                 <div class="dz-message">
                                     <div class="drag-icon-cph">
                                         <i class="material-icons">touch_app</i>
