@@ -97,14 +97,20 @@
                     </li>
                     <li>
                         {% block busqueda_general %}
-                        {#[<form action="" method="get" id="frm-busqueda-general" >
+                        <form action="" method="get" id="frm-busqueda-general" >
                         <div class="search-box">
+                            {% if app.request.get('clienteid') %}
+                            <input type="hidden" name="clienteid" value="{{app.request.get('clienteid')}}">
+                            {% endif %}
+                             {% if app.request.get('factura_interna') %}
+                            <input type="hidden" name="factura_interna" value="1">
+                            {% endif %}
                             <input type="search" id="search" name="query" placeholder="Buscar..." value="{{app.request.get('query')}}" />
                             <button class="icon" id="btn-busqueda-general">
                                 <i class="fa fa-search"></i>
                             </button>
                         </div>
-                        </form>#}
+                        </form>
                         {% endblock %}
                     </li>
                 </ul>

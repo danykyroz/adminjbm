@@ -529,7 +529,10 @@ class ClientesController extends AbstractController
             $qb->andWhere(sprintf('LOWER(%s.%s) LIKE :fuzzy_query', 'p', 'id'));
             $qb->orWhere(sprintf('LOWER(%s.%s) LIKE :fuzzy_query', 'p', 'valor'));
             $qb->orWhere(sprintf('LOWER(%s.%s) LIKE :fuzzy_query', 'p', 'folio'));
-            
+            $qb->orWhere(sprintf('LOWER(%s.%s) LIKE :fuzzy_query', 'p', 'nombreProveedor'));
+            $qb->orWhere(sprintf('LOWER(%s.%s) LIKE :fuzzy_query', 'p', 'rfcProveedor'));
+
+
             $lowerSearchQuery=trim(strtolower($request->get('query')));
             $qb->setParameter('fuzzy_query','%'.$lowerSearchQuery.'%');;
 
