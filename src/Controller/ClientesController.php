@@ -2346,7 +2346,7 @@ class ClientesController extends AbstractController
     $dias=json_encode($dias);
     $empleado->setDiasDescanso($dias);
         $fechaAlta = $request->request->get('fecha-alta');
-        $empleado->setFechaAlta(\DateTime::createFromFormat('d/m/Y', $fechaAlta));
+        $empleado->setFechaAlta(new \DateTime($fechaAlta));
     $em->persist($empleado);
     $em->flush();
 

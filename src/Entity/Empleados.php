@@ -233,7 +233,7 @@ class Empleados
     /**
      * @return \DateTime|null
      */
-    public function getFechaAlta(): ?\DateTime
+    public function getFechaAlta()
     {
         return $this->fechaAlta;
     }
@@ -241,9 +241,12 @@ class Empleados
     /**
      * @param \DateTime|null $fechaAlta
      */
-    public function setFechaAlta(?\DateTime $fechaAlta): void
+    public function setFechaAlta($fechaAlta): self
     {
         $this->fechaAlta = $fechaAlta;
+
+        return $this;
+
     }
 
 
