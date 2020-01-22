@@ -29,6 +29,10 @@
                         Transferencia
                         {% endif %}
                       </td>
+                      <td>
+                        {{tipopagos[pago.tipoPagoId-1].nombre}}
+                      </td>
+
                       <td id="td_pago_folio_{{pago.id}}">
                         {% if pago.folio=="" %}
                         NA
@@ -37,10 +41,7 @@
                         {% endif%}
                       </td>
 
-                       <td>
-                        {{tipopagos[pago.tipoPagoId-1].nombre}}
-                      </td>
-
+                    
                       <td>$ {{pago.facturado|number_format(2,'.',',')}}</td>
                       <td>$ {{pago.porFacturar|number_format(2,'.',',')}}</td>
                       <td> 
