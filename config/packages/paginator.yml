@@ -8,6 +8,4 @@ knp_paginator:
         filter_field_name: filterField  # filter field query parameter name
         filter_value_name: filterValue  # filter value query parameter name
     template:
-        pagination: '@EasyAdmin/Pagination/twitter_bootstrap_v4_pagination.html.twig'     # sliding pagination controls template
-        sortable: '@EasyAdmin/Pagination/font_awesome_sortable_link.html.twig' # sort link template
-        filtration: '@KnpPaginator/Pagination/filtration.html.twig' 
+        pagination: 'paginacion/bootstrap_4.html.twig'
