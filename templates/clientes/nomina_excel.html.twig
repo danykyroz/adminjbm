@@ -16,7 +16,8 @@
       <tr>
         <th >Nombre</th>
         <th >Cargo</th>
-        <th >Fecha</th>
+        <th>Fecha Creación</th>
+        <th>Fecha Alta</th>
         <th >D</th>
         <th >L</th>
         <th >M</th>
@@ -34,6 +35,13 @@
         <td >{{empleado.nombres}}</td>
         <td >{{empleado.cargo}}</td>
         <td >{{empleado.createdAt|date('d/m/y')}}</td>
+        <td>
+          {% if empleado.fechaAlta!="" %}
+        {{empleado.fechaAlta|date('d/m/y')}}
+        {% else %}
+         NA 
+       {% endif %}
+       </td>
 
         <td  >
           {% if objempleado.horario.D=="A"  %}
