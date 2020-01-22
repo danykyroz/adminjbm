@@ -278,7 +278,10 @@
                   </tbody>
 
                 </table>
-                  <div class="navigation">
+                  <div class="count">
+                 Total Registros {{ pagination.getTotalItemCount }}
+                </div>
+                <div class="navigation">
                         {{ knp_pagination_render(pagination) }}
                   </div>
               </div>

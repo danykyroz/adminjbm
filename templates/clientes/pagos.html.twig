@@ -116,7 +116,7 @@
                             <div class="form-line" style="margin-top: -15px">
                             <label>Mes</label>
 
-                             <input type="number" name="filtros[mes]" id="mes" value="{{filtros.mes}}" min="1" max="12" >
+                             <input type="number" name="filtros[mes]" id="mes" value="{{filtros.mes}}" min="1" max="12" onKeyPress="return soloNumeros(event)" >
                         </div>
                     </div>
 
@@ -156,7 +156,7 @@
 
             <div class="header">
               <h2>
-                <strong>Compobantes de pago</strong></h2>
+                <strong>Comprobantes de pago</strong></h2>
               <ul class="header-dropdown m-r--5">
                 <li class="dropdown">
                   <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -176,6 +176,8 @@
             </div>
             <div class="body">
               <div class="table-responsive">
+               
+
                 <table id="tableExport" class="display table table-hover table-checkable order-column m-t-20 width-per-100">
                   <thead>
                     <tr>
@@ -292,7 +294,9 @@
                   </tbody>
                  
                 </table>
-
+                 <div class="count">
+                 Total Registros {{ pagination.getTotalItemCount }}
+                </div>
                  <div class="navigation">
                         {{ knp_pagination_render(pagination) }}
                   </div>
@@ -535,6 +539,11 @@
 
    }
 
+   function soloNumeros(e){
+      var key = window.Event ? e.which : e.keyCode
+      return (key >= 48 && key <= 57)
+    }
+
  $('document').ready(function(){
 
       $(".reportar_cuenta").click(function(e){
@@ -543,6 +552,20 @@
         $("#pagoid_cuenta").val(id);
         $("#reportarCuenta").modal('show');
 
+      })
+
+      $("#mes").keydown(function(){
+         valor=$(this).val();
+         if(valor>12){
+          $(this).val("12");
+          return false;
+         }
+         if(valor<0){
+          return false;
+         }
+         if(valor=='00'){
+           $(this).val("01");
+         }
       })
 
       $(".editar").click(function(e){

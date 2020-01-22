@@ -554,7 +554,7 @@ class ClientesController extends AbstractController
         $pagination = $paginator->paginate(
             $qb, /* query NOT result */
             $request->query->getInt('page', 1), /*page number*/
-            50 /*limit per page*/
+            25 /*limit per page*/
         );
      
 
@@ -589,7 +589,8 @@ class ClientesController extends AbstractController
       else{
         $plantilla='clientes/pagos.html.twig';
       }      
-     
+
+       
       return $this->render($plantilla,array(
       'pagos'=>$pagination,
       'cliente'=>$cliente,
