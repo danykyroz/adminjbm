@@ -201,7 +201,7 @@ class ClientesController extends AbstractController
             
             $em = $this->getDoctrine()->getManager();
 
-            $user = $em->getRepository("App:FosUser")->findOneBy(["email" => $cliente->getEmail()]);
+            $user = $em->getRepository("App:User")->findOneBy(["email" => $cliente->getEmail()]);
 
             if (!$user) {
                 /** @var  $user GrantUser */
