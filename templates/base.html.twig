@@ -228,10 +228,10 @@
 
         {% block wrapper %}
         		
+
                 {% block content %}
                 
                          
-                        
                         {% block content_header_wrapper %}
                         {% set _has_content_help = _entity_config is defined and _entity_config[app.request.query.get('action')]['help']|default(false) %}
                         <section class="content-header {{ _has_content_help ? 'has-content-help' }}">
@@ -272,6 +272,7 @@
 
                         {% block content_footer_wrapper %}
                             <section class="content-footer">
+
                                 {% block content_footer %}{% endblock %}
                             </section>
                         {% endblock %}

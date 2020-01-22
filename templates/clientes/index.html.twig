@@ -29,6 +29,23 @@
           {% endif %}
         </div>
       </div>
+      {% for message in app.flashes('success') %}
+       <div class="alert alert-success" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">×</span>
+          </button>
+          {{message}}
+      </div>
+      {% endfor %}
+      {% for message in app.flashes('bad') %}
+      <div class="alert bg-pink alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">×</span>
+          </button>
+          {{message}}
+      </div>
+      {% endfor %}
+      
       <!-- Basic Table -->
        <div class="row clearfix">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">

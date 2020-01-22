@@ -554,7 +554,7 @@ class ClientesController extends AbstractController
         $pagination = $paginator->paginate(
             $qb, /* query NOT result */
             $request->query->getInt('page', 1), /*page number*/
-            50 /*limit per page*/
+            25 /*limit per page*/
         );
      
 
@@ -589,7 +589,8 @@ class ClientesController extends AbstractController
       else{
         $plantilla='clientes/pagos.html.twig';
       }      
-     
+
+       
       return $this->render($plantilla,array(
       'pagos'=>$pagination,
       'cliente'=>$cliente,
@@ -2345,7 +2346,7 @@ class ClientesController extends AbstractController
     $dias=json_encode($dias);
     $empleado->setDiasDescanso($dias);
         $fechaAlta = $request->request->get('fecha-alta');
-        $empleado->setFechaAlta(\DateTime::createFromFormat('d/m/Y', $fechaAlta));
+        $empleado->setFechaAlta(new \DateTime($fechaAlta));
     $em->persist($empleado);
     $em->flush();
 
