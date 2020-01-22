@@ -2332,8 +2332,9 @@ class ClientesController extends AbstractController
   */
   
   public function nomina_guardar_empleado(Request $request){
-      
-    $user=($this->getUser());
+
+
+      $user=($this->getUser());
     $em=$this->getDoctrine()->getManager();
     $empleado=new Empleados();
     $empleado->setCreatedAt(new \DateTime('now'));
@@ -2344,6 +2345,8 @@ class ClientesController extends AbstractController
     $dias=$this->getDias($request->get('diasdescanso'));
     $dias=json_encode($dias);
     $empleado->setDiasDescanso($dias);
+        $fechaAlta = $request->request->get('fecha-alta');
+        $empleado->setFechaAlta(\DateTime::createFromFormat('d/m/Y', $fechaAlta));
     $em->persist($empleado);
     $em->flush();
 

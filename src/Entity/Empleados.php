@@ -92,6 +92,12 @@ class Empleados
      */
     private $fileBaja;
 
+    /**
+     * @var \DateTime|null
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(name="fecha_alta", type="datetime", nullable=true)
+     */
+    private $fechaAlta;
 
 
 
@@ -223,6 +229,23 @@ class Empleados
 
         return $this;
     }
-  
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getFechaAlta(): ?\DateTime
+    {
+        return $this->fechaAlta;
+    }
+
+    /**
+     * @param \DateTime|null $fechaAlta
+     */
+    public function setFechaAlta(?\DateTime $fechaAlta): void
+    {
+        $this->fechaAlta = $fechaAlta;
+    }
+
+
 
 }

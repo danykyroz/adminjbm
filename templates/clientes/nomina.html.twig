@@ -1,8 +1,8 @@
-  {% extends 'base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block content %}
 
-{% block body %}
+    {% block body %}
 
 <style type="text/css">
   select.form-control{
@@ -306,6 +306,11 @@
           </div>
             <div class="form-group">
                 <div class="form-line">
+                    <input type="text" name="fecha-alta" id="fecha-alta" class="form-control date" placeholder="Fecha de alta">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-line">
                     <p><div class="sidebar-userpic-name">Alta </div></p>
                     <input type="file" name="documento-alta" id="documento-alta" class="custom-file" placeholder="Alta" accept="application/pdf">
                     <hr />
@@ -495,7 +500,9 @@
 
   }
 
-  $("document").ready(function(){
+        $("document").ready(function () {
+            var $demoMaskedInput = $('#exampleModalCenter');
+            $demoMaskedInput.find('.date').inputmask('dd/mm/yyyy', { placeholder: 'dd/mm/yyyy' });
 
       $("#procesar-horario").on('click', (function (e) {
           e.preventDefault();
