@@ -150,6 +150,24 @@
         </div>
    
 
+              <div class="body">
+                  {% for flash_message in app.session.flashbag.get('warning') %}
+                      <div class="alert bg-pink alert-dismissible" role="alert">
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                          </button>
+                          {{ flash_message }}
+                      </div>
+                  {% endfor %}
+                  {% for flash_message in app.session.flashbag.get('success') %}
+                      <div class="alert alert-info alert-dismissible" role="alert">
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                          </button>
+                          {{ flash_message }}
+                      </div>
+                  {% endfor %}
+              </div>
 
             <div class="header">
               <h2>
@@ -457,6 +475,8 @@
         </div>
         <form  name="form-cuenta" method="post" id="form-cuenta" action="{{path('pagos_facturas_lote')}}" enctype="multipart/form-data" >
         <input type="hidden" id="lote-clienteid" name="clienteid"  value="{{cliente.id}}" >
+        <input type="hidden" id="lote-facturaInterna" name="facturaInterna"  value="{{ facturaInterna }}" >
+
         <div class="modal-body">
          
 

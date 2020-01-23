@@ -599,6 +599,7 @@ class ClientesController extends AbstractController
       'filtros'=>$filtros,
       'tipopagos'=>$tipopagos,
       'proveedores'=>$proveedores,
+      'facturaInterna' => $factura_interna,
 
 
       )); 
@@ -629,9 +630,11 @@ class ClientesController extends AbstractController
   * @Route("/pagos/factura/lote", name="pagos_facturas_lote", methods={"GET","POST"})
   */
   public function pagos_facturas_lote(Request $request){
-      
+
       $em=$this->getDoctrine()->getManager();
       $clienteid=$request->get('clienteid');
+      $facturaInterna = $request->get('facturaInterna');
+
       $cliente=$em->getRepository('App:Clientes','c')->find($clienteid);
       $cont_facturas=0;
 
@@ -651,61 +654,69 @@ class ClientesController extends AbstractController
         //Abrimos nuestro archivo
         $archivo = fopen($ruta_csv, "r");
         //Lo recorremos
+        $cont_linea = 0;
         while (($datos = fgetcsv($archivo, "")) == true) 
         {
-          $num = count($datos);
-          //Recorremos las columnas de esa linea
+            if(count($datos) == 1 && !strpos($datos[0], ',')){
 
-          for ($columna = 0; $columna < $num; $columna++) 
-              {
-                if($cont_linea==0){
-                  continue;
-                }
-                $linea=explode(";",$datos[$columna]);
-                $proveedor=$linea[0];
-                $rfc=$linea[1];
-                $fecha=$linea[2];
-                $valor=$linea[3];
-                $iva=$linea[4];
-                $total=$linea[5];
-                $ext="csv";
-                $pago=false;
+                unlink($ruta_csv);
+                $this->addFlash('warning', 'No se puede procesar el archivo debido a que no cumple el formato requerido. El archivo debe ser separado por comas ","');
+                return $this->redirectToRoute('pagos_clientes', [
+                    'factura_interna'=>$facturaInterna,
+                    'clienteid'=>$clienteid
+                ]);
 
-                //Creamos la factura
+                break;
+            }
 
-                //Buscamos un pago tipo 5 con el mismo id de cliente y fecha
-                $fecha_time=(new \DateTime($fecha));
-                $fecha_inicial=$fecha_time->format('Y-m-01');  
-                $fecha_final=$fecha_time->format('Y-m-31');  
+            if($cont_linea==0){
+                $cont_linea++;
+              continue;
+            }
+            $proveedor=$datos[0];
+            $rfc=$datos[1];
+            $fecha=$datos[2];
+            $valor=$datos[3];
+            $iva=$datos[4];
+            $total=$datos[5];
+            $ext="csv";
+            $pago=false;
+
+            //Creamos la factura
+
+            //Buscamos un pago tipo 5 con el mismo id de cliente y fecha
+            $fecha_time=(new \DateTime($fecha));
+            $fecha_inicial=$fecha_time->format('Y-m-01');
+            $fecha_final=$fecha_time->format('Y-m-31');
 
 
-                $qb=$em->createQueryBuilder();
+            $qb=$em->createQueryBuilder();
 
-                $qb->select('p')
-                    ->from('App:Pagos','p')
-                    ->where('p.fecha>=:fecha_inicial')
-                    ->andWhere('p.fecha<=:fecha_final')
-                    ->andWhere('p.clienteId=:clienteId')
-                    ->andWhere('p.tipoPagoId=:tipopagoId')
-                    ->andWhere('p.rfcProveedor=:rfcProveedor')
-                    ->orderBy('p.fecha','Asc');
+            $qb->select('p')
+                ->from('App:Pagos','p')
+                ->where('p.fecha>=:fecha_inicial')
+                ->andWhere('p.fecha<=:fecha_final')
+                ->andWhere('p.clienteId=:clienteId')
+                ->andWhere('p.tipoPagoId=:tipopagoId')
+                ->andWhere('p.rfcProveedor=:rfcProveedor')
+                ->orderBy('p.fecha','Asc');
 
-                  $qb->setParameters(array('fecha_inicial'=>$fecha_inicial,
-                                            'fecha_final'=>$fecha_final,
-                                            'clienteId'=>$clienteid,
-                                            'tipopagoId'=>5,
-                                            'rfcProveedor'=>$rfc));
+              $qb->setParameters(array('fecha_inicial'=>$fecha_inicial,
+                                        'fecha_final'=>$fecha_final,
+                                        'clienteId'=>$clienteid,
+                                        'tipopagoId'=>5,
+                                        'rfcProveedor'=>$rfc));
 
-                  
-                $pagos=$qb->getQuery()->getResult();
-                if(count($pagos)>0){
-                  $pago=$pagos[0];
-                }
-                
 
-                if(is_object($pago)){
+            $pagos=$qb->getQuery()->getResult();
+            if(count($pagos)>0){
+              $pago=$pagos[0];
+            }
 
-                //Sumar todos los pagos   
+
+            if(is_object($pago)){
+
+                //Sumar todos los pagos
 
 
                 }
@@ -759,7 +770,7 @@ class ClientesController extends AbstractController
                   ->andWhere('c.pagoId=:pagoId');
 
                   $qb->setParameters(array('fecha_inicial'=>$fecha_inicial,'fecha_final'=>$fecha_final,'clienteId'=>$clienteid,'rfcProveedor'=>$rfc,'pagoId'=>$pago->getId()));
-                  
+
 
                 $totales=$qb->getQuery()->getSingleResult();
 
@@ -789,18 +800,17 @@ class ClientesController extends AbstractController
                     $em->flush();
 
                   }
-                 
+
                 }
-               
-             }
              $cont_linea++;
 
         }
         //Cerramos el archivo
         fclose($archivo);
 
-
+          $this->addFlash('success', 'Archivo procesado correctamente');
       }
+
 
       return  $this->redirect($this->generateUrl('pagos_clientes',array('clienteid'=>$pago->getClienteId(),'factura_interna'=>1)));
  
