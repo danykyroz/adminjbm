@@ -11,6 +11,7 @@
                       <th>Folio</th>
                       <th>Comprobado</th>
                       <th>Por Comprobar</th>
+                      <th>Beneficiario</th>
                       <th>Facturas</th>
                     </tr>
                   </thead>
@@ -44,17 +45,10 @@
                     
                       <td>$ {{pago.facturado|number_format(2,'.',',')}}</td>
                       <td>$ {{pago.porFacturar|number_format(2,'.',',')}}</td>
-                      <td> 
                      
-
-                      <a href="{{path('cuentas_por_cobrar_pago_id',{id:pago.id})}}" class="col-dark-gray waves-effect m-r-20" title="agregar">
-                         <div style="background: blue; color: #fff; height:20px; width: 20px; text-align: center; border-radius: 50%; float: left; margin-right: 15px;" class="">
-                      {{ render(path('facturas_pago_id',{id:pago.id})) }}
-                                            </div>
-
-                      </a>
-                      
-                        
+                      <td>{{pago.beneficiario}}</td>
+                      <td>
+                        {{ render(path('facturas_pago_id',{id:pago.id})) }} 
                       </td>
                     </tr>
                   {% endfor %}

@@ -58,6 +58,13 @@ class CuentasPorCobrar
      */
     private $iva = '';
 
+     /**
+     * @var float
+     *
+     * @ORM\Column(name="descuento", type="float", nullable=false)
+     */
+    private $descuento = '';
+
     /**
      * @var float
      *
@@ -325,6 +332,18 @@ class CuentasPorCobrar
         return $this;
     }
 
+    public function getDescuento(): ?float
+    {
+        return $this->descuento;
+    }
+
+    public function setDescuento(float $descuento): self
+    {
+        $this->descuento = $descuento;
+
+        return $this;
+    }
+
     public function getTotal(): ?float
     {
         return $this->total;
@@ -363,7 +382,7 @@ class CuentasPorCobrar
 
     public function getPagoId(): ?int
     {
-        return $this->pagoId;
+        return $this->pagoId?$this->pagoId:0;
     }
 
     public function setPagoId(int $pagoId): self
