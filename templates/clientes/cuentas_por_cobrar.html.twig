@@ -225,6 +225,7 @@
                       <th>Fecha</th>
                       <th>Valor</th>
                       <th>IVA</th>
+                      <th>Descuento</th>
                       <th>Total</th>
                       <th>Estado Factura</th>
                       <th>Cancelable</th>
@@ -242,6 +243,7 @@
                       <td>{{cuenta.fecha|date('d/m/Y')}}</td>
                       <td>$ {{cuenta.valor|number_format(2,'.',',')}}</td>
                       <td>$ {{cuenta.iva|number_format(2,'.',',')}}</td>
+                      <td>$ {{cuenta.descuento|number_format(2,'.',',')}}</td>
                       <td>$ {{cuenta.total|number_format(2,'.',',')}}</td>
                       <td>{{cuenta.cfdi}}</td>
                       <td>{{cuenta.cancelable}}</td> 
