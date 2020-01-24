@@ -2128,6 +2128,18 @@ class ClientesController extends AbstractController
 
             if($pago){
 
+              if($data_json->Comprobante->TipoDeComprobante=='E'){
+
+                $valor=$pago->getValor()+$CuentasPorCobrar->getTotal();
+                $resta=$valor-$pago->getFacturado();
+                
+                $pago->setValor($valor);
+                $pago->setPorFacturar($resta);
+            
+
+              }else{
+
+              
               $qb=$em->createQueryBuilder();
               $qb->select("sum(c.total) as suma")->from('App:CuentasPorCobrar','c')->where("c.pagoId=:pagoId and c.extension!='csv'");
 
@@ -2135,7 +2147,13 @@ class ClientesController extends AbstractController
 
               $total=$qb->getQuery()->getSingleScalarResult();
               $resta=$pago->getValor()-$total;
-              
+
+              $pago->setFacturado($total);
+              $pago->setPorFacturar($resta);
+            
+
+              }
+
               if($resta<0){
 
                $this-> deletePdfXml($CuentasPorCobrar);
@@ -2147,11 +2165,11 @@ class ClientesController extends AbstractController
                 return  new Response('La factura supera el saldo por facturar');
               }
 
-              $pago->setFacturado($total);
-              $pago->setPorFacturar($resta);
+              
               $em->persist($pago);
               $em->flush();
 
+              
             }
 
 
