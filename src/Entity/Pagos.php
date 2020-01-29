@@ -122,6 +122,14 @@ class Pagos
      * @ORM\Column(name="rfc_proveedor", type="string", length=255, nullable=true)
      */
     private $rfcProveedor = '';
+
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="beneficiario", type="string", length=255, nullable=true)
+     */
+    private $beneficiario = '';
     
 
     public function getId(): ?int
@@ -303,7 +311,7 @@ class Pagos
         return $this;
     }
 
-     public function getNombreProveedor()
+    public function getNombreProveedor()
     {
         return $this->nombreProveedor;
     }
@@ -311,6 +319,17 @@ class Pagos
     public function setNombreProveedor($nombreProveedor): self
     {
         $this->nombreProveedor = $nombreProveedor;
+        return $this;
+    }
+
+    public function getBeneficiario()
+    {
+        return $this->beneficiario;
+    }
+
+    public function setBeneficiario($beneficiario): self
+    {
+        $this->beneficiario = $beneficiario;
         return $this;
     }
 

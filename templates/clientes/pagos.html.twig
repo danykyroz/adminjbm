@@ -189,7 +189,8 @@
                       <th>Folio</th>
                       <th>Comprobado</th>
                       <th>Por Comprobar</th>
-
+                      <th>Beneficiario</th>
+                      
                       <th>Facturas</th>
                     </tr>
                   </thead>
@@ -220,8 +221,10 @@
                         {{pago.folio}}
                         {% endif%}
                       </td>
-                      <td>$ {{pago.facturado|number_format(2,'.',',')}}</td>
-                      <td>$ {{pago.porFacturar|number_format(2,'.',',')}}</td>
+                      <td>$ {{  pago.facturado|number_format(2,'.',',')}}</td>
+                      <td>$ {{  pago.porFacturar|number_format(2,'.',',')}}</td>
+                      <td id="td_pago_beneficiario_{{pago.id}}">  {{  pago.beneficiario }}</td>
+
                       <td> 
                      
 
@@ -359,6 +362,8 @@
                       {% endfor %}
                   </select>
            </div>
+
+          
        
             <div class="col-sm-6 col-lg-6">
               <div class="form-check form-check-radio">
@@ -377,7 +382,12 @@
               </div>
             </div>
           </div>
-        
+          
+          <div class="form-group">
+            <div class="form-line">
+              <input type="text" name="beneficiario" id="beneficiario" class="form-control" placeholder="Beneficiario">
+            </div>
+          </div>
 
           <div class="form-group">
             <div class="form-line">
@@ -427,6 +437,11 @@
         <input type="hidden" id="pagoid" name="pagoid" class="pagoid" >
         <div class="modal-body">
          
+          <div class="form-group">
+            <div class="form-line">
+              <input type="text" name="beneficiario" id="beneficiario" class="form-control beneficiario beneficiario" placeholder="Beneficiario">
+            </div>
+          </div>
 
           <div class="form-group">
             <div class="form-line">
@@ -574,6 +589,7 @@
         var tr=$("#tr_pago_"+id);
         var valor=$("#td_pago_valor_"+id).html();
         var folio=$("#td_pago_folio_"+id).html();
+        var beneficiario=$("#td_pago_beneficiario_"+id).html();
         $("#exampleModalEditar").modal('show');
         var valor2=valor.replace('$','');
         valor2 =valor2.replace(/,/g, '');
@@ -581,6 +597,8 @@
         $('.valor').val(valor2.trim());
         $('.folio').val(folio.trim());
         $('.pagoid').val(id);
+        $('.beneficiario').val(beneficiario.trim());
+
 
       })
 

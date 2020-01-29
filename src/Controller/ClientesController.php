@@ -825,12 +825,14 @@ class ClientesController extends AbstractController
       
       $em=$this->getDoctrine()->getManager();
       $pagoid=$request->get('pagoid');
+      $beneficiario=$request->get('beneficiario');
       $pago=$em->getRepository('App:Pagos','p')->find($pagoid);
       $valor=$request->get('valor');
       $valor=str_replace(",","", $valor);
       $folio=$request->get('folio');
 
       if($pago){
+        $pago->setBeneficiario($beneficiario);
         $pago->setValor($valor);
         $pago->setFolio($folio);
         $pago->setPorFacturar($valor-$pago->getFacturado());
@@ -976,6 +978,7 @@ class ClientesController extends AbstractController
      $pagos->setTipo($request->get('tipo'));
      $pagos->setFolio($request->get('folio'));
      $pagos->setValor($request->get('valor'));
+     $pagos->setBeneficiario($request->get('beneficiario'));
      $pagos->setFacturado(0);
      $pagos->setPorFacturar($request->get('valor'));
      $pagos->setClienteId($request->get('cliente'));
@@ -1175,7 +1178,7 @@ class ClientesController extends AbstractController
 
       $em=$this->getDoctrine()->getManager();
       $qb=$em->createQueryBuilder();
-      if($pago->getTipoPagoId()==4){
+      if($pago->getTipoPagoId()<=4){
         $qb->select('c')->from('App:CuentasPorCobrar','c')->where('c.pagoId=:pagoId')->setParameter('pagoId',$pago->getId());
         $qb->andWhere("c.rfc!=''");
         
@@ -1553,9 +1556,10 @@ class ClientesController extends AbstractController
 
         }
         //Se agrega extension xml para todas las consultas
-        if($pago->getTipoPagoId()==4){
+        if($pago->getTipoPagoId()<=4){
           $qb->andWhere("c.extension='xml'");
         }else{
+
             if($pago->getTipoPagoId()==5){
 
                 $qb->andWhere("c.valor>0");
@@ -2078,7 +2082,13 @@ class ClientesController extends AbstractController
 
             $CuentasPorCobrar->setRfc($data_json->Emisor->Rfc);
             $CuentasPorCobrar->setValor($data_json->Comprobante->SubTotal);
-            $CuentasPorCobrar->setIva($data_json->Traslado->Importe);
+            if(isset($data_json->Traslado)){
+                $CuentasPorCobrar->setIva($data_json->Traslado->Importe);
+            }else{
+                $CuentasPorCobrar->setIva(0);
+            }
+
+            $CuentasPorCobrar->setDescuento($data_json->Comprobante->Descuento);
             $CuentasPorCobrar->setTotal($data_json->Comprobante->Total);
             $CuentasPorCobrar->setNombre($name);
             $CuentasPorCobrar->setExtension($ext);
@@ -2128,6 +2138,18 @@ class ClientesController extends AbstractController
 
             if($pago){
 
+              if($data_json->Comprobante->TipoDeComprobante=='E'){
+
+                $valor=$pago->getValor()+$CuentasPorCobrar->getTotal();
+                $resta=$valor-$pago->getFacturado();
+                
+                $pago->setValor($valor);
+                $pago->setPorFacturar($resta);
+            
+
+              }else{
+
+              
               $qb=$em->createQueryBuilder();
               $qb->select("sum(c.total) as suma")->from('App:CuentasPorCobrar','c')->where("c.pagoId=:pagoId and c.extension!='csv'");
 
@@ -2135,7 +2157,13 @@ class ClientesController extends AbstractController
 
               $total=$qb->getQuery()->getSingleScalarResult();
               $resta=$pago->getValor()-$total;
-              
+
+              $pago->setFacturado($total);
+              $pago->setPorFacturar($resta);
+            
+
+              }
+
               if($resta<0){
 
                $this-> deletePdfXml($CuentasPorCobrar);
@@ -2147,11 +2175,11 @@ class ClientesController extends AbstractController
                 return  new Response('La factura supera el saldo por facturar');
               }
 
-              $pago->setFacturado($total);
-              $pago->setPorFacturar($resta);
+              
               $em->persist($pago);
               $em->flush();
 
+              
             }
 
 
@@ -2572,6 +2600,13 @@ class ClientesController extends AbstractController
       $xml_json['Comprobante']['Fecha']=(String)$cfdiComprobante['Fecha'];
       $xml_json['Comprobante']['Sello']=(String)$cfdiComprobante['Sello'];
       $xml_json['Comprobante']['Total']=(String)$cfdiComprobante['Total'];
+      
+      if(isset($cfdiComprobante['Descuento'])){
+        $xml_json['Comprobante']['Descuento']=(String)$cfdiComprobante['Descuento'];
+      }else{
+        $xml_json['Comprobante']['Descuento']=0;
+      }
+      
       $xml_json['Comprobante']['SubTotal']=(String)$cfdiComprobante['SubTotal'];
       $xml_json['Comprobante']['Certificado']=(String)$cfdiComprobante['Certificado'];
       $xml_json['Comprobante']['FormaDePago']=(String)$cfdiComprobante['FormaPago'];
@@ -2643,6 +2678,7 @@ foreach ($xml->xpath('//cfdi:Comprobante//cfdi:Conceptos//cfdi:Concepto') as $Co
     $xml_json['Concepto']['ValorUnitario']=(String)$Concepto['ValorUnitario'];
     
 } 
+
 foreach ($xml->xpath('//cfdi:Comprobante//cfdi:Impuestos//cfdi:Traslados//cfdi:Traslado') as $Traslado){ 
    
   $xml_json['Traslado']['Tasa']=(String)$Traslado['Tasa'];
@@ -2650,8 +2686,6 @@ foreach ($xml->xpath('//cfdi:Comprobante//cfdi:Impuestos//cfdi:Traslados//cfdi:T
   $xml_json['Traslado']['Impuesto']=(String)$Traslado['Impuesto'];
   $xml_json['Traslado']['TasaCuota']=(String)$Traslado['TasaCuota'];
   $xml_json['Traslado']['TipoFactor']=(String)$Traslado['TipoFactor'];
-
-
 
 }
 
@@ -2666,7 +2700,10 @@ foreach ($xml->xpath('//t:TimbreFiscalDigital') as $tfd) {
  
 }
 
-return json_encode($xml_json);  
+$json= json_encode($xml_json);  
+
+
+return $json;
 
 }
 

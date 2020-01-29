@@ -32,11 +32,11 @@
           </div>
           <div class="col-xl-6 col-lg-7 col-md-8 col-sm-12 text-right">
           {% if pago %}
-            {% if (pago.revisado==0 or pago.revisado=="") and pago.tipoPagoId<5 %}
+            {% if (pago.revisado==0 or pago.revisado=="") or pago.tipoPagoId<5 %}
               <div class="breadcrumb-chart">
                 <div class="float-right">
                   <div class="icon m-b-10">
-                     <a href="{{path('cuentas_por_cobrar_subir_archivos',{clienteid:pago.clienteId})}}" type="button" class="btn btn-primary  waves-effect" >Subir xml</a>
+                     <a href="{{path('cuentas_por_cobrar_subir_archivos',{clienteid:pago.clienteId,id:pago.id})}}" type="button" class="btn btn-primary  waves-effect" >Subir xml</a>
                   </div>
                 </div>
               </div>
@@ -225,6 +225,7 @@
                       <th>Fecha</th>
                       <th>Valor</th>
                       <th>IVA</th>
+                      <th>Descuento</th>
                       <th>Total</th>
                       <th>Estado Factura</th>
                       <th>Cancelable</th>
@@ -242,6 +243,7 @@
                       <td>{{cuenta.fecha|date('d/m/Y')}}</td>
                       <td>$ {{cuenta.valor|number_format(2,'.',',')}}</td>
                       <td>$ {{cuenta.iva|number_format(2,'.',',')}}</td>
+                      <td>$ {{cuenta.descuento|number_format(2,'.',',')}}</td>
                       <td>$ {{cuenta.total|number_format(2,'.',',')}}</td>
                       <td>{{cuenta.cfdi}}</td>
                       <td>{{cuenta.cancelable}}</td> 
