@@ -270,10 +270,12 @@
                              </a> 
 
                         {% endif %}
-                       
+
+                          {% if is_granted('ROLE_ADMIN') %}
                          <a data-id="{{cuenta.id}}" href="{{path('cuentas_por_cobrar_delete',{id:cuenta.id})}}" class="col-dark-gray waves-effect m-r-20 eliminar" title="Eliminar">
                             <i class="material-icons">delete_sweep</i>
                           </a>
+                          {% endif %}
 
                        </td>
                     </tr>
