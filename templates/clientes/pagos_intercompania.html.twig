@@ -150,6 +150,24 @@
         </div>
    
 
+              <div class="body">
+                  {% for flash_message in app.session.flashbag.get('warning') %}
+                      <div class="alert bg-pink alert-dismissible" role="alert">
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                          </button>
+                          {{ flash_message }}
+                      </div>
+                  {% endfor %}
+                  {% for flash_message in app.session.flashbag.get('success') %}
+                      <div class="alert alert-info alert-dismissible" role="alert">
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                          </button>
+                          {{ flash_message }}
+                      </div>
+                  {% endfor %}
+              </div>
 
             <div class="header">
               <h2>
@@ -212,16 +230,18 @@
 
                       </a>
                        {% if pago.file !="" %}
-                       <a href="{{asset(pago.file)}}" target="_blank" class="col-dark-gray waves-effect m-r-20" title="Archivo Adjunto">
+                       {    #<a href="{{asset(pago.file)}}" target="_blank" class="col-dark-gray waves-effect m-r-20" title="Archivo Adjunto">
                           <i class="material-icons">remove_red_eye</i>
-                        </a>
+                        </a> #}
                         {% endif %}
                         
                         {% if pago.file== "" %}
+                        
                           <!-- <a href="#" data-id="{{pago.id}}" class="waves-effect m-r-20 reportar_cuenta" title="Agregar Comprobante">
                               <i class="material-icons">add</i>
                              </a> 
                           !-->
+                          
                         {% endif %}
                             {% if pago.tipoPagoId!=5 %}
 
@@ -245,7 +265,7 @@
 
                               {% else %}
 
-                                 <a href="{{path('pagos_cliente_revisado',{id:pago.id})}}" class="col-dark-green text-green  waves-effect m-r-20 revisado" title="Quitar Revisado" >  <i class="material-icons">done</i></a>
+
                           
                               
                               {% endif %}
@@ -458,6 +478,8 @@
         </div>
         <form  name="form-cuenta" method="post" id="form-cuenta" action="{{path('pagos_facturas_lote')}}" enctype="multipart/form-data" >
         <input type="hidden" id="lote-clienteid" name="clienteid"  value="{{cliente.id}}" >
+        <input type="hidden" id="lote-facturaInterna" name="facturaInterna"  value="{{ facturaInterna }}" >
+
         <div class="modal-body">
          
 

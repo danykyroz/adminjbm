@@ -220,6 +220,7 @@
                   <thead>
                     <tr>
                       <th>Folio</th>
+                      <th>UUID</th>
                       <th>Proveedor</th>
                       <th>RFC</th>
                       <th>Fecha</th>
@@ -238,6 +239,7 @@
                     <tr>
 
                       <td>{{cuenta.folio}}</td>
+                        <td>{{ cuenta.uuid }}</td>
                       <th>{{cuenta.proveedor}}</th>
                       <td>{{cuenta.rfc}}</td>
                       <td>{{cuenta.fecha|date('d/m/Y')}}</td>
@@ -269,6 +271,7 @@
 
                         {% endif %}
 
+
                         {% if cuenta.file=="" %}
                          <a href="#" data-id="{{cuenta.id}}" class="waves-effect m-r-20 reportar_cuenta" title="Agregar Imagen Comprobante">
                               <i class="material-icons">add_a_photo</i>
@@ -280,10 +283,13 @@
                         </a>
                         
                         {% endif %}
-                       
+
+                          {% if is_granted('ROLE_ADMIN') %}
+
                          <a data-id="{{cuenta.id}}" href="{{path('cuentas_por_cobrar_delete',{id:cuenta.id})}}" class="col-dark-gray waves-effect m-r-20 eliminar" title="Eliminar">
                             <i class="material-icons">delete_sweep</i>
                           </a>
+                          {% endif %}
 
                        </td>
                     </tr>
