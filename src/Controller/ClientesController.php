@@ -1100,6 +1100,69 @@ class ClientesController extends AbstractController
 
 
   /**
+  * @Route("/cobros/new/file", name="cobros_new_file", methods={"GET","POST"})
+  */
+  public function cobros_new_file(Request $request){
+    
+     $em=$this->getDoctrine()->getManager();
+     
+     $cobro=$em->getRepository('App:CuentasPorCobrar','c')->find($request->get('cobroid'));
+    
+     if($_FILES["file"]["error"]==0){
+
+          $tmp_name = $_FILES["file"]["tmp_name"];
+          $name = $_FILES["file"]["name"];
+
+          //Nombre carpeta
+
+           $cliente=$em->getRepository('App:Clientes','c')->find($cobro->getClienteId());
+
+            $nombre_cliente=str_replace(" ","-",$cliente->getRazonSocial());
+            
+            $year_carpeta=date_format($cobro->getFecha(),'Y');
+            $mes_carpeta=date_format($cobro->getFecha(),'m');
+            $dia_carpeta=date_format($cobro->getFecha(),'d');
+           
+            $tipo="facturas_por_pagar";
+
+            if($cobro->getFolio()!=""){
+              $consecutivo=$cobro->getFolio();
+            }
+            else{
+              $consecutivo=$cobro->getId();
+            }
+
+            $carpeta_nueva='uploads/'.$nombre_cliente.'/'.$year_carpeta.'/'.$mes_carpeta.'/'.$tipo.'/'.$dia_carpeta.'/'.$consecutivo;
+            
+            $ruta_nueva=$carpeta_nueva.'/'.$name;
+            $this->new_directories($carpeta_nueva);
+            
+            $ruta="uploads/$name";
+
+            $move= move_uploaded_file($tmp_name, $ruta);
+
+            $move_new= copy($ruta, $ruta_nueva);
+            if($move_new){
+              unlink($ruta);
+            }
+
+           if($move_new){
+            $cobro->setFile($ruta_nueva);
+            $em->persist($cobro);
+            $em->flush();
+           }
+     }
+   
+
+
+     $this->addFlash('success', 'Comprobante guardado exitosamente.');
+
+
+      return  $this->redirect($request->server->get('HTTP_REFERER'));
+
+  }
+
+  /**
   * @Route("/pagos/new/file", name="pagos_new_file", methods={"GET","POST"})
   */
   public function pago_new_file(Request $request){
@@ -1677,6 +1740,21 @@ class ClientesController extends AbstractController
 
   }
 
+   /**
+  * @Route("/cuentas_por_cobrar/link/file/{id}", name="cuentas_por_cobrar_link_file", methods={"GET"})
+  */
+  public function cuentas_por_cobrar_link_file(Request $request, CuentasPorCobrar $cuenta){
+
+    $em=$this->getDoctrine()->getManager();
+    
+    if($cuenta->getFile()!=""){
+      return $this->render('clientes/link_pdf.html.twig',array('pdf'=>$cuenta->getFile()));
+    }else{
+      return new Response($cuenta->getId());
+    }
+
+  }
+
 
 
   /**
@@ -1849,9 +1927,17 @@ class ClientesController extends AbstractController
     $nombre=$factura->getXml();
     $explode=explode(".",$nombre);
     $ext=$explode[count($explode)-1];
-    if($ext=="xml"){
-          return $this->render('clientes/detalle_factura.html.twig',array('factura'=>$detalle_factura));
-    }else{
+    $is_file=$request->get('file','');
+
+    if($is_file==""){
+         if($ext=="xml"){
+            return $this->render('clientes/detalle_factura.html.twig',array('factura'=>$detalle_factura));
+          }else{
+              return $this->render('clientes/detalle_factura_pdf.html.twig',array('pdf'=>$nombre));
+          }
+    }
+    else{
+        $nombre=$factura->getFile();
         return $this->render('clientes/detalle_factura_pdf.html.twig',array('pdf'=>$nombre));
     }
 
@@ -2060,13 +2146,17 @@ class ClientesController extends AbstractController
             }
 
             if(!$new){
-              $total_bd=(int) $CuentasPorCobrar->getTotal();
+
+              $total_bd=(int) $CuentasPorCobrar->getTotal()+1;
               $total_xml=(int) $data_json->Comprobante->Total;
-              if($total_bd!=$total_xml){
+              
+              $resta=$total_xml-$total_bd;
+
+              if($total_bd!=$total_xml && ($resta>1)){
 
                   $CuentasPorCobrar->setNombre($name);
                   $this->deletePdfXml($CuentasPorCobrar);
-                  return  new Response('El valor total del xml no coincide con el original'.$total_bd);
+                  return  new Response('El valor total del xml no coincide con el original'.$total_bd.'!='.$total_xml);
               }
             }
 
@@ -2189,6 +2279,7 @@ class ClientesController extends AbstractController
             $CuentasPorCobrar->setValor(0);
             $CuentasPorCobrar->setIva(0);
             $CuentasPorCobrar->setTotal(0);
+            $CuentasPorCobrar->setDescuento(0);
             $CuentasPorCobrar->setNombre($name);
             $CuentasPorCobrar->setExtension($ext);
 

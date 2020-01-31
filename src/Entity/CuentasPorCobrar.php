@@ -179,6 +179,13 @@ class CuentasPorCobrar
      */
     private $uuid = '';
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="file", type="string", length=255, nullable=true)
+     */
+    private $file = '';
+
 
     
     
@@ -481,6 +488,18 @@ class CuentasPorCobrar
     public function setUuid(?string $uuid): self
     {
         $this->uuid = $uuid;
+        return $this;
+    }
+
+      public function getFile(): ?string
+    {
+        return $this->file;
+    }
+
+    public function setFile($file): self
+    {
+        $this->file = $file;
+
         return $this;
     }
    

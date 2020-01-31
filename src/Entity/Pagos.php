@@ -270,23 +270,7 @@ class Pagos
         return $this;
     }
 
-    public function consecutivo(){
-        
-        $prefijo="";
-        $pad= str_pad($this->id,3,'0',STR_PAD_LEFT);
-
-        if($this->tipo==2){
-            $prefijo="tr";
-            $folio=date_format($this->createdAt,'dmy');
-
-        }else{
-            $prefijo="ch";
-            $folio=$this->getFolio();
-        }
-
-        return $prefijo.$folio.$pad;
-
-    }
+    
 
     public function getTipoPagoId()
     {
@@ -350,6 +334,27 @@ class Pagos
             '12' => 'Dic',
         ];
         return $meses[$mes];
+    }
+
+    public function consecutivo(){
+        
+        $prefijo="";
+        $pad= str_pad($this->id,3,'0',STR_PAD_LEFT);
+
+        if($this->tipo==2){
+            $prefijo="tr";
+            $folio=date_format($this->createdAt,'dmy');
+
+        }else{
+            $prefijo="ch";
+            $folio=$this->getFolio();
+        }
+        if($this->getTipoPagoId()==5){
+            $prefijo="PR";
+            $folio=$this->getId();
+        }
+
+        return $prefijo.$folio.$pad;
     }
    
 
