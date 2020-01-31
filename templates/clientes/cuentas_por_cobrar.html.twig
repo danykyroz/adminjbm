@@ -378,7 +378,8 @@
 
         </div>
         <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-type="pdf" id="eliminar_archivo" >Eliminar Archivo</button>
+
+        <button type="button" data-url="{{path('cuentas_por_cobrar_delete_file')}}" class="btn btn-danger" data-type="pdf" id="eliminar_archivo" data-id="" >Eliminar Archivo</button>
         <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
       </div>
       </div>
@@ -522,12 +523,13 @@
       var id=$(this).data('id');
       var url=$(this).attr('href');
       var type=$(this).data('type');
-      alert(type);
+
       if(type=='xml'){
        $("#eliminar_archivo").hide(); 
       }else{
          $("#eliminar_archivo").show();
          $("#eliminar_archivo").data('type',type);
+         $("#eliminar_archivo").data('id',id);
       }
       
       $.get(url,{},function(data){
@@ -539,7 +541,26 @@
 
     $("#eliminar_archivo").click(function(e){
       e.preventDefault();
-      alert($(this).data('type'));
+      url=$(this).data('url');
+      type=$(this).data('type');
+      id=$(this).data('id');
+      data={type:type,id:id};
+
+      $.get(url,data,function(data){
+        
+        $("#exampleModalDetalle").modal('hide');
+
+        swal({
+          title: "Ok!",
+          text: data,
+          type: "success"
+      }).then(function() {
+           location.reload();
+      });
+
+      
+
+      })
 
     })
 

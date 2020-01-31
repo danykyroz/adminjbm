@@ -1828,7 +1828,7 @@ class ClientesController extends AbstractController
   }
 
 
-   /**
+  /**
   * @Route("/cuentas_por_cobrar/delete/{id}", name="cuentas_por_cobrar_delete", methods={"GET"})
   */
   public function cuentas_por_cobrar_delete(Request $request, CuentasPorCobrar $cuenta){
@@ -1860,7 +1860,49 @@ class ClientesController extends AbstractController
 
     }
 
+  }
 
+
+  /**
+  * @Route("/cuentas_por_cobrar/file/delete", name="cuentas_por_cobrar_delete_file", methods={"GET"})
+  */
+  public function cuentas_por_cobrar_delete_file(Request $request){
+
+    $em=$this->getDoctrine()->getManager();
+    $id=$request->get('id');
+    $cuenta=$em->getRepository('App:CuentasPorCobrar','c')->find($id);
+    $name=str_replace('.xml', '.pdf',$cuenta->getNombre());
+    $clienteid=$cuenta->getClienteId();
+    $pagoid=(int)$cuenta->getPagoId();
+    $type=$request->get('type','');
+
+    if($type=='file'){
+
+      @unlink($cuenta->getFile());
+      $cuenta->setFile(NULL);
+      $em->persist($cuenta);
+      $em->flush();
+
+    }else{
+
+      $qb=$em->createQueryBuilder()->select('c')->from('App:CuentasPorCobrar','c')->where('c.nombre=:nombre')->andWhere('c.pagoId=:pagoId');
+      $qb->setParameters(array('nombre'=>$name,'pagoId'=>$cuenta->getPagoId()));
+
+      $result=$qb->getQuery()->getResult();
+      $pdf=false;
+      if(count($result)>0){
+        $pdf=$result[0];
+      }
+      if($pdf){
+       unlink($pdf->getXml()); 
+       $em->remove($pdf);
+      }
+      $em->remove($cuenta);
+      $em->flush();
+
+
+    }
+     return new Response('Archivo eliminado exitosamente');
 
   }
 
