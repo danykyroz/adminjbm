@@ -250,7 +250,7 @@
                       <td>No</td>
                       <td> 
                       {% if cuenta.extension=="xml" %} 
-                        <a href="{{path('detalle_factura',{id:cuenta.id})}}" data-toggle="modal" data-target="#exampleModalDetalle" class="col-dark-gray waves-effect m-r-20 detalle_factura" data-id="{{cuenta.id}}" title="Ver Detalle">
+                        <a href="{{path('detalle_factura',{id:cuenta.id})}}" data-toggle="modal" data-target="#exampleModalDetalle" class="col-dark-gray waves-effect m-r-20 detalle_factura" data-type="xml" data-id="{{cuenta.id}}" title="Ver Detalle">
                           <i class="material-icons">remove_red_eye</i>
                         </a>
                         {% endif %}
@@ -263,10 +263,22 @@
                         {% if cuenta.extension!="csv" %}
                          {{ render(path('cuentas_por_cobrar_link_pdf',{id:cuenta.id})) }}
                         {% else %}
-                         <a href="{{path('cuentas_por_cobrar_subir_archivos',{clienteid:pago.clienteId,cuentaid:cuenta.id})}}" data-id="{{cuenta.id}}" class="waves-effect m-r-20 reportar_cuenta" title="Agregar Comprobante">
+                         <a href="{{path('cuentas_por_cobrar_subir_archivos',{clienteid:pago.clienteId,cuentaid:cuenta.id})}}" data-id="{{cuenta.id}}" class="waves-effect m-r-20" title="Agregar Archivos">
                               <i class="material-icons">add</i>
-                             </a> 
+                        </a> 
 
+                        {% endif %}
+
+                        {% if cuenta.file=="" %}
+                         <a href="#" data-id="{{cuenta.id}}" class="waves-effect m-r-20 reportar_cuenta" title="Agregar Imagen Comprobante">
+                              <i class="material-icons">add_a_photo</i>
+                            </a> 
+                        {% else %}
+                        <!--Ver archivo de imagen o pdf adjunto!-->
+                        <a href="{{path('detalle_factura',{id:cuenta.id,file:true})}}" data-toggle="modal" data-target="#exampleModalDetalle" class="col-dark-gray waves-effect m-r-20 detalle_factura" data-id="{{cuenta.id}}" title="Ver Imagen Comprobante" data-type="file">
+                         <i class="material-icons">photo</i>
+                        </a>
+                        
                         {% endif %}
                        
                          <a data-id="{{cuenta.id}}" href="{{path('cuentas_por_cobrar_delete',{id:cuenta.id})}}" class="col-dark-gray waves-effect m-r-20 eliminar" title="Eliminar">
@@ -347,7 +359,7 @@
 
 
   <div class="modal fade" id="exampleModalDetalle" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLongTitle">Detalle Comprobante de pago</h5>
@@ -359,7 +371,39 @@
        
 
         </div>
-       
+        <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-type="pdf" id="eliminar_archivo" >Eliminar Archivo</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="reportarCuenta" tabindex="-1" role="dialog" aria-labelledby="reportarCuentaTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Archivo Adjunto</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form  name="form-cuenta" method="post" id="form-cuenta" action="{{path('cobros_new_file')}}" enctype="multipart/form-data" >
+        <input type="hidden" id="cobroid_file" name="cobroid" class="cobroid" value="" >
+        <div class="modal-body">
+        
+           <div class="form-group">
+            <div class="form-line">
+              <input type="file" class="form-control" name="file" id="file_cuenta" accept="image/*,application/pdf" placeholder="Archivo Adjunto">
+            </div>
+          </div>
+         
+        </div>
+        <div class="modal-footer">
+          <button type="submit" id="btn-cuenta-submit" class="btn btn-primary">Guardar</button>
+        </div>
+      </form>
+        
       </div>
     </div>
   </div>
@@ -453,6 +497,8 @@
       });
     });
 
+
+
      $('#valor').on('blur', function() {
       sumatotal();
     });
@@ -469,11 +515,26 @@
       e.preventDefault();
       var id=$(this).data('id');
       var url=$(this).attr('href');
+      var type=$(this).data('type');
+      alert(type);
+      if(type=='xml'){
+       $("#eliminar_archivo").hide(); 
+      }else{
+         $("#eliminar_archivo").show();
+         $("#eliminar_archivo").data('type',type);
+      }
+      
       $.get(url,{},function(data){
         $('#modal-body').html(data);
         $("#exampleModalDetalle").modal('show');
 
       })
+    })
+
+    $("#eliminar_archivo").click(function(e){
+      e.preventDefault();
+      alert($(this).data('type'));
+
     })
 
     $(".eliminar").click(function(e){
@@ -494,6 +555,14 @@
       });
 
     })
+
+    $(".reportar_cuenta").click(function(e){
+        e.preventDefault();
+        var id=$(this).data('id');
+        $("#cobroid_file").val(id);
+        $("#reportarCuenta").modal('show');
+
+      })
 
      $("#btn-reset").click(function(e){
         e.preventDefault();
