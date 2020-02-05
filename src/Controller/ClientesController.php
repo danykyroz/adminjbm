@@ -682,6 +682,9 @@ class ClientesController extends AbstractController
             $ext="csv";
             $pago=false;
 
+            $valor=filter_var($valor, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+            $iva=filter_var($iva, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+            $total=filter_var($total, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
             //Creamos la factura
 
             //Buscamos un pago tipo 5 con el mismo id de cliente y fecha
