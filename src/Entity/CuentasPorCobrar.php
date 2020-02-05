@@ -63,7 +63,7 @@ class CuentasPorCobrar
      *
      * @ORM\Column(name="descuento", type="float", nullable=false)
      */
-    private $descuento = '';
+    private $descuento = '0.0';
 
     /**
      * @var float
@@ -332,7 +332,7 @@ class CuentasPorCobrar
         return $this->iva;
     }
 
-    public function setIva(float $iva): self
+    public function setIva($iva): self
     {
         $this->iva = $iva;
 
@@ -344,7 +344,7 @@ class CuentasPorCobrar
         return $this->descuento;
     }
 
-    public function setDescuento(float $descuento): self
+    public function setDescuento($descuento): self
     {
         $this->descuento = $descuento;
 
@@ -356,7 +356,7 @@ class CuentasPorCobrar
         return $this->total;
     }
 
-    public function setTotal(float $total): self
+    public function setTotal($total): self
     {
         $this->total = $total;
 

@@ -750,6 +750,7 @@ class ClientesController extends AbstractController
                 $CuentasPorCobrar->setValor($valor);
                 $CuentasPorCobrar->setIva($iva);
                 $CuentasPorCobrar->setTotal($total);
+                $CuentasPorCobrar->setDescuento(0);
                 $CuentasPorCobrar->setPagoId($pago->getId());
                 //$CuentasPorCobrar->setNombre($name);
                 $CuentasPorCobrar->setExtension($ext);
