@@ -127,8 +127,7 @@ class ArchivosController extends AbstractController
         }
    }
    if(count($arr_files)==0){
-
-       return $this->render('archivos/carpetas.html.twig',['directorios'=>$arr_directories,'directorio'=>$nombre_carpeta,'cliente'=>$cliente]); 
+       return $this->render('archivos/carpetas.html.twig',['directorios'=>$arr_directories,'directorio'=>$nombre_carpeta,'cliente'=>$cliente]);
 
    }
    else{

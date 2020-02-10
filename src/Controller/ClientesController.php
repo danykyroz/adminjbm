@@ -2540,13 +2540,9 @@ class ClientesController extends AbstractController
                   $cliente_path . DIRECTORY_SEPARATOR .
                   'nomina' . DIRECTORY_SEPARATOR .
                   $empleado_path . DIRECTORY_SEPARATOR .
-                  'alta' . DIRECTORY_SEPARATOR .
-                    $documentoAlta->getClientOriginalName()
-              ;
+                  'alta' . DIRECTORY_SEPARATOR;
 
-              $documentoAlta->move(
-                  $pathAlta
-              );
+              $documentoAlta->move( $pathAlta, $documentoAlta->getClientOriginalName());
 
               $empleado->setFileAlta($pathAlta);
               $em->persist($empleado);
