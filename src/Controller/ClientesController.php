@@ -7,6 +7,7 @@ use App\Entity\CuentasPorCobrar;
 use App\Entity\Empleados;
 use App\Entity\HorarioEmpleado;
 use App\Entity\Pagos;
+//https://cfdiutils.readthedocs.io/es/latest/
 use CfdiUtils\Cfdi;
 use CfdiUtils\ConsultaCfdiSat\RequestParameters;
 use CfdiUtils\ConsultaCfdiSat\WebService;
@@ -2168,12 +2169,14 @@ class ClientesController extends AbstractController
 
             $result_existe=$qb->getQuery()->getResult();
 
-
+            //Envio de xml a CFDI
             $cfdi = Cfdi::newFromString(file_get_contents($ruta));
             $request = RequestParameters::createFromCfdi($cfdi);
 
             $service = new WebService();
             $response = $service->request($request);
+
+            //Fin Envio 
             if($cuentaid==0){
 
               $CuentasPorCobrar=new CuentasPorCobrar();
@@ -2229,6 +2232,7 @@ class ClientesController extends AbstractController
             $CuentasPorCobrar->setNombre($name);
             $CuentasPorCobrar->setExtension($ext);
 
+            //Se saca de response la validacion obtenida por el servicio
             if($response->getCode()=="S - Comprobante obtenido satisfactoriamente."){
               $CuentasPorCobrar->setComprobado(1);
             }
@@ -2237,6 +2241,7 @@ class ClientesController extends AbstractController
             $CuentasPorCobrar->setCfdi($response->getCfdi());
             $CuentasPorCobrar->setCancelable($response->getCancellable());
             $CuentasPorCobrar->setEstadoCancelacion($response->getCancellationStatus());
+            //Fin de variables obtenidas del servicio 
             $CuentasPorCobrar->setResponseJson($json_xml);
             $CuentasPorCobrar->setClienteId($clienteId);
             $CuentasPorCobrar->setXml($ruta);
