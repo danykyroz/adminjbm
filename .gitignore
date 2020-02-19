@@ -24,3 +24,5 @@
 *.pdf
 *.xml
 *.csv
+!/.env
+.idea

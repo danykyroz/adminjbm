@@ -3,17 +3,22 @@
 namespace App\Entity;
 
 
+use App\Entity\Traits\TimestampableTrait;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Delegacion as Delegacion;
 use Gedmo\Mapping\Annotation as Gedmo;
+
 /**
  * CuentasPorCobrar
  *
  * @ORM\Table(name="cuentas_por_cobrar")
  * @ORM\Entity(repositoryClass="App\Repository\CuentasPorCobrarRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class CuentasPorCobrar
 {
+    use TimestampableTrait;
+
     /**
      * @var int
      *
@@ -30,7 +35,7 @@ class CuentasPorCobrar
      */
     private $proveedor = '';
 
-     /**
+    /**
      * @var string
      *
      * @ORM\Column(name="rfc", type="string", length=20, nullable=true)
@@ -58,7 +63,7 @@ class CuentasPorCobrar
      */
     private $iva = '';
 
-     /**
+    /**
      * @var float
      *
      * @ORM\Column(name="descuento", type="float", nullable=false)
@@ -72,15 +77,15 @@ class CuentasPorCobrar
      */
     private $total = '';
 
-    
-     /**
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="comprobado", type="integer", nullable=false)
      */
     private $comprobado = '';
 
-     /**
+    /**
      * @var string
      *
      * @ORM\Column(name="xml", type="string", nullable=false)
@@ -94,20 +99,6 @@ class CuentasPorCobrar
     private $fecha;
 
     /**
-     * @var \DateTime|null
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(name="created_at", type="datetime", nullable=true)
-     */
-    private $createdAt;
-
-    /**
-     * @var \DateTime|null
-     * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
-     */
-    private $updatedAt;
-
-     /**
      * @var integer
      *
      * @ORM\Column(name="pago_id", type="integer", length=11, nullable=true)
@@ -129,20 +120,20 @@ class CuentasPorCobrar
      */
     private $cfdi = '';
 
-     /**
+    /**
      * @var string
      *
      * @ORM\Column(name="cancelable", type="string", nullable=false)
      */
     private $cancelable = '';
 
-     /**
+    /**
      * @var string
      *
      * @ORM\Column(name="estado_cancelacion", type="string", nullable=false)
      */
     private $estadoCancelacion = '';
-    
+
     /**
      * @var string
      *
@@ -150,14 +141,14 @@ class CuentasPorCobrar
      */
     private $responseJson = '';
 
-     /**
+    /**
      * @var string
      *
      * @ORM\Column(name="nombre", type="string", length=255, nullable=false)
      */
     private $nombre = '';
 
-     /**
+    /**
      * @var string
      *
      * @ORM\Column(name="extension", type="string", length=3, nullable=false)
@@ -172,7 +163,7 @@ class CuentasPorCobrar
     private $clienteId = '';
 
 
-     /**
+    /**
      * @var string
      *
      * @ORM\Column(name="uuid", type="string", length=50, nullable=true)
@@ -186,9 +177,6 @@ class CuentasPorCobrar
      */
     private $file = '';
 
-
-    
-    
 
     public function getId(): ?int
     {
@@ -255,7 +243,7 @@ class CuentasPorCobrar
         return $this;
     }
 
-      public function getFecha(): ?\DateTimeInterface
+    public function getFecha(): ?\DateTimeInterface
     {
         return $this->fecha;
     }
@@ -263,30 +251,6 @@ class CuentasPorCobrar
     public function setFecha($fecha): self
     {
         $this->fecha = $fecha;
-
-        return $this;
-    }
-   
-    public function getCreatedAt(): ?\DateTimeInterface
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(?\DateTimeInterface $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTimeInterface
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
-    {
-        $this->updatedAt = $updatedAt;
 
         return $this;
     }
@@ -389,7 +353,7 @@ class CuentasPorCobrar
 
     public function getPagoId(): ?int
     {
-        return $this->pagoId?$this->pagoId:0;
+        return $this->pagoId ? $this->pagoId : 0;
     }
 
     public function setPagoId(int $pagoId): self
@@ -479,7 +443,7 @@ class CuentasPorCobrar
         return $this;
     }
 
-     public function getUuid(): ?string
+    public function getUuid(): ?string
     {
         return $this->uuid;
     }
@@ -491,7 +455,7 @@ class CuentasPorCobrar
         return $this;
     }
 
-      public function getFile(): ?string
+    public function getFile(): ?string
     {
         return $this->file;
     }
@@ -502,6 +466,6 @@ class CuentasPorCobrar
 
         return $this;
     }
-   
+
 
 }
