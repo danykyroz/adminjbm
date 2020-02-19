@@ -10,7 +10,7 @@
           <div class="col-xl-6 col-lg-5 col-md-4 col-sm-12">
             <ul class="breadcrumb breadcrumb-style">
               <li class="breadcrumb-item  bcrumb-1">
-                <a href="../../index.html">
+                <a href="{{asset('/')}}">
                   <i class="material-icons">home</i> Home / Pagos</a>
               </li>
               <li class="breadcrumb-item bcrumb-2">
@@ -26,26 +26,8 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
                         <div class="header">
-                            <h2>
-                                <strong>File</strong> Upload</h2>
-                            <ul class="header-dropdown m-r--5">
-                                <li class="dropdown">
-                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                        <i class="material-icons">more_vert</i>
-                                    </a>
-                                    <ul class="dropdown-menu pull-right">
-                                        <li>
-                                            <a href="javascript:void(0);">Action</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0);">Another action</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0);">Something else here</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
+                            <h2><strong>File</strong> Upload</h2>
+
                         </div>
                         <div class="body">
                             <form action="{{path('cuentas_por_cobrar_analizar_archivos',{'clienteid':clienteId})}}" id="frmFileDropzone" class="dropzone dz-clickable" method="post" enctype="multipart/form-data">

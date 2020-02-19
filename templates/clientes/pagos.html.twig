@@ -332,7 +332,6 @@
         <div class="modal-body">
           <div class="row">
           {% if cliente %}
-
             <div class="col-sm-12 col-lg-12">
                 <input type="hidden" name="cliente" id="cliente" value="{{cliente.id}}" >
            </div>
@@ -344,7 +343,6 @@
                    <option value="">Seleccione un cliente</option>
                     {% for objcliente in clientes %}
                     <option value="{{objcliente.id}}" >{{objcliente.razonSocial}}</option>
-
                     {% endfor %}
                 </select>
             </div>
@@ -358,7 +356,6 @@
                      <option value="">Seleccione un tipo de transacción</option>
                       {% for tipopago in tipopagos %}
                       <option value="{{tipopago.id}}" >{{tipopago.nombre}}</option>
-
                       {% endfor %}
                   </select>
            </div>
@@ -409,7 +406,7 @@
           
            <div class="form-group">
             <div class="form-line">
-              <input type="file" class="form-control" name="file" id="file" accept="image/*,application/pdf" placeholder="Archivo Adjunto">
+                  <input type="file" class="form-control" name="file" id="file" accept="image/*,application/pdf" placeholder="Archivo Adjunto">
             </div>
           </div>
 
@@ -703,17 +700,12 @@
     
       
       if($("#fecha").val()==""){
-        swal("Por favor ingresa una fecha valida");
+        swal("Por favor ingresa una fecha válida");
         return false;
       }
 
       if($('#tipopago').val()==""){
        swal("Por favor seleccione un tipo de pago");
-        return false;
-      }
-
-      if($("#file").val()==""){
-        swal("Por favor ingresa una archivo valido.");
         return false;
       }
 

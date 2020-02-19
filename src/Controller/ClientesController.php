@@ -397,7 +397,7 @@ class ClientesController extends AbstractController
   * @Route("/pagos/index", name="pagos_clientes", methods={"GET"})
   */
   public function pagos_cliente(Request $request){
-      
+
       $em=$this->getDoctrine()->getManager();
       $qb=$em->createQueryBuilder();
       $filtros=$request->get('filtros');
