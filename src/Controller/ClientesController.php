@@ -2297,13 +2297,13 @@ class ClientesController extends AbstractController
 
                         if ($resta < 0) {
 
-                            $this->deletePdfXml($CuentasPorCobrar);
+                            //$this->deletePdfXml($CuentasPorCobrar);
 
-                            $em->remove($CuentasPorCobrar);
-                            $em->flush();
+                            //$em->remove($CuentasPorCobrar);
+                            //$em->flush();
 
 
-                            return new Response('La factura supera el saldo por facturar');
+                            //return new Response('La factura supera el saldo por facturar');
                         }
 
 
