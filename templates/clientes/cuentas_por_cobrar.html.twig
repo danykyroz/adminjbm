@@ -272,18 +272,6 @@
                         {% endif %}
 
 
-                        {% if cuenta.file=="" %}
-                         <a href="#" data-id="{{cuenta.id}}" class="waves-effect m-r-20 reportar_cuenta" title="Agregar Imagen Comprobante">
-                              <i class="material-icons">add_a_photo</i>
-                            </a> 
-                        {% else %}
-                        <!--Ver archivo de imagen o pdf adjunto!-->
-                        <a href="{{path('detalle_factura',{id:cuenta.id,file:true})}}" data-toggle="modal" data-target="#exampleModalDetalle" class="col-dark-gray waves-effect m-r-20 detalle_factura" data-id="{{cuenta.id}}" title="Ver Imagen Comprobante" data-type="file">
-                         <i class="material-icons">photo</i>
-                        </a>
-                        
-                        {% endif %}
-
                           {% if is_granted('ROLE_ADMIN') %}
 
                          <a data-id="{{cuenta.id}}" href="{{path('cuentas_por_cobrar_delete',{id:cuenta.id})}}" class="col-dark-gray waves-effect m-r-20 eliminar" title="Eliminar">
