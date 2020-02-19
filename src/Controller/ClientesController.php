@@ -2173,8 +2173,6 @@ class ClientesController extends AbstractController
                         $dtfecha = new \DateTime($fecha);
 
                         $CuentasPorCobrar->setFecha($dtfecha);
-                        $CuentasPorCobrar->setCreatedAt(new \DateTime('now'));
-                        $CuentasPorCobrar->setUpdatedAt(new \DateTime('now'));
                         $CuentasPorCobrar->setProveedor($data_json->Emisor->Nombre);
                         $new = true;
                     } else {
@@ -2324,8 +2322,6 @@ class ClientesController extends AbstractController
                     $CuentasPorCobrar = new CuentasPorCobrar();
                     $CuentasPorCobrar->setFolio(time());
                     $CuentasPorCobrar->setFecha(new \DateTime('now'));
-                    $CuentasPorCobrar->setCreatedAt(new \DateTime('now'));
-                    $CuentasPorCobrar->setUpdatedAt(new \DateTime('now'));
                     $CuentasPorCobrar->setClienteId($clienteId);
                     $CuentasPorCobrar->setValor(0);
                     $CuentasPorCobrar->setIva(0);
